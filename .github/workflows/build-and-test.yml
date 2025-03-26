@@ -20,6 +20,18 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.x
+          
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.1.11
+        with:
+          versionSpec: '6.0.x'
+
+      - name: Determine Version
+        id: version_step # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v3.1.11
+        with:
+          useConfigFile: true
+          configFilePath: VersionConfig.yml
 
       - name: Cache NuGet Packages
         uses: actions/cache@v4
@@ -29,14 +41,17 @@ jobs:
           restore-keys: |
             nuget-${{ runner.os }}-
 
-      - name: Restore Dependencies
-        run: dotnet restore src/FrontierSharp.sln
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: ./src
 
-      - name: Build Solution
-        run: dotnet build src/FrontierSharp.sln --no-restore --configuration Release
+      - name: Build
+        run: dotnet build --no-restore /p:Version=${{ steps.version_step.outputs.FullSemVer }}
+        working-directory: ./src
 
-      - name: Run Tests
-        run: dotnet test src/FrontierSharp.sln --no-build --configuration Release --logger trx --results-directory TestResults
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+        working-directory: ./src
 
       - name: Upload Test Results
         if: always()
