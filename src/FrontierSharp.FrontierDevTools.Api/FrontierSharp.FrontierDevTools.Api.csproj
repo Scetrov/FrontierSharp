@@ -4,6 +4,18 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>0.0.1</Version>
+        <Title>FrontierSharp FrontierDevTools (API)</Title>
+        <Authors>Scetrov, Zlake</Authors>
+        <Description>Access to basic Character and Starmap Information for EVE Frontier</Description>
+        <Copyright>© Scetrov, 2025</Copyright>
+        <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/Scetrov/FrontierSharp/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageIcon>FrontierSharp.png</PackageIcon>
+        <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>eve,frontier,games</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +28,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\FrontierSharp.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>FrontierSharp.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

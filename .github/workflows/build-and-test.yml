@@ -11,6 +11,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      packages: write
 
     steps:
       - name: Checkout Repository
@@ -48,11 +52,11 @@ jobs:
         working-directory: ./src
 
       - name: Build
-        run: dotnet build --no-restore /p:Version=${{ steps.version_step.outputs.FullSemVer }}
+        run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.version_step.outputs.FullSemVer }}
         working-directory: ./src
 
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --configuration Release --verbosity normal
         working-directory: ./src
 
       - name: Upload Test Results
@@ -61,3 +65,17 @@ jobs:
         with:
           name: test-results
           path: TestResults/
+
+      - name: Pack NuGet Package
+        run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=${{ steps.version_step.outputs.FullSemVer }}
+        working-directory: ./src
+
+      - name: Publish NuGet Package
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        working-directory: ./src
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./nupkg/*.nupkg"
