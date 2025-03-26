@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentResults" Version="3.16.0"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.3.0"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
+    </ItemGroup>
+
+</Project>
