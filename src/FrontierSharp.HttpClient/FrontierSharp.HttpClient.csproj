@@ -4,6 +4,17 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>0.0.0</Version>
+        <Title>FrontierSharp Generic HTTP Client</Title>
+        <Authors>Scetrov</Authors>
+        <Description>Base HTTP Client implementation wrapper for .NET HttpClient</Description>
+        <Copyright>© 2025, Scetrov</Copyright>
+        <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
+        <PackageIcon>FrontierSharp.png</PackageIcon>
+        <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>eve,frontier,games</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +24,21 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.3"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="FrontierSharp.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\FrontierSharp.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>FrontierSharp.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>
