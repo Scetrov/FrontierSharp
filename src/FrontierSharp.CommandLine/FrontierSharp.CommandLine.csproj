@@ -18,8 +18,15 @@
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>eve,frontier</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseFile>../../LICENSE</PackageLicenseFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\assets\FrontierSharp.png">
+            <Pack>True</Pack>
+            <Link>FrontierSharp.png</Link>
+        </None>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="3.16.0"/>
@@ -40,16 +47,4 @@
     <ItemGroup>
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <None Include="..\..\assets\FrontierSharp.png">
-            <Pack>True</Pack>
-            <Link>FrontierSharp.png</Link>
-        </None>
-        <None Include="..\..\LICENSE">
-            <Pack>True</Pack>
-            <Link>FrontierSharp.png</Link>
-        </None>
-    </ItemGroup>
-
 </Project>
