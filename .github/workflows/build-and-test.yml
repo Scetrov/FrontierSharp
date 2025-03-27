@@ -88,7 +88,7 @@ jobs:
         working-directory: ./src
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release /p:Version=0.0.0
+        run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.version_step.outputs.FullSemVer }}
         working-directory: ./src
 
       - name: Test
@@ -104,8 +104,9 @@ jobs:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
         working-directory: ./src
-
+        
       - uses: ncipollo/release-action@v1
         with:
+          tag: ${{ steps.version_step.outputs.FullSemVer }}
+          commit: ${{ github.sha }}
           artifacts: "./nupkg/*.nupkg"
-

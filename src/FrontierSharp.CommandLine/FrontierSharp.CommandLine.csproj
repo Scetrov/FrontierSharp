@@ -6,6 +6,18 @@
         <Nullable>enable</Nullable>
         <OutputType>Exe</OutputType>
         <AssemblyName>frontierctl</AssemblyName>
+        <PackageId>FrontierSharp.CommandLine</PackageId>
+        <Version>0.0.0</Version>
+        <Title>FrontierSharp CLI Tool</Title>
+        <Authors>Scetrov, Zlake</Authors>
+        <Description>Command Line Interface to FrontierSharp and EVE Frontier</Description>
+        <Copyright>© 2025, Scetrov</Copyright>
+        <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
+        <PackageIcon>FrontierSharp.png</PackageIcon>
+        <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>eve,frontier</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,6 +38,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\FrontierSharp.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>FrontierSharp.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>
