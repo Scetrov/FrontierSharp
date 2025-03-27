@@ -15,7 +15,7 @@
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>eve,frontier,games</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseFile>../../LICENSE</PackageLicenseFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,10 +29,6 @@
 
     <ItemGroup>
         <None Include="..\..\assets\FrontierSharp.png">
-            <Pack>True</Pack>
-            <Link>FrontierSharp.png</Link>
-        </None>
-        <None Include="..\..\LICENSE">
             <Pack>True</Pack>
             <Link>FrontierSharp.png</Link>
         </None>
