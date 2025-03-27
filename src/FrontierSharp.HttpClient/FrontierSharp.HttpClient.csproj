@@ -20,26 +20,22 @@
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="3.16.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.3.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="FrontierSharp.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="..\..\assets\FrontierSharp.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-        <Link>FrontierSharp.png</Link>
-      </None>
+        <None Include="..\..\assets\FrontierSharp.png">
+            <Pack>True</Pack>
+            <Link>FrontierSharp.png</Link>
+        </None>
+        <None Include="..\..\LICENSE">
+            <Pack>True</Pack>
+            <Link>FrontierSharp.png</Link>
+        </None>
     </ItemGroup>
 
 </Project>
