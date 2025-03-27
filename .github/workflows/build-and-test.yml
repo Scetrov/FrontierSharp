@@ -82,6 +82,18 @@ jobs:
         with:
           useConfigFile: true
           configFilePath: VersionConfig.yml
+          
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: ./src
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release /p:Version=0.0.0
+        working-directory: ./src
+
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal
+        working-directory: ./src
 
       - name: Pack NuGet Package
         run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=${{ steps.version_step.outputs.FullSemVer }}
