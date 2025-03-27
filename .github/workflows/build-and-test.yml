@@ -105,8 +105,12 @@ jobs:
         run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
         working-directory: ./src
         
+      - name: Create tar.gz Archive
+        run: tar -czvf ../../../frontierctl-linux-x86.tar.gz 
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/
+        
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.version_step.outputs.FullSemVer }}
           commit: ${{ github.sha }}
-          artifacts: "./nupkg/*.nupkg"
+          artifacts: "./src/nupkg/*.nupkg,./src/*.tar.gz,./src/*.zip"
