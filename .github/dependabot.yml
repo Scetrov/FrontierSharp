@@ -4,3 +4,9 @@ updates:
     directory: "/src"
     schedule:
       interval: "weekly"
+    target-branch: "main"
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
