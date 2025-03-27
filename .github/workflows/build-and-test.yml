@@ -106,7 +106,7 @@ jobs:
         working-directory: ./src
         
       - name: Create tar.gz Archive
-        run: tar -czvf ../../../frontierctl-linux-x86.tar.gz 
+        run: tar -czvf ../../../frontierctl-linux-x86.tar.gz .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/
         
       - uses: ncipollo/release-action@v1
