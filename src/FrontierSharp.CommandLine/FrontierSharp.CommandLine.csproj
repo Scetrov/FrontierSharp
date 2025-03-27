@@ -13,20 +13,13 @@
         <Description>Command Line Interface to FrontierSharp and EVE Frontier</Description>
         <Copyright>© 2025, Scetrov</Copyright>
         <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
-        <PackageIcon>FrontierSharp.png</PackageIcon>
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>eve,frontier</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>FrontierSharp.png</PackageIcon>
     </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="..\..\assets\FrontierSharp.png">
-            <Pack>True</Pack>
-            <Link>FrontierSharp.png</Link>
-        </None>
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="3.16.0"/>
@@ -46,5 +39,13 @@
 
     <ItemGroup>
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\FrontierSharp.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>FrontierSharp.png</Link>
+      </None>
     </ItemGroup>
 </Project>
