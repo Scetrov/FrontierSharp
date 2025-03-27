@@ -48,4 +48,34 @@ services.AddSingleton<IFrontierDevToolsClient, FrontierDevToolsClient>();
 
 ### Command-Line Tool
 
+FrontierSharp comes with a command-line tool that can be used to interact with the EVE Frontier services. The tool is available from the Releases page.
 
+## Configuration
+
+The project uses the standard .NET configuration system. You can configure the API client by adding the following configuration to your `appsettings.json` file:
+
+```json
+{
+  "FrontierSharp": {
+    "BaseUri": "https://api.frontierdevtools.com/",
+    "HttpClientName": "FrontierDevTools"
+  }
+}
+```
+
+You can then load this into the dependency injection provider with:
+
+```csharp
+services.Configure<FrontierSharpHttpClientOptions>(Configuration.GetSection("FrontierSharp"));
+```
+
+## Contributing
+
+Contributions are welcome! For bug reports, feature requests, or questions, please open an issue. For code contributions, please create a pull request.
+
+> [!IMPORTANT]
+> If you find a security issue with the solution, I would appreciate it if you followed a responsible disclosure process and contacted me directly or via the GitHub Security Reporting programme.
+
+## License
+
+FrontierSharp is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
