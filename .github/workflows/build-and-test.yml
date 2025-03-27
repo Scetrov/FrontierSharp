@@ -54,7 +54,7 @@ jobs:
   publish:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    if: github.ref == 'refs/heads/main'
     
     permissions:
       contents: write
@@ -96,3 +96,4 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "./nupkg/*.nupkg"
+
