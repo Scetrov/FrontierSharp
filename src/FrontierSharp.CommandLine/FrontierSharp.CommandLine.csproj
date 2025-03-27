@@ -18,6 +18,7 @@
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>eve,frontier</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseFile>../../LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
     <ItemGroup>
