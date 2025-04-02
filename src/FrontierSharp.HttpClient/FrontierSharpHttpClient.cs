@@ -11,7 +11,9 @@ public class FrontierSharpHttpClient(ILogger<FrontierSharpHttpClient> logger, IH
     public async Task<IResult<TResponseModel>> Get<TRequestModel, TResponseModel>(TRequestModel requestModel, CancellationToken cancellationToken = default) where TRequestModel : GetRequestModel<TRequestModel>, new() where TResponseModel : class {
         return await cache.GetOrCreateAsync(requestModel.GetCacheKey(), async ct => {
             var client = httpClientFactory.CreateClient(options.Value.HttpClientName);
-            var request = new HttpRequestMessage(HttpMethod.Get, FormatUrl(requestModel));
+            var url = FormatUrl(requestModel);
+            logger.LogInformation("HTTP GET {url}", url);
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
             var response = await client.SendAsync(request, ct);
 
             if (!response.IsSuccessStatusCode) {

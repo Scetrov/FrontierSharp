@@ -33,7 +33,11 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IFrontierDevToolsClient, FrontierDevToolsClient>();
 
         var app = new CommandApp(new TypeRegistrar(services));
-        app.Configure(config => { config.AddCommand<GetCharacterCommand>("character").WithAlias("char").WithAlias("c"); });
+        app.Configure(config => {
+            config.AddCommand<GetCharacterCommand>("rider").WithAlias("character").WithAlias("char").WithAlias("c");
+            config.AddCommand<GetCorporationCommand>("tribe").WithAlias("corporation").WithAlias("corp");
+            config.AddCommand<GetGateNetworkCommand>("gates").WithAlias("g");
+        });
         services.AddSingleton<ICommandApp>(app);
     })
     .Build();

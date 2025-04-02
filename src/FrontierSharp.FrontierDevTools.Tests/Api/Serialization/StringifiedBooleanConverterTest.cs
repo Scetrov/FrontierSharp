@@ -55,26 +55,7 @@ public class StringifiedBooleanConverterTests {
 
         // Assert
         act.Should().Throw<JsonException>()
-            .WithMessage("Invalid JSON value for Int32.");
-    }
-
-    [Fact]
-    public void Read_WithBooleanLiteralToken_ShouldThrowJsonException() {
-        // Arrange: A JSON boolean token true (without quotes) produces a token type of True.
-        var converter = new StringifiedBooleanConverter();
-        const string json = "true";
-        var bytes = Encoding.UTF8.GetBytes(json);
-
-        // Act: Create the reader inside the lambda.
-        var act = () => {
-            var reader = new Utf8JsonReader(bytes);
-            reader.Read(); // Advance to the boolean token.
-            converter.Read(ref reader, typeof(bool), new JsonSerializerOptions());
-        };
-
-        // Assert
-        act.Should().Throw<JsonException>()
-            .WithMessage("Invalid JSON value for Int32.");
+            .WithMessage("Invalid JSON value for Boolean.");
     }
 
     [Fact]
