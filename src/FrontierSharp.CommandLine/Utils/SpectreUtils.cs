@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Text;
 using Humanizer;
 using Spectre.Console;
 
@@ -42,6 +43,35 @@ public static class SpectreUtils {
 
     public static string ToAnsiString(this bool value) {
         return value ? "[green]Yes[/]" : "[red]No[/]";
+    }
+    
+    public static string ToAnsiString(this bool? value) {
+        if (!value.HasValue) {
+            return "[grey]N/A[/]";
+        }
+        return value.Value ? "[green]Yes[/]" : "[red]No[/]";
+    }
+    
+    public static string FuelToAnsiString(this int value) {
+        var builder = new StringBuilder();
+        
+        switch (value) {
+            case 0:
+                return "[red]Empty[/]";
+            case > 0 and < 100:
+                builder.AppendFormat("[orange1]{0}[/]", value);
+                break;
+            case >= 100 and < 240:
+                builder.AppendFormat("[yellow]{0}[/]", value);
+                break;
+            case >= 240:
+                builder.AppendFormat("[green]{0}[/]", value);
+                break;
+        }
+
+        builder.Append($" ({TimeSpan.FromHours(value).Humanize()})");
+
+        return builder.ToString();
     }
 
     public static string ToAnsiString(this DateTimeOffset value) {

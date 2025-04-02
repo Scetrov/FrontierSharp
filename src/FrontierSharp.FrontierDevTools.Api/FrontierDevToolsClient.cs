@@ -22,4 +22,8 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
     public async Task<IResult<CorpResponse>> GetCharactersByPlayer(string playerName, CancellationToken ct = default) =>
         await httpClient.Get<GetCharactersByPlayerRequest, CorpResponse>(
             new GetCharactersByPlayerRequest { PlayerName = playerName }, ct);
+    
+    public async Task<IResult<GateNetworkResponse>> GetGateNetwork(string identifier, CancellationToken ct = default) =>
+        await httpClient.Get<GetGateNetworkRequest, GateNetworkResponse>(
+            new GetGateNetworkRequest() { Identifier = identifier }, ct);
 }
