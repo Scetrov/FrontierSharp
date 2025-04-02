@@ -18,7 +18,6 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
     }
 
     public override async Task<int> ExecuteAsync(CommandContext context, GetCorporationCommand.Settings settings) {
-        logger.LogInformation("Getting corporations for player {searchType} - [{playerName}|{id}]", settings.SearchType, settings.PlayerName, settings.Id);
         var result = settings.SearchType switch {
             CorporationSearchType.Id => await devToolsClient.GetCharactersByCorpId(settings.Id!.Value, CancellationToken.None),
             CorporationSearchType.Player => await devToolsClient.GetCharactersByPlayer(settings.PlayerName, CancellationToken.None),
