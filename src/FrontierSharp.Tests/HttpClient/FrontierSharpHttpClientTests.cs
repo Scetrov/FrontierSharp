@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using FluentAssertions;
+using FrontierSharp.HttpClient;
 using FrontierSharp.HttpClient.Models;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Options;
 using NSubstitute;
 using Xunit;
 
-namespace FrontierSharp.HttpClient.Tests;
+namespace FrontierSharp.Tests.HttpClient;
 
 // Fake Request Model extending GetRequestModel<T>
 public class FakeRequest : GetRequestModel<FakeRequest> {

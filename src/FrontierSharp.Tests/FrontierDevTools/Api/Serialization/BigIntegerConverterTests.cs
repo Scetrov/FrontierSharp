@@ -5,7 +5,7 @@ using FluentAssertions;
 using FrontierSharp.FrontierDevTools.Api.Serialization;
 using Xunit;
 
-namespace FrontierSharp.FrontierDevTools.Tests.Api.Serialization;
+namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;
 
 public class BigIntegerConverterTests {
     [Fact]

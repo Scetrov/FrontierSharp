@@ -6,13 +6,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.FrontierDevTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.CommandLine", "FrontierSharp.CommandLine\FrontierSharp.CommandLine.csproj", "{03230400-42A8-4F78-B44F-66AD04B88D85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.FrontierDevTools.Tests", "FrontierSharp.FrontierDevTools.Tests\FrontierSharp.FrontierDevTools.Tests.csproj", "{413D2A57-6450-41A2-964F-647180879CD6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.HttpClient", "FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj", "{B3EFC6DB-9C80-4AB6-96F7-3A06F38C8279}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.CommandLine.Tests", "FrontierSharp.CommandLine.Tests\FrontierSharp.CommandLine.Tests.csproj", "{5BB7932C-6D1D-4BA1-BFE1-B6CC5B03E28B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.HttpClient.Tests", "FrontierSharp.HttpClient.Tests\FrontierSharp.HttpClient.Tests.csproj", "{5C7A43BF-6A3F-4C1F-9AEE-A32B7B00647A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.Tests", "FrontierSharp.Tests\FrontierSharp.Tests.csproj", "{B904B7B7-E8D2-453C-A268-F5CE42451D30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,21 +28,13 @@ Global
 		{03230400-42A8-4F78-B44F-66AD04B88D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03230400-42A8-4F78-B44F-66AD04B88D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03230400-42A8-4F78-B44F-66AD04B88D85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{413D2A57-6450-41A2-964F-647180879CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{413D2A57-6450-41A2-964F-647180879CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{413D2A57-6450-41A2-964F-647180879CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{413D2A57-6450-41A2-964F-647180879CD6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3EFC6DB-9C80-4AB6-96F7-3A06F38C8279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3EFC6DB-9C80-4AB6-96F7-3A06F38C8279}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EFC6DB-9C80-4AB6-96F7-3A06F38C8279}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EFC6DB-9C80-4AB6-96F7-3A06F38C8279}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BB7932C-6D1D-4BA1-BFE1-B6CC5B03E28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BB7932C-6D1D-4BA1-BFE1-B6CC5B03E28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BB7932C-6D1D-4BA1-BFE1-B6CC5B03E28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BB7932C-6D1D-4BA1-BFE1-B6CC5B03E28B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C7A43BF-6A3F-4C1F-9AEE-A32B7B00647A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C7A43BF-6A3F-4C1F-9AEE-A32B7B00647A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C7A43BF-6A3F-4C1F-9AEE-A32B7B00647A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C7A43BF-6A3F-4C1F-9AEE-A32B7B00647A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

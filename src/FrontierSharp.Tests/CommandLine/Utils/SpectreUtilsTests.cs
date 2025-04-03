@@ -5,7 +5,7 @@ using Humanizer;
 using Spectre.Console;
 using Xunit;
 
-namespace FrontierSharp.CommandLine.Tests.Utils;
+namespace FrontierSharp.Tests.CommandLine.Utils;
 
 public class SpectreUtilsTests {
     [Fact]
