@@ -10,7 +10,7 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using Xunit;
 
-namespace FrontierSharp.CommandLine.Tests;
+namespace FrontierSharp.CommandLine.Tests.Commands;
 
 // Helper to create a CommandContext using a mock IAnsiConsole.
 public static class CommandContextHelper {

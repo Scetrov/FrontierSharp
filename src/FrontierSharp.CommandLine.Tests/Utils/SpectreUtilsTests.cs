@@ -54,7 +54,6 @@ public class SpectreUtilsTests {
         foreach (var row in table.Rows) {
             row.Count.Should().Be(2);
             var cellKey = row[0].ToString();
-            var cellValue = row[1].ToString();
             // Remove the markup to extract the plain key.
             var plainKey = cellKey?.Replace("[bold]", "").Replace("[/]", "");
             plainKey.Should().NotBeNull();

@@ -11,11 +11,6 @@ public class NullableStringConverterTests {
     };
 
     [Theory]
-    [InlineData("\"null\"", null)]
-    [InlineData("\"NULL\"", null)]
-    [InlineData("\"Null\"", null)]
-    [InlineData("\"nan\"", null)]
-    [InlineData("\"NaN\"", null)]
     [InlineData("\"test\"", "test")]
     [InlineData("\"\"", "")]
     public void Read_ShouldReturnExpectedResult(string json, string expected) {
@@ -24,6 +19,20 @@ public class NullableStringConverterTests {
 
         // Assert
         result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("\"null\"")]
+    [InlineData("\"NULL\"")]
+    [InlineData("\"Null\"")]
+    [InlineData("\"nan\"")]
+    [InlineData("\"NaN\"")]
+    public void Read_ShouldReturnNull(string json) {
+        // Act
+        var result = JsonSerializer.Deserialize<string>(json, _options);
+
+        // Assert
+        result.Should().BeNull();
     }
 
     [Fact]
