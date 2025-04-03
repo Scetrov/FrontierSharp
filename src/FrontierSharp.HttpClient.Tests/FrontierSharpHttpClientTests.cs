@@ -6,7 +6,7 @@ using FrontierSharp.HttpClient.Models;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace FrontierSharp.HttpClient.Tests;
@@ -74,8 +74,8 @@ public class FrontierSharpHttpClientTests {
     [Fact]
     public async Task Get_ReturnsFailure_WhenResponseIsNotSuccessful() {
         // Arrange
-        var loggerMock = new Mock<ILogger<FrontierSharpHttpClient>>();
-        var httpClientFactoryMock = new Mock<IHttpClientFactory>();
+        var loggerMock = Substitute.For<ILogger<FrontierSharpHttpClient>>();
+        var httpClientFactoryMock = Substitute.For<IHttpClientFactory>();
         var cache = new FakeHybridCache();
 
         // Simulate an HTTP response with a non-success status code.
@@ -86,11 +86,11 @@ public class FrontierSharpHttpClientTests {
         };
 
         var httpClient = new System.Net.Http.HttpClient(new FakeHttpMessageHandler(responseMessage));
-        httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        httpClientFactoryMock.CreateClient(Arg.Any<string>()).Returns(httpClient);
 
         var client = new FrontierSharpHttpClient(
-            loggerMock.Object,
-            httpClientFactoryMock.Object,
+            loggerMock,
+            httpClientFactoryMock,
             cache,
             _options);
 
@@ -107,8 +107,8 @@ public class FrontierSharpHttpClientTests {
     [Fact]
     public async Task Get_ReturnsSuccess_WhenResponseIsSuccessful_AndDeserializationSucceeds() {
         // Arrange
-        var loggerMock = new Mock<ILogger<FrontierSharpHttpClient>>();
-        var httpClientFactoryMock = new Mock<IHttpClientFactory>();
+        var loggerMock = Substitute.For<ILogger<FrontierSharpHttpClient>>();
+        var httpClientFactoryMock = Substitute.For<IHttpClientFactory>();
         var cache = new FakeHybridCache();
 
         // Prepare a valid JSON response.
@@ -119,11 +119,11 @@ public class FrontierSharpHttpClientTests {
         };
 
         var httpClient = new System.Net.Http.HttpClient(new FakeHttpMessageHandler(responseMessage));
-        httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        httpClientFactoryMock.CreateClient(Arg.Any<string>()).Returns(httpClient);
 
         var client = new FrontierSharpHttpClient(
-            loggerMock.Object,
-            httpClientFactoryMock.Object,
+            loggerMock,
+            httpClientFactoryMock,
             cache,
             _options);
 
@@ -141,8 +141,8 @@ public class FrontierSharpHttpClientTests {
     [Fact]
     public async Task Get_ReturnsFailure_WhenDeserializationFails() {
         // Arrange
-        var loggerMock = new Mock<ILogger<FrontierSharpHttpClient>>();
-        var httpClientFactoryMock = new Mock<IHttpClientFactory>();
+        var loggerMock = Substitute.For<ILogger<FrontierSharpHttpClient>>();
+        var httpClientFactoryMock = Substitute.For<IHttpClientFactory>();
         var cache = new FakeHybridCache();
 
         // Provide a JSON that deserializes to null.
@@ -151,11 +151,11 @@ public class FrontierSharpHttpClientTests {
         };
 
         var httpClient = new System.Net.Http.HttpClient(new FakeHttpMessageHandler(responseMessage));
-        httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
+        httpClientFactoryMock.CreateClient(Arg.Any<string>()).Returns(httpClient);
 
         var client = new FrontierSharpHttpClient(
-            loggerMock.Object,
-            httpClientFactoryMock.Object,
+            loggerMock,
+            httpClientFactoryMock,
             cache,
             _options);
 
