@@ -23,4 +23,9 @@
     &lt;TestId&gt;xUnit::413D2A57-6450-41A2-964F-647180879CD6::net9.0::FrontierSharp.FrontierDevTools.Tests.Api.Serialization.NullableStringConverterTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::413D2A57-6450-41A2-964F-647180879CD6::net9.0::FrontierSharp.FrontierDevTools.Tests.Api.Serialization.NullableStringifiedBooleanConverterTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ecc5bf93_002De5ac_002D4ade_002Daf47_002Df233f9ae002f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetCharacterCommandTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::5BB7932C-6D1D-4BA1-BFE1-B6CC5B03E28B::net9.0::FrontierSharp.CommandLine.Tests.Commands.GetCharacterCommandTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
