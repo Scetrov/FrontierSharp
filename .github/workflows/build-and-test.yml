@@ -82,7 +82,7 @@ jobs:
         with:
           useConfigFile: true
           configFilePath: VersionConfig.yml
-          
+
       - name: Restore dependencies
         run: dotnet restore
         working-directory: ./src
@@ -104,11 +104,11 @@ jobs:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
         working-directory: ./src
-        
+
       - name: Create tar.gz Archive
         run: tar -czvf ../../../../frontierctl-linux-x86.tar.gz .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/
-        
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:

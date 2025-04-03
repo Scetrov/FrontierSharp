@@ -1,14 +1,11 @@
+using System.Text.Json;
+using FluentAssertions;
 using FrontierSharp.FrontierDevTools.Api.Serialization;
+using Xunit;
 
 namespace FrontierSharp.FrontierDevTools.Tests.Api.Serialization;
 
-using System;
-using System.Text.Json;
-using FluentAssertions;
-using Xunit;
-
-public class NullableStringConverterTests
-{
+public class NullableStringConverterTests {
     private readonly JsonSerializerOptions _options = new() {
         Converters = { new NullableStringConverter() }
     };
@@ -21,24 +18,22 @@ public class NullableStringConverterTests
     [InlineData("\"NaN\"", null)]
     [InlineData("\"test\"", "test")]
     [InlineData("\"\"", "")]
-    public void Read_ShouldReturnExpectedResult(string json, string expected)
-    {
+    public void Read_ShouldReturnExpectedResult(string json, string expected) {
         // Act
         var result = JsonSerializer.Deserialize<string>(json, _options);
-        
+
         // Assert
         result.Should().Be(expected);
     }
 
     [Fact]
-    public void Read_ShouldThrowJsonException_WhenTokenIsNotStringOrNull()
-    {
+    public void Read_ShouldThrowJsonException_WhenTokenIsNotStringOrNull() {
         // Arrange
         const string json = "123";
-        
+
         // Act
         Action act = () => JsonSerializer.Deserialize<string>(json, _options);
-        
+
         // Assert
         act.Should().Throw<JsonException>()
             .WithMessage("Invalid JSON value for Nullable<bool>.");
@@ -48,11 +43,10 @@ public class NullableStringConverterTests
     [InlineData(null, "null")]
     [InlineData("test", "\"test\"")]
     [InlineData("", "\"\"")]
-    public void Write_ShouldSerializeAsExpected(string? value, string expectedJson)
-    {
+    public void Write_ShouldSerializeAsExpected(string? value, string expectedJson) {
         // Act
         var json = JsonSerializer.Serialize(value, _options);
-        
+
         // Assert
         json.Should().Be(expectedJson);
     }

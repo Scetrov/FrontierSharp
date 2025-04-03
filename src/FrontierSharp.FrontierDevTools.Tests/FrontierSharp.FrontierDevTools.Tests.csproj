@@ -9,7 +9,7 @@
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="8.2.0"/>
         <PackageReference Include="FluentResults" Version="3.16.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.3.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
         <PackageReference Include="Moq" Version="4.20.72"/>
