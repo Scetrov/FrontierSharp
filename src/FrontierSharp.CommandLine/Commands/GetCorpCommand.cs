@@ -17,7 +17,7 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
         Player
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, GetCorporationCommand.Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = settings.SearchType switch {
             CorporationSearchType.Id => await devToolsClient.GetCharactersByCorpId(settings.Id!.Value, CancellationToken.None),
             CorporationSearchType.Player => await devToolsClient.GetCharactersByPlayer(settings.PlayerName, CancellationToken.None),
@@ -33,7 +33,7 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
         }
 
         var corporation = result.Value;
-        
+
         if (corporation == null || !corporation.CorpCharacters.Any()) {
             logger.LogError("No characters found for that corporation.");
             return 1;
@@ -74,11 +74,11 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
 
         public override ValidationResult Validate() {
             var optionCount = 0;
-            
+
             if (Id.HasValue) {
                 optionCount++;
             }
-            
+
             if (!string.IsNullOrWhiteSpace(PlayerName)) {
                 optionCount++;
             }

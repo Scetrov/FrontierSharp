@@ -2,7 +2,7 @@ using FluentAssertions;
 using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using Xunit;
 
-namespace FrontierSharp.FrontierDevTools.Tests.Api.RequestModels;
+namespace FrontierSharp.Tests.FrontierDevTools.Api.RequestModels;
 
 public class GetCharacterByAddressRequestTests {
     [Fact]

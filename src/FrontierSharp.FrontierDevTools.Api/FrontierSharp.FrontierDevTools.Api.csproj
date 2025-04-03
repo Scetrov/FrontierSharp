@@ -32,11 +32,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\..\assets\FrontierSharp.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-        <Link>FrontierSharp.png</Link>
-      </None>
+        <None Include="..\..\assets\FrontierSharp.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+            <Link>FrontierSharp.png</Link>
+        </None>
     </ItemGroup>
 
 

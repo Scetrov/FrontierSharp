@@ -12,7 +12,7 @@ using Spectre.Console.Cli;
 using ZiggyCreatures.Caching.Fusion;
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging => logging.ClearProviders())
-    .ConfigureAppConfiguration((context, config) => { config.AddJsonFile("config.json", true); })
+    .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })
     .ConfigureServices((context, services) => {
         Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()

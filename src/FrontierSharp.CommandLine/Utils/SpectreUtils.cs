@@ -44,17 +44,18 @@ public static class SpectreUtils {
     public static string ToAnsiString(this bool value) {
         return value ? "[green]Yes[/]" : "[red]No[/]";
     }
-    
+
     public static string ToAnsiString(this bool? value) {
         if (!value.HasValue) {
             return "[grey]N/A[/]";
         }
+
         return value.Value ? "[green]Yes[/]" : "[red]No[/]";
     }
-    
+
     public static string FuelToAnsiString(this int value) {
         var builder = new StringBuilder();
-        
+
         switch (value) {
             case 0:
                 return "[red]Empty[/]";

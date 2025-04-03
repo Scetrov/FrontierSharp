@@ -29,7 +29,7 @@ public class GetGateNetworkCommand(ILogger<GetCorporationCommand> logger, IFront
         }
 
         var gateNetwork = result.Value;
-        
+
         if (gateNetwork == null || !gateNetwork.GateNetwork.Any()) {
             logger.LogError("No gates found for that corporation.");
             return 1;
