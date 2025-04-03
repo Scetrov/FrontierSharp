@@ -1,4 +1,3 @@
-using System.Numerics;
 using FluentAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine.Commands;
@@ -7,143 +6,145 @@ using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Spectre.Console;
-using Spectre.Console.Cli;
 using Xunit;
 
 namespace FrontierSharp.Tests.CommandLine.Commands;
 
-// Helper to create a CommandContext using a mock IAnsiConsole.
-public static class CommandContextHelper {
-    public static CommandContext Create() {
-        var args = new[] { "dummy" };
-        var remaining = Substitute.For<IRemainingArguments>();
-        return new CommandContext(args, remaining, "dummy", null);
-    }
-}
-
 public class GetCharacterCommandTests {
+    private static GetCharacterCommand CreateCommand(
+        IFrontierDevToolsClient? client = null,
+        IAnsiConsole? console = null,
+        ILogger<GetCharacterCommand>? logger = null) =>
+        new(logger ?? Substitute.For<ILogger<GetCharacterCommand>>(),
+            client ?? Substitute.For<IFrontierDevToolsClient>(),
+            console ?? Substitute.For<IAnsiConsole>());
+
     [Fact]
-    public async Task ExecuteAsync_ReturnsOne_WhenResultFails() {
-        // Arrange
-        var loggerMock = Substitute.For<ILogger<GetCharacterCommand>>();
-        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
-        var ansiConsoleMock = Substitute.For<IAnsiConsole>();
-
-        const string errorMessage = "API error occurred";
-        var failureResult = Result.Fail<CharactersResponse>(errorMessage);
-        devToolsClientMock
-            .GetCharactersByName(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(failureResult);
-
-        var settings = new GetCharacterCommand.Settings { Name = "TestName" };
-        var command = new GetCharacterCommand(
-            loggerMock,
-            devToolsClientMock,
-            ansiConsoleMock);
-
-        // Act
-        var exitCode = await command.ExecuteAsync(
-            CommandContextHelper.Create(), settings);
-
-        // Assert
-        exitCode.Should().Be(1);
+    public void Settings_Validate_Fails_WhenNoOptionProvided() {
+        var settings = new GetCharacterCommand.Settings();
+        var result = settings.Validate();
+        result.Successful.Should().BeFalse();
     }
 
     [Fact]
-    public async Task ExecuteAsync_ReturnsOne_WhenNoCharactersFound() {
-        // Arrange
-        var loggerMock = Substitute.For<ILogger<GetCharacterCommand>>();
-        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
-        var ansiConsoleMock = Substitute.For<IAnsiConsole>();
-
-        var response = new CharactersResponse { Characters = new List<CharacterResponse>() };
-        var successResult = Result.Ok(response);
-        devToolsClientMock
-            .GetCharactersByName(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(successResult);
-
-        var settings = new GetCharacterCommand.Settings { Name = "TestName" };
-        var command = new GetCharacterCommand(
-            loggerMock,
-            devToolsClientMock,
-            ansiConsoleMock);
-
-        // Act
-        var exitCode = await command.ExecuteAsync(
-            CommandContextHelper.Create(), settings);
-
-        // Assert
-        exitCode.Should().Be(1);
-    }
-
-    [Fact]
-    public async Task ExecuteAsync_ReturnsZero_WithMultipleCharacters() {
-        // Arrange
-        var loggerMock = Substitute.For<ILogger<GetCharacterCommand>>();
-        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
-        var ansiConsoleMock = Substitute.For<IAnsiConsole>();
-
-        var character1 = new CharacterResponse { Name = "Alice", Address = "0xAlice", CorpId = 1 };
-        var character2 = new CharacterResponse { Name = "Bob", Address = "0xBob", CorpId = 2 };
-        var response = new CharactersResponse { Characters = new List<CharacterResponse> { character1, character2 } };
-        var successResult = Result.Ok(response);
-        devToolsClientMock
-            .GetCharactersByName(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(successResult);
-
-        var settings = new GetCharacterCommand.Settings { Name = "TestName" };
-        var command = new GetCharacterCommand(
-            loggerMock,
-            devToolsClientMock,
-            ansiConsoleMock);
-
-        ansiConsoleMock.Write(Arg.Any<Table>());
-
-        // Act
-        var exitCode = await command.ExecuteAsync(
-            CommandContextHelper.Create(), settings);
-
-        // Assert
-        exitCode.Should().Be(0);
-    }
-
-    [Fact]
-    public async Task ExecuteAsync_ReturnsZero_WithSingleCharacter() {
-        // Arrange
-        var loggerMock = Substitute.For<ILogger<GetCharacterCommand>>();
-        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
-        var ansiConsoleMock = Substitute.For<IAnsiConsole>();
-
-        // Create one character with full details.
-        var character = new CharacterResponse {
-            Name = "Charlie",
-            Address = "0xCharlieAddress12345678901234567890",
-            CorpId = 3,
-            Id = "UniqueCharacterIdThatIsLong",
-            IsSmartCharacter = true,
-            CreatedAt = new DateTimeOffset(2021, 6, 15, 12, 0, 0, TimeSpan.Zero),
-            EveBalanceWei = BigInteger.Parse("1000000000000000000"), // 1 Ether
-            GasBalanceWei = BigInteger.Parse("500000000000000000") // 0.5 Ether
+    public void Settings_Validate_Fails_WhenBothNameAndAddressProvided() {
+        var settings = new GetCharacterCommand.Settings {
+            Name = "Alice",
+            Address = "0x1234567890123456789012345678901234567890"
         };
-        var response = new CharactersResponse { Characters = new List<CharacterResponse> { character } };
-        var successResult = Result.Ok(response);
-        devToolsClientMock
-            .GetCharactersByName(Arg.Any<string>(), Arg.Any<CancellationToken>())
-            .Returns(successResult);
+        var result = settings.Validate();
+        result.Successful.Should().BeFalse();
+    }
 
-        var settings = new GetCharacterCommand.Settings { Name = "TestName" };
-        var command = new GetCharacterCommand(
-            loggerMock,
-            devToolsClientMock,
-            ansiConsoleMock);
+    [Fact]
+    public void Settings_Validate_Fails_WhenAddressInvalidFormat() {
+        var settings = new GetCharacterCommand.Settings {
+            Address = "123456"
+        };
+        var result = settings.Validate();
+        result.Successful.Should().BeFalse();
+        result.Message.Should().Contain("prefix");
+    }
 
-        ansiConsoleMock.Write(Arg.Any<Table>());
+    [Fact]
+    public void Settings_Validate_Fails_WhenAddressWrongLength() {
+        var settings = new GetCharacterCommand.Settings {
+            Address = "0x1234"
+        };
+        var result = settings.Validate();
+        result.Successful.Should().BeFalse();
+        result.Message.Should().Contain("42 characters");
+    }
 
-        // Act
-        var exitCode = await command.ExecuteAsync(
-            CommandContextHelper.Create(), settings);
+    [Fact]
+    public void Settings_SearchType_Throws_WhenNoValidOption() {
+        var settings = new GetCharacterCommand.Settings();
+        Action act = () => _ = settings.SearchType;
+        act.Should().Throw<NotImplementedException>();
+    }
 
-        // Assert
+    [Fact]
+    public async Task ExecuteAsync_UsesAddressSearch_WhenSearchTypeIsAddress() {
+        var loggerMock = Substitute.For<ILogger<GetCharacterCommand>>();
+        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
+        var ansiConsoleMock = Substitute.For<IAnsiConsole>();
+
+        var response = new CharactersResponse {
+            Characters = new List<CharacterResponse> {
+                new() { Name = "AddrGuy", Address = "0x1234567890123456789012345678901234567890", CorpId = 5 }
+            }
+        };
+        devToolsClientMock.GetCharactersByAddress(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Result.Ok(response));
+
+        var settings = new GetCharacterCommand.Settings {
+            Address = "0x1234567890123456789012345678901234567890"
+        };
+
+        var command = CreateCommand(devToolsClientMock, ansiConsoleMock, loggerMock);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+
         exitCode.Should().Be(0);
+        await devToolsClientMock.Received().GetCharactersByAddress(settings.Address, Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_AddressSearch_ReturnsOne_OnFailure() {
+        var loggerMock = Substitute.For<ILogger<GetCharacterCommand>>();
+        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
+        var ansiConsoleMock = Substitute.For<IAnsiConsole>();
+
+        devToolsClientMock.GetCharactersByAddress(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Result.Fail<CharactersResponse>("address error"));
+
+        var settings = new GetCharacterCommand.Settings {
+            Address = "0x1234567890123456789012345678901234567890"
+        };
+
+        var command = CreateCommand(devToolsClientMock, ansiConsoleMock, loggerMock);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+
+        exitCode.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_AddressSearch_ReturnsOne_OnEmptyCharacters() {
+        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
+        devToolsClientMock.GetCharactersByAddress(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Result.Ok(new CharactersResponse {
+                Characters = new List<CharacterResponse>()
+            }));
+
+        var settings = new GetCharacterCommand.Settings {
+            Address = "0x1234567890123456789012345678901234567890"
+        };
+
+        var command = CreateCommand(devToolsClientMock);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+
+        exitCode.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_AddressSearch_ReturnsZero_OnMultipleCharacters() {
+        var devToolsClientMock = Substitute.For<IFrontierDevToolsClient>();
+        devToolsClientMock.GetCharactersByAddress(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Result.Ok(new CharactersResponse {
+                Characters = new List<CharacterResponse> {
+                    new() { Name = "A", Address = "0x1", CorpId = 1 },
+                    new() { Name = "B", Address = "0x2", CorpId = 2 }
+                }
+            }));
+
+        var settings = new GetCharacterCommand.Settings {
+            Address = "0x1234567890123456789012345678901234567890"
+        };
+
+        var consoleMock = Substitute.For<IAnsiConsole>();
+        var command = CreateCommand(devToolsClientMock, consoleMock);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+
+        exitCode.Should().Be(0);
+        consoleMock.Received().Write(Arg.Any<Table>());
     }
 }

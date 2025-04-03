@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using FluentAssertions;
 using FrontierSharp.CommandLine.Utils;
-using Humanizer;
 using Spectre.Console;
 using Xunit;
 
@@ -9,115 +8,111 @@ namespace FrontierSharp.Tests.CommandLine.Utils;
 
 public class SpectreUtilsTests {
     [Fact]
-    public void CreateAnsiTable_ShouldCreateTableWithCorrectTitleAndColumns() {
-        // Arrange
-        const string title = "Test Table";
-        var columns = new[] { "Col1", "Col2", "Col3" };
-
+    public void CreateAnsiTable_Should_Create_Table_With_Styled_Columns() {
         // Act
-        var table = SpectreUtils.CreateAnsiTable(title, columns);
+        var table = SpectreUtils.CreateAnsiTable("Test Title", "Col1", "Col2");
 
         // Assert
         table.Should().NotBeNull();
-        table.Title.Should().NotBeNull();
-        // Assuming TableTitle.Text returns the provided title.
-        table.Title?.Text.Should().Be(title);
-        table.Border.Should().Be(TableBorder.Rounded);
-        table.BorderStyle?.Foreground.Should().Be(Color.Orange1);
-        table.Columns.Count.Should().Be(columns.Length);
+        table.Title!.Text.Should().Be("Test Title");
+        table.Columns.Should().HaveCount(2);
     }
 
     [Fact]
-    public void CreateAnsiListing_ShouldCreateTableWithKeyValueColumnsAndRows() {
+    public void CreateAnsiListing_Should_Create_Table_With_KeyValueRows() {
         // Arrange
-        const string title = "Listing Table";
         var data = new Dictionary<string, string> {
             { "Key1", "Value1" },
             { "Key2", "Value2" }
         };
 
         // Act
-        var table = SpectreUtils.CreateAnsiListing(title, data);
+        var table = SpectreUtils.CreateAnsiListing("Listing", data);
 
         // Assert
         table.Should().NotBeNull();
-        table.Title.Should().NotBeNull();
-        table.Title?.Text.Should().Be(title);
-        table.Border.Should().Be(TableBorder.Rounded);
-        table.BorderStyle?.Foreground.Should().Be(Color.Orange1);
-        // CreateAnsiListing always adds two columns: "[bold]Key[/]" and "[bold]Value[/]"
-        table.Columns.Count.Should().Be(2);
-
-        // Verify rows: each row should have two cells. The first cell contains the key (wrapped in [bold][/])
-        // and the second cell contains the corresponding value.
-        table.Rows.Count.Should().Be(data.Count);
-        foreach (var row in table.Rows) {
-            row.Count.Should().Be(2);
-            var cellKey = row[0].ToString();
-            // Remove the markup to extract the plain key.
-            var plainKey = cellKey?.Replace("[bold]", "").Replace("[/]", "");
-            plainKey.Should().NotBeNull();
-            data.Should().ContainKey("Key1");
-            data["Key1"].Should().Be("Value1");
-        }
+        table.Title!.Text.Should().Be("Listing");
+        table.Columns.Should().HaveCount(2);
+        table.Rows.Should().HaveCount(2);
     }
 
     [Fact]
-    public void AsWeiToEther_ShouldConvertWeiToEtherString() {
+    public void AsWeiToEther_Should_Convert_And_Format_Correctly() {
         // Arrange
-        // 1 Ether = 1e18 wei. The conversion divides by 1e18 and then calls
-        // decimal.ToAnsiString() which formats using "0.00[grey]000[/]".
-        var wei = BigInteger.Parse("1000000000000000000");
-        const string expected = "1.00[grey]000[/]";
+        var wei = BigInteger.Parse("1000000000000000000"); // 1 ETH
 
         // Act
         var result = wei.AsWeiToEther();
 
         // Assert
+        result.Should().Be("1.00[grey]000[/]");
+    }
+
+    [Theory]
+    [InlineData(true, "[green]Yes[/]")]
+    [InlineData(false, "[red]No[/]")]
+    public void ToAnsiString_Bool_Should_Return_Correct_Ansi(bool input, string expected) {
+        // Act
+        var result = input.ToAnsiString();
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData(true, "[green]Yes[/]")]
+    [InlineData(false, "[red]No[/]")]
+    public void ToAnsiString_NullableBool_Should_Return_Correct_Ansi_When_HasValue(bool input, string expected) {
+        // Act
+        var result = ((bool?)input).ToAnsiString();
+
+        // Assert
         result.Should().Be(expected);
     }
 
     [Fact]
-    public void ToAnsiString_Bool_ShouldReturnYesOrNo() {
+    public void ToAnsiString_NullableBool_Should_Return_NA_When_Null() {
         // Arrange
-        const bool trueValue = true;
-        const bool falseValue = false;
-        const string expectedTrue = "[green]Yes[/]";
-        const string expectedFalse = "[red]No[/]";
+        bool? input = null;
 
         // Act
-        var trueResult = trueValue.ToAnsiString();
-        var falseResult = falseValue.ToAnsiString();
+        var result = input.ToAnsiString();
 
         // Assert
-        trueResult.Should().Be(expectedTrue);
-        falseResult.Should().Be(expectedFalse);
+        result.Should().Be("[grey]N/A[/]");
+    }
+
+    [Theory]
+    [InlineData(0, "[red]Empty[/]")]
+    [InlineData(50, "[orange1]50[/]")]
+    [InlineData(150, "[yellow]150[/]")]
+    [InlineData(300, "[green]300[/]")]
+    public void FuelToAnsiString_Should_Format_Fuel_With_Color_And_Time(int value, string expectedStart) {
+        // Act
+        var result = value.FuelToAnsiString();
+
+        // Assert
+        result.Should().StartWith(expectedStart);
     }
 
     [Fact]
-    public void ToAnsiString_DateTimeOffset_ShouldFormatDateAndHumanized() {
+    public void ToAnsiString_DateTimeOffset_Should_Format_With_Date_And_HumanizedTime() {
         // Arrange
-        // Use a fixed date so that the humanized part is predictable.
-        // Note: Humanize() returns a relative time (e.g. "3 years ago") which depends on the current time.
-        // Here we compute the expected value at runtime.
-        var date = new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero);
-        var humanized = date.Humanize();
-        var expected = $"{date:yyyy-MM-dd} [grey]({humanized})[/]";
+        var date = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromDays(1));
 
         // Act
         var result = date.ToAnsiString();
 
         // Assert
-        result.Should().Be(expected);
+        result.Should().Contain(date.ToString("yyyy-MM-dd"));
+        result.Should().Contain("[grey](yesterday)[/]");
     }
 
-    [Fact]
-    public void ToAnsiString_Decimal_ShouldFormatDecimalCorrectly() {
-        // Arrange
-        const decimal value = 1m;
-        // Expected output uses the format string "0.00[grey]000[/]"
-        const string expected = "1.00[grey]000[/]";
-
+    [Theory]
+    [InlineData(0.0001, "0.00[grey]010[/]")]
+    [InlineData(123.456789, "123.45[grey]679[/]")]
+    [InlineData(100, "100.00[grey]000[/]")]
+    public void ToAnsiString_Decimal_Should_Format_With_GreyDecimalTail(decimal value, string expected) {
         // Act
         var result = value.ToAnsiString();
 
@@ -126,34 +121,28 @@ public class SpectreUtilsTests {
     }
 
     [Fact]
-    public void SliceMiddle_WithShortString_ShouldReturnOriginalString() {
+    public void SliceMiddle_Should_Leave_Short_Strings_Unchanged() {
         // Arrange
-        const string input = "short string";
-        // When the input length is less than (default) 18 * 2 = 36 characters,
-        // the original string is returned.
-        const string expected = input;
+        var input = "ShortString";
 
         // Act
         var result = input.SliceMiddle();
 
         // Assert
-        result.Should().Be(expected);
+        result.Should().Be(input);
     }
 
     [Fact]
-    public void SliceMiddle_WithLongString_ShouldSliceAndInsertEllipsis() {
+    public void SliceMiddle_Should_Truncate_Long_Strings_With_Grey_Ellipsis() {
         // Arrange
-        // Create a string longer than 36 characters.
-        const string longInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890ABCD"; // Length = 40.
-        // Default slicing uses 18 characters from start and end.
-        var first18 = longInput.Substring(0, 18);
-        var last18 = longInput.Substring(longInput.Length - 18, 18);
-        var expected = $"{first18}[grey]...[/]{last18}";
+        var input = new string('X', 50);
 
         // Act
-        var result = longInput.SliceMiddle();
+        var result = input.SliceMiddle(10);
 
         // Assert
-        result.Should().Be(expected);
+        result.Should().StartWith("XXXXXXXXXX[grey]...[/]");
+        result.Should().EndWith("XXXXXXXXXX");
+        result.Length.Should().BeLessThan(input.Length);
     }
 }

@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="CommandLine\" />
       <Folder Include="FrontierDevTools\" />
     </ItemGroup>
 

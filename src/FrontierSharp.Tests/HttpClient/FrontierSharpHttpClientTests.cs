@@ -14,17 +14,23 @@ using Xunit;
 namespace FrontierSharp.Tests.HttpClient;
 
 public class FakeRequest : GetRequestModel<FakeRequest> {
-    public override string GetCacheKey() {
-        return "FakeRequestCacheKey";
-    }
+    public override string GetCacheKey() => "FakeRequestCacheKey";
+    public override Dictionary<string, string> GetQueryParams() => new();
+    public override string GetEndpoint() => "/test";
+}
+
+public class FakeComplexRequest : GetRequestModel<FakeComplexRequest> {
+    public override string GetCacheKey() => "FakeRequestCacheKey";
 
     public override Dictionary<string, string> GetQueryParams() {
-        return new Dictionary<string, string>();
+        return new Dictionary<string, string> {
+            { "key1", "value1" },
+            { "key2", "value2" },
+            { "key3", "value3" }
+        };
     }
 
-    public override string GetEndpoint() {
-        return "/test";
-    }
+    public override string GetEndpoint() => "/complex";
 }
 
 // Fake Response Model used for deserialization
@@ -61,6 +67,26 @@ public class FrontierSharpHttpClientTests {
         result.Errors[0].Message.Should().Contain($"Request failed with status code 500 (Internal server error).");
     }
 
+    [Fact]
+    public async Task Get_ReturnsSuccess_WhenResponseIsSuccessful_AndDeserializationSucceeds_Complex() {
+        // Arrange
+        var client = new FrontierSharpHttpClient(
+            Substitute.For<ILogger<FrontierSharpHttpClient>>(),
+            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK, new StringContent(JsonSerializer.Serialize(new FakeResponse { Message = "Hello" }), Encoding.UTF8, "application/json")),
+            new FakeHybridCache(),
+            _options);
+
+        var requestModel = new FakeComplexRequest();
+
+        // Act
+        var result = await client.Get<FakeComplexRequest, FakeResponse>(requestModel);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value.Message.Should().Be("Hello");
+    }
+    
     [Fact]
     public async Task Get_ReturnsSuccess_WhenResponseIsSuccessful_AndDeserializationSucceeds() {
         // Arrange

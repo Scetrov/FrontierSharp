@@ -17,13 +17,13 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
             new GetCharacterByAddressRequest { Address = address }, ct);
     }
 
-    public async Task<IResult<CorpResponse>> GetCharactersByCorpId(int corpId, CancellationToken ct = default) {
-        return await httpClient.Get<GetCharactersByCorpIdRequest, CorpResponse>(
+    public async Task<IResult<CorporationResponse>> GetCharactersByCorpId(int corpId, CancellationToken ct = default) {
+        return await httpClient.Get<GetCharactersByCorpIdRequest, CorporationResponse>(
             new GetCharactersByCorpIdRequest { CorpId = corpId }, ct);
     }
 
-    public async Task<IResult<CorpResponse>> GetCharactersByPlayer(string playerName, CancellationToken ct = default) {
-        return await httpClient.Get<GetCharactersByPlayerRequest, CorpResponse>(
+    public async Task<IResult<CorporationResponse>> GetCharactersByPlayer(string playerName, CancellationToken ct = default) {
+        return await httpClient.Get<GetCharactersByPlayerRequest, CorporationResponse>(
             new GetCharactersByPlayerRequest { PlayerName = playerName }, ct);
     }
 
