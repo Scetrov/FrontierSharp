@@ -153,7 +153,7 @@ jobs:
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-x64/publish
         
       - name: Create Windows-arm64 Archive
-        run: zip -r $GITHUB_WORKSPACE/src/frontierctl-win-arm64.zip .
+        run: zip -r "$GITHUB_WORKSPACE/src/frontierctl-win-arm64.zip" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-arm64/publish
 
       - name: Create Release
