@@ -26,7 +26,7 @@ public class OptimizeStargateNetworkPlacementTests {
             Start = "A",
             End = "B",
             MaxDistance = 499m,
-            NpcAvoidanceLevel = NPCAvodianceLevel.High
+            NpcAvoidanceLevel = NpcAvoidanceLevel.High
         };
 
         var result = settings.Validate();

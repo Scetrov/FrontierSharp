@@ -56,7 +56,7 @@ public class OptimizeStargateNetworkPlacement(ILogger<GetCorporationCommand> log
 
         [CommandOption("--npcAvoidanceLevel <npcAvoidanceLevel>")]
         [Description("Level of NPC avoidance")]
-        public NPCAvodianceLevel NpcAvoidanceLevel { get; set; } = NPCAvodianceLevel.High;
+        public NpcAvoidanceLevel NpcAvoidanceLevel { get; set; } = NpcAvoidanceLevel.High;
 
 
         public override ValidationResult Validate() {

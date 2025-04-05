@@ -12,7 +12,7 @@ public class OptimizeStargateNetworkPlacementRequestTests {
         request.StartName.Should().Be("ICT-SVL");
         request.EndName.Should().Be("UB3-3QJ");
         request.MaxDistanceInLightYears.Should().Be(499m);
-        request.NpcAvoidanceLevel.Should().Be(NPCAvodianceLevel.High);
+        request.NpcAvoidanceLevel.Should().Be(NpcAvoidanceLevel.High);
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public class OptimizeStargateNetworkPlacementRequestTests {
             StartName = "Alpha",
             EndName = "Beta",
             MaxDistanceInLightYears = 250.5m,
-            NpcAvoidanceLevel = NPCAvodianceLevel.Medium
+            NpcAvoidanceLevel = NpcAvoidanceLevel.Medium
         };
 
         var expected = "OptimizeStargateNetworkPlacementRequest_Alpha_Beta_250.5_Medium";
@@ -35,7 +35,7 @@ public class OptimizeStargateNetworkPlacementRequestTests {
             StartName = "GateA",
             EndName = "GateB",
             MaxDistanceInLightYears = 123.45m,
-            NpcAvoidanceLevel = NPCAvodianceLevel.Off
+            NpcAvoidanceLevel = NpcAvoidanceLevel.Off
         };
 
         var queryParams = request.GetQueryParams();

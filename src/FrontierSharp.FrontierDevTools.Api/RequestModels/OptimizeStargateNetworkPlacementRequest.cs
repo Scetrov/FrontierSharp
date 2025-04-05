@@ -7,7 +7,7 @@ public class OptimizeStargateNetworkPlacementRequest : GetRequestModel<OptimizeS
     public string StartName { get; init; } = "ICT-SVL";
     public string EndName { get; init; } = "UB3-3QJ";
     public decimal MaxDistanceInLightYears { get; init; } = 499m;
-    public NPCAvodianceLevel NpcAvoidanceLevel { get; init; } = NPCAvodianceLevel.High;
+    public NpcAvoidanceLevel NpcAvoidanceLevel { get; init; } = NpcAvoidanceLevel.High;
 
     public override string GetCacheKey() {
         return $"{nameof(OptimizeStargateNetworkPlacementRequest)}_{StartName}_{EndName}_{MaxDistanceInLightYears}_{NpcAvoidanceLevel}";
