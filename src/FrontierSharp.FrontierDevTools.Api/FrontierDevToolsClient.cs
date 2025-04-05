@@ -32,8 +32,13 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
             new GetGateNetworkRequest { Identifier = identifier }, ct);
     }
 
-    public async Task<IResult<RouteResponse>> OptimalStargateAndNetworkPlacement(string start, string end, decimal maxDistance, NpcAvoidanceLevel avoidanceLevel, CancellationToken ct = default) {
+    public async Task<IResult<RouteResponse>> OptimalStargateAndNetworkPlacement(string start, string end, decimal maxDistance = 499m, NpcAvoidanceLevel avoidanceLevel = NpcAvoidanceLevel.High, CancellationToken ct = default) {
         return await httpClient.Get<OptimizeStargateNetworkPlacementRequest, RouteResponse>(
             new OptimizeStargateNetworkPlacementRequest { StartName = start, EndName = end, MaxDistanceInLightYears = maxDistance, NpcAvoidanceLevel = avoidanceLevel }, ct);
+    }
+
+    public async Task<IResult<RouteResponse>> FindTravelRoute(string start, string end, bool avoidGates = false, decimal maxDistance = 100m, CancellationToken ct = default) {
+        return await httpClient.Get<FindTravelRouteRequest, RouteResponse>(
+            new FindTravelRouteRequest { StartName = start, EndName = end, AvoidGates = avoidGates, MaxDistanceInLightYears = maxDistance }, ct);
     }
 }

@@ -2,7 +2,6 @@ using System.ComponentModel;
 using FluentResults;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
-using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
@@ -11,9 +10,9 @@ using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class OptimizeStargateNetworkPlacement(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<OptimizeStargateNetworkPlacement.Settings> {
+public class FindTravelRouteCommand(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.OptimalStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
+        var result = await devToolsClient.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, CancellationToken.None);
 
         if (result.IsFailed) {
             foreach (var err in result.Errors.OfType<IError>()) {
@@ -31,7 +30,7 @@ public class OptimizeStargateNetworkPlacement(ILogger<GetCorporationCommand> log
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable($"Gate Placement {settings.Start} \u2192 {settings.End}", "From", "To", "Distance (LY)");
+        var table = SpectreUtils.CreateAnsiTable($"Route from {settings.Start} \u2192 {settings.End}", "From", "To", "Distance (LY)");
 
         foreach (var jump in routeArray) {
             table.AddRow(jump.From, jump.To, ((int)Math.Floor(jump.DistanceInLightYears)).ToString());
@@ -50,14 +49,13 @@ public class OptimizeStargateNetworkPlacement(ILogger<GetCorporationCommand> log
         [Description("End Solarsystem, i.e. UB3-3QJ")]
         public required string End { get; set; }
 
+        [CommandOption("--avoidGates <avoidGates>")]
+        [Description("Avoid gates in the route")]
+        public bool AvoidGates { get; set; }
+
         [CommandOption("--maxDistance <maxDistance>")]
-        [Description("Maximum jump distance in lightyears between two systems in the route, i.e. 499")]
+        [Description("Maximum jump distance in lightyears between two systems in the route, i.e. 100")]
         public decimal MaxDistance { get; set; } = 499m;
-
-        [CommandOption("--npcAvoidanceLevel <npcAvoidanceLevel>")]
-        [Description("Level of NPC avoidance")]
-        public NpcAvoidanceLevel NpcAvoidanceLevel { get; set; } = NpcAvoidanceLevel.High;
-
 
         public override ValidationResult Validate() {
             if (string.IsNullOrWhiteSpace(Start)) {
