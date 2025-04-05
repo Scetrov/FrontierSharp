@@ -40,7 +40,7 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<GetCorporationCommand>("tribe").WithAlias("t").WithAlias("corporation").WithAlias("corp");
             config.AddCommand<GetGateNetworkCommand>("gates").WithAlias("g");
             config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o").WithAlias("op");
-            config.AddCommand<FindTravelRouteCommand>("route").WithAlias("r").WithAlias("rt");
+            config.AddCommand<FindTravelRouteCommand>("route").WithAlias("fr").WithAlias("rt");
         });
         services.AddSingleton<ICommandApp>(app);
     })
