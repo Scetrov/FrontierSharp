@@ -9,8 +9,8 @@ using Xunit;
 namespace FrontierSharp.Tests.CommandLine;
 
 public class TypeRegistrarTests {
-    private readonly IServiceCollection _services;
     private readonly TypeRegistrar _registrar;
+    private readonly IServiceCollection _services;
 
     public TypeRegistrarTests() {
         _services = new ServiceCollection();
@@ -68,9 +68,11 @@ public class TypeRegistrarTests {
         resolved.Should().BeOfType<MyService>();
     }
 
-    public interface IMyService { }
+    public interface IMyService {
+    }
 
-    public class MyService : IMyService { }
+    public class MyService : IMyService {
+    }
 
     public class TypeResolver(IServiceProvider provider) : ITypeResolver {
 
@@ -79,4 +81,4 @@ public class TypeRegistrarTests {
             return provider.GetService(type)!;
         }
     }
-} 
+}

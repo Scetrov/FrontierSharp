@@ -1,14 +1,12 @@
-using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using FluentAssertions;
+using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using Xunit;
 
 namespace FrontierSharp.Tests.FrontierDevTools.Api.RequestModels;
 
-public class GetCharactersByPlayerRequestTests
-{
+public class GetCharactersByPlayerRequestTests {
     [Fact]
-    public void GetEndpoint_ShouldReturnCorrectEndpoint()
-    {
+    public void GetEndpoint_ShouldReturnCorrectEndpoint() {
         // Arrange
         var request = new GetCharactersByPlayerRequest();
 
@@ -20,8 +18,7 @@ public class GetCharactersByPlayerRequestTests
     }
 
     [Fact]
-    public void GetCacheKey_ShouldIncludeClassNameAndPlayerName()
-    {
+    public void GetCacheKey_ShouldIncludeClassNameAndPlayerName() {
         // Arrange
         var request = new GetCharactersByPlayerRequest { PlayerName = "TestPlayer" };
 
@@ -33,8 +30,7 @@ public class GetCharactersByPlayerRequestTests
     }
 
     [Fact]
-    public void GetQueryParams_ShouldReturnPlayerNameParameter()
-    {
+    public void GetQueryParams_ShouldReturnPlayerNameParameter() {
         // Arrange
         var request = new GetCharactersByPlayerRequest { PlayerName = "Alice" };
 
@@ -47,8 +43,7 @@ public class GetCharactersByPlayerRequestTests
     }
 
     [Fact]
-    public void DefaultConstructor_ShouldInitializePlayerNameAsEmptyString()
-    {
+    public void DefaultConstructor_ShouldInitializePlayerNameAsEmptyString() {
         // Act
         var request = new GetCharactersByPlayerRequest();
 

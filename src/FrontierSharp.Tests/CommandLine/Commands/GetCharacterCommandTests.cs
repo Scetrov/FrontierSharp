@@ -14,10 +14,11 @@ public class GetCharacterCommandTests {
     private static GetCharacterCommand CreateCommand(
         IFrontierDevToolsClient? client = null,
         IAnsiConsole? console = null,
-        ILogger<GetCharacterCommand>? logger = null) =>
-        new(logger ?? Substitute.For<ILogger<GetCharacterCommand>>(),
+        ILogger<GetCharacterCommand>? logger = null) {
+        return new GetCharacterCommand(logger ?? Substitute.For<ILogger<GetCharacterCommand>>(),
             client ?? Substitute.For<IFrontierDevToolsClient>(),
             console ?? Substitute.For<IAnsiConsole>());
+    }
 
     [Fact]
     public void Settings_Validate_Fails_WhenNoOptionProvided() {

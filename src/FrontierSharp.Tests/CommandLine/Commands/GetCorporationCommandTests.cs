@@ -6,7 +6,6 @@ using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Spectre.Console;
-using Spectre.Console.Cli;
 using Xunit;
 
 namespace FrontierSharp.Tests.CommandLine.Commands;
@@ -15,16 +14,17 @@ public class GetCorporationCommandTests {
     private static GetCorporationCommand CreateCommand(
         IFrontierDevToolsClient? client = null,
         IAnsiConsole? console = null,
-        ILogger<GetCorporationCommand>? logger = null) =>
-        new(logger ?? Substitute.For<ILogger<GetCorporationCommand>>(),
+        ILogger<GetCorporationCommand>? logger = null) {
+        return new GetCorporationCommand(logger ?? Substitute.For<ILogger<GetCorporationCommand>>(),
             client ?? Substitute.For<IFrontierDevToolsClient>(),
             console ?? Substitute.For<IAnsiConsole>());
+    }
 
     [Fact]
     public async Task ExecuteAsync_ReturnsOne_WhenSearchTypeIsId_AndApiFails() {
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByCorpId(Arg.Any<int>(), Arg.Any<CancellationToken>())
-              .Returns(Result.Fail<CorporationResponse>("API failure"));
+            .Returns(Result.Fail<CorporationResponse>("API failure"));
 
         var settings = new GetCorporationCommand.Settings {
             Id = 123
@@ -41,7 +41,7 @@ public class GetCorporationCommandTests {
     public async Task ExecuteAsync_ReturnsOne_WhenSearchTypeIsPlayer_AndApiFails() {
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByPlayer(Arg.Any<string>(), Arg.Any<CancellationToken>())
-              .Returns(Result.Fail<CorporationResponse>("API error"));
+            .Returns(Result.Fail<CorporationResponse>("API error"));
 
         var settings = new GetCorporationCommand.Settings {
             PlayerName = "Alice"
@@ -58,9 +58,9 @@ public class GetCorporationCommandTests {
     public async Task ExecuteAsync_ReturnsOne_WhenApiReturnsNullOrEmptyCharacters() {
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByCorpId(Arg.Any<int>(), Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new CorporationResponse {
-                  CorpCharacters = new List<string>() // empty
-              }));
+            .Returns(Result.Ok(new CorporationResponse {
+                CorpCharacters = new List<string>() // empty
+            }));
 
         var settings = new GetCorporationCommand.Settings {
             Id = 98000001
@@ -78,9 +78,9 @@ public class GetCorporationCommandTests {
 
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByCorpId(98000001, Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new CorporationResponse {
-                  CorpCharacters = characters
-              }));
+            .Returns(Result.Ok(new CorporationResponse {
+                CorpCharacters = characters
+            }));
 
         var console = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(client, console);
@@ -101,9 +101,9 @@ public class GetCorporationCommandTests {
 
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByPlayer("Scetrov", Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new CorporationResponse {
-                  CorpCharacters = characters
-              }));
+            .Returns(Result.Ok(new CorporationResponse {
+                CorpCharacters = characters
+            }));
 
         var console = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(client, console);

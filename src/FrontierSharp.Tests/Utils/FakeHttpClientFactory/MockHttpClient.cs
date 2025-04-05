@@ -9,7 +9,7 @@ public static class MockHttpClient {
         var httpClientFactoryMock = Substitute.For<IHttpClientFactory>();
         var responseMessage = new HttpResponseMessage(returnCode) {
             ReasonPhrase = returnCode.Humanize(),
-            Content = content,
+            Content = content
         };
         var httpClient = new System.Net.Http.HttpClient(new FakeHttpMessageHandler(responseMessage));
         httpClientFactoryMock.CreateClient(Arg.Any<string>()).Returns(httpClient);

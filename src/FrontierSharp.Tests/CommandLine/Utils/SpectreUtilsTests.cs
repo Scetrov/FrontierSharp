@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using FluentAssertions;
 using FrontierSharp.CommandLine.Utils;
-using Spectre.Console;
 using Xunit;
 
 namespace FrontierSharp.Tests.CommandLine.Utils;
