@@ -1,5 +1,6 @@
 ﻿using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
+using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.HttpClient;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })
     .ConfigureServices((context, services) => {
         Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Is(args.GetLogLevel())
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateLogger();
@@ -34,10 +36,11 @@ using var host = Host.CreateDefaultBuilder(args)
 
         var app = new CommandApp(new TypeRegistrar(services));
         app.Configure(config => {
-            config.AddCommand<GetCharacterCommand>("rider").WithAlias("character").WithAlias("char").WithAlias("c");
-            config.AddCommand<GetCorporationCommand>("tribe").WithAlias("corporation").WithAlias("corp");
+            config.AddCommand<GetCharacterCommand>("rider").WithAlias("r").WithAlias("character").WithAlias("char");
+            config.AddCommand<GetCorporationCommand>("tribe").WithAlias("t").WithAlias("corporation").WithAlias("corp");
             config.AddCommand<GetGateNetworkCommand>("gates").WithAlias("g");
-            config.AddCommand<OptimizeStargateNetworkPlacement>("optimize-placement").WithAlias("optimize").WithAlias("opt").WithAlias("o");
+            config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o").WithAlias("op");
+            config.AddCommand<FindTravelRouteCommand>("route").WithAlias("fr").WithAlias("rt");
         });
         services.AddSingleton<ICommandApp>(app);
     })
