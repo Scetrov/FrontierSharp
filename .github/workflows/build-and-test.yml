@@ -96,27 +96,27 @@ jobs:
         working-directory: ./src
         
       - name: Publish Commandline (linux-x64)
-        run: dotnet publish --no-build -c Release -r linux-x64 --self-contained
+        run: dotnet publish -c Release -r linux-x64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
 
       - name: Publish Commandline (linux-arm64)
-        run: dotnet publish --no-build -c Release -r linux-arm64 --self-contained
+        run: dotnet publish -c Release -r linux-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
         
       - name: Publish Commandline (osx-x64)
-        run: dotnet publish --no-build -c Release -r osx-x64 --self-contained
+        run: dotnet publish -c Release -r osx-x64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
         
       - name: Publish Commandline (osx-arm64)
-        run: dotnet publish --no-build -c Release -r osx-arm64 --self-contained
+        run: dotnet publish -c Release -r osx-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
 
       - name: Publish Commandline (win-x64)
-        run: dotnet publish --no-build -c Release -r win-x64 --self-contained
+        run: dotnet publish -c Release -r win-x64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
 
       - name: Publish Commandline (win-arm64)
-        run: dotnet publish --no-build -c Release -r win-arm64 --self-contained
+        run: dotnet publish -c Release -r win-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
         
       - name: Pack NuGet Package
