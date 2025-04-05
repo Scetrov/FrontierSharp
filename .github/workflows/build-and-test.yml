@@ -141,7 +141,7 @@ jobs:
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-arm64/publish
 
       - name: Create OSX-x64 Archive
-        run: tar -czvf $GITHUB_WORKSPACE/src/frontierctl-osx-x64.tar.gz .
+        run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-osx-x64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/osx-x64/publish
 
       - name: Create OSX-arm64 Archive
