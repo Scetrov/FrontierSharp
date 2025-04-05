@@ -14,10 +14,11 @@ public class GetGateNetworkCommandTests {
     private static GetGateNetworkCommand CreateCommand(
         IFrontierDevToolsClient? client = null,
         IAnsiConsole? console = null,
-        ILogger<GetCorporationCommand>? logger = null) =>
-        new(logger ?? Substitute.For<ILogger<GetCorporationCommand>>(),
+        ILogger<GetCorporationCommand>? logger = null) {
+        return new GetGateNetworkCommand(logger ?? Substitute.For<ILogger<GetCorporationCommand>>(),
             client ?? Substitute.For<IFrontierDevToolsClient>(),
             console ?? Substitute.For<IAnsiConsole>());
+    }
 
     [Fact]
     public void Validate_Fails_WhenIdentifierIsEmpty() {
@@ -46,7 +47,7 @@ public class GetGateNetworkCommandTests {
     public async Task ExecuteAsync_ReturnsOne_WhenResultFails() {
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetGateNetwork(Arg.Any<string>(), Arg.Any<CancellationToken>())
-              .Returns(Result.Fail<GateNetworkResponse>("Failed"));
+            .Returns(Result.Fail<GateNetworkResponse>("Failed"));
 
         var command = CreateCommand(client);
         var settings = new GetGateNetworkCommand.Settings {
@@ -62,9 +63,9 @@ public class GetGateNetworkCommandTests {
     public async Task ExecuteAsync_ReturnsOne_WhenNoGatesReturned() {
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetGateNetwork(Arg.Any<string>(), Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new GateNetworkResponse {
-                  GateNetwork = new List<GateResponse>()
-              }));
+            .Returns(Result.Ok(new GateNetworkResponse {
+                GateNetwork = new List<GateResponse>()
+            }));
 
         var command = CreateCommand(client);
         var settings = new GetGateNetworkCommand.Settings {
@@ -89,9 +90,9 @@ public class GetGateNetworkCommandTests {
 
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetGateNetwork(Arg.Any<string>(), Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new GateNetworkResponse {
-                  GateNetwork = new List<GateResponse> { gate }
-              }));
+            .Returns(Result.Ok(new GateNetworkResponse {
+                GateNetwork = new List<GateResponse> { gate }
+            }));
 
         var console = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(client, console);

@@ -23,7 +23,7 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton(AnsiConsole.Console);
 
         services.Configure<ConfigurationOptions>(context.Configuration.GetSection("Configuration"));
-        services.AddHttpClient();
+        services.AddHttpClient("FrontierDevTools", config => config.Timeout = TimeSpan.FromMinutes(5));
         services.AddFusionCache().AsHybridCache();
         services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(FrontierDevToolsClient))
             .Configure<FrontierSharpHttpClientOptions>(options => {
@@ -37,6 +37,7 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<GetCharacterCommand>("rider").WithAlias("character").WithAlias("char").WithAlias("c");
             config.AddCommand<GetCorporationCommand>("tribe").WithAlias("corporation").WithAlias("corp");
             config.AddCommand<GetGateNetworkCommand>("gates").WithAlias("g");
+            config.AddCommand<OptimizeStargateNetworkPlacement>("optimize-placement").WithAlias("optimize").WithAlias("opt").WithAlias("o");
         });
         services.AddSingleton<ICommandApp>(app);
     })

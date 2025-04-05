@@ -97,7 +97,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
         working-directory: ./src
-        
+
       - name: Publish Commandline (linux-x64)
         run: dotnet publish -c Release -r linux-x64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
@@ -105,11 +105,11 @@ jobs:
       - name: Publish Commandline (linux-arm64)
         run: dotnet publish -c Release -r linux-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
-        
+
       - name: Publish Commandline (osx-x64)
         run: dotnet publish -c Release -r osx-x64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
-        
+
       - name: Publish Commandline (osx-arm64)
         run: dotnet publish -c Release -r osx-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
@@ -121,7 +121,7 @@ jobs:
       - name: Publish Commandline (win-arm64)
         run: dotnet publish -c Release -r win-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
-        
+
       - name: Pack NuGet Package
         run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=${{ steps.version_step.outputs.FullSemVer }}
         working-directory: ./src
@@ -131,11 +131,11 @@ jobs:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
         working-directory: ./src
-        
+
       - name: Create Linux-x64 Archive
         run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-linux-x64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-x64/publish
-        
+
       - name: Create Linux-arm64 Archive
         run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-linux-arm64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-arm64/publish
@@ -151,7 +151,7 @@ jobs:
       - name: Create Windows-x64 Archive
         run: zip -r "$GITHUB_WORKSPACE/src/frontierctl-win-x64.zip" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-x64/publish
-        
+
       - name: Create Windows-arm64 Archive
         run: zip -r "$GITHUB_WORKSPACE/src/frontierctl-win-arm64.zip" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-arm64/publish

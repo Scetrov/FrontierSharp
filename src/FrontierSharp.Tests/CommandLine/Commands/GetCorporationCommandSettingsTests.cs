@@ -79,6 +79,6 @@ public class GetCorporationCommandSettingsTests {
         Action act = () => _ = settings.SearchType;
 
         act.Should().Throw<NotImplementedException>()
-           .WithMessage("Search Type not Implemented.");
+            .WithMessage("Search Type not Implemented.");
     }
 }

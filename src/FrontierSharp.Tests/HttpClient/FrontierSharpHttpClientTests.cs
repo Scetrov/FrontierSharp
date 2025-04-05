@@ -14,13 +14,23 @@ using Xunit;
 namespace FrontierSharp.Tests.HttpClient;
 
 public class FakeRequest : GetRequestModel<FakeRequest> {
-    public override string GetCacheKey() => "FakeRequestCacheKey";
-    public override Dictionary<string, string> GetQueryParams() => new();
-    public override string GetEndpoint() => "/test";
+    public override string GetCacheKey() {
+        return "FakeRequestCacheKey";
+    }
+
+    public override Dictionary<string, string> GetQueryParams() {
+        return new Dictionary<string, string>();
+    }
+
+    public override string GetEndpoint() {
+        return "/test";
+    }
 }
 
 public class FakeComplexRequest : GetRequestModel<FakeComplexRequest> {
-    public override string GetCacheKey() => "FakeRequestCacheKey";
+    public override string GetCacheKey() {
+        return "FakeRequestCacheKey";
+    }
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
@@ -30,7 +40,9 @@ public class FakeComplexRequest : GetRequestModel<FakeComplexRequest> {
         };
     }
 
-    public override string GetEndpoint() => "/complex";
+    public override string GetEndpoint() {
+        return "/complex";
+    }
 }
 
 // Fake Response Model used for deserialization
@@ -64,7 +76,7 @@ public class FrontierSharpHttpClientTests {
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors[0].Message.Should().Contain($"Request failed with status code 500 (Internal server error).");
+        result.Errors[0].Message.Should().Contain("Request failed with status code 500 (Internal server error).");
     }
 
     [Fact]
@@ -86,7 +98,7 @@ public class FrontierSharpHttpClientTests {
         result.Value.Should().NotBeNull();
         result.Value.Message.Should().Be("Hello");
     }
-    
+
     [Fact]
     public async Task Get_ReturnsSuccess_WhenResponseIsSuccessful_AndDeserializationSucceeds() {
         // Arrange
