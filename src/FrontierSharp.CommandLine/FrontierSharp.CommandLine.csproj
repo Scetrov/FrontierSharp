@@ -48,6 +48,7 @@
     <ItemGroup>
         <None Include="..\..\assets\FrontierSharp.png">
             <Pack>True</Pack>
+            <PackagePath />
             <Link>FrontierSharp.png</Link>
         </None>
     </ItemGroup>
