@@ -27,7 +27,7 @@ public class OptimizeStargateNetworkPlacement(ILogger<GetCorporationCommand> log
         var routeArray = route as JumpResponse[] ?? route.ToArray();
 
         if (routeArray.Length == 0) {
-            logger.LogError("No gates found for that corporation.");
+            logger.LogError("No valid route found for the specified placement.");
             return 1;
         }
 
