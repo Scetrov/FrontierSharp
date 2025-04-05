@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-    pull_request:
-      branches:
-        - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-test:
@@ -133,27 +133,27 @@ jobs:
         working-directory: ./src
         
       - name: Create Linux-x64 Archive
-        run: tar -czvf ../../../../../../frontierctl-linux-x64.tar.gz .
+        run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-linux-x64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-x64/publish
         
       - name: Create Linux-arm64 Archive
-        run: tar -czvf ../../../../../../frontierctl-linux-arm64.tar.gz .
+        run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-linux-arm64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-arm64/publish
 
       - name: Create OSX-x64 Archive
-        run: tar -czvf ../../../../../../frontierctl-osx-x64.tar.gz .
+        run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-osx-x64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/osx-x64/publish
 
       - name: Create OSX-arm64 Archive
-        run: tar -czvf ../../../../../../frontierctl-osx-arm64.tar.gz .
+        run: tar -czvf "$GITHUB_WORKSPACE/src/frontierctl-osx-arm64.tar.gz" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/osx-arm64/publish
 
       - name: Create Windows-x64 Archive
-        run: zip -r ../../../../../../frontierctl-win-x64.zip .
+        run: zip -r "$GITHUB_WORKSPACE/src/frontierctl-win-x64.zip" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-x64/publish
         
       - name: Create Windows-arm64 Archive
-        run: zip -r ../../../../../../frontierctl-win-arm64.zip .
+        run: zip -r "$GITHUB_WORKSPACE/src/frontierctl-win-arm64.zip" .
         working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-arm64/publish
 
       - name: Create Release
