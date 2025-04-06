@@ -6,13 +6,9 @@ using Xunit;
 namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;
 
 public class StringifiedDecimalConverterTests {
-    private readonly JsonSerializerOptions _options;
-
-    public StringifiedDecimalConverterTests() {
-        _options = new JsonSerializerOptions {
-            Converters = { new StringifiedDecimalConverter() }
-        };
-    }
+    private readonly JsonSerializerOptions _options = new() {
+        Converters = { new StringifiedDecimalConverter() }
+    };
 
     [Theory]
     [InlineData("123.45", 123.45)]
@@ -25,7 +21,7 @@ public class StringifiedDecimalConverterTests {
         var result = JsonSerializer.Deserialize<TestObject>(json, _options);
 
         result.Should().NotBeNull();
-        result!.Value.Should().Be(expected);
+        result.Value.Should().Be(expected);
     }
 
     [Theory]
@@ -53,6 +49,6 @@ public class StringifiedDecimalConverterTests {
     }
 
     public class TestObject {
-        public decimal Value { get; set; }
+        public decimal Value { get; init; }
     }
 }
