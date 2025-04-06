@@ -20,6 +20,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
         <IsPackable>false</IsPackable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -52,5 +53,11 @@
             <PackagePath/>
             <Link>FrontierSharp.png</Link>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 </Project>
