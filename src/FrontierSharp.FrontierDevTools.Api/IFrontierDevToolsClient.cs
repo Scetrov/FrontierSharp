@@ -13,4 +13,5 @@ public interface IFrontierDevToolsClient {
     Task<IResult<RouteResponse>> OptimalStargateAndNetworkPlacement(string start, string end, decimal maxDistance, NpcAvoidanceLevel avoidanceLevel, CancellationToken ct = default);
     Task<IResult<RouteResponse>> FindTravelRoute(string start, string end, bool avoidGates = false, decimal maxDistance = 100m, CancellationToken ct = default);
     Task<IResult<DistanceResponse>> CalculateDistance(string systemA, string systemB, CancellationToken ct = default);
+    Task<IResult<SystemsWithinDistanceResponse>> FindSystemsWithinDistance(string systemName, decimal maxDistance, CancellationToken ct = default);
 }

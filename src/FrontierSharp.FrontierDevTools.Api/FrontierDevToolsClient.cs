@@ -46,4 +46,9 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
         return await httpClient.Get<CalculateDistanceRequest, DistanceResponse>(
             new CalculateDistanceRequest { SystemA = systemA, SystemB = systemB }, ct);
     }
+    
+    public async Task<IResult<SystemsWithinDistanceResponse>> FindSystemsWithinDistance(string systemName, decimal maxDistance, CancellationToken ct = default) {
+        return await httpClient.Get<FindSystemsWithingDistanceRequest, SystemsWithinDistanceResponse>(
+            new FindSystemsWithingDistanceRequest { SystemName = systemName, MaxDistance = maxDistance }, ct);
+    }
 }
