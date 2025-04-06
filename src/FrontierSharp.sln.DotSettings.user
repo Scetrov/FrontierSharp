@@ -33,4 +33,7 @@
     &lt;TestId&gt;xUnit::413D2A57-6450-41A2-964F-647180879CD6::net9.0::FrontierSharp.FrontierDevTools.Tests.Api.Serialization.NullableStringifiedBooleanConverterTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d0d40ad4_002D1919_002D4e69_002Da6dd_002D1dc6b0ac0687/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Solution /&gt;
+&lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>

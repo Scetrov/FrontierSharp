@@ -41,6 +41,7 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<GetGateNetworkCommand>("gates").WithAlias("g");
             config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o").WithAlias("op");
             config.AddCommand<FindTravelRouteCommand>("route").WithAlias("fr").WithAlias("rt");
+            config.AddCommand<CalculateDistanceCommand>("distance").WithAlias("d");
         });
         services.AddSingleton<ICommandApp>(app);
     })
