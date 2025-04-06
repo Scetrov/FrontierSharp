@@ -178,12 +178,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Build and Push Image
-        uses: docker/build-push-action@v5 
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@v5
         with:
-          context: ./src/FrontierSharp.CommandLine
+          context: .
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/frontierctl:latest
-            ghcr.io/${{ env.OWNER_LC }}/frontierctl:${{ steps.version_step.outputs.FullSemVer }}
+            ghcr.io/${{ github.repository_owner }}/frontierctl:latest
+            ghcr.io/${{ github.repository_owner }}/frontierctl:${{ steps.version_step.outputs.FullSemVer }}
+          provenance: false
+          sbom: false
