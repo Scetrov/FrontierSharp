@@ -6,13 +6,9 @@ using Xunit;
 namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;
 
 public class StringifiedDecimalConverterTests {
-    private readonly JsonSerializerOptions _options;
-
-    public StringifiedDecimalConverterTests() {
-        _options = new JsonSerializerOptions {
-            Converters = { new StringifiedDecimalConverter() }
-        };
-    }
+    private readonly JsonSerializerOptions _options = new() {
+        Converters = { new StringifiedDecimalConverter() }
+    };
 
     [Theory]
     [InlineData("123.45", 123.45)]
