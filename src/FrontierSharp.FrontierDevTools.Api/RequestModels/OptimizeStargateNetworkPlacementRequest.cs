@@ -9,20 +9,17 @@ public class OptimizeStargateNetworkPlacementRequest : GetRequestModel<OptimizeS
     public decimal MaxDistanceInLightYears { get; init; } = 499m;
     public NpcAvoidanceLevel NpcAvoidanceLevel { get; init; } = NpcAvoidanceLevel.High;
 
-    public override string GetCacheKey() {
-        return $"{nameof(OptimizeStargateNetworkPlacementRequest)}_{StartName}_{EndName}_{MaxDistanceInLightYears}_{NpcAvoidanceLevel}";
-    }
+    public override string GetCacheKey() =>
+        $"{nameof(OptimizeStargateNetworkPlacementRequest)}_{StartName}_{EndName}_{MaxDistanceInLightYears}_{NpcAvoidanceLevel}";
 
-    public override Dictionary<string, string> GetQueryParams() {
-        return new Dictionary<string, string> {
+    public override Dictionary<string, string> GetQueryParams() =>
+        new() {
             { "start_name", StartName },
             { "end_name", EndName },
             { "max_distance", MaxDistanceInLightYears.ToString(CultureInfo.InvariantCulture) },
             { "npc_avoidance_level", ((int)NpcAvoidanceLevel).ToString() }
         };
-    }
 
-    public override string GetEndpoint() {
-        return "/optimize_stargate_network_placement";
-    }
+    public override string GetEndpoint() =>
+        "/optimize_stargate_network_placement";
 }

@@ -1,0 +1,982 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EVE Frontier Dev Tools API",
+    "description": "\nAPI for navigation and character information data retrieval.\n\nThis API provides optimized navigation tools, character and corporation data lookups, and MUD Explorer table access for the EVE Frontier universe.\n\n**Features include:**\n- Optimal Stargate network planning and deployment tools\n- Fuzzy-matched system route calculations with NPC gate avoidance\n- Real-time smart character and structure data lookup\n- MUD table querying and data inspection\n\nFor detailed docs and examples, expand the endpoints below.\n\nSome of the data is cached and/or modified behind the scenes to make more useful outputs for various uses. \n\n**How to Use:**\n- **Devs:** Should be straightforward to plug in to your services\n- **Non-Devs:** You can still use this page. Expand a **GET** service, on the right, click the **Try it out** button which will allow you to enter parameters or run with the default. Click **Execute**. Slightly below in the **Responses** section, you will get an output in the **Code 200** **Successful Response** area. All defaults are functional.\n\n**Intent/Summary:**\n- Normalize a core set of navigation functionality to allow app builders to integrate endpoints instead of 50 versions of optimization tools\n- Character tools/MUD tools were used as helpers to diagnose character issues, identify Corp IDs easier and generally troubleshooting\n- Derive feedback on usefullness of trying to set a standard\n    - If there is adoption, will push this to an open-source repo for community-driven development\n- Backend is Python/Docker\n- Deployed via CloudRun -- you could experience a slight pause when hitting the service if it has been some time since last active while it spins up.\n\n**Contact:**\nPlease contact **Zlake** with any issues, suggestions or feedback.\n\n**TODO**\n- Clean Repo and push to public\n- Add dynamic fuel pricing or arguments for fuel pricing to optimization algo\n- Add player controlled SmartGates and canJump logic to routing\n- Provide endpoints for data used on the backend such as mass, volume, typeIds for InGame Assets\n- Further refine/speedup Navigation tools\n- Once available, add in market endpoints\n- Likely move to registering users and providing API keys to secure and manage access\n    ",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/optimize_stargate_network_placement": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Determine the Optimal StarGate Network Placement",
+        "description": "### Find the shortest route while avoiding or deprioritizing NPC-gated systems. Uses fuzzy matching to return a 404 if your names are invalid with suggestions to fix.\n\n**Query Parameters:**\n- **start_name** (*str*, default: ICT-SVL): Name of the starting system.\n- **end_name** (*str*, default: UB3-3QJ): Name of the destination system.\n- **max_distance** (*float*, default: 499): Maximum distance (ly) between two systems in the route.\n- **npc_avoidance_level** (*int*, default: 3): 0 (off) to 3 (strict avoidance).\n\n**Returns:**\n- A JSON object with the optimized route.\n\n**Example Request:**\n```\nhttps://api.frontierdevtools.com//optimal_stargate_network_and_deployment?start_name=ICT-SVL&end_name=UB3-3QJ&max_stargate_distance=499&npc_avoidance_level=3&include_ships=Flegel&avoid_gates=false\n```\n\n**Example Response:**\n```json\n{\n\"route\": [\n    {\n    \"from\": \"ICT-SVL\",\n    \"to\": \"I.PJR.0N1\",\n    \"distance_ly\": \"391\"\n    },\n    {\n    \"from\": \"I.PJR.0N1\",\n    \"to\": \"H.L3N.5XY\",\n    \"distance_ly\": \"278\"\n    },\n    {\n    \"from\": \"H.L3N.5XY\",\n    \"to\": \"E9H-LGK\",\n    \"distance_ly\": \"433\"\n    },\n    {\n    \"from\": \"E9H-LGK\",\n    \"to\": \"UB3-3QJ\",\n    \"distance_ly\": \"359\"\n    }\n]\n}\n```",
+        "operationId": "optimize_stargate_network_placement_optimize_stargate_network_placement_get",
+        "parameters": [
+          {
+            "name": "start_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ICT-SVL",
+              "title": "Start Name"
+            }
+          },
+          {
+            "name": "end_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "UB3-3QJ",
+              "title": "End Name"
+            }
+          },
+          {
+            "name": "max_distance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 499,
+              "title": "Max Distance"
+            }
+          },
+          {
+            "name": "npc_avoidance_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Npc Avoidance Level"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleRouteResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/find_travel_route": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Find the shortest travel route between two systems",
+        "description": "### Find the shortest route between two systems.\n\n**Query Parameters:**\n- **start_name** (*str*, default: ICT-SVL): Name of the starting system.\n- **end_name** (*str*, default: UB3-3QJ): Name of the destination system.\n- **avoid_gates** (*bool*, default: False): Whether to avoid (True) NPC Gates or not (False)\n- **max_distance** (*float*, default: 100): Maximum distance (ly) between two systems in the route.\n\n**Returns:**\n- A JSON object with the optimized route.\n\n**Example Request:**\n```\nGET /find_route?start_name=ICT-SVL&end_name=UB3-3QJ&max_distance=120\n```\n\n**Example Response:**\n```json\n{\n    \"route\": [\n        {\n            \"from\": \"ICT-SVL\",\n            \"to\": \"R.Y9N.D51\",\n            \"distance_ly\": \"495\"\n        },\n        {\n            \"from\": \"R.Y9N.D51\",\n            \"to\": \"D.GHQ-89\",\n            \"distance_ly\": \"320\"\n        }\n    ]\n}\n```",
+        "operationId": "find_route_api_find_travel_route_get",
+        "parameters": [
+          {
+            "name": "start_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ICT-SVL",
+              "title": "Start Name"
+            }
+          },
+          {
+            "name": "end_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "UB3-3QJ",
+              "title": "End Name"
+            }
+          },
+          {
+            "name": "avoid_gates",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Avoid Gates"
+            }
+          },
+          {
+            "name": "max_distance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 100,
+              "title": "Max Distance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/optimal_stargate_network_and_deployment": {
+      "get": {
+        "tags": [
+          "Optimization Tools"
+        ],
+        "summary": "Evaluate Optimal Gate Deployment for Selected Ships",
+        "description": "### Simulate gate deployment strategies across a stargate-optimized route for a selection of ships.\n\n**Query Parameters:**\n- **start_name** (*str*, default: ICT-SVL): Starting solar system name.\n- **end_name** (*str*, default: UB3-3QJ): Destination solar system name.\n- **max_stargate_distance** (*float*, default: 499): Max LY distance between Star Gates.\n- **npc_avoidance_level** (*int*, default: 3): 0 (off) to 3 (strict): avoid NPC-gated systems.\n- **include_ships** (*str*, default: Flegel): Ship name to evaluate for deployment.\n- **avoid_gates** (*bool*, default: False): Whether to avoid (True) NPC Gates or not (False)\n\n**Returns:**\n- JSON list of optimal gate deployment strategies for the selected ships, sorted by performance.",
+        "operationId": "batch_optimal_gate_push_optimal_stargate_network_and_deployment_get",
+        "parameters": [
+          {
+            "name": "start_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ICT-SVL",
+              "title": "Start Name"
+            }
+          },
+          {
+            "name": "end_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "UB3-3QJ",
+              "title": "End Name"
+            }
+          },
+          {
+            "name": "max_stargate_distance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 499,
+              "title": "Max Stargate Distance"
+            }
+          },
+          {
+            "name": "npc_avoidance_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Npc Avoidance Level"
+            }
+          },
+          {
+            "name": "include_ships",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Flegel",
+              "title": "Include Ships"
+            }
+          },
+          {
+            "name": "avoid_gates",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Avoid Gates"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calculate_distance": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Find the distance between two systems",
+        "description": "### Calculate the distance in light-years between two solar systems.\n\n**Query Parameters:**\n- **system_a** (*str*, default: EFN-12M): First system name.\n- **system_b** (*str*, default: H.BQL.581): Second system name.\n\n**Returns:**\n- A JSON object with the validated system names and the calculated distance in light-years.\n\n**Example Request:**\n```\nGET /calculate_distance?system_a=EFN-12M&system_b=H.BQL.581\n```\n\n**Example Response:**\n```json\n{\n    \"system_a\": \"EFN-12M\",\n    \"system_b\": \"H.BQL.581\",\n    \"distance_ly\": \"294.62\"\n}\n```",
+        "operationId": "calculate_distance_api_calculate_distance_get",
+        "parameters": [
+          {
+            "name": "system_a",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "EFN-12M",
+              "title": "System A"
+            }
+          },
+          {
+            "name": "system_b",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "H.BQL.581",
+              "title": "System B"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/find_systems_within_distance": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Find all systems within a specified distance",
+        "description": "### Return all systems within a specified max distance from a reference system.\n\n\n**Query Parameters:**\n- **system_name** (*str*, default: EFN-12M): The reference system to search around.\n- **max_distance** (*float*, default: 60): Maximum distance (in light-years).\n\n**Returns:**\n- A JSON object with a list of nearby systems and their distances from the reference system.\n\n**Example Request:**\n```\nGET /find_systems_within_distance?system_name=EFN-12M&max_distance=60\n```\n\n**Example Response:**\n```json\n{\n    \"reference_system\": \"EFN-12M\",\n    \"nearby_systems\": [\n        {\n            \"system_name\": \"OCL-D3M\",\n            \"distance_ly\": \"58\"\n        },\n        {\n            \"system_name\": \"OKN-N3M\",\n            \"distance_ly\": \"59\"\n        }\n    ]\n}\n```",
+        "operationId": "find_systems_within_distance_api_find_systems_within_distance_get",
+        "parameters": [
+          {
+            "name": "system_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "EFN-12M",
+              "title": "System Name"
+            }
+          },
+          {
+            "name": "max_distance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 60,
+              "title": "Max Distance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/find_common_systems_within_distance": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Find common systems within a specified distance of two systems",
+        "description": "### Find systems that are within a given distance from *both* input systems.\n\nSystem names are validated independently. This is useful to identify a common jump point or stargate location between two systems.\n\n**Query Parameters:**\n- **system_a** (*str*, default: E9H-LGK): First reference system.\n- **system_b** (*str*, default: IMK-85H): Second reference system.\n- **max_distance** (*float*, default: 400): Maximum distance from each system.\n\n**Returns:**\n- A JSON object with shared nearby systems and their distances from each reference point.\n\n**Example Request:**\n```\nGET /find_common_systems_within_distance?system_a=E9H-LGK&system_b=IMK-85H&max_distance=400\n```\n\n**Example Response:**\n```json\n{\n    \"reference_systems\": [\"E9H-LGK\", \"IMK-85H\"],\n    \"common_systems\": [\n        {\n            \"system_name\": \"IT0-7MJ\",\n            \"distance_from_a_ly\": \"360\",\n            \"distance_from_b_ly\": \"368\"\n        },\n        {\n            \"system_name\": \"IMQ-VKJ\",\n            \"distance_from_a_ly\": \"392\",\n            \"distance_from_b_ly\": \"318\"\n        }\n    ]\n}\n```",
+        "operationId": "find_common_systems_within_distance_api_find_common_systems_within_distance_get",
+        "parameters": [
+          {
+            "name": "system_a",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "E9H-LGK",
+              "title": "System A"
+            }
+          },
+          {
+            "name": "system_b",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "IMK-85H",
+              "title": "System B"
+            }
+          },
+          {
+            "name": "max_distance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 400,
+              "title": "Max Distance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calculate_travel_distance": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Calculate the maximum travel distance for a ship",
+        "description": "### Find the jump range of a ship.\n\n**Query Parameters:**\n- **current_fuel** (*float*): Amount of fuel in your tank.\n- **fuel_efficiency** (*float*): Fuel efficiency as a whole number (e.g., 80% = 80).\n- **mass** (*float*): Mass in kg from the \"show info\" window when fully loaded to jump.\n\n**Returns:**\n- A JSON object with the max travel distance.\n\n**Example Request:**\n```\nGET /calculate_travel_distance?current_fuel=2800&fuel_efficiency=80&mass=4795000\n```\n\n**Example Response:**\n```json\n{\n    \"max_travel_distance_ly\": \"125.83\"\n}\n```",
+        "operationId": "calculate_travel_distance_api_calculate_travel_distance_get",
+        "parameters": [
+          {
+            "name": "current_fuel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 2800,
+              "title": "Current Fuel"
+            }
+          },
+          {
+            "name": "fuel_efficiency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 90,
+              "title": "Fuel Efficiency"
+            }
+          },
+          {
+            "name": "mass",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 200276776,
+              "title": "Mass"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calculate_fuel_required": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Calculate fuel required to travel a given distance",
+        "description": "### Find the fuel needed to travel a specific distance.\n\n**Query Parameters:**\n- **mass** (*float*): Mass in kg from the \"show info\" window when fully loaded.\n- **lightyears** (*float*): Distance to travel in light-years.\n- **fuel_efficiency** (*float*): Fuel efficiency (e.g., 80 = 80%).\n\n**Returns:**\n- A JSON object with the fuel required.\n\n**Example Request:**\n```\nGET /calculate_fuel_required?mass=4795000&lightyears=420&fuel_efficiency=80\n```\n\n**Example Response:**\n```json\n{\n    \"fuel_required\": \"2514.38\"\n}\n```",
+        "operationId": "calculate_fuel_required_api_calculate_fuel_required_get",
+        "parameters": [
+          {
+            "name": "mass",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 4795000,
+              "title": "Mass"
+            }
+          },
+          {
+            "name": "lightyears",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 420,
+              "title": "Lightyears"
+            }
+          },
+          {
+            "name": "fuel_efficiency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 80,
+              "title": "Fuel Efficiency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calculate_fuel_per_lightyear": {
+      "get": {
+        "tags": [
+          "Navigation Tools"
+        ],
+        "summary": "Calculate how much fuel is used per light-year",
+        "description": "### Find how much fuel your ship uses per light-year of travel.\n\n**Query Parameters:**\n- **mass** (*float*): Mass of the ship in kg.\n- **fuel_efficiency** (*float*): Fuel efficiency (e.g., 80 = 80%).\n\n**Returns:**\n- A JSON object with fuel used per light-year.\n\n**Example Request:**\n```\nGET /calculate_fuel_per_lightyear?mass=4795000&fuel_efficiency=80\n```\n\n**Example Response:**\n```json\n{\n    \"fuel_per_lightyear\": \"0.60\"\n}\n```",
+        "operationId": "calculate_fuel_per_lightyear_api_calculate_fuel_per_lightyear_get",
+        "parameters": [
+          {
+            "name": "mass",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 4795000,
+              "title": "Mass"
+            }
+          },
+          {
+            "name": "fuel_efficiency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 80,
+              "title": "Fuel Efficiency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_character_by_name": {
+      "get": {
+        "tags": [
+          "Character Tools"
+        ],
+        "summary": "Find public information about a character by name",
+        "description": "### Find public information about a character given their in-game name.\n\n**Query Parameters:**\n- **player_name** (*str*): Case-sensitive name of a player.\n\n**Returns:**\n- A JSON object with the public information about that player, ensuring all values are serialized as plain strings.\n\n**Example Request:**\n```\nGET /get_character_by_name?player_name=Zlake\n```\n\n**Example Response:**\n```json\n{\n    \"characters\": [\n        {\n            \"address\": \"0xf5f889892848a5344838b281101b1553a4837316\",\n            \"id\": \"6425463909252110460469638684213996014816210684576621181392451609492115685376\",\n            \"corpId\": \"98000003\",\n            \"name\": \"Zlake\",\n            \"isSmartCharacter\": \"True\",\n            \"createdAt\": \"0\",\n            \"eveBalanceWei\": \"1010000000000000000\",\n            \"gasBalanceWei\": \"864136049501080\"\n        }\n    ]\n}\n```",
+        "operationId": "get_character_by_name_api_get_character_by_name_get",
+        "parameters": [
+          {
+            "name": "player_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Zlake",
+              "title": "Player Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_character_by_address": {
+      "get": {
+        "tags": [
+          "Character Tools"
+        ],
+        "summary": "Find public information about a character by wallet address",
+        "description": "### Find public information about a character given their wallet address.\n\n**Query Parameters:**\n- **player_address** (*str*): Wallet address of the player.\n\n**Returns:**\n- A JSON object with the public information about that player, ensuring all values are serialized as plain strings.\n\n**Example Request:**\n```\nGET /get_character_by_address?player_address=0xf5f889892848a5344838b281101b1553a4837316\n```\n\n**Example Response:**\n```json\n{\n    \"characters\": [\n        {\n            \"address\": \"0x....\",\n            \"id\": \"6425463909252110460469638684213996014816210684576621181392451609492115685376\",\n            \"corpId\": \"98000003\",\n            \"name\": \"Zlake\",\n            \"isSmartCharacter\": \"true\",\n            \"createdAt\": \"0\",\n            \"eveBalanceWei\": \"1010000000000000000\",\n            \"gasBalanceWei\": \"864136049501080\"\n        }\n    ]\n}\n```",
+        "operationId": "get_character_by_address_api_get_character_by_address_get",
+        "parameters": [
+          {
+            "name": "player_address",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "0xf5f889892848a5344838b281101b1553a4837316",
+              "title": "Player Address"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_chars_by_corp_id": {
+      "get": {
+        "tags": [
+          "Character Tools"
+        ],
+        "summary": "Find all characters in a corporation given a corp ID",
+        "description": "### Find all characters in a corporation given a corp ID.\n\n**Query Parameters:**\n- **corp_id** (*str*): Corporation ID, either pulled from a character or in-game info.\n\n**Returns:**\n- A JSON object with all characters in the corporation identified by `corp_id`.\n\n**Example Request:**\n```\nGET /get_chars_by_corp_id?corp_id=98000003\n```\n\n**Example Response:**\n```json\n{\n    \"corp_id\": \"98000003\",\n    \"corp_characters\": [\n        \"Char1\",\n        \"Char2\",\n        \"Char3\"\n    ]\n}\n```",
+        "operationId": "get_chars_by_corp_id_api_get_chars_by_corp_id_get",
+        "parameters": [
+          {
+            "name": "corp_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "98000003",
+              "title": "Corp Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_chars_by_player": {
+      "get": {
+        "tags": [
+          "Character Tools"
+        ],
+        "summary": "Find all characters in a corporation given a player’s name",
+        "description": "### Find all characters in a corporation given another player's name.\n\n**Query Parameters:**\n- **player_name** (*str*): Case-sensitive in-game character name.\n\n**Returns:**\n- A JSON object with a list of all characters in the same corporation as `player_name`.\n\n**Example Request:**\n```\nGET /get_chars_by_player?player_name=input_char_name\n```\n\n**Example Response:**\n```json\n{\n    \"player_name\": \"input_char_name\",\n    \"corp_characters\": [\n        \"Char1\",\n        \"Char2\",\n        \"Char3\"\n    ]\n}\n```",
+        "operationId": "get_chars_by_player_api_get_chars_by_player_get",
+        "parameters": [
+          {
+            "name": "player_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Zlake",
+              "title": "Player Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_gate_network": {
+      "get": {
+        "tags": [
+          "Character Tools"
+        ],
+        "summary": "Find the gate network for a given player name or corp ID",
+        "description": "### Find the gate network for a given player name or corp ID. *This data is cached and not regularly updated*\n\n**Query Parameters:**\n- **identifier** (*str*): Case-sensitive in-game character name or corpID\n\n**Returns:**\n- A JSON object of the current gate network or a restricted message.\n\n**Example Request:**\n```\nGET /get_gate_network?identifier=98000004\n```\n\n**Example Response (Valid Data):**\n```json\n{\n    \"gate_network\": [\n        {\n            \"from_system\": \"ELM-D0J\",\n            \"to_system\": \"null\",\n            \"owner\": \"MicroKong\",\n            \"fuel_amount\": \"500\",\n            \"fromIsOnline\": \"False\",\n            \"toIsOnline\": \"null\"\n        },\n        {\n            \"from_system\": \"E6H-RVH\",\n            \"to_system\": \"EQM-42J\",\n            \"owner\": \"MicroKong\",\n            \"fuel_amount\": \"344\",\n            \"fromIsOnline\": \"False\",\n            \"toIsOnline\": \"False\"\n        }\n    ]\n}\n```\n\n**Example Response (Restricted ID):**\n```json\n{\n    \"detail\": \"Unable to return REAP Data\"\n}\n```",
+        "operationId": "get_gate_network_get_gate_network_get",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "98000004",
+              "title": "Identifier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_mud_table_data": {
+      "get": {
+        "tags": [
+          "MUD Tools"
+        ],
+        "summary": "Query MUD Tables",
+        "description": "Retrieves data from a specified MUD table.\n\n**Query Parameters:**\n- **tablename** (*str*): The name of the table to query.\n- **limit** (*int*, optional): The maximum number of records to retrieve. If not provided, all records are returned.\n- **filter_value** (*str*, optional): A filter condition applied to the first key column in the table.\n\n**Returns:**\n- A JSON object containing:\n    - **\"table\"** (*str*): The name of the queried table.\n    - **\"columns\"** (*list* of *str*): A list of column names from the table.\n    - **\"data\"** (*list* of *dict*): A list of dictionaries where each dictionary represents a row, with keys as column names and values as row values.\n\n**Example Request:**\n```\nGET /get_mud_table_data?tablename=CharactersTable&limit=2\n```\n\n**Example Response:**\n```json\n{\n\"table\": \"CharactersTable\",\n\"columns\": [\n    \"characterId\",\n    \"characterAddress\",\n    \"corpId\",\n    \"createdAt\"\n],\n\"data\": [\n    {\n    \"characterId\": \"98871062387115037444364141419090065812481202731919592000305631490714909180\",\n    \"characterAddress\": \"0x7e48f47b877227ffc3d5396f516044e79aef77f8\",\n    \"corpId\": \"98000005\",\n    \"createdAt\": \"1741328834\"\n    },\n    {\n    \"characterId\": \"130819829625681100337969536607612248115466983599341682913106800954885202891\",\n    \"characterAddress\": \"0x96c606aa9276f799617a240b306c04644dbff405\",\n    \"corpId\": \"98000011\",\n    \"createdAt\": \"1741291492\"\n    }\n]\n}\n```\n\n**Error Responses:**\n- `400 Bad Request`: If the table name is invalid or not found.\n- `500 Internal Server Error`: If an unexpected error occurs during query execution.\n\n**Raises:**\n- `HTTPException`: If the requested table does not exist or an error occurs while fetching data.",
+        "operationId": "get_mud_table_data_get_mud_table_data_get",
+        "parameters": [
+          {
+            "name": "tablename",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "CharactersTable",
+              "title": "Tablename"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": 10,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "filter_value",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filter Value"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "RouteSegment": {
+        "properties": {
+          "from": {
+            "type": "string",
+            "title": "From"
+          },
+          "to": {
+            "type": "string",
+            "title": "To"
+          },
+          "distance_ly": {
+            "type": "string",
+            "title": "Distance Ly"
+          }
+        },
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "distance_ly"
+        ],
+        "title": "RouteSegment"
+      },
+      "SimpleRouteResponse": {
+        "properties": {
+          "route": {
+            "items": {
+              "$ref": "#/components/schemas/RouteSegment"
+            },
+            "type": "array",
+            "title": "Route"
+          }
+        },
+        "type": "object",
+        "required": [
+          "route"
+        ],
+        "title": "SimpleRouteResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Optimization Tools",
+      "description": "Tools for optimizing StarGate Network Deployment, including fuel cost, range calculation, and deployment strategies for specific ship types."
+    },
+    {
+      "name": "Navigation Tools",
+      "description": "Tools for finding routes, system distances and jump ranges."
+    },
+    {
+      "name": "Character Tools",
+      "description": "APIs for retrieving character and corporation information. Builds on CCPs API and some data munging to make more useful outputs."
+    },
+    {
+      "name": "MUD Tools",
+      "description": "APIs for retrieving information from MUD Explorer tables. Wraps some calls to Observe MUD Explorer for easier use and a single functional endpoint."
+    }
+  ]
+}

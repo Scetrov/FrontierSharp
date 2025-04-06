@@ -7,23 +7,20 @@ public class FindTravelRouteRequest : GetRequestModel<FindTravelRouteRequest> {
     public string StartName { get; init; } = "ICT-SVL";
     public string EndName { get; init; } = "UB3-3QJ";
 
-    public bool AvoidGates { get; init; } = false;
+    public bool AvoidGates { get; init; }
     public decimal MaxDistanceInLightYears { get; init; } = 100m;
 
-    public override string GetCacheKey() {
-        return $"{nameof(FindTravelRouteRequest)}_{StartName}_{EndName}_{AvoidGates}_{MaxDistanceInLightYears}";
-    }
+    public override string GetCacheKey() =>
+        $"{nameof(FindTravelRouteRequest)}_{StartName}_{EndName}_{AvoidGates}_{MaxDistanceInLightYears}";
 
-    public override Dictionary<string, string> GetQueryParams() {
-        return new Dictionary<string, string> {
+    public override Dictionary<string, string> GetQueryParams() =>
+        new() {
             { "start_name", StartName },
             { "end_name", EndName },
             { "avoid_gates", AvoidGates.ToString() },
             { "max_distance", MaxDistanceInLightYears.ToString(CultureInfo.InvariantCulture) }
         };
-    }
 
-    public override string GetEndpoint() {
-        return "/find_travel_route";
-    }
+    public override string GetEndpoint() =>
+        "/find_travel_route";
 }
