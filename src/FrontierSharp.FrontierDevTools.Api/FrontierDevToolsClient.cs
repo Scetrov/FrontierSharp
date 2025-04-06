@@ -41,9 +41,9 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
         return await httpClient.Get<FindTravelRouteRequest, RouteResponse>(
             new FindTravelRouteRequest { StartName = start, EndName = end, AvoidGates = avoidGates, MaxDistanceInLightYears = maxDistance }, ct);
     }
-    
+
     public async Task<IResult<DistanceResponse>> CalculateDistance(string systemA, string systemB, CancellationToken ct = default) {
         return await httpClient.Get<CalculateDistanceRequest, DistanceResponse>(
-            new CalculateDistanceRequest() { SystemA = systemA, SystemB = systemB }, ct);
+            new CalculateDistanceRequest { SystemA = systemA, SystemB = systemB }, ct);
     }
 }

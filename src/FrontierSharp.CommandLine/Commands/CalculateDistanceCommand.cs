@@ -2,7 +2,6 @@ using System.ComponentModel;
 using FluentResults;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
-using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -23,9 +22,9 @@ public class CalculateDistanceCommand(ILogger<GetCorporationCommand> logger, IFr
         }
 
         var table = SpectreUtils.CreateAnsiTable($"Distance {settings.SystemA} \u2192 {settings.SystemB}", "SystemA", "SystemB", "Distance (LY)");
-        
+
         table.AddRow(result.Value.SystemA, result.Value.SystemB, ((int)Math.Floor(result.Value.DistanceInLightYears)).ToString());
-        
+
         ansiConsole.Write(table);
         return 0;
     }
