@@ -2,6 +2,7 @@
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
+using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using FrontierSharp.HttpClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +43,7 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o").WithAlias("op");
             config.AddCommand<FindTravelRouteCommand>("route").WithAlias("fr").WithAlias("rt");
             config.AddCommand<CalculateDistanceCommand>("distance").WithAlias("d");
+            config.AddCommand<FindSystemsWithinDistanceCommand>("systems-within-distance").WithAlias("sd");
         });
         services.AddSingleton<ICommandApp>(app);
     })
