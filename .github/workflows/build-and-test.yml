@@ -126,10 +126,16 @@ jobs:
         run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=${{ steps.version_step.outputs.FullSemVer }}
         working-directory: ./src
 
-      - name: Publish NuGet Package
+      - name: Publish NuGet Package to NuGet.org
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        working-directory: ./src
+
+      - name: Publish NuGet Package to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key $GITHUB_TOKEN --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
         working-directory: ./src
 
       - name: Create Linux-x64 Archive
@@ -162,3 +168,4 @@ jobs:
           tag: ${{ steps.version_step.outputs.FullSemVer }}
           commit: ${{ github.sha }}
           artifacts: "./src/nupkg/*.nupkg,./src/*.tar.gz,./src/*.zip"
+
