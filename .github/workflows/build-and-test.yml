@@ -182,8 +182,7 @@ jobs:
         with:
           images: ghcr.io/${{ env.REPO_LC }}
           tags: |
-            type=latest
-            type=semver,pattern=v${{ steps.version_step.outputs.FullSemVer }}
+            type=semver,pattern={{version}},value=${{ steps.version_step.outputs.FullSemVer }}
 
       - name: Build and push Docker image
         id: push
