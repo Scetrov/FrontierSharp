@@ -181,11 +181,11 @@ jobs:
       - name: Build and push multi-arch image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./src/FrontierSharp.CommandLine
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/scetrov/frontierctl:latest
-            ghcr.io/scetrov/frontierctl:${{ steps.version_step.outputs.FullSemVer }}
+            ghcr.io/{{ env.OWNER_LC }}/frontierctl:latest
+            ghcr.io/{{ env.OWNER_LC }}/frontierctl:${{ steps.version_step.outputs.FullSemVer }}
           provenance: false
           sbom: false
