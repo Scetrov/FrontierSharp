@@ -9,6 +9,14 @@
 
 You can download binaries from the [Releases](https://github.com/Scetrov/FrontierSharp/releases) page.
 
+## Running with Docker
+
+You can run `frontierctl` using Docker. The following command will run the latest version of `frontierctl`:
+
+```sh
+docker run ghcr.io/scetrov/frontiersharp:latest rider --name Scetrov
+```
+
 ## Building from Source
 
 To build `frontierctl` from source, you can use the following steps:
