@@ -9,7 +9,7 @@ using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class CalculateDistanceCommand(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<CalculateDistanceCommand.Settings> {
+public class CalculateDistanceCommand(ILogger<CalculateDistanceCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<CalculateDistanceCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.CalculateDistance(settings.SystemA, settings.SystemB, CancellationToken.None);
 

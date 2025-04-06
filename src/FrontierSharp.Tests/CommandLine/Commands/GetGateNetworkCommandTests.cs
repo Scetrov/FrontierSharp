@@ -14,8 +14,8 @@ public class GetGateNetworkCommandTests {
     private static GetGateNetworkCommand CreateCommand(
         IFrontierDevToolsClient? client = null,
         IAnsiConsole? console = null,
-        ILogger<GetCorporationCommand>? logger = null) {
-        return new GetGateNetworkCommand(logger ?? Substitute.For<ILogger<GetCorporationCommand>>(),
+        ILogger<GetGateNetworkCommand>? logger = null) {
+        return new GetGateNetworkCommand(logger ?? Substitute.For<ILogger<GetGateNetworkCommand>>(),
             client ?? Substitute.For<IFrontierDevToolsClient>(),
             console ?? Substitute.For<IAnsiConsole>());
     }

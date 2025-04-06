@@ -11,7 +11,7 @@ using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class OptimizeStargateNetworkPlacementCommand(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<OptimizeStargateNetworkPlacementCommand.Settings> {
+public class OptimizeStargateNetworkPlacementCommand(ILogger<OptimizeStargateNetworkPlacementCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<OptimizeStargateNetworkPlacementCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.OptimalStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
 

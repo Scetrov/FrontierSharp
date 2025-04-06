@@ -17,7 +17,7 @@ public class FindTravelRouteCommandTests {
     private readonly IFrontierDevToolsClient _client = Substitute.For<IFrontierDevToolsClient>();
     private readonly FindTravelRouteCommand _command;
     private readonly IAnsiConsole _console = Substitute.For<IAnsiConsole>();
-    private readonly ILogger<GetCorporationCommand> _logger = Substitute.For<ILogger<GetCorporationCommand>>();
+    private readonly ILogger<FindTravelRouteCommand> _logger = Substitute.For<ILogger<FindTravelRouteCommand>>();
 
     public FindTravelRouteCommandTests() {
         _command = new FindTravelRouteCommand(_logger, _client, _console);

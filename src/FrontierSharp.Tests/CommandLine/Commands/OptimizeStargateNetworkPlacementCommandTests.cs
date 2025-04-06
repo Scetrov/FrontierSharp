@@ -17,7 +17,7 @@ public class OptimizeStargateNetworkPlacementCommandTests {
     private readonly IFrontierDevToolsClient _client = Substitute.For<IFrontierDevToolsClient>();
     private readonly OptimizeStargateNetworkPlacementCommand _command;
     private readonly IAnsiConsole _console = Substitute.For<IAnsiConsole>();
-    private readonly ILogger<GetCorporationCommand> _logger = Substitute.For<ILogger<GetCorporationCommand>>();
+    private readonly ILogger<OptimizeStargateNetworkPlacementCommand> _logger = Substitute.For<ILogger<OptimizeStargateNetworkPlacementCommand>>();
 
     public OptimizeStargateNetworkPlacementCommandTests() {
         _command = new OptimizeStargateNetworkPlacementCommand(_logger, _client, _console);

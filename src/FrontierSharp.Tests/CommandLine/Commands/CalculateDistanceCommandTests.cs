@@ -17,7 +17,7 @@ public class CalculateDistanceCommandTests {
     [Fact]
     public async Task ExecuteAsync_ShouldWriteTableAndReturnZero_OnSuccess() {
         // Arrange
-        var logger = Substitute.For<ILogger<GetCorporationCommand>>();
+        var logger = Substitute.For<ILogger<CalculateDistanceCommand>>();
         var client = Substitute.For<IFrontierDevToolsClient>();
         var console = Substitute.For<IAnsiConsole>();
         var command = new CalculateDistanceCommand(logger, client, console);
@@ -49,7 +49,7 @@ public class CalculateDistanceCommandTests {
     [Fact]
     public async Task ExecuteAsync_ShouldLogErrorAndReturnOne_OnFailure() {
         // Arrange
-        var logger = Substitute.For<ILogger<GetCorporationCommand>>();
+        var logger = Substitute.For<ILogger<CalculateDistanceCommand>>();
         var client = Substitute.For<IFrontierDevToolsClient>();
         var console = Substitute.For<IAnsiConsole>();
         var command = new CalculateDistanceCommand(logger, client, console);
