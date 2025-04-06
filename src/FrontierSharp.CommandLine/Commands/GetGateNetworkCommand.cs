@@ -10,7 +10,7 @@ using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class GetGateNetworkCommand(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<GetGateNetworkCommand.Settings> {
+public class GetGateNetworkCommand(ILogger<GetGateNetworkCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<GetGateNetworkCommand.Settings> {
     // ReSharper disable once ClassNeverInstantiated.Global
     public enum CorporationSearchType {
         Id,

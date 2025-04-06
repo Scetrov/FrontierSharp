@@ -1,9 +1,9 @@
-
 # FrontierSharp.CommandLine
 
 ## Description
 
-`frontierctl` is a cross-platform command line application designed for interacting with the EVE Frontier world via the API, Blockchain and Mud Tables.
+`frontierctl` is a cross-platform command line application designed for interacting with the EVE Frontier world via the
+API, Blockchain and Mud Tables.
 
 ## Downloading Binaries
 
@@ -43,7 +43,8 @@ To build `frontierctl` from source, you can use the following steps:
 
 ### Usage
 
-After installation, you can use the CLI tool by finding `frontierctl` in the `bin/Release/net9.0` directory of the project. You can run it directly from the command line:
+After installation, you can use the CLI tool by finding `frontierctl` in the `bin/Release/net9.0` directory of the
+project. You can run it directly from the command line:
 
 ```sh
 frontierctl --help

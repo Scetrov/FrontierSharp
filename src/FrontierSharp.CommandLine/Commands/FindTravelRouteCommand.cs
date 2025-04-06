@@ -10,7 +10,7 @@ using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class FindTravelRouteCommand(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
+public class FindTravelRouteCommand(ILogger<FindTravelRouteCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, CancellationToken.None);
 
