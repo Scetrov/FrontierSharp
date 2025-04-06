@@ -186,5 +186,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/frontiersharp-cli:latest
-            ghcr.io/${{ github.repository_owner }}/frontiersharp-cli:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner.lowercase }}/frontierctl:latest
+            ghcr.io/${{ github.repository_owner.lowercase }}/frontierctl:${{ steps.version_step.outputs.FullSemVer }}
