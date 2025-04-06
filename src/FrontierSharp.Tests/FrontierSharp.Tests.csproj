@@ -41,4 +41,9 @@
         <ProjectReference Include="..\FrontierSharp.Starmap\FrontierSharp.Starmap.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Remove="FrontierDevTools\openapi.json"/>
+        <EmbeddedResource Include="FrontierDevTools\openapi.json"/>
+    </ItemGroup>
+
 </Project>

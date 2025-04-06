@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine.Commands;
-using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Spectre.Console;
-using Spectre.Console.Cli;
 using Xunit;
 
 namespace FrontierSharp.Tests.CommandLine.Commands;
@@ -34,7 +27,7 @@ public class FindSystemsWithinDistanceCommandTests {
         };
 
         client.FindSystemsWithinDistance("ROOT", 50, Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = systems, ReferenceSystem = "ROOT" }));
+            .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = systems, ReferenceSystem = "ROOT" }));
 
         var context = CommandContextHelper.Create();
         var settings = new FindSystemsWithinDistanceCommand.Settings {
@@ -57,7 +50,7 @@ public class FindSystemsWithinDistanceCommandTests {
 
         var error = new Error("API failure");
         client.FindSystemsWithinDistance("ROOT", 50, Arg.Any<CancellationToken>())
-              .Returns(Result.Fail<SystemsWithinDistanceResponse>(error));
+            .Returns(Result.Fail<SystemsWithinDistanceResponse>(error));
 
         var context = CommandContextHelper.Create();
         var settings = new FindSystemsWithinDistanceCommand.Settings {
@@ -80,7 +73,7 @@ public class FindSystemsWithinDistanceCommandTests {
         var command = new FindSystemsWithinDistanceCommand(logger, client, console);
 
         client.FindSystemsWithinDistance("EMPTY", 100, Arg.Any<CancellationToken>())
-              .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = [], ReferenceSystem = "EMPTY"}));
+            .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = [], ReferenceSystem = "EMPTY" }));
 
         var context = CommandContextHelper.Create();
         var settings = new FindSystemsWithinDistanceCommand.Settings {

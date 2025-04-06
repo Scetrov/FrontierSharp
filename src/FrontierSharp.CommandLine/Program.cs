@@ -2,7 +2,6 @@
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
-using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using FrontierSharp.HttpClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

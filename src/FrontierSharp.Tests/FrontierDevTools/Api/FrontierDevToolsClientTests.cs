@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using FluentResults;
 using FrontierSharp.FrontierDevTools.Api;
@@ -86,7 +87,7 @@ public class FrontierDevToolsClientTests {
 
         result.Should().Be(expected);
     }
-    
+
     [Fact]
     public async Task CalculateDistance_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<DistanceResponse>>();
@@ -116,7 +117,7 @@ public class FrontierDevToolsClientTests {
 
         result.Should().Be(expected);
     }
-    
+
     [Fact]
     public async Task OptimalStargateAndNetworkPlacement_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<RouteResponse>>();
@@ -137,7 +138,7 @@ public class FrontierDevToolsClientTests {
 
         result.Should().Be(expected);
     }
-    
+
     [Fact]
     public async Task FindTravelRoute_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<RouteResponse>>();
@@ -157,5 +158,95 @@ public class FrontierDevToolsClientTests {
         var result = await _sut.FindTravelRoute(start, end, avoidGates, maxDistance);
 
         result.Should().Be(expected);
+    }
+
+
+    [Theory]
+    [MemberData(nameof(GetFindTravelRouteTestCases))]
+    public async Task RequestModelsParameters_ShouldMatchOpenApiDefinition<T>(string route, IGetRequestModel model) {
+        await using var jsonContent = ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
+        var jsonDocument = await JsonNode.ParseAsync(jsonContent);
+        var requestModel = jsonDocument?["paths"]?[route]?["get"]?["parameters"];
+
+        if (requestModel == null) {
+            throw new InvalidOperationException("The $.paths.{route}.get.parameters node was not found in the OpenAPI document.");
+        }
+
+        var parameters = requestModel.AsArray().Select(x => x?["name"]?.GetValue<string>()).ToArray();
+        model.GetEndpoint().Should().Be(route);
+        model.GetQueryParams().Keys.Should().BeEquivalentTo(parameters);
+    }
+
+    public static IEnumerable<object[]> GetFindTravelRouteTestCases() {
+        yield return [
+            "/optimize_stargate_network_placement",
+            new OptimizeStargateNetworkPlacementRequest {
+                StartName = "A",
+                EndName = "B",
+                NpcAvoidanceLevel = NpcAvoidanceLevel.Medium,
+                MaxDistanceInLightYears = 99m
+            }
+        ];
+
+        yield return [
+            "/find_travel_route",
+            new FindTravelRouteRequest {
+                StartName = "A",
+                EndName = "B",
+                AvoidGates = true,
+                MaxDistanceInLightYears = 99m
+            }
+        ];
+
+        yield return [
+            "/calculate_distance",
+            new CalculateDistanceRequest {
+                SystemA = "A",
+                SystemB = "B"
+            }
+        ];
+
+        yield return [
+            "/find_systems_within_distance",
+            new FindSystemsWithinDistanceRequest {
+                SystemName = "A",
+                MaxDistance = 99m
+            }
+        ];
+
+        yield return [
+            "/get_character_by_name",
+            new GetCharacterByNameRequest {
+                PlayerName = "A"
+            }
+        ];
+
+        yield return [
+            "/get_character_by_address",
+            new GetCharacterByAddressRequest {
+                Address = "A"
+            }
+        ];
+
+        yield return [
+            "/get_chars_by_corp_id",
+            new GetCharactersByCorpIdRequest {
+                CorpId = 99
+            }
+        ];
+
+        yield return [
+            "/get_chars_by_player",
+            new GetCharactersByPlayerRequest {
+                PlayerName = "A"
+            }
+        ];
+
+        yield return [
+            "/get_gate_network",
+            new GetGateNetworkRequest {
+                Identifier = "A"
+            }
+        ];
     }
 }
