@@ -8,7 +8,7 @@ public class FindSystemsWithingDistanceRequest : GetRequestModel<FindSystemsWith
     public decimal MaxDistance { get; init; } = 60;
 
     public override string GetCacheKey() {
-        return $"{nameof(CalculateDistanceRequest)}_{SystemName}_{MaxDistance}";
+        return $"{nameof(FindSystemsWithinDistanceRequest)}_{SystemName}_{MaxDistance}";
     }
 
     public override Dictionary<string, string> GetQueryParams() {
