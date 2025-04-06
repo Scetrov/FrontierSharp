@@ -3,7 +3,7 @@ using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.FrontierDevTools.Api.RequestModels;
 
-public class FindSystemsWithingDistanceRequest : GetRequestModel<FindSystemsWithingDistanceRequest> {
+public class FindSystemsWithinDistanceRequest : GetRequestModel<FindSystemsWithinDistanceRequest> {
     public string SystemName { get; init; } = "EFN-12M";
     public decimal MaxDistance { get; init; } = 60;
 

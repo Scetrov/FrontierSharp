@@ -7,7 +7,7 @@ namespace FrontierSharp.Tests.FrontierDevTools.Api.RequestModels;
 public class FindSystemsWithinDistanceRequestTests {
     [Fact]
     public void Constructor_ShouldInitializeWithDefaultValues() {
-        var request = new FindSystemsWithingDistanceRequest();
+        var request = new FindSystemsWithinDistanceRequest();
 
         request.SystemName.Should().Be("EFN-12M");
         request.MaxDistance.Should().Be(60);
@@ -15,7 +15,7 @@ public class FindSystemsWithinDistanceRequestTests {
 
     [Fact]
     public void GetCacheKey_ShouldReturnCorrectFormat() {
-        var request = new FindSystemsWithingDistanceRequest {
+        var request = new FindSystemsWithinDistanceRequest {
             SystemName = "SYS-77",
             MaxDistance = 123.45m
         };
@@ -27,7 +27,7 @@ public class FindSystemsWithinDistanceRequestTests {
 
     [Fact]
     public void GetQueryParams_ShouldContainCorrectKeysAndValues() {
-        var request = new FindSystemsWithingDistanceRequest {
+        var request = new FindSystemsWithinDistanceRequest {
             SystemName = "HOME",
             MaxDistance = 42.75m
         };
@@ -41,7 +41,7 @@ public class FindSystemsWithinDistanceRequestTests {
 
     [Fact]
     public void GetEndpoint_ShouldReturnExpectedEndpoint() {
-        var request = new FindSystemsWithingDistanceRequest();
+        var request = new FindSystemsWithinDistanceRequest();
 
         var endpoint = request.GetEndpoint();
 

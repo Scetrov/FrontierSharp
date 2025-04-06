@@ -23,10 +23,10 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 public class FindSystemsWithinDistanceCommandTests {
     [Fact]
     public async Task ExecuteAsync_ShouldReturnZeroAndWriteTable_WhenSystemsAreFound() {
-        var logger = Substitute.For<ILogger<FindSystemsWithingDistanceCommand>>();
+        var logger = Substitute.For<ILogger<FindSystemsWithinDistanceCommand>>();
         var client = Substitute.For<IFrontierDevToolsClient>();
         var console = Substitute.For<IAnsiConsole>();
-        var command = new FindSystemsWithingDistanceCommand(logger, client, console);
+        var command = new FindSystemsWithinDistanceCommand(logger, client, console);
 
         var systems = new List<SystemDistanceResponse> {
             new() { SystemName = "SYS-01", DistanceInLightYears = 12.5m },
@@ -37,7 +37,7 @@ public class FindSystemsWithinDistanceCommandTests {
               .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = systems, ReferenceSystem = "ROOT" }));
 
         var context = CommandContextHelper.Create();
-        var settings = new FindSystemsWithingDistanceCommand.Settings {
+        var settings = new FindSystemsWithinDistanceCommand.Settings {
             SystemName = "ROOT",
             MaxDistance = 50
         };
@@ -50,17 +50,17 @@ public class FindSystemsWithinDistanceCommandTests {
 
     [Fact]
     public async Task ExecuteAsync_ShouldReturnOneAndLogError_WhenResultIsFailed() {
-        var logger = Substitute.For<ILogger<FindSystemsWithingDistanceCommand>>();
+        var logger = Substitute.For<ILogger<FindSystemsWithinDistanceCommand>>();
         var client = Substitute.For<IFrontierDevToolsClient>();
         var console = Substitute.For<IAnsiConsole>();
-        var command = new FindSystemsWithingDistanceCommand(logger, client, console);
+        var command = new FindSystemsWithinDistanceCommand(logger, client, console);
 
         var error = new Error("API failure");
         client.FindSystemsWithinDistance("ROOT", 50, Arg.Any<CancellationToken>())
               .Returns(Result.Fail<SystemsWithinDistanceResponse>(error));
 
         var context = CommandContextHelper.Create();
-        var settings = new FindSystemsWithingDistanceCommand.Settings {
+        var settings = new FindSystemsWithinDistanceCommand.Settings {
             SystemName = "ROOT",
             MaxDistance = 50
         };
@@ -74,16 +74,16 @@ public class FindSystemsWithinDistanceCommandTests {
 
     [Fact]
     public async Task ExecuteAsync_ShouldReturnOneAndLogMessage_WhenNoSystemsFound() {
-        var logger = Substitute.For<ILogger<FindSystemsWithingDistanceCommand>>();
+        var logger = Substitute.For<ILogger<FindSystemsWithinDistanceCommand>>();
         var client = Substitute.For<IFrontierDevToolsClient>();
         var console = Substitute.For<IAnsiConsole>();
-        var command = new FindSystemsWithingDistanceCommand(logger, client, console);
+        var command = new FindSystemsWithinDistanceCommand(logger, client, console);
 
         client.FindSystemsWithinDistance("EMPTY", 100, Arg.Any<CancellationToken>())
               .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = [], ReferenceSystem = "EMPTY"}));
 
         var context = CommandContextHelper.Create();
-        var settings = new FindSystemsWithingDistanceCommand.Settings {
+        var settings = new FindSystemsWithinDistanceCommand.Settings {
             SystemName = "EMPTY",
             MaxDistance = 100
         };
@@ -99,7 +99,7 @@ public class FindSystemsWithinDistanceCommandTests {
     [InlineData("")]
     [InlineData(" ")]
     public void Settings_ShouldReturnError_WhenSystemNameIsInvalid(string? systemName) {
-        var settings = new FindSystemsWithingDistanceCommand.Settings {
+        var settings = new FindSystemsWithinDistanceCommand.Settings {
             SystemName = systemName!,
             MaxDistance = 20
         };
@@ -112,7 +112,7 @@ public class FindSystemsWithinDistanceCommandTests {
 
     [Fact]
     public void Settings_ShouldReturnSuccess_WhenSystemNameIsValid() {
-        var settings = new FindSystemsWithingDistanceCommand.Settings {
+        var settings = new FindSystemsWithinDistanceCommand.Settings {
             SystemName = "EFN-12M",
             MaxDistance = 80
         };

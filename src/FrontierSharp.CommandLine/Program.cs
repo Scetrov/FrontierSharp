@@ -43,7 +43,7 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o").WithAlias("op");
             config.AddCommand<FindTravelRouteCommand>("route").WithAlias("fr").WithAlias("rt");
             config.AddCommand<CalculateDistanceCommand>("distance").WithAlias("d");
-            config.AddCommand<FindSystemsWithingDistanceCommand>("systems-within-distance").WithAlias("sd");
+            config.AddCommand<FindSystemsWithinDistanceCommand>("systems-within-distance").WithAlias("sd");
         });
         services.AddSingleton<ICommandApp>(app);
     })

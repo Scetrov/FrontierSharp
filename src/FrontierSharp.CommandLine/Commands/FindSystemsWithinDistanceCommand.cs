@@ -10,7 +10,7 @@ using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class FindSystemsWithingDistanceCommand(ILogger<FindSystemsWithingDistanceCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindSystemsWithingDistanceCommand.Settings> {
+public class FindSystemsWithinDistanceCommand(ILogger<FindSystemsWithinDistanceCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindSystemsWithinDistanceCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.FindSystemsWithinDistance(settings.SystemName, settings.MaxDistance, CancellationToken.None);
 
