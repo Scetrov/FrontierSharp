@@ -22,7 +22,7 @@ public class FindSystemsWithinDistanceRequestTests {
 
         var result = request.GetCacheKey();
 
-        result.Should().Be("CalculateDistanceRequest_SYS-77_123.45");
+        result.Should().Be("FindSystemsWithinDistanceRequest_SYS-77_123.45");
     }
 
     [Fact]
