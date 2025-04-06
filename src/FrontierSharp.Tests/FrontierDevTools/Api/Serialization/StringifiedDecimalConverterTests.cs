@@ -21,7 +21,7 @@ public class StringifiedDecimalConverterTests {
         var result = JsonSerializer.Deserialize<TestObject>(json, _options);
 
         result.Should().NotBeNull();
-        result!.Value.Should().Be(expected);
+        result.Value.Should().Be(expected);
     }
 
     [Theory]
@@ -49,6 +49,6 @@ public class StringifiedDecimalConverterTests {
     }
 
     public class TestObject {
-        public decimal Value { get; set; }
+        public decimal Value { get; init; }
     }
 }
