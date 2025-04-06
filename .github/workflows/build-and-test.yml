@@ -43,13 +43,6 @@ jobs:
         run: dotnet test --no-build --configuration Release --verbosity normal
         working-directory: ./src
 
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: TestResults/
-
       - name: Pack NuGet Package
         run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=0.0.0
         working-directory: ./src
