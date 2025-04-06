@@ -86,4 +86,76 @@ public class FrontierDevToolsClientTests {
 
         result.Should().Be(expected);
     }
+    
+    [Fact]
+    public async Task CalculateDistance_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<DistanceResponse>>();
+        var systemA = "EFN-12M";
+        var systemB = "H.BQL.581";
+
+        _httpClient.Get<CalculateDistanceRequest, DistanceResponse>(
+            Arg.Is<CalculateDistanceRequest>(r => r.SystemA == systemA && r.SystemB == systemB),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.CalculateDistance(systemA, systemB);
+
+        result.Should().Be(expected);
+    }
+
+    [Fact]
+    public async Task FindSystemsWithinDistance_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<SystemsWithinDistanceResponse>>();
+        var systemName = "EFN-12M";
+        var maxDistance = 42.5m;
+
+        _httpClient.Get<FindSystemsWithinDistanceRequest, SystemsWithinDistanceResponse>(
+            Arg.Is<FindSystemsWithinDistanceRequest>(r => r.SystemName == systemName && r.MaxDistance == maxDistance),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.FindSystemsWithinDistance(systemName, maxDistance);
+
+        result.Should().Be(expected);
+    }
+    
+    [Fact]
+    public async Task OptimalStargateAndNetworkPlacement_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<RouteResponse>>();
+        var start = "SOL";
+        var end = "ALPHA-CENT";
+        var maxDistance = 250m;
+        var avoidanceLevel = NpcAvoidanceLevel.Medium;
+
+        _httpClient.Get<OptimizeStargateNetworkPlacementRequest, RouteResponse>(
+            Arg.Is<OptimizeStargateNetworkPlacementRequest>(r =>
+                r.StartName == start &&
+                r.EndName == end &&
+                r.MaxDistanceInLightYears == maxDistance &&
+                r.NpcAvoidanceLevel == avoidanceLevel),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.OptimalStargateAndNetworkPlacement(start, end, maxDistance, avoidanceLevel);
+
+        result.Should().Be(expected);
+    }
+    
+    [Fact]
+    public async Task FindTravelRoute_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<RouteResponse>>();
+        var start = "NEBULA-1";
+        var end = "NEBULA-9";
+        var avoidGates = true;
+        var maxDistance = 150m;
+
+        _httpClient.Get<FindTravelRouteRequest, RouteResponse>(
+            Arg.Is<FindTravelRouteRequest>(r =>
+                r.StartName == start &&
+                r.EndName == end &&
+                r.AvoidGates == avoidGates &&
+                r.MaxDistanceInLightYears == maxDistance),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.FindTravelRoute(start, end, avoidGates, maxDistance);
+
+        result.Should().Be(expected);
+    }
 }
