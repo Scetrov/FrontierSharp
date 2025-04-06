@@ -51,6 +51,8 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    env:
+      BUILDX_NO_DEFAULT_ATTESTATIONS: 1
     
     permissions:
       contents: write
@@ -182,9 +184,9 @@ jobs:
         with:
           images: ghcr.io/${{ env.REPO_LC }}
           tags: |
-            type=semver,pattern={{major}},value=${{ steps.version_step.outputs.FullSemVer }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ steps.version_step.outputs.FullSemVer }}
-            type=semver,pattern={{version}},value=${{ steps.version_step.outputs.FullSemVer }}
+            type=semver,pattern=v{{major}},value=${{ steps.version_step.outputs.FullSemVer }}
+            type=semver,pattern=v{{major}}.{{minor}},value=${{ steps.version_step.outputs.FullSemVer }}
+            type=semver,pattern=v{{version}},value=${{ steps.version_step.outputs.FullSemVer }}
 
       - name: Build and push Docker image
         id: push
