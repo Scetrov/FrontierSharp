@@ -29,7 +29,7 @@ public class FindCommonSystemsWithinDistanceRequestCommand(ILogger<FindCommonSys
         var table = SpectreUtils.CreateAnsiTable($"Common systems between {result.Value.ReferenceSystems.First()} and {result.Value.ReferenceSystems.Last()}", "System Name", "Distance from A (LY)", "Distance from B (LY)", "NPC Gates");
 
         foreach (var system in result.Value.CommonSystems) {
-            table.AddRow(system.SystemName, ((int)Math.Floor(system.DistanceFromBInLy)).ToString(), ((int)Math.Floor(system.DistanceFromBInLy)).ToString(), system.NpcGates.ToString());
+            table.AddRow(system.SystemName, ((int)Math.Floor(system.DistanceFromAInLy)).ToString(), ((int)Math.Floor(system.DistanceFromBInLy)).ToString(), system.NpcGates.ToString());
         }
         
         ansiConsole.Write(table);
