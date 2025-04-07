@@ -65,7 +65,7 @@ public class OptimizeStargateNetworkPlacementCommandTests {
         var error = Substitute.For<IError>();
         error.Message.Returns("Something failed");
 
-        _client.OptimalStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
+        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
             .Returns(Result.Fail<RouteResponse>(error));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -85,7 +85,7 @@ public class OptimizeStargateNetworkPlacementCommandTests {
             Route = Array.Empty<JumpResponse>()
         };
 
-        _client.OptimalStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
+        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -107,7 +107,7 @@ public class OptimizeStargateNetworkPlacementCommandTests {
             ]
         };
 
-        _client.OptimalStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
+        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);

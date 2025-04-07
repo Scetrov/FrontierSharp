@@ -21,7 +21,7 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task GetCharactersByName_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<CharactersResponse>>();
-        var name = "JaneDoe";
+        const string name = "JaneDoe";
 
         _httpClient.Get<GetCharacterByNameRequest, CharactersResponse>(
             Arg.Is<GetCharacterByNameRequest>(r => r.PlayerName == name),
@@ -35,7 +35,7 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task GetCharactersByAddress_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<CharactersResponse>>();
-        var address = "0xabc123";
+        const string address = "0xabc123";
 
         _httpClient.Get<GetCharacterByAddressRequest, CharactersResponse>(
             Arg.Is<GetCharacterByAddressRequest>(r => r.Address == address),
@@ -49,7 +49,7 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task GetCharactersByCorpId_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<CorporationResponse>>();
-        var corpId = 99;
+        const int corpId = 99;
 
         _httpClient.Get<GetCharactersByCorpIdRequest, CorporationResponse>(
             Arg.Is<GetCharactersByCorpIdRequest>(r => r.CorpId == corpId),
@@ -63,7 +63,7 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task GetCharactersByPlayer_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<CorporationResponse>>();
-        var playerName = "CommanderShepard";
+        const string playerName = "CommanderShepard";
 
         _httpClient.Get<GetCharactersByPlayerRequest, CorporationResponse>(
             Arg.Is<GetCharactersByPlayerRequest>(r => r.PlayerName == playerName),
@@ -77,7 +77,7 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task GetGateNetwork_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<GateNetworkResponse>>();
-        var identifier = "Sol";
+        const string identifier = "Sol";
 
         _httpClient.Get<GetGateNetworkRequest, GateNetworkResponse>(
             Arg.Is<GetGateNetworkRequest>(r => r.Identifier == identifier),
@@ -91,8 +91,8 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task CalculateDistance_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<DistanceResponse>>();
-        var systemA = "EFN-12M";
-        var systemB = "H.BQL.581";
+        const string systemA = "EFN-12M";
+        const string systemB = "H.BQL.581";
 
         _httpClient.Get<CalculateDistanceRequest, DistanceResponse>(
             Arg.Is<CalculateDistanceRequest>(r => r.SystemA == systemA && r.SystemB == systemB),
@@ -106,8 +106,8 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task FindSystemsWithinDistance_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<SystemsWithinDistanceResponse>>();
-        var systemName = "EFN-12M";
-        var maxDistance = 42.5m;
+        const string systemName = "EFN-12M";
+        const decimal maxDistance = 42.5m;
 
         _httpClient.Get<FindSystemsWithinDistanceRequest, SystemsWithinDistanceResponse>(
             Arg.Is<FindSystemsWithinDistanceRequest>(r => r.SystemName == systemName && r.MaxDistance == maxDistance),
@@ -119,12 +119,12 @@ public class FrontierDevToolsClientTests {
     }
 
     [Fact]
-    public async Task OptimalStargateAndNetworkPlacement_ShouldCallHttpClientWithCorrectRequest() {
+    public async Task OptimizeStargateAndNetworkPlacement_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<RouteResponse>>();
-        var start = "SOL";
-        var end = "ALPHA-CENT";
-        var maxDistance = 250m;
-        var avoidanceLevel = NpcAvoidanceLevel.Medium;
+        const string start = "SOL";
+        const string end = "ALPHA-CENT";
+        const decimal maxDistance = 250m;
+        const NpcAvoidanceLevel avoidanceLevel = NpcAvoidanceLevel.Medium;
 
         _httpClient.Get<OptimizeStargateNetworkPlacementRequest, RouteResponse>(
             Arg.Is<OptimizeStargateNetworkPlacementRequest>(r =>
@@ -134,7 +134,7 @@ public class FrontierDevToolsClientTests {
                 r.NpcAvoidanceLevel == avoidanceLevel),
             Arg.Any<CancellationToken>()).Returns(expected);
 
-        var result = await _sut.OptimalStargateAndNetworkPlacement(start, end, maxDistance, avoidanceLevel);
+        var result = await _sut.OptimizeStargateAndNetworkPlacement(start, end, maxDistance, avoidanceLevel);
 
         result.Should().Be(expected);
     }
@@ -142,10 +142,10 @@ public class FrontierDevToolsClientTests {
     [Fact]
     public async Task FindTravelRoute_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<RouteResponse>>();
-        var start = "NEBULA-1";
-        var end = "NEBULA-9";
-        var avoidGates = true;
-        var maxDistance = 150m;
+        const string start = "NEBULA-1";
+        const string end = "NEBULA-9";
+        const bool avoidGates = true;
+        const decimal maxDistance = 150m;
 
         _httpClient.Get<FindTravelRouteRequest, RouteResponse>(
             Arg.Is<FindTravelRouteRequest>(r =>

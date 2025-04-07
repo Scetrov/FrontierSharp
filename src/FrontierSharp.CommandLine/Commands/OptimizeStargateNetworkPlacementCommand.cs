@@ -13,7 +13,7 @@ namespace FrontierSharp.CommandLine.Commands;
 
 public class OptimizeStargateNetworkPlacementCommand(ILogger<OptimizeStargateNetworkPlacementCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<OptimizeStargateNetworkPlacementCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.OptimalStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
+        var result = await devToolsClient.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
 
         if (result.IsFailed) {
             foreach (var err in result.Errors.OfType<IError>()) {
