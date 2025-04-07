@@ -162,7 +162,7 @@ public class FrontierDevToolsClientTests {
 
 
     [Theory]
-    [MemberData(nameof(GetFindTravelRouteTestCases))]
+    [MemberData(nameof(PathByRequestModel))]
     public async Task RequestModelsParameters_ShouldMatchOpenApiDefinition<T>(string route, IGetRequestModel model) {
         await using var jsonContent = ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
         var jsonDocument = await JsonNode.ParseAsync(jsonContent);
@@ -175,9 +175,10 @@ public class FrontierDevToolsClientTests {
         var parameters = requestModel.AsArray().Select(x => x?["name"]?.GetValue<string>()).ToArray();
         model.GetEndpoint().Should().Be(route);
         model.GetQueryParams().Keys.Should().BeEquivalentTo(parameters);
+        model.GetCacheKey().Should().StartWith(model.GetType().Name);
     }
 
-    public static IEnumerable<object[]> GetFindTravelRouteTestCases() {
+    public static IEnumerable<object[]> PathByRequestModel() {
         yield return [
             "/optimize_stargate_network_placement",
             new OptimizeStargateNetworkPlacementRequest {
@@ -210,6 +211,15 @@ public class FrontierDevToolsClientTests {
             "/find_systems_within_distance",
             new FindSystemsWithinDistanceRequest {
                 SystemName = "A",
+                MaxDistance = 99m
+            }
+        ];
+
+        yield return [
+            "/find_common_systems_within_distance",
+            new FindCommonSystemsWithinDistanceRequest {
+                SystemA = "A",
+                SystemB = "B",
                 MaxDistance = 99m
             }
         ];
