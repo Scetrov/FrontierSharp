@@ -9,7 +9,7 @@ public class FindCommonSystemsWithinDistanceRequest : GetRequestModel<FindCommon
     public decimal MaxDistance { get; init; } = 400m;
 
     public override string GetCacheKey() =>
-        $"{nameof(FindCommonSystemsWithinDistanceRequest)}_{SystemA}_{SystemB}_{MaxDistance}";
+        $"{nameof(FindCommonSystemsWithinDistanceRequest)}_{SystemA}_{SystemB}_{MaxDistance.ToString(CultureInfo.InvariantCulture)}";
 
     public override Dictionary<string, string> GetQueryParams() =>
         new() {
