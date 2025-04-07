@@ -29,7 +29,10 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
             new FindSystemsWithinDistanceRequest { SystemName = systemName, MaxDistance = maxDistance }, ct);
     }
     
-    // FindCommonSystemsWithinDistance
+    public async Task<IResult<CommonSystemsWithinDistanceResponse>> FindCommonSystemsWithinDistance(string systemA, string systemB, decimal maxDistance, CancellationToken ct = default) {
+        return await httpClient.Get<FindCommonSystemsWithinDistanceRequest, CommonSystemsWithinDistanceResponse>(
+            new FindCommonSystemsWithinDistanceRequest { SystemA = systemA, SystemB = systemB, MaxDistance = maxDistance }, ct);
+    }
     
     // CalculateTravelDistance
     
