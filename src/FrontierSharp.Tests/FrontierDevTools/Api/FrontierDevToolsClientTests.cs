@@ -160,6 +160,79 @@ public class FrontierDevToolsClientTests {
         result.Should().Be(expected);
     }
 
+    [Fact]
+    public async Task CalculateTravelDistance_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<TravelDistanceResponse>>();
+        const decimal currentFuel = 2800m;
+        const decimal mass = 4795000m;
+        const decimal fuelEfficiency = 80m;
+
+        _httpClient.Get<CalculateTravelDistanceRequest, TravelDistanceResponse>(
+            Arg.Is<CalculateTravelDistanceRequest>(r =>
+                r.CurrentFuel == currentFuel &&
+                r.Mass == mass &&
+                r.FuelEfficiency == fuelEfficiency),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.CalculateTravelDistance(currentFuel, mass, fuelEfficiency);
+
+        result.Should().Be(expected);
+    }
+
+    [Fact]
+    public async Task CalculateFuelRequired_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<FuelRequiredResponse>>();
+        const decimal mass = 4795000m;
+        const decimal lightyears = 99m;
+        const decimal fuelEfficiency = 80m;
+
+        _httpClient.Get<CalculateFuelRequired, FuelRequiredResponse>(
+            Arg.Is<CalculateFuelRequired>(r =>
+                r.Mass == mass &&
+                r.Lightyears == lightyears &&
+                r.FuelEfficiency == fuelEfficiency),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.CalculateFuelRequired(mass, lightyears, fuelEfficiency);
+
+        result.Should().Be(expected);
+    }
+
+    [Fact]
+    public async Task CalculateFuelPerLightyear_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<FuelPerLightyearResponse>>();
+        const decimal mass = 4795000m;
+        const decimal fuelEfficiency = 80m;
+
+        _httpClient.Get<CalculateFuelPerLightyear, FuelPerLightyearResponse>(
+            Arg.Is<CalculateFuelPerLightyear>(r =>
+                r.Mass == mass &&
+                r.FuelEfficiency == fuelEfficiency),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.CalculateFuelPerLightyear(mass, fuelEfficiency);
+
+        result.Should().Be(expected);
+    }
+
+    [Fact]
+    public async Task FindCommonSystemsWithinDistance_ShouldCallHttpClientWithCorrectRequest() {
+        var expected = Substitute.For<IResult<CommonSystemsWithinDistanceResponse>>();
+        const string systemA = "EFN-12M";
+        const string systemB = "H.BQL.581";
+        const decimal maxDistance = 42.5m;
+
+        _httpClient.Get<FindCommonSystemsWithinDistanceRequest, CommonSystemsWithinDistanceResponse>(
+            Arg.Is<FindCommonSystemsWithinDistanceRequest>(r =>
+                r.SystemA == systemA &&
+                r.SystemB == systemB &&
+                r.MaxDistance == maxDistance),
+            Arg.Any<CancellationToken>()).Returns(expected);
+
+        var result = await _sut.FindCommonSystemsWithinDistance(systemA, systemB, maxDistance);
+
+        result.Should().Be(expected);
+    }
 
     [Theory]
     [MemberData(nameof(PathByRequestModel))]
@@ -221,6 +294,32 @@ public class FrontierDevToolsClientTests {
                 SystemA = "A",
                 SystemB = "B",
                 MaxDistance = 99m
+            }
+        ];
+
+        yield return [
+            "/calculate_travel_distance",
+            new CalculateTravelDistanceRequest {
+                CurrentFuel = 2800,
+                FuelEfficiency = 80,
+                Mass = 4795000,
+            }
+        ];
+        
+        yield return [
+            "/calculate_fuel_required",
+            new CalculateFuelRequired {
+                Mass = 4795000,
+                Lightyears = 99m,
+                FuelEfficiency = 80
+            }
+        ];
+        
+        yield return [
+            "/calculate_fuel_per_lightyear",
+            new CalculateFuelPerLightyear {
+                Mass = 4795000,
+                FuelEfficiency = 80
             }
         ];
 

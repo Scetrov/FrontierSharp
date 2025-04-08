@@ -12,6 +12,7 @@ using Serilog;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using ZiggyCreatures.Caching.Fusion;
+using CalculateFuelRequired = FrontierSharp.FrontierDevTools.Api.RequestModels.CalculateFuelRequired;
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging => logging.ClearProviders())
     .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })
@@ -45,6 +46,9 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<CalculateDistanceCommand>("distance").WithAlias("d");
             config.AddCommand<FindSystemsWithinDistanceCommand>("systems-within-distance").WithAlias("sd");
             config.AddCommand<FindCommonSystemsWithinDistanceRequestCommand>("common-systems").WithAlias("common").WithAlias("cs");
+            config.AddCommand<CalculateTravelDistanceCommand>("calculate-travel-distance").WithAlias("calc-travel-distance").WithAlias("td");
+            config.AddCommand<CalculateFuelRequiredCommand>("calculate-fuel").WithAlias("calc-fuel").WithAlias("cf");
+            config.AddCommand<CalculateFuelPerLightyearCommand>("calculate-fuel-per-ly").WithAlias("calc-fuel-ly").WithAlias("cfl");
         });
         services.AddSingleton<ICommandApp>(app);
     })

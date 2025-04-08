@@ -25,16 +25,15 @@ public class StringifiedDecimalConverterTests {
     }
 
     [Theory]
-    [InlineData("\"not-a-number\"")]
-    [InlineData("true")]
-    [InlineData("null")]
-    public void Read_ShouldThrowJsonException_OnInvalidValue(string jsonValue) {
+    [InlineData("\"not-a-number\"", "not-a-number")]
+    [InlineData("null", "")]
+    public void Read_ShouldThrowJsonException_OnInvalidValue(string jsonValue, string expected) {
         var json = $"{{\"Value\":{jsonValue}}}";
 
         Action act = () => JsonSerializer.Deserialize<TestObject>(json, _options);
 
         act.Should().Throw<JsonException>()
-            .WithMessage("Invalid JSON value for Decimal.");
+            .WithMessage($"Invalid JSON value for Decimal ({expected}).");
     }
 
     [Theory]

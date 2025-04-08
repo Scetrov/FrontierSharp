@@ -15,4 +15,7 @@ public interface IFrontierDevToolsClient {
     Task<IResult<DistanceResponse>> CalculateDistance(string systemA, string systemB, CancellationToken ct = default);
     Task<IResult<SystemsWithinDistanceResponse>> FindSystemsWithinDistance(string systemName, decimal maxDistance, CancellationToken ct = default);
     Task<IResult<CommonSystemsWithinDistanceResponse>> FindCommonSystemsWithinDistance(string systemA, string systemB, decimal maxDistance, CancellationToken ct = default);
+    Task<IResult<TravelDistanceResponse>> CalculateTravelDistance(decimal currentFuel, decimal mass, decimal fuelEfficency, CancellationToken ct = default);
+    Task<IResult<FuelRequiredResponse>> CalculateFuelRequired(decimal mass, decimal lightyears, decimal fuelEfficiency, CancellationToken ct = default);
+    Task<IResult<FuelPerLightyearResponse>> CalculateFuelPerLightyear(decimal mass, decimal fuelEfficiency, CancellationToken ct = default);
 }
