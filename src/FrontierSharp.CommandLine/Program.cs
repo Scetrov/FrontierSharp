@@ -2,7 +2,6 @@
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
-using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using FrontierSharp.HttpClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +11,6 @@ using Serilog;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using ZiggyCreatures.Caching.Fusion;
-using CalculateFuelRequired = FrontierSharp.FrontierDevTools.Api.RequestModels.CalculateFuelRequired;
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging => logging.ClearProviders())
     .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })

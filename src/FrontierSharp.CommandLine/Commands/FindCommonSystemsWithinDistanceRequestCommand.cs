@@ -20,7 +20,7 @@ public class FindCommonSystemsWithinDistanceRequestCommand(ILogger<FindCommonSys
 
             return 1;
         }
-        
+
         if (!result.Value.CommonSystems.Any()) {
             logger.LogError("No common systems found within {maxDistance} of {systemA} and {systemB}", settings.MaxDistance, settings.SystemA, settings.SystemB);
             return 1;
@@ -31,7 +31,7 @@ public class FindCommonSystemsWithinDistanceRequestCommand(ILogger<FindCommonSys
         foreach (var system in result.Value.CommonSystems) {
             table.AddRow(system.SystemName, ((int)Math.Floor(system.DistanceFromAInLy)).ToString(), ((int)Math.Floor(system.DistanceFromBInLy)).ToString(), system.NpcGates.ToString());
         }
-        
+
         ansiConsole.Write(table);
         return 0;
     }
@@ -44,11 +44,11 @@ public class FindCommonSystemsWithinDistanceRequestCommand(ILogger<FindCommonSys
         [CommandArgument(1, "<b>")]
         [Description("End Solarsystem, i.e. UB3-3QJ")]
         public required string SystemB { get; set; }
-        
+
         [CommandOption("--maxDistance <maxDistance>")]
         [Description("Maximum jump distance in lightyears between two systems in the route, i.e. 400")]
         public decimal MaxDistance { get; set; } = 400m;
-        
+
         public override ValidationResult Validate() {
             if (string.IsNullOrWhiteSpace(SystemA)) {
                 return ValidationResult.Error("You must specify a start solar system.");

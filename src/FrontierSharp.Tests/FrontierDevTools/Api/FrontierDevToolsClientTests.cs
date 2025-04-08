@@ -302,10 +302,10 @@ public class FrontierDevToolsClientTests {
             new CalculateTravelDistanceRequest {
                 CurrentFuel = 2800,
                 FuelEfficiency = 80,
-                Mass = 4795000,
+                Mass = 4795000
             }
         ];
-        
+
         yield return [
             "/calculate_fuel_required",
             new CalculateFuelRequired {
@@ -314,7 +314,7 @@ public class FrontierDevToolsClientTests {
                 FuelEfficiency = 80
             }
         ];
-        
+
         yield return [
             "/calculate_fuel_per_lightyear",
             new CalculateFuelPerLightyear {

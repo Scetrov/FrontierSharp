@@ -14,9 +14,9 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 [SuppressMessage("Non-substitutable member", "NS1001:Non-virtual setup specification.")]
 [SuppressMessage("Usage", "NS5000:Received check.")]
 public class CalculateFuelRequiredCommandTests {
-    private readonly ILogger<CalculateFuelRequiredCommand> _logger = Substitute.For<ILogger<CalculateFuelRequiredCommand>>();
-    private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
     private readonly IAnsiConsole _ansiConsole = Substitute.For<IAnsiConsole>();
+    private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
+    private readonly ILogger<CalculateFuelRequiredCommand> _logger = Substitute.For<ILogger<CalculateFuelRequiredCommand>>();
     private readonly CalculateFuelRequiredCommand _sut;
 
     public CalculateFuelRequiredCommandTests() {
@@ -58,7 +58,7 @@ public class CalculateFuelRequiredCommandTests {
             FuelEfficiency = 80
         };
 
-        var error = new FluentResults.Error("Something went wrong");
+        var error = new Error("Something went wrong");
         var result = Result.Fail<FuelRequiredResponse>(error);
 
         _devToolsClient

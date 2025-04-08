@@ -8,16 +8,19 @@ public class FindCommonSystemsWithinDistanceRequest : GetRequestModel<FindCommon
     public string SystemB { get; init; } = "IMK-85H";
     public decimal MaxDistance { get; init; } = 400m;
 
-    public override string GetCacheKey() =>
-        $"{nameof(FindCommonSystemsWithinDistanceRequest)}_{SystemA}_{SystemB}_{MaxDistance.ToString(CultureInfo.InvariantCulture)}";
+    public override string GetCacheKey() {
+        return $"{nameof(FindCommonSystemsWithinDistanceRequest)}_{SystemA}_{SystemB}_{MaxDistance.ToString(CultureInfo.InvariantCulture)}";
+    }
 
-    public override Dictionary<string, string> GetQueryParams() =>
-        new() {
+    public override Dictionary<string, string> GetQueryParams() {
+        return new Dictionary<string, string> {
             { "system_a", SystemA },
             { "system_b", SystemB },
             { "max_distance", MaxDistance.ToString(CultureInfo.InvariantCulture) }
         };
+    }
 
-    public override string GetEndpoint() =>
-        "/find_common_systems_within_distance";
+    public override string GetEndpoint() {
+        return "/find_common_systems_within_distance";
+    }
 }

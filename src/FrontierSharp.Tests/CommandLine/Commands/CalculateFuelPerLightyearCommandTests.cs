@@ -14,9 +14,9 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 [SuppressMessage("Non-substitutable member", "NS1001:Non-virtual setup specification.")]
 [SuppressMessage("Usage", "NS5000:Received check.")]
 public class CalculateFuelPerLightyearCommandTests {
-    private readonly ILogger<CalculateFuelPerLightyearCommand> _logger = Substitute.For<ILogger<CalculateFuelPerLightyearCommand>>();
-    private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
     private readonly IAnsiConsole _ansiConsole = Substitute.For<IAnsiConsole>();
+    private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
+    private readonly ILogger<CalculateFuelPerLightyearCommand> _logger = Substitute.For<ILogger<CalculateFuelPerLightyearCommand>>();
     private readonly CalculateFuelPerLightyearCommand _sut;
 
     public CalculateFuelPerLightyearCommandTests() {
@@ -32,7 +32,7 @@ public class CalculateFuelPerLightyearCommandTests {
             FuelEfficiency = 80
         };
 
-        var result = Result.Ok(new FuelPerLightyearResponse() {
+        var result = Result.Ok(new FuelPerLightyearResponse {
             FuelPerLightyear = 5.5m
         });
 
@@ -56,7 +56,7 @@ public class CalculateFuelPerLightyearCommandTests {
             FuelEfficiency = 80
         };
 
-        var error = new FluentResults.Error("API failure");
+        var error = new Error("API failure");
         var result = Result.Fail<FuelPerLightyearResponse>(error);
 
         _devToolsClient

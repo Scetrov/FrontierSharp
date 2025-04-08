@@ -14,9 +14,9 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 [SuppressMessage("Non-substitutable member", "NS1001:Non-virtual setup specification.")]
 [SuppressMessage("Usage", "NS5000:Received check.")]
 public class CalculateTravelDistanceCommandTests {
-    private readonly ILogger<CalculateTravelDistanceCommand> _logger = Substitute.For<ILogger<CalculateTravelDistanceCommand>>();
-    private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
     private readonly IAnsiConsole _ansiConsole = Substitute.For<IAnsiConsole>();
+    private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
+    private readonly ILogger<CalculateTravelDistanceCommand> _logger = Substitute.For<ILogger<CalculateTravelDistanceCommand>>();
     private readonly CalculateTravelDistanceCommand _sut;
 
     public CalculateTravelDistanceCommandTests() {
@@ -33,7 +33,7 @@ public class CalculateTravelDistanceCommandTests {
             FuelEfficiency = 80
         };
 
-        var result = Result.Ok(new TravelDistanceResponse() {
+        var result = Result.Ok(new TravelDistanceResponse {
             MaxTravelDistanceInLightYears = 42.42m
         });
 
@@ -58,7 +58,7 @@ public class CalculateTravelDistanceCommandTests {
             FuelEfficiency = 80
         };
 
-        var error = new FluentResults.Error("Failed to calculate travel distance");
+        var error = new Error("Failed to calculate travel distance");
         var result = Result.Fail<TravelDistanceResponse>(error);
 
         _devToolsClient
