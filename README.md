@@ -1,5 +1,7 @@
 # FrontierSharp
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scetrov/frontiersharp/build-and-test.yml?style=flat-square) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/scetrov/frontiersharp/total?style=flat-square) ![NuGet Downloads](https://img.shields.io/nuget/dt/FrontierSharp.HttpClient?style=flat-square) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/scetrov/frontiersharp?style=flat-square) ![GitHub License](https://img.shields.io/github/license/scetrov/frontiersharp?style=flat-square) ![GitHub Release](https://img.shields.io/github/v/release/scetrov/frontiersharp?style=flat-square)
+
 FrontierSharp is a .NET library that provides access to basic Character and Starmap Information for EVE Frontier. It includes an API client and a command-line tool for interacting with the EVE Frontier services via both official and third-party services.
 
 ## Table of Contents
