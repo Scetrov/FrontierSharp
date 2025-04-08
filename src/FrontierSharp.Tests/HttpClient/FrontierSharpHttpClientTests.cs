@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using FluentAssertions;
 using FrontierSharp.HttpClient;
-using FrontierSharp.HttpClient.Models;
 using FrontierSharp.Tests.Utils.FakeHttpClientFactory;
 using FrontierSharp.Tests.Utils.FakeHybridCache;
 using Microsoft.Extensions.Logging;
@@ -13,42 +12,7 @@ using Xunit;
 
 namespace FrontierSharp.Tests.HttpClient;
 
-public class FakeRequest : GetRequestModel<FakeRequest> {
-    public override string GetCacheKey() {
-        return "FakeRequestCacheKey";
-    }
-
-    public override Dictionary<string, string> GetQueryParams() {
-        return new Dictionary<string, string>();
-    }
-
-    public override string GetEndpoint() {
-        return "/test";
-    }
-}
-
-public class FakeComplexRequest : GetRequestModel<FakeComplexRequest> {
-    public override string GetCacheKey() {
-        return "FakeRequestCacheKey";
-    }
-
-    public override Dictionary<string, string> GetQueryParams() {
-        return new Dictionary<string, string> {
-            { "key1", "value1" },
-            { "key2", "value2" },
-            { "key3", "value3" }
-        };
-    }
-
-    public override string GetEndpoint() {
-        return "/complex";
-    }
-}
-
 // Fake Response Model used for deserialization
-public class FakeResponse {
-    public required string Message { get; init; }
-}
 
 public class FrontierSharpHttpClientTests {
     private readonly IOptions<FrontierSharpHttpClientOptions> _options;

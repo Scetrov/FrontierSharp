@@ -34,11 +34,20 @@ public class FrontierDevToolsClient([FromKeyedServices(nameof(FrontierDevToolsCl
             new FindCommonSystemsWithinDistanceRequest { SystemA = systemA, SystemB = systemB, MaxDistance = maxDistance }, ct);
     }
     
-    // CalculateTravelDistance
+    public async Task<IResult<TravelDistanceResponse>> CalculateTravelDistance(decimal currentFuel, decimal mass, decimal fuelEfficency, CancellationToken ct = default) {
+        return await httpClient.Get<CalculateTravelDistanceRequest, TravelDistanceResponse>(
+            new CalculateTravelDistanceRequest { CurrentFuel = currentFuel, Mass = mass, FuelEfficiency = fuelEfficency}, ct);
+    }
     
-    // CalculateFuelRequired
+    public async Task<IResult<FuelRequiredResponse>> CalculateFuelRequired(decimal mass, decimal lightyears, decimal fuelEfficiency, CancellationToken ct = default) {
+        return await httpClient.Get<CalculateFuelRequired, FuelRequiredResponse>(
+            new CalculateFuelRequired { Mass = mass, Lightyears = lightyears, FuelEfficiency = fuelEfficiency }, ct);
+    }
     
-    // CalculateFuelPerLightyear
+    public async Task<IResult<FuelPerLightyearResponse>> CalculateFuelPerLightyear(decimal mass, decimal fuelEfficiency, CancellationToken ct = default) {
+        return await httpClient.Get<CalculateFuelPerLightyear, FuelPerLightyearResponse>(
+            new CalculateFuelPerLightyear { Mass = mass, FuelEfficiency = fuelEfficiency}, ct);
+    }
     
     public async Task<IResult<CharactersResponse>> GetCharactersByName(string name, CancellationToken ct = default) {
         return await httpClient.Get<GetCharacterByNameRequest, CharactersResponse>(
