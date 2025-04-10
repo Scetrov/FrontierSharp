@@ -19,6 +19,40 @@ public class FrontierDevToolsClientTests {
     }
 
     [Fact]
+    public async Task OptimalStargateNetworkAndDeployment_ShouldCallHttpClientWithCorrectRequestModel() {
+        var httpClient = Substitute.For<IFrontierSharpHttpClient>();
+        var mockResponse = Substitute.For<IResult<OptimalStargateNetworkAndDeploymentResponse>>();
+
+        httpClient
+            .Get<OptimalStargateNetworkAndDeploymentRequest, OptimalStargateNetworkAndDeploymentResponse>(
+                Arg.Any<OptimalStargateNetworkAndDeploymentRequest>(),
+                Arg.Any<CancellationToken>())
+            .Returns(mockResponse);
+
+        var client = new FrontierDevToolsClient(httpClient);
+
+        var result = await client.OptimalStargateNetworkAndDeployment(
+            "Start-A",
+            "End-B",
+            250m,
+            NpcAvoidanceLevel.Medium,
+            true,
+            "MockShip");
+
+        result.Should().BeSameAs(mockResponse);
+
+        await httpClient.Received(1).Get<OptimalStargateNetworkAndDeploymentRequest, OptimalStargateNetworkAndDeploymentResponse>(
+            Arg.Is<OptimalStargateNetworkAndDeploymentRequest>(r =>
+                r.StartName == "Start-A" &&
+                r.EndName == "End-B" &&
+                r.MaxStargateDistance == 250m &&
+                r.NpcAvoidanceLevel == NpcAvoidanceLevel.Medium &&
+                r.AvoidGates == true &&
+                r.IncludeShips == "MockShip"),
+            Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
     public async Task GetCharactersByName_ShouldCallHttpClientWithCorrectRequest() {
         var expected = Substitute.For<IResult<CharactersResponse>>();
         const string name = "JaneDoe";
@@ -251,7 +285,30 @@ public class FrontierDevToolsClientTests {
         model.GetCacheKey().Should().StartWith(model.GetType().Name);
     }
 
+    [Fact]
+    public async Task ClientShouldImplementAllMethods() {
+        await using var jsonContent = ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
+        var jsonDocument = await JsonNode.ParseAsync(jsonContent);
+        var paths = jsonDocument?["paths"] as JsonObject;
+        var specificationPaths = paths?.Select(x => x.Key).Where(x => x != "/get_mud_table_data").ToList();
+        var implementedPaths = PathByRequestModel().Select(x => x[0].ToString()).ToList();
+
+        specificationPaths.Should().BeEquivalentTo(implementedPaths);
+    }
+
     public static IEnumerable<object[]> PathByRequestModel() {
+        yield return [
+            "/optimal_stargate_network_and_deployment",
+            new OptimalStargateNetworkAndDeploymentRequest {
+                StartName = "A",
+                EndName = "B",
+                NpcAvoidanceLevel = NpcAvoidanceLevel.Medium,
+                MaxStargateDistance = 99m,
+                AvoidGates = true,
+                IncludeShips = "Flegel"
+            }
+        ];
+
         yield return [
             "/optimize_stargate_network_placement",
             new OptimizeStargateNetworkPlacementRequest {

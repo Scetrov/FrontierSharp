@@ -47,6 +47,7 @@ using var host = Host.CreateDefaultBuilder(args)
             config.AddCommand<CalculateTravelDistanceCommand>("calculate-travel-distance").WithAlias("calc-travel-distance").WithAlias("td");
             config.AddCommand<CalculateFuelRequiredCommand>("calculate-fuel").WithAlias("calc-fuel").WithAlias("cf");
             config.AddCommand<CalculateFuelPerLightyearCommand>("calculate-fuel-per-ly").WithAlias("calc-fuel-ly").WithAlias("cfl");
+            config.AddCommand<OptimalStargateNetworkAndDeploymentCommand>("optimal-stargate-network").WithAlias("osn").WithAlias("plan");
         });
         services.AddSingleton<ICommandApp>(app);
     })
