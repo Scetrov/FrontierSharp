@@ -18,4 +18,5 @@ public interface IFrontierDevToolsClient {
     Task<IResult<TravelDistanceResponse>> CalculateTravelDistance(decimal currentFuel, decimal mass, decimal fuelEfficency, CancellationToken ct = default);
     Task<IResult<FuelRequiredResponse>> CalculateFuelRequired(decimal mass, decimal lightyears, decimal fuelEfficiency, CancellationToken ct = default);
     Task<IResult<FuelPerLightyearResponse>> CalculateFuelPerLightyear(decimal mass, decimal fuelEfficiency, CancellationToken ct = default);
+    Task<IResult<OptimalStargateNetworkAndDeploymentResponse>> OptimalStargateNetworkAndDeployment(string start, string end, decimal maxDistance = 499m, NpcAvoidanceLevel avoidanceLevel = NpcAvoidanceLevel.High, bool avoidGates = false, string includeShips = "Flegel", CancellationToken ct = default);
 }
