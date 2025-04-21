@@ -11,6 +11,7 @@ public class ShipPathSegment {
     public required string To { get; set; }
 
     [JsonPropertyName("jumpGate")]
+    [JsonConverter(typeof(NullableStringifiedBooleanConverter))]
     public bool? JumpGate { get; set; }
 
     [JsonPropertyName("distance")]

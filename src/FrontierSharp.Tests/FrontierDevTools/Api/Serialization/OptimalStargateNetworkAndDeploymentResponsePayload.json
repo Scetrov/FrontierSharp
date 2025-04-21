@@ -4,12 +4,12 @@
       "start_system": "ICT-SVL",
       "end_system": "UB3-3QJ",
       "total_gate_distance": "1446",
-      "ship": "Flegel",
-      "fuel_type": "EU-90 Fuel",
+      "ship": "Grus",
+      "fuel_type": "EU-40 Fuel",
       "fuel_volume": "0.28",
-      "fuel_used": "64715.14",
-      "fuel_volume_used": "18120.24",
-      "fuel_cost": "202040664.95",
+      "fuel_used": "1518804.66",
+      "fuel_volume_used": "425265.30",
+      "fuel_cost": "30376093.21",
       "systems_reached": "4",
       "gates_deployed": "8"
     },
@@ -17,101 +17,296 @@
       {
         "deploy_from": "ICT-SVL",
         "deploy_to": "R.Y9N.D51",
-        "fuel_required": "28950.92",
-        "distance": "1646",
-        "jumps": "6",
+        "fuel_required": "209409.99",
+        "distance": "344",
+        "jumps": "2",
         "ship_path": [
           {
             "from": "ICT-SVL",
-            "to": "E.17C.BS1",
-            "distance": "159"
+            "to": "IM0-21M",
+            "jumpGate": "True"
           },
           {
-            "from": "E.17C.BS1",
-            "to": "T.HRD.V61",
-            "distance": "156"
+            "from": "IM0-21M",
+            "to": "EFN-12M",
+            "jumpGate": "True"
           },
           {
-            "from": "T.HRD.V61",
-            "to": "H.NHL.L51",
-            "distance": "95"
+            "from": "EFN-12M",
+            "to": "OKN-N3M",
+            "jumpGate": "True"
           },
           {
-            "from": "H.NHL.L51",
-            "to": "H.7VR.071",
-            "distance": "150"
+            "from": "OKN-N3M",
+            "to": "E2N-K5M",
+            "distance": "66"
           },
           {
-            "from": "H.7VR.071",
-            "to": "E.3QN.42G",
-            "distance": "134"
+            "from": "E2N-K5M",
+            "to": "ULV-L5M",
+            "jumpGate": "True"
           },
           {
-            "from": "E.3QN.42G",
+            "from": "ULV-L5M",
+            "to": "E7V-C1M",
+            "jumpGate": "True"
+          },
+          {
+            "from": "E7V-C1M",
+            "to": "O9L-J2M",
+            "jumpGate": "True"
+          },
+          {
+            "from": "O9L-J2M",
+            "to": "UPF-80M",
+            "jumpGate": "True"
+          },
+          {
+            "from": "UPF-80M",
+            "to": "ELB-FTL",
+            "jumpGate": "True"
+          },
+          {
+            "from": "ELB-FTL",
+            "to": "EJV-VRL",
+            "jumpGate": "True"
+          },
+          {
+            "from": "EJV-VRL",
+            "to": "IK5-2LL",
+            "jumpGate": "True"
+          },
+          {
+            "from": "IK5-2LL",
+            "to": "E0D-HHL",
+            "jumpGate": "True"
+          },
+          {
+            "from": "E0D-HHL",
+            "to": "A0R-5JL",
+            "jumpGate": "True"
+          },
+          {
+            "from": "A0R-5JL",
+            "to": "ESF-DDL",
+            "jumpGate": "True"
+          },
+          {
+            "from": "ESF-DDL",
             "to": "R.Y9N.D51",
-            "distance": "129"
+            "distance": "106"
           }
         ]
       },
       {
         "deploy_from": "R.Y9N.D51",
         "deploy_to": "O.5RT.681",
-        "fuel_required": "9985.24",
-        "distance": "594",
-        "jumps": "2",
+        "fuel_required": "443063.71",
+        "distance": "728",
+        "jumps": "4",
         "ship_path": [
           {
             "from": "R.Y9N.D51",
-            "to": "N.R9N.2R1",
-            "distance": "138"
+            "to": "U.RKT.W7D",
+            "distance": "107"
           },
           {
-            "from": "N.R9N.2R1",
+            "from": "U.RKT.W7D",
+            "to": "E.3QN.42G",
+            "distance": "107"
+          },
+          {
+            "from": "E.3QN.42G",
+            "to": "C.62R.E11",
+            "jumpGate": "True"
+          },
+          {
+            "from": "C.62R.E11",
+            "to": "A.ZEN.Y9H",
+            "jumpGate": "True"
+          },
+          {
+            "from": "A.ZEN.Y9H",
+            "to": "R.25R.SEV",
+            "jumpGate": "True"
+          },
+          {
+            "from": "R.25R.SEV",
+            "to": "H.QQN.E4B",
+            "jumpGate": "True"
+          },
+          {
+            "from": "H.QQN.E4B",
+            "to": "C.VCN.7SJ",
+            "jumpGate": "True"
+          },
+          {
+            "from": "C.VCN.7SJ",
+            "to": "H.L3N.5XY",
+            "distance": "52"
+          },
+          {
+            "from": "H.L3N.5XY",
             "to": "O.5RT.681",
-            "distance": "159"
+            "distance": "98"
           }
         ]
       },
       {
         "deploy_from": "O.5RT.681",
         "deploy_to": "U4C-P8K",
-        "fuel_required": "17121.85",
-        "distance": "1068",
+        "fuel_required": "394280.80",
+        "distance": "648",
         "jumps": "4",
         "ship_path": [
           {
             "from": "O.5RT.681",
-            "to": "E.GZS.BGM",
-            "distance": "140"
+            "to": "H.L3N.5XY",
+            "distance": "98"
           },
           {
-            "from": "E.GZS.BGM",
-            "to": "R.Z3S.TRB",
-            "distance": "130"
+            "from": "H.L3N.5XY",
+            "to": "C.VCN.7SJ",
+            "distance": "52"
           },
           {
-            "from": "R.Z3S.TRB",
-            "to": "E9H-LGK",
-            "distance": "135"
+            "from": "C.VCN.7SJ",
+            "to": "H.QQN.E4B",
+            "jumpGate": "True"
           },
           {
-            "from": "E9H-LGK",
+            "from": "H.QQN.E4B",
+            "to": "R.25R.SEV",
+            "jumpGate": "True"
+          },
+          {
+            "from": "R.25R.SEV",
+            "to": "D.6FR.HZV",
+            "jumpGate": "True"
+          },
+          {
+            "from": "D.6FR.HZV",
+            "to": "U.V3L.DPS",
+            "jumpGate": "True"
+          },
+          {
+            "from": "U.V3L.DPS",
+            "to": "B.BPL.R44",
+            "jumpGate": "True"
+          },
+          {
+            "from": "B.BPL.R44",
+            "to": "N.WZL.BVS",
+            "jumpGate": "True"
+          },
+          {
+            "from": "N.WZL.BVS",
+            "to": "H.DQL.1GZ",
+            "jumpGate": "True"
+          },
+          {
+            "from": "H.DQL.1GZ",
+            "to": "E.E4L.BT1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "E.E4L.BT1",
+            "to": "E.8ER.XP1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "E.8ER.XP1",
+            "to": "R.28R.FX1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "R.28R.FX1",
+            "to": "U.8CN.RY2",
+            "jumpGate": "True"
+          },
+          {
+            "from": "U.8CN.RY2",
+            "to": "R.N1N.QH2",
+            "distance": "90"
+          },
+          {
+            "from": "R.N1N.QH2",
+            "to": "E.BQT.9D2",
+            "jumpGate": "True"
+          },
+          {
+            "from": "E.BQT.9D2",
+            "to": "M.R2T.LW1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "M.R2T.LW1",
+            "to": "I.9BS.672",
+            "jumpGate": "True"
+          },
+          {
+            "from": "I.9BS.672",
+            "to": "I.C7S.LF2",
+            "jumpGate": "True"
+          },
+          {
+            "from": "I.C7S.LF2",
+            "to": "R.CV9.KT2",
+            "jumpGate": "True"
+          },
+          {
+            "from": "R.CV9.KT2",
+            "to": "R.FG9.S72",
+            "jumpGate": "True"
+          },
+          {
+            "from": "R.FG9.S72",
+            "to": "I.BL9.C92",
+            "jumpGate": "True"
+          },
+          {
+            "from": "I.BL9.C92",
+            "to": "A.CG8.6C1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "A.CG8.6C1",
+            "to": "N.TC8.JX1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "N.TC8.JX1",
+            "to": "H.TX8.7D1",
+            "jumpGate": "True"
+          },
+          {
+            "from": "H.TX8.7D1",
             "to": "U4C-P8K",
-            "distance": "129"
+            "distance": "84"
           }
         ]
       },
       {
         "deploy_from": "U4C-P8K",
         "deploy_to": "UB3-3QJ",
-        "fuel_required": "8657.12",
-        "distance": "540",
-        "jumps": "2",
+        "fuel_required": "472050.16",
+        "distance": "776",
+        "jumps": "4",
         "ship_path": [
           {
             "from": "U4C-P8K",
+            "to": "I0J-P5K",
+            "distance": "111"
+          },
+          {
+            "from": "I0J-P5K",
+            "to": "E31-L2K",
+            "distance": "52"
+          },
+          {
+            "from": "E31-L2K",
             "to": "IN0-CTJ",
-            "distance": "156"
+            "distance": "111"
           },
           {
             "from": "IN0-CTJ",
@@ -125,32 +320,32 @@
       {
         "from": "ICT-SVL",
         "to": "R.Y9N.D51",
-        "jumps": "6",
-        "fuel_used": "28950.92",
-        "distance": "1646"
+        "jumps": "15",
+        "fuel_used": "209409.99",
+        "distance": "344"
       },
       {
         "from": "R.Y9N.D51",
         "to": "O.5RT.681",
-        "jumps": "2",
-        "fuel_used": "9985.24",
-        "distance": "594"
+        "jumps": "9",
+        "fuel_used": "443063.71",
+        "distance": "728"
       },
       {
         "from": "O.5RT.681",
         "to": "U4C-P8K",
-        "jumps": "4",
-        "fuel_used": "17121.85",
-        "distance": "1068"
+        "jumps": "25",
+        "fuel_used": "394280.80",
+        "distance": "648"
       },
       {
         "from": "U4C-P8K",
         "to": "UB3-3QJ",
-        "jumps": "2",
-        "fuel_used": "8657.12",
-        "distance": "540"
+        "jumps": "4",
+        "fuel_used": "472050.16",
+        "distance": "776"
       }
     ],
-    "over_deployed": "True"
+    "over_deployed": "False"
   }
 }
