@@ -5,7 +5,8 @@ namespace FrontierSharp.FrontierDevTools.Api.Serialization;
 
 public class DateTimeOffsetConverter : JsonConverter<DateTimeOffset> {
     public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
-        if (reader.TokenType == JsonTokenType.String && DateTimeOffset.TryParse(reader.GetString(), out var dateTimeOffset))
+        if (reader.TokenType == JsonTokenType.String &&
+            DateTimeOffset.TryParse(reader.GetString(), out var dateTimeOffset))
             return dateTimeOffset;
 
         if (reader.TokenType == JsonTokenType.String && long.TryParse(reader.GetString(), out var longValue))

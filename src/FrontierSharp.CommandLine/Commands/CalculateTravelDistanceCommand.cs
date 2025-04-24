@@ -4,23 +4,27 @@ using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class CalculateTravelDistanceCommand(ILogger<CalculateTravelDistanceCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<CalculateTravelDistanceCommand.Settings> {
+public class CalculateTravelDistanceCommand(
+    ILogger<CalculateTravelDistanceCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<CalculateTravelDistanceCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.CalculateTravelDistance(settings.CurrentFuel, settings.Mass, settings.FuelEfficiency, CancellationToken.None);
+        var result = await devToolsClient.CalculateTravelDistance(settings.CurrentFuel, settings.Mass,
+            settings.FuelEfficiency, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
 
-        ansiConsole.MarkupLine($"[b]Travel distance:[/] [cyan]{result.Value.MaxTravelDistanceInLightYears:N2}[/] lightyears");
+        ansiConsole.MarkupLine(
+            $"[b]Travel distance:[/] [cyan]{result.Value.MaxTravelDistanceInLightYears:N2}[/] lightyears");
         return 0;
     }
 
@@ -38,9 +42,8 @@ public class CalculateTravelDistanceCommand(ILogger<CalculateTravelDistanceComma
         public required decimal Mass { get; set; }
 
         public override ValidationResult Validate() {
-            if (CurrentFuel <= 0) {
+            if (CurrentFuel <= 0)
                 return ValidationResult.Error("The amount of fuel in your ship must be greater than 0.");
-            }
 
             switch (FuelEfficiency) {
                 case <= 0:
@@ -49,9 +52,7 @@ public class CalculateTravelDistanceCommand(ILogger<CalculateTravelDistanceComma
                     return ValidationResult.Error("There is no fuel efficiency greater than 90 in the game.");
             }
 
-            if (Mass <= 0) {
-                return ValidationResult.Error("The mass of your ship must be greater than 0.");
-            }
+            if (Mass <= 0) return ValidationResult.Error("The mass of your ship must be greater than 0.");
 
             return ValidationResult.Success();
         }

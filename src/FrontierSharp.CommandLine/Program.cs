@@ -1,6 +1,8 @@
 ﻿using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
+using FrontierSharp.CommandLine.Commands.Data.Static;
 using FrontierSharp.CommandLine.Utils;
+using FrontierSharp.Data.Static;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.HttpClient;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +13,7 @@ using Serilog;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using ZiggyCreatures.Caching.Fusion;
+
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging => logging.ClearProviders())
     .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })
@@ -33,21 +36,40 @@ using var host = Host.CreateDefaultBuilder(args)
                 options.HttpClientName = "FrontierDevTools";
             });
         services.AddSingleton<IFrontierDevToolsClient, FrontierDevToolsClient>();
+        services.AddSingleton<IFrontierResourceHiveFactory, FrontierResourceHiveFactory>();
 
         var app = new CommandApp(new TypeRegistrar(services));
         app.Configure(config => {
             config.AddCommand<GetCharacterCommand>("rider").WithAlias("r").WithAlias("character").WithAlias("char");
             config.AddCommand<GetCorporationCommand>("tribe").WithAlias("t").WithAlias("corporation").WithAlias("corp");
             config.AddCommand<GetGateNetworkCommand>("gates").WithAlias("g");
-            config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o").WithAlias("op");
+            config.AddCommand<OptimizeStargateNetworkPlacementCommand>("optimize-placement").WithAlias("o")
+                .WithAlias("op");
             config.AddCommand<FindTravelRouteCommand>("route").WithAlias("fr").WithAlias("rt");
             config.AddCommand<CalculateDistanceCommand>("distance").WithAlias("d");
             config.AddCommand<FindSystemsWithinDistanceCommand>("systems-within-distance").WithAlias("sd");
-            config.AddCommand<FindCommonSystemsWithinDistanceRequestCommand>("common-systems").WithAlias("common").WithAlias("cs");
-            config.AddCommand<CalculateTravelDistanceCommand>("calculate-travel-distance").WithAlias("calc-travel-distance").WithAlias("td");
+            config.AddCommand<FindCommonSystemsWithinDistanceRequestCommand>("common-systems").WithAlias("common")
+                .WithAlias("cs");
+            config.AddCommand<CalculateTravelDistanceCommand>("calculate-travel-distance")
+                .WithAlias("calc-travel-distance").WithAlias("td");
             config.AddCommand<CalculateFuelRequiredCommand>("calculate-fuel").WithAlias("calc-fuel").WithAlias("cf");
-            config.AddCommand<CalculateFuelPerLightyearCommand>("calculate-fuel-per-ly").WithAlias("calc-fuel-ly").WithAlias("cfl");
-            config.AddCommand<OptimalStargateNetworkAndDeploymentCommand>("optimal-stargate-network").WithAlias("osn").WithAlias("plan");
+            config.AddCommand<CalculateFuelPerLightyearCommand>("calculate-fuel-per-ly").WithAlias("calc-fuel-ly")
+                .WithAlias("cfl");
+            config.AddCommand<OptimalStargateNetworkAndDeploymentCommand>("optimal-stargate-network").WithAlias("osn")
+                .WithAlias("plan");
+
+            config.ConfigureExceptions();
+
+            config.AddBranch("data", data => {
+                data.SetDescription("Commands for data management");
+                data.AddBranch("static", staticData => {
+                    staticData.SetDescription("Commands for static data");
+                    staticData.AddBranch("resources",
+                        resources => {
+                            resources.AddCommand<ResourceListCommand>("list").WithAlias("l").WithAlias("ls");
+                        });
+                });
+            });
         });
         services.AddSingleton<ICommandApp>(app);
     })

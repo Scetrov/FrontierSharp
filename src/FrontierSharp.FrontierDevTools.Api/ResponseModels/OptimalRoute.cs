@@ -4,21 +4,17 @@ using FrontierSharp.FrontierDevTools.Api.Serialization;
 namespace FrontierSharp.FrontierDevTools.Api.ResponseModels;
 
 public class OptimalRoute {
-    [JsonPropertyName("start_system")]
-    public required string StartSystem { get; set; }
+    [JsonPropertyName("start_system")] public required string StartSystem { get; set; }
 
-    [JsonPropertyName("end_system")]
-    public required string EndSystem { get; set; }
+    [JsonPropertyName("end_system")] public required string EndSystem { get; set; }
 
     [JsonPropertyName("total_gate_distance")]
     [JsonConverter(typeof(StringifiedInt32Converter))]
     public int TotalGateDistance { get; set; }
 
-    [JsonPropertyName("ship")]
-    public required string Ship { get; set; }
+    [JsonPropertyName("ship")] public required string Ship { get; set; }
 
-    [JsonPropertyName("fuel_type")]
-    public required string FuelType { get; set; }
+    [JsonPropertyName("fuel_type")] public required string FuelType { get; set; }
 
     [JsonPropertyName("fuel_volume")]
     [JsonConverter(typeof(StringifiedDecimalConverter))]

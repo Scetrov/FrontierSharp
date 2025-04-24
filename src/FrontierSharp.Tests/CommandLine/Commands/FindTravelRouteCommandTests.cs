@@ -65,7 +65,8 @@ public class FindTravelRouteCommandTests {
         var error = Substitute.For<IError>();
         error.Message.Returns("Route error");
 
-        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(Result.Fail<RouteResponse>(error));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -85,7 +86,8 @@ public class FindTravelRouteCommandTests {
             Route = Array.Empty<JumpResponse>()
         };
 
-        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -107,7 +109,8 @@ public class FindTravelRouteCommandTests {
             ]
         };
 
-        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);

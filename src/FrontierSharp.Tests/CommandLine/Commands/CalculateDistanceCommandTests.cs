@@ -79,7 +79,8 @@ public class CalculateDistanceCommandTests {
     [InlineData("   ", "SYS-B", "You must specify a start solar system.")]
     [InlineData("SYS-A", "", "You must specify an end solar system.")]
     [InlineData("SYS-A", " ", "You must specify an end solar system.")]
-    public void Settings_Validate_ShouldReturnError_WhenSystemIsInvalid(string systemA, string systemB, string expectedError) {
+    public void Settings_Validate_ShouldReturnError_WhenSystemIsInvalid(string systemA, string systemB,
+        string expectedError) {
         var settings = new CalculateDistanceCommand.Settings {
             SystemA = systemA,
             SystemB = systemB

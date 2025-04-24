@@ -3,7 +3,8 @@ using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.FrontierDevTools.Api.RequestModels;
 
-public class OptimalStargateNetworkAndDeploymentRequest : GetRequestModel<OptimalStargateNetworkAndDeploymentRequest>, IGetRequestModel {
+public class OptimalStargateNetworkAndDeploymentRequest : GetRequestModel<OptimalStargateNetworkAndDeploymentRequest>,
+    IGetRequestModel {
     public string StartName { get; init; } = "ICT-SVL";
     public string EndName { get; init; } = "UB3-3QJ";
     public decimal MaxStargateDistance { get; init; } = 499m;
@@ -12,7 +13,8 @@ public class OptimalStargateNetworkAndDeploymentRequest : GetRequestModel<Optima
     public bool AvoidGates { get; init; } = false;
 
     public override string GetCacheKey() {
-        return $"{nameof(OptimalStargateNetworkAndDeploymentRequest)}_{StartName}_{EndName}_{MaxStargateDistance}_{NpcAvoidanceLevel}_{IncludeShips}_{AvoidGates}";
+        return
+            $"{nameof(OptimalStargateNetworkAndDeploymentRequest)}_{StartName}_{EndName}_{MaxStargateDistance}_{NpcAvoidanceLevel}_{IncludeShips}_{AvoidGates}";
     }
 
     public override Dictionary<string, string> GetQueryParams() {

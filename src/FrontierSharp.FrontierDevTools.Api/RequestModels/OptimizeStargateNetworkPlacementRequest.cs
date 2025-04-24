@@ -3,14 +3,16 @@ using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.FrontierDevTools.Api.RequestModels;
 
-public class OptimizeStargateNetworkPlacementRequest : GetRequestModel<OptimizeStargateNetworkPlacementRequest>, IGetRequestModel {
+public class OptimizeStargateNetworkPlacementRequest : GetRequestModel<OptimizeStargateNetworkPlacementRequest>,
+    IGetRequestModel {
     public string StartName { get; init; } = "ICT-SVL";
     public string EndName { get; init; } = "UB3-3QJ";
     public decimal MaxDistanceInLightYears { get; init; } = 499m;
     public NpcAvoidanceLevel NpcAvoidanceLevel { get; init; } = NpcAvoidanceLevel.High;
 
     public override string GetCacheKey() {
-        return $"{nameof(OptimizeStargateNetworkPlacementRequest)}_{StartName}_{EndName}_{MaxDistanceInLightYears}_{NpcAvoidanceLevel}";
+        return
+            $"{nameof(OptimizeStargateNetworkPlacementRequest)}_{StartName}_{EndName}_{MaxDistanceInLightYears}_{NpcAvoidanceLevel}";
     }
 
     public override Dictionary<string, string> GetQueryParams() {

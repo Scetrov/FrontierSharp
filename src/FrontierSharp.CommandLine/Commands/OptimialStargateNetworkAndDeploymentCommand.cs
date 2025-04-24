@@ -7,18 +7,22 @@ using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class OptimalStargateNetworkAndDeploymentCommand(ILogger<OptimalStargateNetworkAndDeploymentCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<OptimalStargateNetworkAndDeploymentCommand.Settings> {
+public class OptimalStargateNetworkAndDeploymentCommand(
+    ILogger<OptimalStargateNetworkAndDeploymentCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<OptimalStargateNetworkAndDeploymentCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.OptimalStargateNetworkAndDeployment(settings.Start, settings.End, settings.MaxStargateDistance, settings.NpcAvoidanceLevel, settings.AvoidGates, settings.IncludeShips, CancellationToken.None);
+        var result = await devToolsClient.OptimalStargateNetworkAndDeployment(settings.Start, settings.End,
+            settings.MaxStargateDistance, settings.NpcAvoidanceLevel, settings.AvoidGates, settings.IncludeShips,
+            CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
@@ -49,7 +53,8 @@ public class OptimalStargateNetworkAndDeploymentCommand(ILogger<OptimalStargateN
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable($"Gate Placement {settings.Start} \u2192 {settings.End}", "From", "To", "Fuel Required", "Distance (LY)", "Jumps", "Ship Path");
+        var table = SpectreUtils.CreateAnsiTable($"Gate Placement {settings.Start} \u2192 {settings.End}", "From", "To",
+            "Fuel Required", "Distance (LY)", "Jumps", "Ship Path");
 
         foreach (var waypoint in functionalRoute) {
             var fuelRequired = waypoint.FuelRequired.ToString(CultureInfo.InvariantCulture);
@@ -63,9 +68,9 @@ public class OptimalStargateNetworkAndDeploymentCommand(ILogger<OptimalStargateN
 
         var logTable = SpectreUtils.CreateAnsiTable("Travel Log", "From", "To", "Jumps", "Fuel Used", "Distance (LY)");
 
-        foreach (var travelLogEntry in travelLog) {
-            logTable.AddRow(travelLogEntry.From, travelLogEntry.To, travelLogEntry.Jumps.ToString(), travelLogEntry.FuelUsed.ToString(CultureInfo.InvariantCulture), travelLogEntry.Distance.ToString());
-        }
+        foreach (var travelLogEntry in travelLog)
+            logTable.AddRow(travelLogEntry.From, travelLogEntry.To, travelLogEntry.Jumps.ToString(),
+                travelLogEntry.FuelUsed.ToString(CultureInfo.InvariantCulture), travelLogEntry.Distance.ToString());
 
         ansiConsole.Write(logTable);
         return 0;
@@ -97,21 +102,17 @@ public class OptimalStargateNetworkAndDeploymentCommand(ILogger<OptimalStargateN
         public bool AvoidGates { get; set; } = false;
 
         public override ValidationResult Validate() {
-            if (string.IsNullOrWhiteSpace(Start)) {
+            if (string.IsNullOrWhiteSpace(Start))
                 return ValidationResult.Error("You must specify a start solar system.");
-            }
 
-            if (string.IsNullOrWhiteSpace(End)) {
-                return ValidationResult.Error("You must specify an end solar system.");
-            }
+            if (string.IsNullOrWhiteSpace(End)) return ValidationResult.Error("You must specify an end solar system.");
 
-            if (MaxStargateDistance < 1) {
+            if (MaxStargateDistance < 1)
                 return ValidationResult.Error("Maximum distance must be greater than 1 lightyears.");
-            }
 
-            if (MaxStargateDistance > 500) {
-                return ValidationResult.Error("Maximum distance must be less than 500 lightyears as this is the maximum distance for the longest jump in the game.");
-            }
+            if (MaxStargateDistance > 500)
+                return ValidationResult.Error(
+                    "Maximum distance must be less than 500 lightyears as this is the maximum distance for the longest jump in the game.");
 
             return ValidationResult.Success();
         }

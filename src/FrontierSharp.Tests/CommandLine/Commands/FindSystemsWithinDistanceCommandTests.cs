@@ -27,7 +27,8 @@ public class FindSystemsWithinDistanceCommandTests {
         };
 
         client.FindSystemsWithinDistance("ROOT", 50, Arg.Any<CancellationToken>())
-            .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = systems, ReferenceSystem = "ROOT" }));
+            .Returns(Result.Ok(new SystemsWithinDistanceResponse
+                { NearbySystems = systems, ReferenceSystem = "ROOT" }));
 
         var context = CommandContextHelper.Create();
         var settings = new FindSystemsWithinDistanceCommand.Settings {

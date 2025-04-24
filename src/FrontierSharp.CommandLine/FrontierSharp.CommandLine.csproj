@@ -37,10 +37,11 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
         <PackageReference Include="Spectre.Console" Version="0.50.0"/>
         <PackageReference Include="Spectre.Console.Cli" Version="0.50.0"/>
-        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.2.0" />
+        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.2.0"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\FrontierSharp.Data\FrontierSharp.Data.csproj"/>
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
     </ItemGroup>
 

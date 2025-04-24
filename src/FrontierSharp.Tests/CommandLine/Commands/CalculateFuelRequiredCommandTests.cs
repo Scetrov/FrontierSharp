@@ -16,7 +16,10 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 public class CalculateFuelRequiredCommandTests {
     private readonly IAnsiConsole _ansiConsole = Substitute.For<IAnsiConsole>();
     private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
-    private readonly ILogger<CalculateFuelRequiredCommand> _logger = Substitute.For<ILogger<CalculateFuelRequiredCommand>>();
+
+    private readonly ILogger<CalculateFuelRequiredCommand> _logger =
+        Substitute.For<ILogger<CalculateFuelRequiredCommand>>();
+
     private readonly CalculateFuelRequiredCommand _sut;
 
     public CalculateFuelRequiredCommandTests() {
@@ -38,7 +41,8 @@ public class CalculateFuelRequiredCommandTests {
         });
 
         _devToolsClient
-            .CalculateFuelRequired(settings.Mass, settings.Lightyears, settings.FuelEfficiency, Arg.Any<CancellationToken>())
+            .CalculateFuelRequired(settings.Mass, settings.Lightyears, settings.FuelEfficiency,
+                Arg.Any<CancellationToken>())
             .Returns(result);
 
         // Act
@@ -62,7 +66,8 @@ public class CalculateFuelRequiredCommandTests {
         var result = Result.Fail<FuelRequiredResponse>(error);
 
         _devToolsClient
-            .CalculateFuelRequired(settings.Mass, settings.Lightyears, settings.FuelEfficiency, Arg.Any<CancellationToken>())
+            .CalculateFuelRequired(settings.Mass, settings.Lightyears, settings.FuelEfficiency,
+                Arg.Any<CancellationToken>())
             .Returns(result);
 
         // Act
@@ -78,7 +83,8 @@ public class CalculateFuelRequiredCommandTests {
     [InlineData(100, 0, 80, "Lightyears must be greater than 0.")]
     [InlineData(100, 10, 0, "There is no fuel efficiency of 0 or less in the game.")]
     [InlineData(100, 10, 100, "There is no fuel efficiency greater than 90 in the game.")]
-    public void Validate_Should_ReturnError_WhenSettingsInvalid(decimal mass, decimal lightyears, decimal efficiency, string expectedMessage) {
+    public void Validate_Should_ReturnError_WhenSettingsInvalid(decimal mass, decimal lightyears, decimal efficiency,
+        string expectedMessage) {
         var settings = new CalculateFuelRequiredCommand.Settings {
             Mass = mass,
             Lightyears = lightyears,

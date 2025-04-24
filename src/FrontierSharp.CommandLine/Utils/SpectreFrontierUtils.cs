@@ -10,13 +10,9 @@ public static class SpectreFrontierUtils {
         sb.Append(shipPathSegments.First().From);
         foreach (var segment in shipPathSegments) {
             sb.Append(" \u2192 "); // Right arrow
-            if (segment.JumpGate.HasValue) {
-                sb.Append("(g)");
-            }
+            if (segment.JumpGate.HasValue) sb.Append("(g)");
 
-            if (segment.Distance.HasValue) {
-                sb.Append($"({segment.Distance.Value}ly)");
-            }
+            if (segment.Distance.HasValue) sb.Append($"({segment.Distance.Value}ly)");
 
             sb.Append($" {segment.To} ");
         }

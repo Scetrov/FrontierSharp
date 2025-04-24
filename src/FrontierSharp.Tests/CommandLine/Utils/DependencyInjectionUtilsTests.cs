@@ -5,7 +5,7 @@ using Xunit;
 
 namespace FrontierSharp.Tests.CommandLine.Utils;
 
-public class LoggingUtilsTests {
+public class DependencyInjectionUtilsTests {
     [Fact]
     public void GetLogLevel_ShouldReturnDefault_WhenNoFlagPresent() {
         var args = new[] { "--some-flag", "value" };

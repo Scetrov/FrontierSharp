@@ -18,7 +18,9 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 public class FindCommonSystemsWithinDistanceRequestCommandTests {
     private readonly IFrontierDevToolsClient _client = Substitute.For<IFrontierDevToolsClient>();
     private readonly IAnsiConsole _console = Substitute.For<IAnsiConsole>();
-    private readonly ILogger<FindCommonSystemsWithinDistanceRequestCommand> _logger = Substitute.For<ILogger<FindCommonSystemsWithinDistanceRequestCommand>>();
+
+    private readonly ILogger<FindCommonSystemsWithinDistanceRequestCommand> _logger =
+        Substitute.For<ILogger<FindCommonSystemsWithinDistanceRequestCommand>>();
 
     private FindCommonSystemsWithinDistanceRequestCommand CreateCommand() {
         return new FindCommonSystemsWithinDistanceRequestCommand(_logger, _client, _console);
@@ -39,7 +41,8 @@ public class FindCommonSystemsWithinDistanceRequestCommandTests {
         var settings = CreateSettings();
 
         var error = Result.Fail<CommonSystemsWithinDistanceResponse>("Something went wrong");
-        _client.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(error);
 
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -58,7 +61,8 @@ public class FindCommonSystemsWithinDistanceRequestCommandTests {
             CommonSystems = []
         });
 
-        _client.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(success);
 
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -85,7 +89,8 @@ public class FindCommonSystemsWithinDistanceRequestCommandTests {
             CommonSystems = systems
         });
 
-        _client.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(success);
 
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Spectre.Console.Cli;
 using Xunit;
+
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace FrontierSharp.Tests.CommandLine;
@@ -68,14 +69,11 @@ public class TypeRegistrarTests {
         resolved.Should().BeOfType<MyService>();
     }
 
-    public interface IMyService {
-    }
+    public interface IMyService { }
 
-    public class MyService : IMyService {
-    }
+    public class MyService : IMyService { }
 
     public class TypeResolver(IServiceProvider provider) : ITypeResolver {
-
         public object Resolve(Type? type) {
             ArgumentNullException.ThrowIfNull(type);
             return provider.GetService(type)!;

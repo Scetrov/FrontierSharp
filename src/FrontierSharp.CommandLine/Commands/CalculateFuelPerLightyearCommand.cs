@@ -4,23 +4,28 @@ using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class CalculateFuelPerLightyearCommand(ILogger<CalculateFuelPerLightyearCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelPerLightyearCommand.Settings> {
+public class CalculateFuelPerLightyearCommand(
+    ILogger<CalculateFuelPerLightyearCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelPerLightyearCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.CalculateFuelPerLightyear(settings.Mass, settings.FuelEfficiency, CancellationToken.None);
+        var result =
+            await devToolsClient.CalculateFuelPerLightyear(settings.Mass, settings.FuelEfficiency,
+                CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
 
-        ansiConsole.MarkupLine($"[b]Fuel required:[/] [cyan]{result.Value.FuelPerLightyear:N2}[/] ({settings.FuelEfficiency / 100:P0} Fuel)");
+        ansiConsole.MarkupLine(
+            $"[b]Fuel required:[/] [cyan]{result.Value.FuelPerLightyear:N2}[/] ({settings.FuelEfficiency / 100:P0} Fuel)");
         return 0;
     }
 
@@ -41,9 +46,7 @@ public class CalculateFuelPerLightyearCommand(ILogger<CalculateFuelPerLightyearC
                     return ValidationResult.Error("There is no fuel efficiency greater than 90 in the game.");
             }
 
-            if (Mass <= 0) {
-                return ValidationResult.Error("The mass of your ship must be greater than 0.");
-            }
+            if (Mass <= 0) return ValidationResult.Error("The mass of your ship must be greater than 0.");
 
             return ValidationResult.Success();
         }
