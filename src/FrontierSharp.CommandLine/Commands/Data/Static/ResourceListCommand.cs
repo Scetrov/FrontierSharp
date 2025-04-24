@@ -49,7 +49,7 @@ public class ResourceListCommand(
         }
     }
 
-    public class Settings : CommandSettings {
+    public class Settings : BaseStaticDataCommandSettings {
         [CommandOption("--filter <filter>")]
         [Description("Case-insensitive substring matching")]
         public required string Filter { get; set; }
@@ -57,15 +57,5 @@ public class ResourceListCommand(
         [CommandOption("--type <type>")]
         [Description("Case insensitive file extension type")]
         public required string Type { get; set; }
-
-        [CommandOption("--root <root>")] public required string Root { get; set; } = @"C:\CCP\EVE Frontier";
-
-        public override ValidationResult Validate() {
-            if (!Directory.Exists(Root))
-                return ValidationResult.Error(
-                    $"Directory '{Root}' does not exist, specify the path to the EVE Frontier folder with the --root option.");
-
-            return ValidationResult.Success();
-        }
     }
 }
