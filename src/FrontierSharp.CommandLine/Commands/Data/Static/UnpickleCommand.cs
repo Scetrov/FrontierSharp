@@ -15,30 +15,35 @@ public class ResourceUnpickleCommand(
     ILogger<ResourceListCommand> logger,
     IFrontierResourceHiveFactory frontierResourcesHiveFactory,
     IAnsiConsole ansiConsole) : AsyncCommand<ResourceUnpickleCommand.Settings> {
+    private readonly static string[] Colors = {
+        "lime",
+        "yellow",
+        "fuchsia",
+        "aqua"
+    };
+
     public override Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var frontierResourcesHive = frontierResourcesHiveFactory.Create(settings.Root);
         var index = frontierResourcesHive.GetIndex().Files;
         var resIndex = frontierResourcesHive.GetResIndex().Files;
         var results = index.Concat(resIndex).Where(Predicate).ToArray();
 
-        if (results.Length == 0) {
-            logger.LogWarning("No files named '{Filename}' found", settings.Filename);
-            ansiConsole.MarkupLine($"[red]No files found named '{settings.Filename}'[/]");
-            return Task.FromResult(1);
-        }
+        switch (results.Length) {
+            case 0:
+                logger.LogWarning("No files named '{Filename}' found", settings.Filename);
+                ansiConsole.MarkupLine($"[red]No files found named '{settings.Filename}'[/]");
+                return Task.FromResult(1);
+            case > 2: {
+                logger.LogError("More than 2 files matched the specified filters");
+                ansiConsole.MarkupLine("[red]More than 2 files matched the specified filters[/]");
+                var table = SpectreUtils.CreateAnsiTable("Resource Files", "Filename", "Relative Path");
+                foreach (var file in results) table.AddRow(file.Filename.EscapeMarkup(), file.RelativePath.EscapeMarkup());
 
-        if (results.Length > 2) {
-            logger.LogError("More than 2 files matched the specified filters");
-            ansiConsole.MarkupLine($"[red]More than 2 files matched the specified filters[/]");
-            var table = SpectreUtils.CreateAnsiTable("Resource Files", "Filename", "Relative Path");
-            foreach (var file in results) {
-                table.AddRow(file.Filename.EscapeMarkup(), file.RelativePath.EscapeMarkup());
+                ansiConsole.Write(table);
+                return Task.FromResult(1);
             }
-
-            ansiConsole.Write(table);
-            return Task.FromResult(1);
         }
-        
+
         var path = frontierResourcesHive.ResolvePath(results[0].RelativePath);
         var content = Unpickle(path);
 
@@ -46,20 +51,19 @@ public class ResourceUnpickleCommand(
 
         foreach (var key in content.Keys) {
             var node = tree.AddNode($"[aqua]{key.ToString().EscapeMarkup()}[/]");
-            if (content[key] is Hashtable hashtable) {
-                ConstructNode(hashtable, node, settings.MaxItems, 0);
-                continue;
+            switch (content[key]) {
+                case Hashtable hashtable:
+                    ConstructNode(hashtable, node, settings.MaxItems, 0);
+                    continue;
+                case ArrayList arrayList:
+                    AddArrayList(node, arrayList, "white", key, settings.MaxItems, 0);
+                    continue;
+                default:
+                    AddLeaf(node, key, content[key], "white");
+                    break;
             }
-
-            if (content[key] is ArrayList arrayList) {
-                AddArrayList(node, arrayList, "white", key, settings.MaxItems, 0);
-                continue;
-            }
-            
-            AddLeaf(node, key, content[key], "white");
-            
         }
-        
+
         ansiConsole.Write(tree);
 
         return Task.FromResult(0);
@@ -70,14 +74,7 @@ public class ResourceUnpickleCommand(
             return filenamePredicate && pathPredicate;
         }
     }
-    
-    private readonly static string[] Colors = {
-        "lime",
-        "yellow",
-        "fuchsia",
-        "aqua",
-    };
-    
+
     private static void ConstructNode(Hashtable content, TreeNode node, int maxItems, int depth) {
         var indexer = 0;
         var color = Colors[depth % Colors.Length];
@@ -88,19 +85,20 @@ public class ResourceUnpickleCommand(
             }
 
             var valueObject = content[key];
-            
-            if (valueObject is Hashtable hashtable) {
-                var childNode = node.AddNode($"[{color}]{key.ToString().EscapeMarkup()}[/]");
-                ConstructNode(hashtable, childNode, maxItems, depth + 1);
-                continue;
-            }
-            
-            if (valueObject is ArrayList arrayList) {
-                AddArrayList(node, arrayList, color, key, maxItems, depth + 1);
-                continue;
-            }
 
-            AddLeaf(node, key, valueObject, color);
+            switch (valueObject) {
+                case Hashtable hashtable: {
+                    var childNode = node.AddNode($"[{color}]{key.ToString().EscapeMarkup()}[/]");
+                    ConstructNode(hashtable, childNode, maxItems, depth + 1);
+                    continue;
+                }
+                case ArrayList arrayList:
+                    AddArrayList(node, arrayList, color, key, maxItems, depth + 1);
+                    continue;
+                default:
+                    AddLeaf(node, key, valueObject, color);
+                    break;
+            }
         }
     }
 
@@ -120,17 +118,15 @@ public class ResourceUnpickleCommand(
                     ConstructNode(childHashtable, childNode, maxItems, depth + 1);
                     continue;
                 }
-                
+
                 AddLeaf(node, key, item, color);
             }
-            
-            if (arrayList.Count > array.Length) {
-                node.AddNode($"... {arrayList.Count - maxItems:N0} more items".EscapeMarkup());
-            }
+
+            if (arrayList.Count > array.Length) node.AddNode($"... {arrayList.Count - maxItems:N0} more items".EscapeMarkup());
 
             return;
         }
-        
+
         var arrayContinuance = arrayList.Count > maxItems ? ", ..." : string.Empty;
         var arrayString = $"[ {string.Join(", ", array)} ]".EscapeMarkup();
         var typeString = array.Any(x => x?.GetType() == array[0]?.GetType()) ? array[0]?.GetType().Name : "Mixed";
