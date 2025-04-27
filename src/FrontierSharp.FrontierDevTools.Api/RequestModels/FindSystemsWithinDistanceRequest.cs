@@ -13,8 +13,11 @@ public class FindSystemsWithinDistanceRequest : GetRequestModel<FindSystemsWithi
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "system_name", SystemName },
-            { "max_distance", MaxDistance.ToString(CultureInfo.InvariantCulture) }
+            {
+                "system_name", SystemName
+            }, {
+                "max_distance", MaxDistance.ToString(CultureInfo.InvariantCulture)
+            }
         };
     }
 

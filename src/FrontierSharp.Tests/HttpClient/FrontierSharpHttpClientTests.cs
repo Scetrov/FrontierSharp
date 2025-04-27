@@ -49,7 +49,9 @@ public class FrontierSharpHttpClientTests {
         var client = new FrontierSharpHttpClient(
             Substitute.For<ILogger<FrontierSharpHttpClient>>(),
             MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK,
-                new StringContent(JsonSerializer.Serialize(new FakeResponse { Message = "Hello" }), Encoding.UTF8,
+                new StringContent(JsonSerializer.Serialize(new FakeResponse {
+                        Message = "Hello"
+                    }), Encoding.UTF8,
                     "application/json")),
             new FakeHybridCache(),
             _options);
@@ -71,7 +73,9 @@ public class FrontierSharpHttpClientTests {
         var client = new FrontierSharpHttpClient(
             Substitute.For<ILogger<FrontierSharpHttpClient>>(),
             MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK,
-                new StringContent(JsonSerializer.Serialize(new FakeResponse { Message = "Hello" }), Encoding.UTF8,
+                new StringContent(JsonSerializer.Serialize(new FakeResponse {
+                        Message = "Hello"
+                    }), Encoding.UTF8,
                     "application/json")),
             new FakeHybridCache(),
             _options);

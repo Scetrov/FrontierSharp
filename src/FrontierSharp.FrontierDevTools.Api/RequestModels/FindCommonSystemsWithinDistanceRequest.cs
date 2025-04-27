@@ -16,9 +16,13 @@ public class FindCommonSystemsWithinDistanceRequest : GetRequestModel<FindCommon
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "system_a", SystemA },
-            { "system_b", SystemB },
-            { "max_distance", MaxDistance.ToString(CultureInfo.InvariantCulture) }
+            {
+                "system_a", SystemA
+            }, {
+                "system_b", SystemB
+            }, {
+                "max_distance", MaxDistance.ToString(CultureInfo.InvariantCulture)
+            }
         };
     }
 

@@ -1,11 +1,13 @@
-using System.Collections;
 using System.ComponentModel;
+using System.Text.Json;
+using Dumpify;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.Data.Static;
 using Microsoft.Extensions.Logging;
 using Razorvine.Pickle;
 using Spectre.Console;
 using Spectre.Console.Cli;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -15,13 +17,6 @@ public class ResourceUnpickleCommand(
     ILogger<ResourceListCommand> logger,
     IFrontierResourceHiveFactory frontierResourcesHiveFactory,
     IAnsiConsole ansiConsole) : AsyncCommand<ResourceUnpickleCommand.Settings> {
-    private readonly static string[] Colors = {
-        "lime",
-        "yellow",
-        "fuchsia",
-        "aqua"
-    };
-
     public override Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var frontierResourcesHive = frontierResourcesHiveFactory.Create(settings.Root);
         var index = frontierResourcesHive.GetIndex().Files;
@@ -47,24 +42,29 @@ public class ResourceUnpickleCommand(
         var path = frontierResourcesHive.ResolvePath(results[0].RelativePath);
         var content = Unpickle(path);
 
-        var tree = new Tree($"Unpickled content from [green]{results[0].Filename}[/]");
+        var tableConfig = new TableConfig {
+            MaxCollectionCount = settings.MaxItems,
+        };
 
-        foreach (var key in content.Keys) {
-            var node = tree.AddNode($"[aqua]{key.ToString().EscapeMarkup()}[/]");
-            switch (content[key]) {
-                case Hashtable hashtable:
-                    ConstructNode(hashtable, node, settings.MaxItems, 0);
-                    continue;
-                case ArrayList arrayList:
-                    AddArrayList(node, arrayList, "white", key, settings.MaxItems, 0);
-                    continue;
-                default:
-                    AddLeaf(node, key, content[key], "white");
-                    break;
-            }
+        if (settings.Output == null) {
+            content.Dump(tableConfig: tableConfig);
+            return Task.FromResult(0);
         }
 
-        ansiConsole.Write(tree);
+        switch (settings.OutputFormat) {
+            case Settings.OutputFormatOption.Json:
+                var json = JsonSerializer.Serialize(content, new JsonSerializerOptions {
+                    WriteIndented = true
+                });
+                File.WriteAllText(settings.Output, json);
+                break;
+            case Settings.OutputFormatOption.Yaml:
+                var yaml = new YamlDotNet.Serialization.Serializer().Serialize(content);
+                File.WriteAllText(settings.Output, yaml);
+                break;
+            default:
+                throw new NotImplementedException(settings.OutputFormat.ToString());
+        }
 
         return Task.FromResult(0);
 
@@ -75,75 +75,10 @@ public class ResourceUnpickleCommand(
         }
     }
 
-    private static void ConstructNode(Hashtable content, TreeNode node, int maxItems, int depth) {
-        var indexer = 0;
-        var color = Colors[depth % Colors.Length];
-        foreach (var key in content.Keys) {
-            if (indexer++ > maxItems) {
-                node.AddNode($"... {content.Count - maxItems:N0} more items".EscapeMarkup());
-                break;
-            }
-
-            var valueObject = content[key];
-
-            switch (valueObject) {
-                case Hashtable hashtable: {
-                    var childNode = node.AddNode($"[{color}]{key.ToString().EscapeMarkup()}[/]");
-                    ConstructNode(hashtable, childNode, maxItems, depth + 1);
-                    continue;
-                }
-                case ArrayList arrayList:
-                    AddArrayList(node, arrayList, color, key, maxItems, depth + 1);
-                    continue;
-                default:
-                    AddLeaf(node, key, valueObject, color);
-                    break;
-            }
-        }
-    }
-
-    private static void AddArrayList(TreeNode node, ArrayList arrayList, string color, object key, int maxItems, int depth) {
-        var array = arrayList.Count > maxItems ? arrayList.GetRange(0, maxItems).ToArray() : arrayList.ToArray();
-        if (array.Length == 0) {
-            node.AddNode($"[{color}]{key.ToString().EscapeMarkup()}:[/] [[ ]]");
-            return;
-        }
-
-        if (array.Any(x => x?.GetType() == typeof(Hashtable))) {
-            var indexer = 0;
-            foreach (var item in array) {
-                var childNode = node.AddNode($"[{color}]{(indexer++).ToString().EscapeMarkup()}:[/]");
-
-                if (item is Hashtable childHashtable) {
-                    ConstructNode(childHashtable, childNode, maxItems, depth + 1);
-                    continue;
-                }
-
-                AddLeaf(node, key, item, color);
-            }
-
-            if (arrayList.Count > array.Length) node.AddNode($"... {arrayList.Count - maxItems:N0} more items".EscapeMarkup());
-
-            return;
-        }
-
-        var arrayContinuance = arrayList.Count > maxItems ? ", ..." : string.Empty;
-        var arrayString = $"[ {string.Join(", ", array)} ]".EscapeMarkup();
-        var typeString = array.Any(x => x?.GetType() == array[0]?.GetType()) ? array[0]?.GetType().Name : "Mixed";
-        node.AddNode($"[{color}]{key.ToString().EscapeMarkup()}:[/] {arrayString}{arrayContinuance} ({typeString}[[]])");
-    }
-
-    private static void AddLeaf(TreeNode node, object key, object? valueObject, string color) {
-        var keyString = key.ToString().EscapeMarkup();
-        var value = valueObject?.ToString().EscapeMarkup();
-        var valueString = valueObject == null ? "null" : $"{value} ({valueObject?.GetType().Name})";
-        node.AddNode($"[{color}]{keyString}[/]: {valueString}");
-    }
-
-    private static Hashtable Unpickle(string path) {
+    private static object Unpickle(string path) {
         using var unpiclker = new Unpickler();
         using var fileStream = File.OpenRead(path);
-        return (Hashtable)unpiclker.load(fileStream);
+        return unpiclker.load(fileStream);
     }
 
     public class Settings : BaseStaticDataCommandSettings {
@@ -157,5 +92,16 @@ public class ResourceUnpickleCommand(
 
         [CommandOption("--maxItems <maxItems>")]
         public int MaxItems { get; set; } = 5;
+
+        [CommandOption("--output <output>")]
+        public string? Output { get; set; } = null;
+
+        [CommandOption("--outputFormat <outputFormat>")]
+        public OutputFormatOption OutputFormat { get; set; } = OutputFormatOption.Json;
+
+        public enum OutputFormatOption {
+            Json,
+            Yaml
+        }
     }
 }

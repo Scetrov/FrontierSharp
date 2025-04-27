@@ -32,16 +32,27 @@ public class OptimalStargateNetworkAndDeploymentCommand(
         var travelLog = result.Value.Results.TravelLog.ToArray();
 
         var summaryDictionary = new Dictionary<string, string> {
-            { "Start", summary.StartSystem },
-            { "End", summary.EndSystem },
-            { "Max Distance (LY)", summary.TotalGateDistance.ToString() },
-            { "Ship", summary.Ship },
-            { "Fuel Type", summary.FuelType },
-            { "Fuel Volume", summary.FuelVolume.ToString(CultureInfo.InvariantCulture) },
-            { "Fuel Used", summary.FuelVolumeUsed.ToString(CultureInfo.InvariantCulture) },
-            { "FuelCost", summary.FuelCost.ToString(CultureInfo.InvariantCulture) },
-            { "Systems Reached", summary.SystemsReached.ToString() },
-            { "Gates Deployed", summary.GatesDeployed.ToString() }
+            {
+                "Start", summary.StartSystem
+            }, {
+                "End", summary.EndSystem
+            }, {
+                "Max Distance (LY)", summary.TotalGateDistance.ToString()
+            }, {
+                "Ship", summary.Ship
+            }, {
+                "Fuel Type", summary.FuelType
+            }, {
+                "Fuel Volume", summary.FuelVolume.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "Fuel Used", summary.FuelVolumeUsed.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "FuelCost", summary.FuelCost.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "Systems Reached", summary.SystemsReached.ToString()
+            }, {
+                "Gates Deployed", summary.GatesDeployed.ToString()
+            }
         };
 
         var summaryTable = SpectreUtils.CreateAnsiListing("Summary", summaryDictionary);

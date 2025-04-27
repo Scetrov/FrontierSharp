@@ -14,9 +14,13 @@ public class CalculateTravelDistanceRequest : GetRequestModel<CalculateTravelDis
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "current_fuel", CurrentFuel.ToString(CultureInfo.InvariantCulture) },
-            { "fuel_efficiency", FuelEfficiency.ToString(CultureInfo.InvariantCulture) },
-            { "mass", Mass.ToString(CultureInfo.InvariantCulture) }
+            {
+                "current_fuel", CurrentFuel.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "fuel_efficiency", FuelEfficiency.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "mass", Mass.ToString(CultureInfo.InvariantCulture)
+            }
         };
     }
 

@@ -14,9 +14,13 @@ public class CalculateFuelRequired : GetRequestModel<CalculateFuelRequired>, IGe
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "mass", Mass.ToString(CultureInfo.InvariantCulture) },
-            { "lightyears", Lightyears.ToString(CultureInfo.InvariantCulture) },
-            { "fuel_efficiency", FuelEfficiency.ToString(CultureInfo.InvariantCulture) }
+            {
+                "mass", Mass.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "lightyears", Lightyears.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "fuel_efficiency", FuelEfficiency.ToString(CultureInfo.InvariantCulture)
+            }
         };
     }
 

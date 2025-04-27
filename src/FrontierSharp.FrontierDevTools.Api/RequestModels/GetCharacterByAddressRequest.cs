@@ -11,7 +11,9 @@ public class GetCharacterByAddressRequest : GetRequestModel<GetCharacterByAddres
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "player_address", Address }
+            {
+                "player_address", Address
+            }
         };
     }
 

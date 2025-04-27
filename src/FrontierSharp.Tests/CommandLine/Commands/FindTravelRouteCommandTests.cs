@@ -105,7 +105,11 @@ public class FindTravelRouteCommandTests {
 
         var response = new RouteResponse {
             Route = [
-                new JumpResponse { From = "Foo", To = "Bar", DistanceInLightYears = 42.5m }
+                new JumpResponse {
+                    From = "Foo",
+                    To = "Bar",
+                    DistanceInLightYears = 42.5m
+                }
             ]
         };
 

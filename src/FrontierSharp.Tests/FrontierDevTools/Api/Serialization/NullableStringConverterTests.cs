@@ -7,7 +7,9 @@ namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;
 
 public class NullableStringConverterTests {
     private readonly JsonSerializerOptions _options = new() {
-        Converters = { new NullableStringConverter() }
+        Converters = {
+            new NullableStringConverter()
+        }
     };
 
     [Theory]

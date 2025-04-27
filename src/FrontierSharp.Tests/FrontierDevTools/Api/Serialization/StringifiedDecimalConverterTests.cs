@@ -7,7 +7,9 @@ namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;
 
 public class StringifiedDecimalConverterTests {
     private readonly JsonSerializerOptions _options = new() {
-        Converters = { new StringifiedDecimalConverter() }
+        Converters = {
+            new StringifiedDecimalConverter()
+        }
     };
 
     [Theory]
@@ -40,7 +42,9 @@ public class StringifiedDecimalConverterTests {
     [InlineData(123.45, "\"123.45\"")]
     [InlineData(0, "\"0\"")]
     public void Write_ShouldSerializeDecimalAsString(decimal value, string expectedJsonValue) {
-        var obj = new TestObject { Value = value };
+        var obj = new TestObject {
+            Value = value
+        };
 
         var json = JsonSerializer.Serialize(obj, _options);
 

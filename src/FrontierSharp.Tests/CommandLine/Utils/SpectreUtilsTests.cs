@@ -21,8 +21,11 @@ public class SpectreUtilsTests {
     public void CreateAnsiListing_Should_Create_Table_With_KeyValueRows() {
         // Arrange
         var data = new Dictionary<string, string> {
-            { "Key1", "Value1" },
-            { "Key2", "Value2" }
+            {
+                "Key1", "Value1"
+            }, {
+                "Key2", "Value2"
+            }
         };
 
         // Act

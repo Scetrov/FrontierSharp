@@ -11,7 +11,9 @@ public class GetGateNetworkRequest : GetRequestModel<GetGateNetworkRequest>, IGe
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "identifier", Identifier }
+            {
+                "identifier", Identifier
+            }
         };
     }
 

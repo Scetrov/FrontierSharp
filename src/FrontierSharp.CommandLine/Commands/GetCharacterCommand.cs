@@ -52,14 +52,23 @@ public class GetCharacterCommand(
         else {
             var character = characters.Characters.Single();
             table = SpectreUtils.CreateAnsiListing("Character", new Dictionary<string, string> {
-                { "Name", character.Name },
-                { "Is Smart Character", character.IsSmartCharacter.ToAnsiString() },
-                { "Id", character.Id.SliceMiddle() },
-                { "Address", character.Address },
-                { "Tribe Id", character.CorpId.ToString() },
-                { "Created At", character.CreatedAt.ToAnsiString() },
-                { "EVE Balance", character.EveBalanceWei.AsWeiToEther() },
-                { "Gas Balance", character.GasBalanceWei.AsWeiToEther() }
+                {
+                    "Name", character.Name
+                }, {
+                    "Is Smart Character", character.IsSmartCharacter.ToAnsiString()
+                }, {
+                    "Id", character.Id.SliceMiddle()
+                }, {
+                    "Address", character.Address
+                }, {
+                    "Tribe Id", character.CorpId.ToString()
+                }, {
+                    "Created At", character.CreatedAt.ToAnsiString()
+                }, {
+                    "EVE Balance", character.EveBalanceWei.AsWeiToEther()
+                }, {
+                    "Gas Balance", character.GasBalanceWei.AsWeiToEther()
+                }
             });
         }
 
@@ -87,7 +96,9 @@ public class GetCharacterCommand(
         }
 
         public override ValidationResult Validate() {
-            var optionCount = new[] { Name, Address }.Count(x => !string.IsNullOrWhiteSpace(x));
+            var optionCount = new[] {
+                Name, Address
+            }.Count(x => !string.IsNullOrWhiteSpace(x));
 
             if (optionCount != 1)
                 return ValidationResult.Error("You must specify exactly one of --name, --address, or --corpid");

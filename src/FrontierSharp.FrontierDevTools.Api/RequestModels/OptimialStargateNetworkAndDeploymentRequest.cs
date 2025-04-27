@@ -19,12 +19,19 @@ public class OptimalStargateNetworkAndDeploymentRequest : GetRequestModel<Optima
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "start_name", StartName },
-            { "end_name", EndName },
-            { "max_stargate_distance", MaxStargateDistance.ToString(CultureInfo.InvariantCulture) },
-            { "npc_avoidance_level", ((int)NpcAvoidanceLevel).ToString() },
-            { "include_ships", IncludeShips },
-            { "avoid_gates", AvoidGates.ToString() }
+            {
+                "start_name", StartName
+            }, {
+                "end_name", EndName
+            }, {
+                "max_stargate_distance", MaxStargateDistance.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "npc_avoidance_level", ((int)NpcAvoidanceLevel).ToString()
+            }, {
+                "include_ships", IncludeShips
+            }, {
+                "avoid_gates", AvoidGates.ToString()
+            }
         };
     }
 

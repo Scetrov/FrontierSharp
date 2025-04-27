@@ -13,8 +13,11 @@ public class CalculateFuelPerLightyear : GetRequestModel<CalculateFuelPerLightye
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "mass", Mass.ToString(CultureInfo.InvariantCulture) },
-            { "fuel_efficiency", FuelEfficiency.ToString(CultureInfo.InvariantCulture) }
+            {
+                "mass", Mass.ToString(CultureInfo.InvariantCulture)
+            }, {
+                "fuel_efficiency", FuelEfficiency.ToString(CultureInfo.InvariantCulture)
+            }
         };
     }
 

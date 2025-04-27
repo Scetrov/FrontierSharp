@@ -107,7 +107,11 @@ public class OptimizeStargateNetworkPlacementCommandTests {
 
         var response = new RouteResponse {
             Route = [
-                new JumpResponse { From = "A", To = "B", DistanceInLightYears = 300.3m }
+                new JumpResponse {
+                    From = "A",
+                    To = "B",
+                    DistanceInLightYears = 300.3m
+                }
             ]
         };
 
