@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.IO.Abstractions;
 using System.Text.Json;
 using Dumpify;
 using FrontierSharp.CommandLine.Utils;
@@ -18,6 +19,7 @@ namespace FrontierSharp.CommandLine.Commands.Data.Static;
 public class ResourceUnpickleCommand(
     ILogger<ResourceListCommand> logger,
     IFrontierResourceHiveFactory frontierResourcesHiveFactory,
+    IFileSystem fileSystem,
     IAnsiConsole ansiConsole) : AsyncCommand<ResourceUnpickleCommand.Settings> {
     public override Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var frontierResourcesHive = frontierResourcesHiveFactory.Create(settings.Root);
@@ -42,7 +44,7 @@ public class ResourceUnpickleCommand(
         }
 
         var path = frontierResourcesHive.ResolvePath(results[0].RelativePath);
-        var content = Unpickle(path);
+        var content = Unpickle(path, fileSystem);
 
         var tableConfig = new TableConfig {
             MaxCollectionCount = settings.MaxItems
@@ -58,11 +60,11 @@ public class ResourceUnpickleCommand(
                 var json = JsonSerializer.Serialize(content, new JsonSerializerOptions {
                     WriteIndented = true
                 });
-                File.WriteAllText(settings.Output, json);
+                fileSystem.File.WriteAllText(settings.Output, json);
                 break;
             case Settings.OutputFormatOption.Yaml:
                 var yaml = new Serializer().Serialize(content);
-                File.WriteAllText(settings.Output, yaml);
+                fileSystem.File.WriteAllText(settings.Output, yaml);
                 break;
             default:
                 throw new NotImplementedException(settings.OutputFormat.ToString());
@@ -77,9 +79,9 @@ public class ResourceUnpickleCommand(
         }
     }
 
-    private static object Unpickle(string path) {
+    private static object Unpickle(string path, IFileSystem fileSystem) {
         using var unpiclker = new Unpickler();
-        using var fileStream = File.OpenRead(path);
+        using var fileStream = fileSystem.File.OpenRead(path);
         return unpiclker.load(fileStream);
     }
 

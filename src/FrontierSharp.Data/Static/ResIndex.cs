@@ -3,6 +3,9 @@ using System.IO.Abstractions;
 namespace FrontierSharp.Data.Static;
 
 public class ResIndex {
+    protected ResIndex(IEnumerable<ResFile> files) {
+        Files = files;
+    }
     public ResIndex(string indexFile, IFileSystem fileSystem) {
         if (!fileSystem.File.Exists(indexFile)) throw new FileNotFoundException("Index file not found", indexFile);
 
@@ -12,7 +15,7 @@ public class ResIndex {
             .AsEnumerable();
     }
 
-    public IEnumerable<ResFile> Files { get; }
+    public IEnumerable<ResFile> Files { get; protected set; }
 
     public virtual ResFile FindByFilename(string filename) {
         Func<ResFile, bool> predicate = x => x.Filename == filename;
