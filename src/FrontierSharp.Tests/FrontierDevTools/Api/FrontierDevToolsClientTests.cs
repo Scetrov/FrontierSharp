@@ -41,15 +41,16 @@ public class FrontierDevToolsClientTests {
 
         result.Should().BeSameAs(mockResponse);
 
-        await httpClient.Received(1).Get<OptimalStargateNetworkAndDeploymentRequest, OptimalStargateNetworkAndDeploymentResponse>(
-            Arg.Is<OptimalStargateNetworkAndDeploymentRequest>(r =>
-                r.StartName == "Start-A" &&
-                r.EndName == "End-B" &&
-                r.MaxStargateDistance == 250m &&
-                r.NpcAvoidanceLevel == NpcAvoidanceLevel.Medium &&
-                r.AvoidGates == true &&
-                r.IncludeShips == "MockShip"),
-            Arg.Any<CancellationToken>());
+        await httpClient.Received(1)
+            .Get<OptimalStargateNetworkAndDeploymentRequest, OptimalStargateNetworkAndDeploymentResponse>(
+                Arg.Is<OptimalStargateNetworkAndDeploymentRequest>(r =>
+                    r.StartName == "Start-A" &&
+                    r.EndName == "End-B" &&
+                    r.MaxStargateDistance == 250m &&
+                    r.NpcAvoidanceLevel == NpcAvoidanceLevel.Medium &&
+                    r.AvoidGates == true &&
+                    r.IncludeShips == "MockShip"),
+                Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -271,13 +272,14 @@ public class FrontierDevToolsClientTests {
     [Theory]
     [MemberData(nameof(PathByRequestModel))]
     public async Task RequestModelsParameters_ShouldMatchOpenApiDefinition<T>(string route, IGetRequestModel model) {
-        await using var jsonContent = ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
+        await using var jsonContent =
+            ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
         var jsonDocument = await JsonNode.ParseAsync(jsonContent);
         var requestModel = jsonDocument?["paths"]?[route]?["get"]?["parameters"];
 
-        if (requestModel == null) {
-            throw new InvalidOperationException("The $.paths.{route}.get.parameters node was not found in the OpenAPI document.");
-        }
+        if (requestModel == null)
+            throw new InvalidOperationException(
+                "The $.paths.{route}.get.parameters node was not found in the OpenAPI document.");
 
         var parameters = requestModel.AsArray().Select(x => x?["name"]?.GetValue<string>()).ToArray();
         model.GetEndpoint().Should().Be(route);
@@ -287,7 +289,8 @@ public class FrontierDevToolsClientTests {
 
     [Fact]
     public async Task ClientShouldImplementAllMethods() {
-        await using var jsonContent = ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
+        await using var jsonContent =
+            ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.openapi.json");
         var jsonDocument = await JsonNode.ParseAsync(jsonContent);
         var paths = jsonDocument?["paths"] as JsonObject;
         var specificationPaths = paths?.Select(x => x.Key).Where(x => x != "/get_mud_table_data").ToList();

@@ -12,7 +12,8 @@ public class StringifiedDecimalConverter : JsonConverter<decimal> {
         return reader.TokenType switch {
             JsonTokenType.Number when decimal.TryParse(valueSpan, out var decimalString) => decimalString,
             JsonTokenType.String when decimal.TryParse(reader.GetString(), out var decimalString) => decimalString,
-            JsonTokenType.String when double.TryParse(reader.GetString(), out var doubleString) => (decimal)doubleString,
+            JsonTokenType.String when double.TryParse(reader.GetString(), out var doubleString) =>
+                (decimal)doubleString,
             _ => throw new JsonException($"Invalid JSON value for Decimal ({reader.GetString()}).")
         };
     }

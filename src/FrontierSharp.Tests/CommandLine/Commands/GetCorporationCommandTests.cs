@@ -74,7 +74,10 @@ public class GetCorporationCommandTests {
 
     [Fact]
     public async Task ExecuteAsync_ReturnsZero_WhenUsingIdAndCharactersReturned() {
-        var characters = new List<string> { "Alpha", "Beta" };
+        var characters = new List<string> {
+            "Alpha",
+            "Beta"
+        };
 
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByCorpId(98000001, Arg.Any<CancellationToken>())
@@ -97,7 +100,9 @@ public class GetCorporationCommandTests {
 
     [Fact]
     public async Task ExecuteAsync_ReturnsZero_WhenUsingPlayerNameAndCharactersReturned() {
-        var characters = new List<string> { "Gamma" };
+        var characters = new List<string> {
+            "Gamma"
+        };
 
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetCharactersByPlayer("Scetrov", Arg.Any<CancellationToken>())

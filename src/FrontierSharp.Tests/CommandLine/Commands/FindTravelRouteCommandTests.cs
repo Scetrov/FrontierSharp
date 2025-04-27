@@ -65,7 +65,8 @@ public class FindTravelRouteCommandTests {
         var error = Substitute.For<IError>();
         error.Message.Returns("Route error");
 
-        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(Result.Fail<RouteResponse>(error));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -82,10 +83,11 @@ public class FindTravelRouteCommandTests {
         };
 
         var response = new RouteResponse {
-            Route = Array.Empty<JumpResponse>()
+            Route = []
         };
 
-        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -103,11 +105,16 @@ public class FindTravelRouteCommandTests {
 
         var response = new RouteResponse {
             Route = [
-                new JumpResponse { From = "Foo", To = "Bar", DistanceInLightYears = 42.5m }
+                new JumpResponse {
+                    From = "Foo",
+                    To = "Bar",
+                    DistanceInLightYears = 42.5m
+                }
             ]
         };
 
-        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, Arg.Any<CancellationToken>())
+        _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,
+                Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);

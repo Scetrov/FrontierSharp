@@ -17,7 +17,9 @@ public class OptimizeStargateNetworkPlacementCommandTests {
     private readonly IFrontierDevToolsClient _client = Substitute.For<IFrontierDevToolsClient>();
     private readonly OptimizeStargateNetworkPlacementCommand _command;
     private readonly IAnsiConsole _console = Substitute.For<IAnsiConsole>();
-    private readonly ILogger<OptimizeStargateNetworkPlacementCommand> _logger = Substitute.For<ILogger<OptimizeStargateNetworkPlacementCommand>>();
+
+    private readonly ILogger<OptimizeStargateNetworkPlacementCommand> _logger =
+        Substitute.For<ILogger<OptimizeStargateNetworkPlacementCommand>>();
 
     public OptimizeStargateNetworkPlacementCommandTests() {
         _command = new OptimizeStargateNetworkPlacementCommand(_logger, _client, _console);
@@ -65,7 +67,8 @@ public class OptimizeStargateNetworkPlacementCommandTests {
         var error = Substitute.For<IError>();
         error.Message.Returns("Something failed");
 
-        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
+        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance,
+                settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
             .Returns(Result.Fail<RouteResponse>(error));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -82,10 +85,11 @@ public class OptimizeStargateNetworkPlacementCommandTests {
         };
 
         var response = new RouteResponse {
-            Route = Array.Empty<JumpResponse>()
+            Route = []
         };
 
-        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
+        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance,
+                settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
@@ -103,11 +107,16 @@ public class OptimizeStargateNetworkPlacementCommandTests {
 
         var response = new RouteResponse {
             Route = [
-                new JumpResponse { From = "A", To = "B", DistanceInLightYears = 300.3m }
+                new JumpResponse {
+                    From = "A",
+                    To = "B",
+                    DistanceInLightYears = 300.3m
+                }
             ]
         };
 
-        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance, settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
+        _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance,
+                settings.NpcAvoidanceLevel, Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);

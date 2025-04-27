@@ -45,10 +45,14 @@ public class OptimalStargateNetworkAndDeploymentCommandTests {
                         Jumps = 3,
                         ShipPath = [
                             new ShipPathSegment {
-                                From = "A", To = "B", Distance = 60
+                                From = "A",
+                                To = "B",
+                                Distance = 60
                             },
                             new ShipPathSegment {
-                                From = "B", To = "C", Distance = 63
+                                From = "B",
+                                To = "C",
+                                Distance = 63
                             }
                         ]
                     }

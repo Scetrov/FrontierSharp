@@ -5,12 +5,16 @@ using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<GetCorporationCommand.Settings> {
+public class GetCorporationCommand(
+    ILogger<GetCorporationCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<GetCorporationCommand.Settings> {
     // ReSharper disable once ClassNeverInstantiated.Global
     public enum CorporationSearchType {
         Id,
@@ -19,15 +23,15 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = settings.SearchType switch {
-            CorporationSearchType.Id => await devToolsClient.GetCharactersByCorpId(settings.Id!.Value, CancellationToken.None),
-            CorporationSearchType.Player => await devToolsClient.GetCharactersByPlayer(settings.PlayerName, CancellationToken.None),
+            CorporationSearchType.Id => await devToolsClient.GetCharactersByCorpId(settings.Id!.Value,
+                CancellationToken.None),
+            CorporationSearchType.Player => await devToolsClient.GetCharactersByPlayer(settings.PlayerName,
+                CancellationToken.None),
             _ => throw new InvalidOperationException("Invalid search type.")
         };
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
@@ -39,11 +43,10 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable((settings.Id.HasValue ? settings.Id.ToString() : settings.PlayerName)!, "Player");
+        var table = SpectreUtils.CreateAnsiTable((settings.Id.HasValue ? settings.Id.ToString() : settings.PlayerName)!,
+            "Player");
 
-        foreach (var character in corporation.CorpCharacters) {
-            table.AddRow(character);
-        }
+        foreach (var character in corporation.CorpCharacters) table.AddRow(character);
 
         ansiConsole.Write(table);
         return 0;
@@ -60,13 +63,9 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
 
         public CorporationSearchType SearchType {
             get {
-                if (Id.HasValue) {
-                    return CorporationSearchType.Id;
-                }
+                if (Id.HasValue) return CorporationSearchType.Id;
 
-                if (!string.IsNullOrWhiteSpace(PlayerName)) {
-                    return CorporationSearchType.Player;
-                }
+                if (!string.IsNullOrWhiteSpace(PlayerName)) return CorporationSearchType.Player;
 
                 throw new NotImplementedException("Search Type not Implemented.");
             }
@@ -75,17 +74,12 @@ public class GetCorporationCommand(ILogger<GetCorporationCommand> logger, IFront
         public override ValidationResult Validate() {
             var optionCount = 0;
 
-            if (Id.HasValue) {
-                optionCount++;
-            }
+            if (Id.HasValue) optionCount++;
 
-            if (!string.IsNullOrWhiteSpace(PlayerName)) {
-                optionCount++;
-            }
+            if (!string.IsNullOrWhiteSpace(PlayerName)) optionCount++;
 
-            if (optionCount != 1) {
+            if (optionCount != 1)
                 return ValidationResult.Error("You must specify exactly one of --id, --address, or --player");
-            }
 
             return ValidationResult.Success();
         }

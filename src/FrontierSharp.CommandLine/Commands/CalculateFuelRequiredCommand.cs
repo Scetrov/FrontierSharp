@@ -4,23 +4,27 @@ using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class CalculateFuelRequiredCommand(ILogger<CalculateFuelRequiredCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelRequiredCommand.Settings> {
+public class CalculateFuelRequiredCommand(
+    ILogger<CalculateFuelRequiredCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelRequiredCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.CalculateFuelRequired(settings.Mass, settings.Lightyears, settings.FuelEfficiency, CancellationToken.None);
+        var result = await devToolsClient.CalculateFuelRequired(settings.Mass, settings.Lightyears,
+            settings.FuelEfficiency, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
 
-        ansiConsole.MarkupLine($"[b]Fuel required:[/] [cyan]{result.Value.FuelRequired:N2}[/] ({settings.FuelEfficiency / 100:P0} Fuel)");
+        ansiConsole.MarkupLine(
+            $"[b]Fuel required:[/] [cyan]{result.Value.FuelRequired:N2}[/] ({settings.FuelEfficiency / 100:P0} Fuel)");
         return 0;
     }
 
@@ -38,9 +42,7 @@ public class CalculateFuelRequiredCommand(ILogger<CalculateFuelRequiredCommand> 
         public required decimal FuelEfficiency { get; set; }
 
         public override ValidationResult Validate() {
-            if (Lightyears <= 0) {
-                return ValidationResult.Error("Lightyears must be greater than 0.");
-            }
+            if (Lightyears <= 0) return ValidationResult.Error("Lightyears must be greater than 0.");
 
             switch (FuelEfficiency) {
                 case <= 0:
@@ -49,9 +51,7 @@ public class CalculateFuelRequiredCommand(ILogger<CalculateFuelRequiredCommand> 
                     return ValidationResult.Error("There is no fuel efficiency greater than 90 in the game.");
             }
 
-            if (Mass <= 0) {
-                return ValidationResult.Error("The mass of your ship must be greater than 0.");
-            }
+            if (Mass <= 0) return ValidationResult.Error("The mass of your ship must be greater than 0.");
 
             return ValidationResult.Success();
         }

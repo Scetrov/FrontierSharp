@@ -5,10 +5,12 @@ using Xunit;
 
 namespace FrontierSharp.Tests.CommandLine.Utils;
 
-public class LoggingUtilsTests {
+public class DependencyInjectionUtilsTests {
     [Fact]
     public void GetLogLevel_ShouldReturnDefault_WhenNoFlagPresent() {
-        var args = new[] { "--some-flag", "value" };
+        var args = new[] {
+            "--some-flag", "value"
+        };
 
         var level = args.GetLogLevel(LogEventLevel.Information);
 
@@ -25,7 +27,9 @@ public class LoggingUtilsTests {
     [InlineData("verbose", LogEventLevel.Verbose)]
     [InlineData("WARNING", LogEventLevel.Warning)]
     public void GetLogLevel_ShouldParseValidLogLevel_RegardlessOfCase(string input, LogEventLevel expected) {
-        var args = new[] { "--loglevel", input };
+        var args = new[] {
+            "--loglevel", input
+        };
 
         var level = args.GetLogLevel(LogEventLevel.Error);
 
@@ -34,7 +38,9 @@ public class LoggingUtilsTests {
 
     [Fact]
     public void GetLogLevel_ShouldReturnDefault_WhenLogLevelValueIsInvalid() {
-        var args = new[] { "--loglevel", "nope" };
+        var args = new[] {
+            "--loglevel", "nope"
+        };
 
         var level = args.GetLogLevel(LogEventLevel.Fatal);
 
@@ -43,7 +49,9 @@ public class LoggingUtilsTests {
 
     [Fact]
     public void GetLogLevel_ShouldThrow_WhenLogLevelFlagIsLastArg() {
-        var args = new[] { "--loglevel" };
+        var args = new[] {
+            "--loglevel"
+        };
 
         Action act = () => args.GetLogLevel();
 

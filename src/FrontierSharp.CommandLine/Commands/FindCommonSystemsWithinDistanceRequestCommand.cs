@@ -5,32 +5,38 @@ using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class FindCommonSystemsWithinDistanceRequestCommand(ILogger<FindCommonSystemsWithinDistanceRequestCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindCommonSystemsWithinDistanceRequestCommand.Settings> {
+public class FindCommonSystemsWithinDistanceRequestCommand(
+    ILogger<FindCommonSystemsWithinDistanceRequestCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<FindCommonSystemsWithinDistanceRequestCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB, settings.MaxDistance, CancellationToken.None);
+        var result = await devToolsClient.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB,
+            settings.MaxDistance, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
 
         if (!result.Value.CommonSystems.Any()) {
-            logger.LogError("No common systems found within {maxDistance} of {systemA} and {systemB}", settings.MaxDistance, settings.SystemA, settings.SystemB);
+            logger.LogError("No common systems found within {maxDistance} of {systemA} and {systemB}",
+                settings.MaxDistance, settings.SystemA, settings.SystemB);
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable($"Common systems between {result.Value.ReferenceSystems.First()} and {result.Value.ReferenceSystems.Last()}", "System Name", "Distance from A (LY)", "Distance from B (LY)", "NPC Gates");
+        var table = SpectreUtils.CreateAnsiTable(
+            $"Common systems between {result.Value.ReferenceSystems.First()} and {result.Value.ReferenceSystems.Last()}",
+            "System Name", "Distance from A (LY)", "Distance from B (LY)", "NPC Gates");
 
-        foreach (var system in result.Value.CommonSystems) {
-            table.AddRow(system.SystemName, ((int)Math.Floor(system.DistanceFromAInLy)).ToString(), ((int)Math.Floor(system.DistanceFromBInLy)).ToString(), system.NpcGates.ToString());
-        }
+        foreach (var system in result.Value.CommonSystems)
+            table.AddRow(system.SystemName, ((int)Math.Floor(system.DistanceFromAInLy)).ToString(),
+                ((int)Math.Floor(system.DistanceFromBInLy)).ToString(), system.NpcGates.ToString());
 
         ansiConsole.Write(table);
         return 0;
@@ -50,13 +56,11 @@ public class FindCommonSystemsWithinDistanceRequestCommand(ILogger<FindCommonSys
         public decimal MaxDistance { get; set; } = 400m;
 
         public override ValidationResult Validate() {
-            if (string.IsNullOrWhiteSpace(SystemA)) {
+            if (string.IsNullOrWhiteSpace(SystemA))
                 return ValidationResult.Error("You must specify a start solar system.");
-            }
 
-            if (string.IsNullOrWhiteSpace(SystemB)) {
+            if (string.IsNullOrWhiteSpace(SystemB))
                 return ValidationResult.Error("You must specify an end solar system.");
-            }
 
             return ValidationResult.Success();
         }

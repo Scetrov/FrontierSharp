@@ -5,12 +5,16 @@ using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class GetGateNetworkCommand(ILogger<GetGateNetworkCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<GetGateNetworkCommand.Settings> {
+public class GetGateNetworkCommand(
+    ILogger<GetGateNetworkCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<GetGateNetworkCommand.Settings> {
     // ReSharper disable once ClassNeverInstantiated.Global
     public enum CorporationSearchType {
         Id,
@@ -21,9 +25,7 @@ public class GetGateNetworkCommand(ILogger<GetGateNetworkCommand> logger, IFront
         var result = await devToolsClient.GetGateNetwork(settings.Identifier, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
@@ -35,11 +37,12 @@ public class GetGateNetworkCommand(ILogger<GetGateNetworkCommand> logger, IFront
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable($"Gate Network for {settings.Identifier}", "From", "To", "Owner", "Fuel", "From Online", "To Online");
+        var table = SpectreUtils.CreateAnsiTable($"Gate Network for {settings.Identifier}", "From", "To", "Owner",
+            "Fuel", "From Online", "To Online");
 
-        foreach (var gate in gateNetwork.GateNetwork) {
-            table.AddRow(gate.FromSystem, gate.ToSystem ?? "[gray]Not Connected[/]", gate.Owner, gate.FuelAmount.FuelToAnsiString(), gate.FromIsOnline.ToAnsiString(), gate.ToIsOnline.ToAnsiString());
-        }
+        foreach (var gate in gateNetwork.GateNetwork)
+            table.AddRow(gate.FromSystem, gate.ToSystem ?? "[gray]Not Connected[/]", gate.Owner,
+                gate.FuelAmount.FuelToAnsiString(), gate.FromIsOnline.ToAnsiString(), gate.ToIsOnline.ToAnsiString());
 
         ansiConsole.Write(table);
         return 0;
@@ -51,9 +54,7 @@ public class GetGateNetworkCommand(ILogger<GetGateNetworkCommand> logger, IFront
         public required string Identifier { get; set; }
 
         public override ValidationResult Validate() {
-            if (string.IsNullOrWhiteSpace(Identifier)) {
-                return ValidationResult.Error("You must specify an identifier.");
-            }
+            if (string.IsNullOrWhiteSpace(Identifier)) return ValidationResult.Error("You must specify an identifier.");
 
             return ValidationResult.Success();
         }

@@ -16,7 +16,10 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 public class CalculateTravelDistanceCommandTests {
     private readonly IAnsiConsole _ansiConsole = Substitute.For<IAnsiConsole>();
     private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
-    private readonly ILogger<CalculateTravelDistanceCommand> _logger = Substitute.For<ILogger<CalculateTravelDistanceCommand>>();
+
+    private readonly ILogger<CalculateTravelDistanceCommand> _logger =
+        Substitute.For<ILogger<CalculateTravelDistanceCommand>>();
+
     private readonly CalculateTravelDistanceCommand _sut;
 
     public CalculateTravelDistanceCommandTests() {
@@ -38,7 +41,8 @@ public class CalculateTravelDistanceCommandTests {
         });
 
         _devToolsClient
-            .CalculateTravelDistance(settings.CurrentFuel, settings.Mass, settings.FuelEfficiency, Arg.Any<CancellationToken>())
+            .CalculateTravelDistance(settings.CurrentFuel, settings.Mass, settings.FuelEfficiency,
+                Arg.Any<CancellationToken>())
             .Returns(result);
 
         // Act
@@ -62,7 +66,8 @@ public class CalculateTravelDistanceCommandTests {
         var result = Result.Fail<TravelDistanceResponse>(error);
 
         _devToolsClient
-            .CalculateTravelDistance(settings.CurrentFuel, settings.Mass, settings.FuelEfficiency, Arg.Any<CancellationToken>())
+            .CalculateTravelDistance(settings.CurrentFuel, settings.Mass, settings.FuelEfficiency,
+                Arg.Any<CancellationToken>())
             .Returns(result);
 
         // Act
@@ -79,7 +84,8 @@ public class CalculateTravelDistanceCommandTests {
     [InlineData(100, 50_000, 0, "There is no fuel efficiency of 0 or less in the game.")]
     [InlineData(100, 50_000, 95, "There is no fuel efficiency greater than 90 in the game.")]
     [InlineData(100, 0, 80, "The mass of your ship must be greater than 0.")]
-    public void Validate_Should_ReturnError_WhenSettingsInvalid(decimal fuel, decimal mass, decimal efficiency, string expectedMessage) {
+    public void Validate_Should_ReturnError_WhenSettingsInvalid(decimal fuel, decimal mass, decimal efficiency,
+        string expectedMessage) {
         var settings = new CalculateTravelDistanceCommand.Settings {
             CurrentFuel = fuel,
             Mass = mass,

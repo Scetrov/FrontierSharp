@@ -11,7 +11,9 @@ public class GetCharactersByPlayerRequest : GetRequestModel<GetCharactersByPlaye
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "player_name", PlayerName }
+            {
+                "player_name", PlayerName
+            }
         };
     }
 

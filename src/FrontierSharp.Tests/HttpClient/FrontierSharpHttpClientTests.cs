@@ -48,7 +48,11 @@ public class FrontierSharpHttpClientTests {
         // Arrange
         var client = new FrontierSharpHttpClient(
             Substitute.For<ILogger<FrontierSharpHttpClient>>(),
-            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK, new StringContent(JsonSerializer.Serialize(new FakeResponse { Message = "Hello" }), Encoding.UTF8, "application/json")),
+            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK,
+                new StringContent(JsonSerializer.Serialize(new FakeResponse {
+                        Message = "Hello"
+                    }), Encoding.UTF8,
+                    "application/json")),
             new FakeHybridCache(),
             _options);
 
@@ -68,7 +72,11 @@ public class FrontierSharpHttpClientTests {
         // Arrange
         var client = new FrontierSharpHttpClient(
             Substitute.For<ILogger<FrontierSharpHttpClient>>(),
-            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK, new StringContent(JsonSerializer.Serialize(new FakeResponse { Message = "Hello" }), Encoding.UTF8, "application/json")),
+            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK,
+                new StringContent(JsonSerializer.Serialize(new FakeResponse {
+                        Message = "Hello"
+                    }), Encoding.UTF8,
+                    "application/json")),
             new FakeHybridCache(),
             _options);
 
@@ -88,7 +96,8 @@ public class FrontierSharpHttpClientTests {
         // Arrange
         var client = new FrontierSharpHttpClient(
             Substitute.For<ILogger<FrontierSharpHttpClient>>(),
-            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK, new StringContent("null", Encoding.UTF8, "application/json")),
+            MockHttpClient.CreateSimpleSubstitute(HttpStatusCode.OK,
+                new StringContent("null", Encoding.UTF8, "application/json")),
             new FakeHybridCache(),
             _options);
 
@@ -99,6 +108,7 @@ public class FrontierSharpHttpClientTests {
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors[0].Message.Should().Be("Unable to deserialize the response into a JSON object, resulted in a null object.");
+        result.Errors[0].Message.Should()
+            .Be("Unable to deserialize the response into a JSON object, resulted in a null object.");
     }
 }

@@ -4,11 +4,9 @@ using FrontierSharp.FrontierDevTools.Api.Serialization;
 namespace FrontierSharp.FrontierDevTools.Api.ResponseModels;
 
 public class TravelLogEntry {
-    [JsonPropertyName("from")]
-    public required string From { get; set; }
+    [JsonPropertyName("from")] public required string From { get; set; }
 
-    [JsonPropertyName("to")]
-    public required string To { get; set; }
+    [JsonPropertyName("to")] public required string To { get; set; }
 
     [JsonPropertyName("jumps")]
     [JsonConverter(typeof(StringifiedInt32Converter))]

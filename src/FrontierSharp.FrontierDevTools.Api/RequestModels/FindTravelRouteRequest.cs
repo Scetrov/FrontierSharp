@@ -16,10 +16,15 @@ public class FindTravelRouteRequest : GetRequestModel<FindTravelRouteRequest>, I
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "start_name", StartName },
-            { "end_name", EndName },
-            { "avoid_gates", AvoidGates.ToString() },
-            { "max_distance", MaxDistanceInLightYears.ToString(CultureInfo.InvariantCulture) }
+            {
+                "start_name", StartName
+            }, {
+                "end_name", EndName
+            }, {
+                "avoid_gates", AvoidGates.ToString()
+            }, {
+                "max_distance", MaxDistanceInLightYears.ToString(CultureInfo.InvariantCulture)
+            }
         };
     }
 

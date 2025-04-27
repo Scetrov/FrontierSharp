@@ -22,12 +22,21 @@ public class FindSystemsWithinDistanceCommandTests {
         var command = new FindSystemsWithinDistanceCommand(logger, client, console);
 
         var systems = new List<SystemDistanceResponse> {
-            new() { SystemName = "SYS-01", DistanceInLightYears = 12.5m },
-            new() { SystemName = "SYS-02", DistanceInLightYears = 8.3m }
+            new() {
+                SystemName = "SYS-01",
+                DistanceInLightYears = 12.5m
+            },
+            new() {
+                SystemName = "SYS-02",
+                DistanceInLightYears = 8.3m
+            }
         };
 
         client.FindSystemsWithinDistance("ROOT", 50, Arg.Any<CancellationToken>())
-            .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = systems, ReferenceSystem = "ROOT" }));
+            .Returns(Result.Ok(new SystemsWithinDistanceResponse {
+                NearbySystems = systems,
+                ReferenceSystem = "ROOT"
+            }));
 
         var context = CommandContextHelper.Create();
         var settings = new FindSystemsWithinDistanceCommand.Settings {
@@ -73,7 +82,10 @@ public class FindSystemsWithinDistanceCommandTests {
         var command = new FindSystemsWithinDistanceCommand(logger, client, console);
 
         client.FindSystemsWithinDistance("EMPTY", 100, Arg.Any<CancellationToken>())
-            .Returns(Result.Ok(new SystemsWithinDistanceResponse { NearbySystems = [], ReferenceSystem = "EMPTY" }));
+            .Returns(Result.Ok(new SystemsWithinDistanceResponse {
+                NearbySystems = [],
+                ReferenceSystem = "EMPTY"
+            }));
 
         var context = CommandContextHelper.Create();
         var settings = new FindSystemsWithinDistanceCommand.Settings {

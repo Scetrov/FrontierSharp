@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.HttpClient", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.Tests", "FrontierSharp.Tests\FrontierSharp.Tests.csproj", "{B904B7B7-E8D2-453C-A268-F5CE42451D30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.Data", "FrontierSharp.Data\FrontierSharp.Data.csproj", "{31668BAD-997C-4779-AD81-C39FC377C008}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B904B7B7-E8D2-453C-A268-F5CE42451D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31668BAD-997C-4779-AD81-C39FC377C008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31668BAD-997C-4779-AD81-C39FC377C008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31668BAD-997C-4779-AD81-C39FC377C008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31668BAD-997C-4779-AD81-C39FC377C008}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

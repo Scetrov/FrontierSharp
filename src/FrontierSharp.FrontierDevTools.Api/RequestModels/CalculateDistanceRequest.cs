@@ -12,8 +12,11 @@ public class CalculateDistanceRequest : GetRequestModel<CalculateDistanceRequest
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "system_a", SystemA },
-            { "system_b", SystemB }
+            {
+                "system_a", SystemA
+            }, {
+                "system_b", SystemB
+            }
         };
     }
 

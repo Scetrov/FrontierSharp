@@ -91,7 +91,9 @@ public class GetGateNetworkCommandTests {
         var client = Substitute.For<IFrontierDevToolsClient>();
         client.GetGateNetwork(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new GateNetworkResponse {
-                GateNetwork = new List<GateResponse> { gate }
+                GateNetwork = new List<GateResponse> {
+                    gate
+                }
             }));
 
         var console = Substitute.For<IAnsiConsole>();

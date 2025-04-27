@@ -9,9 +9,13 @@ public class FakeComplexRequest : GetRequestModel<FakeComplexRequest> {
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "key1", "value1" },
-            { "key2", "value2" },
-            { "key3", "value3" }
+            {
+                "key1", "value1"
+            }, {
+                "key2", "value2"
+            }, {
+                "key3", "value3"
+            }
         };
     }
 

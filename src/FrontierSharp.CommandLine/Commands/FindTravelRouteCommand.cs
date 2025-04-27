@@ -6,18 +6,21 @@ using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace FrontierSharp.CommandLine.Commands;
 
-public class FindTravelRouteCommand(ILogger<FindTravelRouteCommand> logger, IFrontierDevToolsClient devToolsClient, IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
+public class FindTravelRouteCommand(
+    ILogger<FindTravelRouteCommand> logger,
+    IFrontierDevToolsClient devToolsClient,
+    IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
-        var result = await devToolsClient.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance, CancellationToken.None);
+        var result = await devToolsClient.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates,
+            settings.MaxDistance, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) {
-                logger.LogError(err.Message);
-            }
+            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
 
             return 1;
         }
@@ -30,11 +33,11 @@ public class FindTravelRouteCommand(ILogger<FindTravelRouteCommand> logger, IFro
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable($"Route from {settings.Start} \u2192 {settings.End}", "From", "To", "Distance (LY)");
+        var table = SpectreUtils.CreateAnsiTable($"Route from {settings.Start} \u2192 {settings.End}", "From", "To",
+            "Distance (LY)");
 
-        foreach (var jump in routeArray) {
+        foreach (var jump in routeArray)
             table.AddRow(jump.From, jump.To, ((int)Math.Floor(jump.DistanceInLightYears)).ToString());
-        }
 
         ansiConsole.Write(table);
         return 0;
@@ -58,17 +61,14 @@ public class FindTravelRouteCommand(ILogger<FindTravelRouteCommand> logger, IFro
         public decimal MaxDistance { get; set; } = 499m;
 
         public override ValidationResult Validate() {
-            if (string.IsNullOrWhiteSpace(Start)) {
+            if (string.IsNullOrWhiteSpace(Start))
                 return ValidationResult.Error("You must specify a start solar system.");
-            }
 
-            if (string.IsNullOrWhiteSpace(End)) {
-                return ValidationResult.Error("You must specify an end solar system.");
-            }
+            if (string.IsNullOrWhiteSpace(End)) return ValidationResult.Error("You must specify an end solar system.");
 
-            if (MaxDistance > 500) {
-                return ValidationResult.Error("Maximum distance must be less than 500 lightyears as this is the maximum distance for the longest jump in the game.");
-            }
+            if (MaxDistance > 500)
+                return ValidationResult.Error(
+                    "Maximum distance must be less than 500 lightyears as this is the maximum distance for the longest jump in the game.");
 
             return ValidationResult.Success();
         }

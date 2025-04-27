@@ -72,7 +72,11 @@ public class GetCharacterCommandTests {
 
         var response = new CharactersResponse {
             Characters = new List<CharacterResponse> {
-                new() { Name = "AddrGuy", Address = "0x1234567890123456789012345678901234567890", CorpId = 5 }
+                new() {
+                    Name = "AddrGuy",
+                    Address = "0x1234567890123456789012345678901234567890",
+                    CorpId = 5
+                }
             }
         };
         devToolsClientMock.GetCharactersByAddress(Arg.Any<string>(), Arg.Any<CancellationToken>())
@@ -132,8 +136,16 @@ public class GetCharacterCommandTests {
         devToolsClientMock.GetCharactersByAddress(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new CharactersResponse {
                 Characters = new List<CharacterResponse> {
-                    new() { Name = "A", Address = "0x1", CorpId = 1 },
-                    new() { Name = "B", Address = "0x2", CorpId = 2 }
+                    new() {
+                        Name = "A",
+                        Address = "0x1",
+                        CorpId = 1
+                    },
+                    new() {
+                        Name = "B",
+                        Address = "0x2",
+                        CorpId = 2
+                    }
                 }
             }));
 

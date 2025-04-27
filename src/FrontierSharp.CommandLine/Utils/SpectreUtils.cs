@@ -9,9 +9,7 @@ public static class SpectreUtils {
     public static Table CreateAnsiTable(string title, params string[] columns) {
         var table = TableFactory(title);
 
-        foreach (var column in columns) {
-            table.AddColumn($"[bold]{column}[/]");
-        }
+        foreach (var column in columns) table.AddColumn($"[bold]{column}[/]");
 
         return table;
     }
@@ -21,9 +19,7 @@ public static class SpectreUtils {
 
         table.AddColumns("[bold]Key[/]", "[bold]Value[/]");
 
-        foreach (var entry in data) {
-            table.AddRow($"[bold]{entry.Key}[/]", entry.Value);
-        }
+        foreach (var entry in data) table.AddRow($"[bold]{entry.Key}[/]", entry.Value);
 
         return table;
     }
@@ -46,9 +42,7 @@ public static class SpectreUtils {
     }
 
     public static string ToAnsiString(this bool? value) {
-        if (!value.HasValue) {
-            return "[grey]N/A[/]";
-        }
+        if (!value.HasValue) return "[grey]N/A[/]";
 
         return value.Value ? "[green]Yes[/]" : "[red]No[/]";
     }

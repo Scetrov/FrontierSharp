@@ -16,7 +16,10 @@ namespace FrontierSharp.Tests.CommandLine.Commands;
 public class CalculateFuelPerLightyearCommandTests {
     private readonly IAnsiConsole _ansiConsole = Substitute.For<IAnsiConsole>();
     private readonly IFrontierDevToolsClient _devToolsClient = Substitute.For<IFrontierDevToolsClient>();
-    private readonly ILogger<CalculateFuelPerLightyearCommand> _logger = Substitute.For<ILogger<CalculateFuelPerLightyearCommand>>();
+
+    private readonly ILogger<CalculateFuelPerLightyearCommand> _logger =
+        Substitute.For<ILogger<CalculateFuelPerLightyearCommand>>();
+
     private readonly CalculateFuelPerLightyearCommand _sut;
 
     public CalculateFuelPerLightyearCommandTests() {
@@ -75,7 +78,8 @@ public class CalculateFuelPerLightyearCommandTests {
     [InlineData(0, 80, "The mass of your ship must be greater than 0.")]
     [InlineData(100_000, 0, "There is no fuel efficiency of 0 or less in the game.")]
     [InlineData(100_000, 100, "There is no fuel efficiency greater than 90 in the game.")]
-    public void Validate_Should_ReturnError_WhenSettingsInvalid(decimal mass, decimal efficiency, string expectedMessage) {
+    public void Validate_Should_ReturnError_WhenSettingsInvalid(decimal mass, decimal efficiency,
+        string expectedMessage) {
         var settings = new CalculateFuelPerLightyearCommand.Settings {
             Mass = mass,
             FuelEfficiency = efficiency

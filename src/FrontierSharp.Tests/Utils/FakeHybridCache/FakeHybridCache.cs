@@ -3,8 +3,10 @@ using Microsoft.Extensions.Caching.Hybrid;
 namespace FrontierSharp.Tests.Utils.FakeHybridCache;
 
 internal sealed class FakeHybridCache : HybridCache {
-    public override ValueTask<T> GetOrCreateAsync<TState, T>(string key, TState state, Func<TState, CancellationToken, ValueTask<T>> factory,
-        HybridCacheEntryOptions? options = null, IEnumerable<string>? tags = null, CancellationToken cancellationToken = default) {
+    public override ValueTask<T> GetOrCreateAsync<TState, T>(string key, TState state,
+        Func<TState, CancellationToken, ValueTask<T>> factory,
+        HybridCacheEntryOptions? options = null, IEnumerable<string>? tags = null,
+        CancellationToken cancellationToken = default) {
         return factory(state, cancellationToken);
     }
 
@@ -16,7 +18,8 @@ internal sealed class FakeHybridCache : HybridCache {
         return default;
     }
 
-    public override ValueTask SetAsync<T>(string key, T value, HybridCacheEntryOptions? options = null, IEnumerable<string>? tags = null,
+    public override ValueTask SetAsync<T>(string key, T value, HybridCacheEntryOptions? options = null,
+        IEnumerable<string>? tags = null,
         CancellationToken cancellationToken = default) {
         return default;
     }

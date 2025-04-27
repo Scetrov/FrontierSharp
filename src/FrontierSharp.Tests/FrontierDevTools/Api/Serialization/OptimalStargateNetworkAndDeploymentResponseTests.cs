@@ -8,7 +8,8 @@ namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;
 public class OptimalStargateNetworkAndDeploymentResponseTests {
     [Fact]
     public async Task OptimalStargateNetworkAndDeploymentResponse_CanBeParsed() {
-        var stream = ResourceHelper.GetEmbeddedResource("FrontierSharp.Tests.FrontierDevTools.Api.Serialization.OptimalStargateNetworkAndDeploymentResponsePayload.json");
+        var stream = ResourceHelper.GetEmbeddedResource(
+            "FrontierSharp.Tests.FrontierDevTools.Api.Serialization.OptimalStargateNetworkAndDeploymentResponsePayload.json");
         var response = await JsonSerializer.DeserializeAsync<OptimalStargateNetworkAndDeploymentResponse>(stream);
 
         response.Should().NotBeNull();

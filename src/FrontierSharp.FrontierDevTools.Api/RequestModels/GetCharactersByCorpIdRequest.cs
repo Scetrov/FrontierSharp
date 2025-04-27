@@ -11,7 +11,9 @@ public class GetCharactersByCorpIdRequest : GetRequestModel<GetCharactersByCorpI
 
     public override Dictionary<string, string> GetQueryParams() {
         return new Dictionary<string, string> {
-            { "corp_id", CorpId.ToString() }
+            {
+                "corp_id", CorpId.ToString()
+            }
         };
     }
 
