@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using Razorvine.Pickle;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using YamlDotNet.Serialization;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -43,7 +45,7 @@ public class ResourceUnpickleCommand(
         var content = Unpickle(path);
 
         var tableConfig = new TableConfig {
-            MaxCollectionCount = settings.MaxItems,
+            MaxCollectionCount = settings.MaxItems
         };
 
         if (settings.Output == null) {
@@ -59,7 +61,7 @@ public class ResourceUnpickleCommand(
                 File.WriteAllText(settings.Output, json);
                 break;
             case Settings.OutputFormatOption.Yaml:
-                var yaml = new YamlDotNet.Serialization.Serializer().Serialize(content);
+                var yaml = new Serializer().Serialize(content);
                 File.WriteAllText(settings.Output, yaml);
                 break;
             default:
@@ -82,6 +84,11 @@ public class ResourceUnpickleCommand(
     }
 
     public class Settings : BaseStaticDataCommandSettings {
+        public enum OutputFormatOption {
+            Json,
+            Yaml
+        }
+
         [CommandOption("--filename <filename>")]
         [Description("Case-insensitive filename to unpickle")]
         public required string? Filename { get; set; }
@@ -98,10 +105,5 @@ public class ResourceUnpickleCommand(
 
         [CommandOption("--outputFormat <outputFormat>")]
         public OutputFormatOption OutputFormat { get; set; } = OutputFormatOption.Json;
-
-        public enum OutputFormatOption {
-            Json,
-            Yaml
-        }
     }
 }

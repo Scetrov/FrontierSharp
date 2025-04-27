@@ -85,7 +85,7 @@ public class OptimizeStargateNetworkPlacementCommandTests {
         };
 
         var response = new RouteResponse {
-            Route = Array.Empty<JumpResponse>()
+            Route = []
         };
 
         _client.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End, settings.MaxDistance,

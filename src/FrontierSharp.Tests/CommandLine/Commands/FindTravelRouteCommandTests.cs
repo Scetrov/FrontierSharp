@@ -83,7 +83,7 @@ public class FindTravelRouteCommandTests {
         };
 
         var response = new RouteResponse {
-            Route = Array.Empty<JumpResponse>()
+            Route = []
         };
 
         _client.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates, settings.MaxDistance,

@@ -1,4 +1,5 @@
-﻿using FrontierSharp.CommandLine;
+﻿using System.IO.Abstractions;
+using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.CommandLine.Commands.Data.Static;
 using FrontierSharp.CommandLine.Utils;
@@ -37,6 +38,7 @@ using var host = Host.CreateDefaultBuilder(args)
             });
         services.AddSingleton<IFrontierDevToolsClient, FrontierDevToolsClient>();
         services.AddSingleton<IFrontierResourceHiveFactory, FrontierResourceHiveFactory>();
+        services.AddSingleton<IFileSystem, FileSystem>();
 
         var app = new CommandApp(new TypeRegistrar(services));
         app.Configure(config => {
