@@ -27,8 +27,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IndexerClient\" />
-      <Folder Include="Codegen\" />
+        <Folder Include="IndexerClient\"/>
+        <Folder Include="Codegen\"/>
     </ItemGroup>
-    
+
 </Project>

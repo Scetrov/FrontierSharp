@@ -1,5 +1,4 @@
 using System.Numerics;
-using Dumpify;
 using FluentAssertions;
 using FrontierSharp.Mud.Linq;
 using FrontierSharp.Mud.Linq.Attributes;
@@ -9,33 +8,33 @@ namespace FrontierSharp.Tests.Mud.Linq;
 
 public class MudQueryableTests {
     [Fact]
-    void Test_BasicLocationQuery() {
+    private void Test_BasicLocationQuery() {
         var provider = new MudQueryProvider();
         var location = new MudQueryable<Location>(provider);
         const string expected = "SELECT \"smartObjectId\", \"solarSystemId\", \"x\", \"y\", \"z\" FROM \"eveworld__Location\";";
         location.ToSql().Should().Be(expected);
     }
-    
+
     [Fact]
-    void Test_QueryWithOrder() {
+    private void Test_QueryWithOrder() {
         var provider = new MudQueryProvider();
         var location = new MudQueryable<Location>(provider);
         var query = location.OrderBy(l => l.X);
         const string expected = "SELECT \"smartObjectId\", \"solarSystemId\", \"x\", \"y\", \"z\" FROM \"eveworld__Location\" ORDER BY \"x\";";
         query.ToSql().Should().Be(expected);
     }
-    
+
     [Fact]
-    void Test_QueryWithGroupBy() {
+    private void Test_QueryWithGroupBy() {
         var provider = new MudQueryProvider();
         var location = new MudQueryable<Location>(provider);
         var query = location.GroupBy(l => l.SolarSystemId);
         const string expected = "SELECT \"solarSystemId\" FROM \"eveworld__Location\" GROUP BY \"solarSystemId\";";
         query.ToSql().Should().Be(expected);
     }
-    
+
     [Fact]
-    void Test_QueryWithDeployableState_UsingLimit() {
+    private void Test_QueryWithDeployableState_UsingLimit() {
         var provider = new MudQueryProvider();
         var deployableState = new MudQueryable<DeployableState>(provider);
 
@@ -45,9 +44,9 @@ public class MudQueryableTests {
         const string expected = "SELECT \"smartObjectId\", \"createdAt\", \"previousState\", \"currentState\", \"isValid\", \"anchoredAt\", \"updatedBlockNumber\", \"updatedBlockTime\" FROM \"eveworld__DeployableState\" WHERE \"currentState\" = 2 LIMIT 10;";
         query.ToSql().Should().Be(expected);
     }
-    
+
     [Fact]
-    void Test_QueryWithDeployableState_UsingLimitAndOffset() {
+    private void Test_QueryWithDeployableState_UsingLimitAndOffset() {
         var provider = new MudQueryProvider();
         var deployableState = new MudQueryable<DeployableState>(provider);
 
@@ -61,6 +60,15 @@ public class MudQueryableTests {
 
     [MudTable("eveworld")]
     private class DeployableState {
+
+        public enum State {
+            Null = 0,
+            Unanchored = 1,
+            Anchored = 2,
+            Online = 3,
+            Destroyed = 4
+        }
+
         [MudColumn("smartObjectId")] public BigInteger SmartObjectId { get; set; }
         [MudColumn("createdAt")] public DateTimeOffset CreatedAt { get; set; }
         [MudColumn("previousState")] public State PreviousState { get; set; }
@@ -69,14 +77,6 @@ public class MudQueryableTests {
         [MudColumn("anchoredAt")] public DateTimeOffset AnchoredAt { get; set; }
         [MudColumn("updatedBlockNumber")] public BigInteger UpdatedBlockNumber { get; set; }
         [MudColumn("updatedBlockTime")] public DateTimeOffset UpdatedBlockTime { get; set; }
-		
-        public enum State {
-            Null = 0,
-            Unanchored = 1,
-            Anchored = 2,
-            Online = 3,
-            Destroyed = 4,
-        }
     }
 
     [MudTable("eveworld", "Location")]

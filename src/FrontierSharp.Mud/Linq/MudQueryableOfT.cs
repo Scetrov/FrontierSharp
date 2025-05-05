@@ -23,5 +23,7 @@ public class MudQueryable<T> : IOrderedQueryable<T> {
         return result.GetEnumerator();
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+    }
 }
