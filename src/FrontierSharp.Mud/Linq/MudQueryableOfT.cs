@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace FrontierSharp.Mud.Linq;
 
-public class MudQueryable<T> : IQueryable<T> {
+public class MudQueryable<T> : IOrderedQueryable<T> {
     public MudQueryable(MudQueryProvider provider) {
         Provider = provider;
         Expression = Expression.Constant(this);

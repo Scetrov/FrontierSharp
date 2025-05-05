@@ -16,14 +16,23 @@ public class MudQueryableTests {
         location.ToSql().Should().Be(expected);
     }
     
-    // [Fact]
-    // void Test_QueryWithOrder() {
-    //     var provider = new MudQueryProvider();
-    //     var location = new MudQueryable<Location>(provider);
-    //     var query = location.OrderBy(l => l.X);
-    //     const string expected = "SELECT \"smartObjectId\", \"solarSystemId\", \"x\", \"y\", \"z\" FROM \"eveworld__Location\" ORDER BY \"z\";";
-    //     query.ToSql().Should().Be(expected);
-    // }
+    [Fact]
+    void Test_QueryWithOrder() {
+        var provider = new MudQueryProvider();
+        var location = new MudQueryable<Location>(provider);
+        var query = location.OrderBy(l => l.X);
+        const string expected = "SELECT \"smartObjectId\", \"solarSystemId\", \"x\", \"y\", \"z\" FROM \"eveworld__Location\" ORDER BY \"x\";";
+        query.ToSql().Should().Be(expected);
+    }
+    
+    [Fact]
+    void Test_QueryWithGroupBy() {
+        var provider = new MudQueryProvider();
+        var location = new MudQueryable<Location>(provider);
+        var query = location.GroupBy(l => l.SolarSystemId);
+        const string expected = "SELECT \"solarSystemId\" FROM \"eveworld__Location\" GROUP BY \"solarSystemId\";";
+        query.ToSql().Should().Be(expected);
+    }
     
     [Fact]
     void Test_QueryWithDeployableState_UsingLimit() {

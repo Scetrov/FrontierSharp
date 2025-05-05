@@ -10,18 +10,42 @@ namespace FrontierSharp.Mud.Linq;
 
 		public string Translate(Expression expression, Type entityType) {
 			_sb.Clear();
+
+			if (entityType.IsGenericType && entityType.GetGenericTypeDefinition() == typeof(IGrouping<,>)) {
+				VisitGroupBy(expression);
+				return $"{_sb};";
+			}
 			
-			_sb.AppendToken("SELECT");
-			var columns = string.Join(", ", entityType
-				.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-				.Select(PropertyToColumnNamePredicate));
-			_sb.AppendToken(columns);
-			_sb.AppendToken("FROM");
-			_sb.AppendToken(ClassToTableName(entityType));
-			
+			VisitUngroupedSelect(entityType);
+
 			Visit(expression);
 			
 			return $"{_sb};";
+		}
+
+		private void VisitUngroupedSelect(Type entityType) {
+			_sb.AppendToken("SELECT");
+			var columns = string.Join(", ", entityType
+				.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+				.Select(PropertyToColumnName));
+			_sb.AppendToken(columns);
+			_sb.AppendToken("FROM");
+			_sb.AppendToken(ClassToTableName(entityType));
+		}
+
+		private void VisitGroupBy(Expression expression) {
+			// Handle GroupBy queries
+			var expr = (MethodCallExpression)expression;
+			var unary = (UnaryExpression)expr.Arguments[1];
+			var lambda = (LambdaExpression)StripQuotes(unary);
+			var body = (MemberExpression)lambda.Body;
+				
+			_sb.AppendToken("SELECT");
+			_sb.AppendToken(PropertyToColumnName(body.Member as PropertyInfo));
+			_sb.AppendToken("FROM");
+			_sb.AppendToken(ClassToTableName(lambda.Parameters[0].Type));
+			_sb.AppendToken("GROUP BY");
+			_sb.AppendToken(PropertyToColumnName(body.Member as PropertyInfo));
 		}
 
 		private string ClassToTableName(Type entityType) {
@@ -36,7 +60,7 @@ namespace FrontierSharp.Mud.Linq;
 			return $"\"{attribute.Namespace}__{tableName}\"";
 		}
 		
-		private string PropertyToColumnNamePredicate(PropertyInfo? p) {
+		private string PropertyToColumnName(PropertyInfo? p) {
 			if (p is null) {
 				ArgumentNullException.ThrowIfNull(p);
 			}
@@ -53,6 +77,12 @@ namespace FrontierSharp.Mud.Linq;
 			switch (node.Method.Name) {
 				case "Where": {
 					_sb.AppendToken("WHERE");
+					var lambda = (LambdaExpression)StripQuotes(node.Arguments[1]);
+					Visit(lambda.Body);
+					return node;
+				}
+				case "OrderBy": {
+					_sb.AppendToken("ORDER BY");
 					var lambda = (LambdaExpression)StripQuotes(node.Arguments[1]);
 					Visit(lambda.Body);
 					return node;
@@ -82,7 +112,7 @@ namespace FrontierSharp.Mud.Linq;
 		}
 
 		protected override Expression VisitMember(MemberExpression node) {
-			_sb.AppendToken(PropertyToColumnNamePredicate(node.Member as PropertyInfo));
+			_sb.AppendToken(PropertyToColumnName(node.Member as PropertyInfo));
 			return node;
 		}
 
