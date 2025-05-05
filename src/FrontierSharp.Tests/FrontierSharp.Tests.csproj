@@ -40,6 +40,7 @@
         <ProjectReference Include="..\FrontierSharp.CommandLine\FrontierSharp.CommandLine.csproj"/>
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
         <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
+        <ProjectReference Include="..\FrontierSharp.Mud\FrontierSharp.Mud.csproj" />
         <ProjectReference Include="..\FrontierSharp.Starmap\FrontierSharp.Starmap.csproj"/>
     </ItemGroup>
 
