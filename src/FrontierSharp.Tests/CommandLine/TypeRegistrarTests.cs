@@ -69,9 +69,11 @@ public class TypeRegistrarTests {
         resolved.Should().BeOfType<MyService>();
     }
 
-    public interface IMyService { }
+    public interface IMyService {
+    }
 
-    public class MyService : IMyService { }
+    public class MyService : IMyService {
+    }
 
     public class TypeResolver(IServiceProvider provider) : ITypeResolver {
         public object Resolve(Type? type) {

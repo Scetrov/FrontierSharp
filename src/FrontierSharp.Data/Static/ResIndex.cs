@@ -6,6 +6,7 @@ public class ResIndex {
     protected ResIndex(IEnumerable<ResFile> files) {
         Files = files;
     }
+
     public ResIndex(string indexFile, IFileSystem fileSystem) {
         if (!fileSystem.File.Exists(indexFile)) throw new FileNotFoundException("Index file not found", indexFile);
 

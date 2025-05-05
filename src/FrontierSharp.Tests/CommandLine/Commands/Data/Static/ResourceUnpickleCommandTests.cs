@@ -10,11 +10,11 @@ using Xunit;
 namespace FrontierSharp.Tests.CommandLine.Commands.Data.Static;
 
 public class ResourceUnpickleCommandTests {
-    private readonly ILogger<ResourceListCommand> _loggerMock = Substitute.For<ILogger<ResourceListCommand>>();
-    private readonly IFrontierResourceHiveFactory _hiveFactoryMock = Substitute.For<IFrontierResourceHiveFactory>();
     private readonly IAnsiConsole _ansiConsoleMock = Substitute.For<IAnsiConsole>();
-    private readonly IFrontierResourceHive _hiveMock = Substitute.For<IFrontierResourceHive>();
     private readonly MockFileSystem _filesystemMock = new();
+    private readonly IFrontierResourceHiveFactory _hiveFactoryMock = Substitute.For<IFrontierResourceHiveFactory>();
+    private readonly IFrontierResourceHive _hiveMock = Substitute.For<IFrontierResourceHive>();
+    private readonly ILogger<ResourceListCommand> _loggerMock = Substitute.For<ILogger<ResourceListCommand>>();
 
     public ResourceUnpickleCommandTests() {
         _hiveFactoryMock.Create(Arg.Any<string>()).Returns(_hiveMock);

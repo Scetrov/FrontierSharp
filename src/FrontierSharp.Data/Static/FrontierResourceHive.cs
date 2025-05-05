@@ -4,10 +4,10 @@ using Microsoft.Extensions.Options;
 namespace FrontierSharp.Data.Static;
 
 public class FrontierResourceHive : IFrontierResourceHive {
+    private readonly IFileSystem _fileSystem;
     private readonly FrontierResourceHiveOptions _options;
     private readonly string _resFiles;
     private readonly string _root;
-    private readonly IFileSystem _fileSystem;
 
     public FrontierResourceHive(string root, IFileSystem fileSystem, IOptions<FrontierResourceHiveOptions> options) {
         _fileSystem = fileSystem;

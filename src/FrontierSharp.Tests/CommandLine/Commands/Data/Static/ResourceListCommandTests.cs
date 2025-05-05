@@ -8,10 +8,10 @@ using Xunit;
 namespace FrontierSharp.Tests.CommandLine.Commands.Data.Static;
 
 public class ResourceListCommandTests {
-    private readonly ILogger<ResourceListCommand> _loggerMock = Substitute.For<ILogger<ResourceListCommand>>();
-    private readonly IFrontierResourceHiveFactory _hiveFactoryMock = Substitute.For<IFrontierResourceHiveFactory>();
     private readonly IAnsiConsole _ansiConsoleMock = Substitute.For<IAnsiConsole>();
+    private readonly IFrontierResourceHiveFactory _hiveFactoryMock = Substitute.For<IFrontierResourceHiveFactory>();
     private readonly IFrontierResourceHive _hiveMock = Substitute.For<IFrontierResourceHive>();
+    private readonly ILogger<ResourceListCommand> _loggerMock = Substitute.For<ILogger<ResourceListCommand>>();
 
     public ResourceListCommandTests() {
         _hiveFactoryMock.Create(Arg.Any<string>()).Returns(_hiveMock);
