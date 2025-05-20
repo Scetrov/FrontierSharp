@@ -27,10 +27,10 @@ public class MudSqlExpressionVisitor : ExpressionVisitor {
         _sb.AppendToken("SELECT");
         var columns = string.Join(", ", entityType
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Select(PropertyToColumnName));
+            .Select(MudQueryableHelpers.QuotedPropertyToColumnName));
         _sb.AppendToken(columns);
         _sb.AppendToken("FROM");
-        _sb.AppendToken(ClassToTableName(entityType));
+        _sb.AppendToken(MudQueryableHelpers.ClassToTableName(entityType));
     }
 
     private void VisitGroupBy(Expression expression) {
@@ -41,35 +41,11 @@ public class MudSqlExpressionVisitor : ExpressionVisitor {
         var body = (MemberExpression)lambda.Body;
 
         _sb.AppendToken("SELECT");
-        _sb.AppendToken(PropertyToColumnName(body.Member as PropertyInfo));
+        _sb.AppendToken(MudQueryableHelpers.QuotedPropertyToColumnName(body.Member as PropertyInfo));
         _sb.AppendToken("FROM");
-        _sb.AppendToken(ClassToTableName(lambda.Parameters[0].Type));
+        _sb.AppendToken(MudQueryableHelpers.ClassToTableName(lambda.Parameters[0].Type));
         _sb.AppendToken("GROUP BY");
-        _sb.AppendToken(PropertyToColumnName(body.Member as PropertyInfo));
-    }
-
-    private string ClassToTableName(Type entityType) {
-        var attribute = entityType.GetCustomAttribute<MudTableAttribute>();
-
-        if (attribute == null) {
-            return $"\"{entityType.Name}\"";
-        }
-
-        var tableName = string.IsNullOrWhiteSpace(entityType.Name) ? attribute.Name : entityType.Name;
-
-        return $"\"{attribute.Namespace}__{tableName}\"";
-    }
-
-    private string PropertyToColumnName(PropertyInfo? p) {
-        if (p is null) {
-            ArgumentNullException.ThrowIfNull(p);
-        }
-
-        if (p.GetCustomAttribute<MudColumnAttribute>() is not { } columnAttribute) {
-            return $"\"{p.Name}\"";
-        }
-
-        return $"\"{columnAttribute.ColumnName}\"";
+        _sb.AppendToken(MudQueryableHelpers.QuotedPropertyToColumnName(body.Member as PropertyInfo));
     }
 
     protected override Expression VisitMethodCall(MethodCallExpression node) {
@@ -112,7 +88,7 @@ public class MudSqlExpressionVisitor : ExpressionVisitor {
     }
 
     protected override Expression VisitMember(MemberExpression node) {
-        _sb.AppendToken(PropertyToColumnName(node.Member as PropertyInfo));
+        _sb.AppendToken(MudQueryableHelpers.QuotedPropertyToColumnName(node.Member as PropertyInfo));
         return node;
     }
 

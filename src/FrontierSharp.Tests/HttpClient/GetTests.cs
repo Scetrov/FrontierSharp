@@ -14,10 +14,10 @@ namespace FrontierSharp.Tests.HttpClient;
 
 // Fake Response Model used for deserialization
 
-public class FrontierSharpHttpClientTests {
+public class GetTests {
     private readonly IOptions<FrontierSharpHttpClientOptions> _options;
 
-    public FrontierSharpHttpClientTests() {
+    public GetTests() {
         var options = new FrontierSharpHttpClientOptions {
             BaseUri = "http://localhost",
             HttpClientName = "TestClient"
@@ -33,10 +33,10 @@ public class FrontierSharpHttpClientTests {
             new FakeHybridCache(),
             _options);
 
-        var requestModel = new FakeRequest();
+        var requestModel = new FakeGetRequest();
 
         // Act
-        var result = await client.Get<FakeRequest, FakeResponse>(requestModel);
+        var result = await client.Get<FakeGetRequest, FakeResponse>(requestModel);
 
         // Assert
         result.IsFailed.Should().BeTrue();
@@ -80,10 +80,10 @@ public class FrontierSharpHttpClientTests {
             new FakeHybridCache(),
             _options);
 
-        var requestModel = new FakeRequest();
+        var requestModel = new FakeGetRequest();
 
         // Act
-        var result = await client.Get<FakeRequest, FakeResponse>(requestModel);
+        var result = await client.Get<FakeGetRequest, FakeResponse>(requestModel);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -101,10 +101,10 @@ public class FrontierSharpHttpClientTests {
             new FakeHybridCache(),
             _options);
 
-        var requestModel = new FakeRequest();
+        var requestModel = new FakeGetRequest();
 
         // Act
-        var result = await client.Get<FakeRequest, FakeResponse>(requestModel);
+        var result = await client.Get<FakeGetRequest, FakeResponse>(requestModel);
 
         // Assert
         result.IsFailed.Should().BeTrue();

@@ -2,7 +2,7 @@ using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.Tests.HttpClient;
 
-public class FakeRequest : GetRequestModel<FakeRequest> {
+public class FakeGetRequest : GetRequestModel<FakeGetRequest> {
     public override string GetCacheKey() {
         return "FakeRequestCacheKey";
     }
