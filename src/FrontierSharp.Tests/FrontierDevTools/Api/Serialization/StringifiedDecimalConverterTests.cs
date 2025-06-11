@@ -1,5 +1,5 @@
 using System.Text.Json;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.FrontierDevTools.Api.Serialization;
 using Xunit;
 

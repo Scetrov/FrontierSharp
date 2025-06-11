@@ -1,5 +1,5 @@
 using System.Text.Json.Nodes;
-using FluentAssertions;
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.FrontierDevTools.Api.RequestModels;

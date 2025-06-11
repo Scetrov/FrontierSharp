@@ -4,10 +4,9 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>0.0.0</Version>
-        <Title>FrontierSharp Generic HTTP Client</Title>
+        <Title>FrontierSharp WorldApiClient</Title>
         <Authors>Scetrov</Authors>
-        <Description>Base HTTP Client implementation wrapper for .NET HttpClient</Description>
+        <Description>Access to the World API for EVE Frontier from .NET</Description>
         <Copyright>© 2025, Scetrov</Copyright>
         <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
@@ -16,16 +15,13 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
+        <AssemblyName>FrontierSharp.WorldApi</AssemblyName>
+        <RootNamespace>FrontierSharp.WorldApi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentResults" Version="3.16.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6" />
+      <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj" />
+      <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -34,6 +30,18 @@
             <PackagePath></PackagePath>
             <Link>FrontierSharp.png</Link>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ResponseModel\" />
     </ItemGroup>
 
 </Project>

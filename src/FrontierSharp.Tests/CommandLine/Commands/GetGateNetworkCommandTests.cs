@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.FrontierDevTools.Api;

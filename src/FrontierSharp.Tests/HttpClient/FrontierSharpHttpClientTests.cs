@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 using System.Text.Json;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.HttpClient;
 using FrontierSharp.Tests.Utils.FakeHttpClientFactory;
 using FrontierSharp.Tests.Utils.FakeHybridCache;
