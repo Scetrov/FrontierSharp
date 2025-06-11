@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.CommandLine.Utils;
 using Xunit;
 

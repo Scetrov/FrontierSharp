@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.CommandLine.Utils;
 using Serilog.Events;
 using Xunit;

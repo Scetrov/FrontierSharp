@@ -1,7 +1,7 @@
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Reflection;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.Data;
 using FrontierSharp.Data.Static;
 using Microsoft.Extensions.Options;

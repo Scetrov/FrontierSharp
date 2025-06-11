@@ -1,7 +1,7 @@
 using System.Numerics;
 using System.Text;
 using System.Text.Json;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.FrontierDevTools.Api.Serialization;
 using Xunit;
 

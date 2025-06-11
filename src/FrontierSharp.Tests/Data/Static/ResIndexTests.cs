@@ -1,5 +1,5 @@
 using System.IO.Abstractions;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.Data.Static;
 using NSubstitute;
 using Xunit;
