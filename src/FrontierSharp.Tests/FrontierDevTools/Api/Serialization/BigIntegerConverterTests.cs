@@ -2,7 +2,7 @@ using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using AwesomeAssertions;
-using FrontierSharp.FrontierDevTools.Api.Serialization;
+using FrontierSharp.HttpClient.Serialization;
 using Xunit;
 
 namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;

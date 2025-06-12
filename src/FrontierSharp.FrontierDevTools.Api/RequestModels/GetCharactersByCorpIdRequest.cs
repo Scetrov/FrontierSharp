@@ -1,3 +1,4 @@
+using FrontierSharp.HttpClient;
 using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.FrontierDevTools.Api.RequestModels;

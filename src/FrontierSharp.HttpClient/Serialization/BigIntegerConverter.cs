@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FrontierSharp.FrontierDevTools.Api.Serialization;
+namespace FrontierSharp.HttpClient.Serialization;
 
 public class BigIntegerConverter : JsonConverter<BigInteger> {
     public override BigInteger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {

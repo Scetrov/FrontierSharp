@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FrontierSharp.FrontierDevTools.Api.Serialization;
+namespace FrontierSharp.HttpClient.Serialization;
 
 public class DateTimeOffsetConverter : JsonConverter<DateTimeOffset> {
     public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {

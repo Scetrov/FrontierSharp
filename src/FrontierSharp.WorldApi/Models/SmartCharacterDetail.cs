@@ -1,6 +1,6 @@
 using System.Numerics;
 using System.Text.Json.Serialization;
-using FrontierSharp.FrontierDevTools.Api.Serialization;
+using FrontierSharp.HttpClient.Serialization;
 
 namespace FrontierSharp.WorldApi.Models;
 

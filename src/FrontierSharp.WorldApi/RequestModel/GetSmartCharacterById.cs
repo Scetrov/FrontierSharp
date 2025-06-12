@@ -1,4 +1,4 @@
-using FrontierSharp.FrontierDevTools.Api.RequestModels;
+using FrontierSharp.HttpClient;
 using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.WorldApi.RequestModel;

@@ -1,4 +1,4 @@
-namespace FrontierSharp.FrontierDevTools.Api.RequestModels;
+namespace FrontierSharp.HttpClient;
 
 public interface IGetRequestModel {
     string GetCacheKey();
