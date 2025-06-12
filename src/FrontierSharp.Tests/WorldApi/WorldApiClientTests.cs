@@ -94,8 +94,7 @@ public class WorldApiClientTests {
     public async Task GetTypesPage_ShouldReturnTypes_WhenResponseIsValid() {
         // Arrange
         var factory = SubstitutableHttpClientFactory.CreateWithPayload(ValidResponse);
-        var httpClient = new FrontierSharpHttpClient(_logger, factory, _cache, _options);
-        var client = new WorldApiClient(httpClient);
+        var client = CreateWorldApiClient(factory);
 
         // Act
         var result = await client.GetTypesPage();
@@ -110,8 +109,7 @@ public class WorldApiClientTests {
     public async Task GetTypesPage_ShouldReturnFailure_WhenInnerCallFails() {
         // Arrange
         var factory = SubstitutableHttpClientFactory.CreateInternalServerError();
-        var httpClient = new FrontierSharpHttpClient(_logger, factory, _cache, _options);
-        var client = new WorldApiClient(httpClient);
+        var client = CreateWorldApiClient(factory);
 
         // Act
         var result = await client.GetTypesPage();
@@ -262,8 +260,7 @@ public class WorldApiClientTests {
         // Arrange
         var payload = GetResourceString("FrontierSharp.Tests.WorldApi.payloads.v2.solarsystems.30012580.json");
         var factory = SubstitutableHttpClientFactory.CreateWithPayload(payload);
-        var httpClient = new FrontierSharpHttpClient(_logger, factory, _cache, _options);
-        var client = new WorldApiClient(httpClient);
+        var client = CreateWorldApiClient(factory);
 
         // Act
         var result = await client.GetSolarSystemById(30012580);
@@ -287,8 +284,7 @@ public class WorldApiClientTests {
         // Arrange
         var payload = GetResourceString("FrontierSharp.Tests.WorldApi.payloads.v2.smartcharacters.0x19957f367b81bd7711d316a451ade0d8fa8cb5bf.json");
         var factory = SubstitutableHttpClientFactory.CreateWithPayload(payload);
-        var httpClient = new FrontierSharpHttpClient(_logger, factory, _cache, _options);
-        var client = new WorldApiClient(httpClient);
+        var client = CreateWorldApiClient(factory);
 
         // Act
         var result = await client.GetSmartCharacterById("0x19957f367b81bd7711d316a451ade0d8fa8cb5bf");
@@ -311,8 +307,7 @@ public class WorldApiClientTests {
         // Arrange
         var payload = GetResourceString("FrontierSharp.Tests.WorldApi.payloads.v2.smartassemblies.75343970651982257052710820829442849942642924970878978184835257992027850797979.json");
         var factory = SubstitutableHttpClientFactory.CreateWithPayload(payload);
-        var httpClient = new FrontierSharpHttpClient(_logger, factory, _cache, _options);
-        var client = new WorldApiClient(httpClient);
+        var client = CreateWorldApiClient(factory);
 
         // Act
         var result = await client.GetSmartAssemblyById(BigInteger.Parse("75343970651982257052710820829442849942642924970878978184835257992027850797979"));
@@ -366,6 +361,12 @@ public class WorldApiClientTests {
         result.Value.Location.X.Should().Be(121834326528);
         result.Value.Location.Y.Should().Be(-5201916416);
         result.Value.Location.Z.Should().Be(241142638592);
+    }
+
+    private WorldApiClient CreateWorldApiClient(IHttpClientFactory factory) {
+        var httpClient = new FrontierSharpHttpClient(_logger, factory, _cache, _options);
+        var client = new WorldApiClient(httpClient);
+        return client;
     }
 
     [Fact]
