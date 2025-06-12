@@ -81,8 +81,8 @@ public class WorldApiClient(
     }
 
     public async Task<Result<WorldApiPayload<SmartCharacter>>> GetSmartCharacterPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
-        var requestModel = new GetListOfSmartAssemblies { Limit = limit, Offset = offset };
-        var result = await Get<GetListOfSmartAssemblies, WorldApiPayload<SmartCharacter>>(requestModel, cancellationToken);
+        var requestModel = new GetListOfSmartCharacters { Limit = limit, Offset = offset };
+        var result = await Get<GetListOfSmartCharacters, WorldApiPayload<SmartCharacter>>(requestModel, cancellationToken);
         return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
     }
 

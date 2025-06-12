@@ -3,17 +3,17 @@ assembly-file-versioning-scheme: MajorMinorPatch
 tag-prefix: '[vV]?'
 version-in-branch-pattern: (?<version>[vV]?\d+(\.\d+)?(\.\d+)?).*
 major-version-bump-message: \+semver:\s?(breaking|major)
-minor-version-bump-message: \+semver:\s?(feature|minor)
+minor-version-bump-message: \+semver:\s?(feat|minor)
 patch-version-bump-message: \+semver:\s?(fix|patch)
 no-bump-message: \+semver:\s?(none|skip)
 tag-pre-release-weight: 60000
 commit-date-format: yyyy-MM-dd
-merge-message-formats: {}
+merge-message-formats: { }
 update-build-number: true
 semantic-version-format: Strict
 strategies:
-- ConfiguredNextVersion
-- Mainline
+  - ConfiguredNextVersion
+  - Mainline
 branches:
   main:
     mode: ContinuousDeployment
@@ -24,8 +24,8 @@ branches:
     track-merge-target: false
     track-merge-message: true
     regex: ^master$|^main$
-    source-branches: []
-    is-source-branch-for: []
+    source-branches: [ ]
+    is-source-branch-for: [ ]
     tracks-release-branches: false
     is-release-branch: false
     is-main-branch: true
@@ -37,10 +37,10 @@ branches:
     prevent-increment:
       when-current-commit-tagged: false
     track-merge-message: true
-    regex: ^features?[/-](?<BranchName>.+)
+    regex: ^feat?[/-](?<BranchName>.+)
     source-branches:
-    - main
-    is-source-branch-for: []
+      - main
+    is-source-branch-for: [ ]
     is-main-branch: false
     pre-release-weight: 30000
   hotfix:
@@ -51,8 +51,8 @@ branches:
       when-current-commit-tagged: false
     regex: ^hotfix(es)?[/-](?<BranchName>.+)
     source-branches:
-    - main
-    is-source-branch-for: []
+      - main
+    is-source-branch-for: [ ]
     is-release-branch: true
     is-main-branch: false
     pre-release-weight: 30000
@@ -67,10 +67,10 @@ branches:
     track-merge-message: true
     regex: ^(pull|pull\-requests|pr)[/-]
     source-branches:
-    - main
-    - feature
-    - hotfix
-    is-source-branch-for: []
+      - main
+      - feature
+      - hotfix
+    is-source-branch-for: [ ]
     pre-release-weight: 30000
   unknown:
     increment: Patch
@@ -78,11 +78,11 @@ branches:
       when-current-commit-tagged: false
     regex: (?<BranchName>.+)
     source-branches:
-    - main
-    is-source-branch-for: []
+      - main
+    is-source-branch-for: [ ]
     pre-release-weight: 30000
 ignore:
-  sha: []
+  sha: [ ]
 mode: ContinuousDelivery
 label: '{BranchName}'
 increment: Inherit
@@ -94,8 +94,8 @@ track-merge-target: false
 track-merge-message: true
 commit-message-incrementing: Enabled
 regex: ''
-source-branches: []
-is-source-branch-for: []
+source-branches: [ ]
+is-source-branch-for: [ ]
 tracks-release-branches: false
 is-release-branch: false
 is-main-branch: false
