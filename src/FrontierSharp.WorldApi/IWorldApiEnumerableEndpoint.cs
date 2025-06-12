@@ -1,4 +1,4 @@
-namespace FrontierSharp.WorldApi.RequestModel;
+namespace FrontierSharp.WorldApi;
 
 public interface IWorldApiEnumerableEndpoint {
     public long Limit { get; set; }

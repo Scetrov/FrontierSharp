@@ -9,7 +9,7 @@ public class FakeHybridCache : HybridCache {
 
     public override async ValueTask<T> GetOrCreateAsync<TState, T>(string key, TState state, Func<TState, CancellationToken, ValueTask<T>> factory, HybridCacheEntryOptions? options = null,
         IEnumerable<string>? tags = null, CancellationToken cancellationToken = default) {
-        var cached = _cache.TryGetValue(key, out object? value);
+        var cached = _cache.TryGetValue(key, out var value);
         if (cached) return (T?)value!;
         _cache.Add(key, await factory(state, cancellationToken));
         return (T?)_cache[key]!;

@@ -1,11 +1,9 @@
 using System.Net;
 using System.Reflection;
-using System.Text.Json;
+using System.Text;
 using AwesomeAssertions;
-using FluentResults;
 using FrontierSharp.HttpClient;
 using FrontierSharp.WorldApi;
-using FrontierSharp.WorldApi.Models;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -54,28 +52,31 @@ public class WorldApiClientTests {
                                       }
                                       """;
 
-    private string ResourcePage1 => LoadResource(100, 0);
-    private string ResourcePage2 => LoadResource(100, 100);
-    private string ResourcePage3 => LoadResource(100, 200);
-    
-    private string LoadResource(long limit, long offset) {
-        var assembly = Assembly.GetExecutingAssembly();
-        var resourceName = $"FrontierSharp.Tests.WorldApi.payloads.v2.types_limit={limit}_offset={offset}.json";
-        using var stream = assembly.GetManifestResourceStream(resourceName);
-        if (stream == null)
-            throw new FileNotFoundException(resourceName);
-        using var reader = new StreamReader(stream);
-        return reader.ReadToEnd();
-    }
-    
-    private readonly MockLogger<WorldApiClient> _logger = Substitute.For<MockLogger<WorldApiClient>>();
     private readonly HybridCache _cache = new FakeHybridCache();
+
+    private readonly MockLogger<WorldApiClient> _logger = Substitute.For<MockLogger<WorldApiClient>>();
     private readonly IOptions<FrontierSharpHttpClientOptions> _options = Substitute.For<IOptions<FrontierSharpHttpClientOptions>>();
 
     public WorldApiClientTests() {
         _options.Value.Returns(new FrontierSharpHttpClientOptions {
             BaseUri = "https://test.local"
         });
+    }
+
+    private string TypesResourcePage1 => LoadResource("types", 100, 0);
+    private string TypesResourcePage2 => LoadResource("types", 100, 100);
+    private string TypesResourcePage3 => LoadResource("types", 100, 200);
+
+    private string FuelsResourcePage1 => LoadResource("fuels", 100, 0);
+
+    private string LoadResource(string endpoint, long limit, long offset) {
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = $"FrontierSharp.Tests.WorldApi.payloads.v2.{endpoint}_limit={limit}_offset={offset}.json";
+        using var stream = assembly.GetManifestResourceStream(resourceName);
+        if (stream == null)
+            throw new FileNotFoundException(resourceName);
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
 
     [Fact]
@@ -115,7 +116,7 @@ public class WorldApiClientTests {
         var factory = new SubstitutableHttpClientFactory((_, _) => {
             var json = responses.Dequeue();
             var msg = new HttpResponseMessage(HttpStatusCode.OK) {
-                Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
             };
             return Task.FromResult(msg);
         });
@@ -123,35 +124,38 @@ public class WorldApiClientTests {
         var client = new WorldApiClient(_logger, factory, _cache, _options);
 
         // Act
-        var result = await client.GetAllTypes(limit: 1);
+        var result = await client.GetAllTypes(1);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().HaveCount(2);
-        result.Value.Select(x => x.Name).Should().BeEquivalentTo(["Type A", "Type B"]);
+        result.Value.Select(x => x.Name).Should().BeEquivalentTo("Type A", "Type B");
     }
-    
+
     [Fact]
     public async Task GetAllTypes_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData() {
         // Arrange
-        var responses = new Queue<string>([ResourcePage1, ResourcePage2, ResourcePage3]);
-
-        var factory = new SubstitutableHttpClientFactory((_, _) => {
-            var json = responses.Dequeue();
-            var msg = new HttpResponseMessage(HttpStatusCode.OK) {
-                Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json")
-            };
-            return Task.FromResult(msg);
-        });
-
-        var client = new WorldApiClient(_logger, factory, _cache, _options);
+        var client = SetupApiClientWithResponses(TypesResourcePage1, TypesResourcePage2, TypesResourcePage3);
 
         // Act
-        var result = await client.GetAllTypes(limit: 100);
+        var result = await client.GetAllTypes(100);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().HaveCount(274);
+    }
+
+    [Fact]
+    public async Task GetAllFuels_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData() {
+        // Arrange
+        var client = SetupApiClientWithResponses(FuelsResourcePage1);
+
+        // Act
+        var result = await client.GetAllFuels(100);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().HaveCount(6);
     }
 
     [Fact]
@@ -172,21 +176,21 @@ public class WorldApiClientTests {
     public async Task GetTypeById_ShouldReturnType_WhenResponseIsValid() {
         // Arrange
         var response = """
-                      {
-                          "id": 42,
-                          "name": "Feral Data",
-                          "description": "desc",
-                          "mass": 0.1,
-                          "radius": 1,
-                          "volume": 0.1,
-                          "portionSize": 1,
-                          "groupName": "Group",
-                          "groupId": 1,
-                          "categoryName": "Category",
-                          "categoryId": 2,
-                          "iconUrl": ""
-                      }
-                      """;
+                       {
+                           "id": 42,
+                           "name": "Feral Data",
+                           "description": "desc",
+                           "mass": 0.1,
+                           "radius": 1,
+                           "volume": 0.1,
+                           "portionSize": 1,
+                           "groupName": "Group",
+                           "groupId": 1,
+                           "categoryName": "Category",
+                           "categoryId": 2,
+                           "iconUrl": ""
+                       }
+                       """;
         var factory = SubstitutableHttpClientFactory.CreateWithPayload(response);
         var client = new WorldApiClient(_logger, factory, _cache, _options);
 
@@ -211,5 +215,17 @@ public class WorldApiClientTests {
         // Assert
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle();
+    }
+
+    private WorldApiClient SetupApiClientWithResponses(params string[] responses) {
+        var responseQueue = new Queue<string>(responses);
+        var factory = new SubstitutableHttpClientFactory((_, _) => {
+            var json = responseQueue.Dequeue();
+            var msg = new HttpResponseMessage(HttpStatusCode.OK) {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            return Task.FromResult(msg);
+        });
+        return new WorldApiClient(_logger, factory, _cache, _options);
     }
 }

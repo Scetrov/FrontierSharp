@@ -1,0 +1,111 @@
+{
+  "data": [
+    {
+      "type": {
+        "id": 78437,
+        "name": "EU-90 Fuel",
+        "description": "EU-90 is the pinnacle of high-energy fuels, suitable for any active operations. \r\n\r\nExtracted from the Eupraxite heptahedral crystal-lattice fluid, it releases a torrent of energy that can power the most demanding systems. Its intense energy output makes it the fuel of choice for high-stakes operations where power is paramount.",
+        "mass": 30,
+        "radius": 1,
+        "volume": 0.2800000011920929,
+        "portionSize": 357143,
+        "groupName": "Crude Fuel",
+        "groupId": 0,
+        "categoryName": "Commodity",
+        "categoryId": 17,
+        "iconUrl": "https://artifacts.evefrontier.com/types/78437.png"
+      },
+      "efficiency": 90
+    },
+    {
+      "type": {
+        "id": 78515,
+        "name": "SOF-80 Fuel",
+        "description": "SOF-80 is a high-energy fuel variant for Crude-type engines, ideal for operations requiring intense energy output. \r\n\r\nThis Sophrogon-derived tetrahedral crystal-lattice fluid, it provides a surge of power that can drive even the most demanding systems, making it a go-to choice for high-stakes, energy-intensive operations. ",
+        "mass": 30,
+        "radius": 1,
+        "volume": 0.2800000011920929,
+        "portionSize": 357143,
+        "groupName": "Crude Fuel",
+        "groupId": 0,
+        "categoryName": "Commodity",
+        "categoryId": 17,
+        "iconUrl": "https://artifacts.evefrontier.com/types/78515.png"
+      },
+      "efficiency": 80
+    },
+    {
+      "type": {
+        "id": 78516,
+        "name": "EU-40 Fuel",
+        "description": "EU-40 is an economical fuel variant.",
+        "mass": 25,
+        "radius": 1,
+        "volume": 0.2800000011920929,
+        "portionSize": 357143,
+        "groupName": "Crude Fuel",
+        "groupId": 0,
+        "categoryName": "Commodity",
+        "categoryId": 17,
+        "iconUrl": "https://artifacts.evefrontier.com/types/78516.png"
+      },
+      "efficiency": 40
+    },
+    {
+      "type": {
+        "id": 84868,
+        "name": "SOF-40 Fuel",
+        "description": "",
+        "mass": 25,
+        "radius": 1,
+        "volume": 0.2800000011920929,
+        "portionSize": 357143,
+        "groupName": "Crude Fuel",
+        "groupId": 0,
+        "categoryName": "Commodity",
+        "categoryId": 17,
+        "iconUrl": "https://artifacts.evefrontier.com/types/84868.png"
+      },
+      "efficiency": 40
+    },
+    {
+      "type": {
+        "id": 88319,
+        "name": "D2 Fuel",
+        "description": "Even the most mundane matter can be improved through synthesis with byproducts of Crude extraction. Plentiful and inefficient on the Frontier, hydrogen too may be uplifted through this process, breathing new life into reactors which would otherwise be left behind. A question remains: are these efforts efficient?",
+        "mass": 30,
+        "radius": 1,
+        "volume": 0.2800000011920929,
+        "portionSize": 357143,
+        "groupName": "Hydrogen Fuel",
+        "groupId": 0,
+        "categoryName": "Commodity",
+        "categoryId": 17,
+        "iconUrl": "https://artifacts.evefrontier.com/types/88319.png"
+      },
+      "efficiency": 15
+    },
+    {
+      "type": {
+        "id": 88335,
+        "name": "D1 Fuel",
+        "description": "The allure of Crude Matter brought computation and humanity to the Frontier. As life reawakens, so too does the thirst for power in all its forms, including from the most mundane sources. Even in the face of the Static Shear, ice still litters the heavens. From its crystals, hydrogen may be extracted, reprocessed, and refined into fuel. This product, inefficient as it is, still drives the smallest vessels of the Frontier via its abundance and minimal cost. ",
+        "mass": 20,
+        "radius": 1,
+        "volume": 0.2800000011920929,
+        "portionSize": 357143,
+        "groupName": "Hydrogen Fuel",
+        "groupId": 0,
+        "categoryName": "Commodity",
+        "categoryId": 17,
+        "iconUrl": "https://artifacts.evefrontier.com/types/88335.png"
+      },
+      "efficiency": 10
+    }
+  ],
+  "metadata": {
+    "total": 6,
+    "limit": 6,
+    "offset": 0
+  }
+}

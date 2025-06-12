@@ -10,5 +10,5 @@ public class SolarSystem {
     public string Name { get; set; } = string.Empty;
 
     [JsonPropertyName("location")]
-    public Location Location { get; set; } = new Location();
+    public Location Location { get; set; } = new();
 }
