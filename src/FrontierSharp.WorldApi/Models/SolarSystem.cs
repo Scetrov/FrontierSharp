@@ -4,7 +4,7 @@ namespace FrontierSharp.WorldApi.Models;
 
 public class SolarSystem {
     [JsonPropertyName("id")]
-    public string Id { get; set; } = string.Empty;
+    public long Id { get; set; } = 0;
 
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;

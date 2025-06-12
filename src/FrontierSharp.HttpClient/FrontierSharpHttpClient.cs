@@ -48,7 +48,7 @@ public class FrontierSharpHttpClient(
                 exception?.Message ?? "No Exception", errorContent);
 
             return Result.Fail<TResponseModel>(
-                "Unable to deserialize the response into a JSON object, resulted in a null object.");
+                $"Unable to deserialize the response into a JSON object, resulted in a null object: {exception?.Message}");
         }, cancellationToken: cancellationToken);
     }
 

@@ -108,6 +108,6 @@ public class FrontierSharpHttpClientTests {
         // Assert
         result.IsFailed.Should().BeTrue();
         result.Errors[0].Message.Should()
-            .Be("Unable to deserialize the response into a JSON object, resulted in a null object.");
+            .Contain("Unable to deserialize the response into a JSON object, resulted in a null object:");
     }
 }
