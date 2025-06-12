@@ -4,7 +4,6 @@ using System.Text.Json;
 using AwesomeAssertions;
 using FrontierSharp.HttpClient;
 using FrontierSharp.Tests.Utils.FakeHttpClientFactory;
-using FrontierSharp.Tests.Utils.FakeHybridCache;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;

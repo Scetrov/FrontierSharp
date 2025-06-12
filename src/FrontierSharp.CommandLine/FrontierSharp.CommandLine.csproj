@@ -26,15 +26,15 @@
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="3.16.0"/>
         <PackageReference Include="Humanizer" Version="2.14.1"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
         <PackageReference Include="Scetrov.DumpifyFork" Version="0.6.7"/>
-        <PackageReference Include="Serilog" Version="4.3.0" />
-        <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+        <PackageReference Include="Serilog" Version="4.3.0"/>
+        <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2"/>
         <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0"/>
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
         <PackageReference Include="Spectre.Console" Version="0.50.0"/>
@@ -45,7 +45,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="YamlDotNet" Version="16.3.0"/>
-        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.3.0" />
+        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.3.0"/>
     </ItemGroup>
 
     <ItemGroup>

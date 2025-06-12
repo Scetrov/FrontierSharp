@@ -3,18 +3,20 @@ using FrontierSharp.HttpClient.Models;
 
 namespace FrontierSharp.WorldApi.RequestModel;
 
-public class GetTypeById : GetRequestModel<GetTypeById>, IGetRequestModel {
-    public long TypeId { get; set; }
+public class GetListOfFuels : GetRequestModel<GetListOfFuels>, IGetRequestModel, IWorldApiEnumerableEndpoint {
 
     public override string GetCacheKey() {
-        return $"WorldApi_Type_{TypeId}";
+        return this.GenerateCacheKey();
     }
 
     public override Dictionary<string, string> GetQueryParams() {
-        return new Dictionary<string, string>();
+        return this.GenerateParams();
     }
 
     public override string GetEndpoint() {
-        return $"/v2/types/{TypeId}";
+        return "/v2/fuels";
     }
+
+    public long Limit { get; set; }
+    public long Offset { get; set; }
 }

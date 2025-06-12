@@ -20,8 +20,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj" />
-      <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj" />
+        <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
+        <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -33,15 +33,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
-      <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ResponseModel\" />
+        <Folder Include="ResponseModel\"/>
     </ItemGroup>
 
 </Project>

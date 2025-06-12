@@ -11,17 +11,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AwesomeAssertions" Version="9.0.0" />
+        <PackageReference Include="AwesomeAssertions" Version="9.0.0"/>
         <PackageReference Include="AwesomeAssertions.Analyzers" Version="9.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="AwesomeAssertions.Json" Version="9.0.0" />
+        <PackageReference Include="AwesomeAssertions.Json" Version="9.0.0"/>
         <PackageReference Include="FluentResults" Version="3.16.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
         <PackageReference Include="NSubstitute" Version="5.3.0"/>
         <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17">
             <PrivateAssets>all</PrivateAssets>
@@ -42,7 +42,7 @@
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
         <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
         <ProjectReference Include="..\FrontierSharp.Starmap\FrontierSharp.Starmap.csproj"/>
-        <ProjectReference Include="..\FrontierSharp.WorldApi\FrontierSharp.WorldApi.csproj" />
+        <ProjectReference Include="..\FrontierSharp.WorldApi\FrontierSharp.WorldApi.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -50,12 +50,14 @@
         <EmbeddedResource Include="FrontierDevTools\openapi.json"/>
         <None Remove="FrontierDevTools\Api\Serialization\OptimalStargateNetworkAndDeploymentResponsePayload.json"/>
         <EmbeddedResource Include="FrontierDevTools\Api\Serialization\OptimalStargateNetworkAndDeploymentResponsePayload.json"/>
-        <None Remove="WorldApi\payloads\v2\types_limit=100_offset=0.json" />
-        <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=0.json" />
-        <None Remove="WorldApi\payloads\v2\types_limit=100_offset=100.json" />
-        <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=100.json" />
-        <None Remove="WorldApi\payloads\v2\types_limit=100_offset=200.json" />
-        <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=200.json" />
+        <None Remove="WorldApi\payloads\v2\types_limit=100_offset=0.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=0.json"/>
+        <None Remove="WorldApi\payloads\v2\types_limit=100_offset=100.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=100.json"/>
+        <None Remove="WorldApi\payloads\v2\types_limit=100_offset=200.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=200.json"/>
+        <None Remove="WorldApi\payloads\v2\fuels_limit=100_offset=0.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\fuels_limit=100_offset=0.json"/>
     </ItemGroup>
 
 </Project>
