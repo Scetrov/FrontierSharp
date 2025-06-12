@@ -16,17 +16,9 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
+        <AssemblyName>FrontierSharp.FrontierDevTools.Api</AssemblyName>
+        <RootNamespace>FrontierSharp.FrontierDevTools.Api</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="FluentResults" Version="3.16.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
-    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
@@ -38,6 +30,16 @@
             <PackagePath></PackagePath>
             <Link>FrontierSharp.png</Link>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentResults" Version="3.16.0"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
     </ItemGroup>
 
 </Project>

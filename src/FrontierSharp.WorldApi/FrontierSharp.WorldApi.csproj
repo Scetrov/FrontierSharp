@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>0.0.0</Version>
         <Title>FrontierSharp WorldApiClient</Title>
         <Authors>Scetrov</Authors>
         <Description>Access to the World API for EVE Frontier from .NET</Description>
@@ -32,15 +33,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentResults" Version="3.16.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6"/>
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="ResponseModel\"/>
     </ItemGroup>
 
 </Project>
