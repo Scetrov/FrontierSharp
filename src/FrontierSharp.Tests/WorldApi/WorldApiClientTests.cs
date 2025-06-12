@@ -154,7 +154,7 @@ public class WorldApiClientTests {
         var result = await client.GetAllFuels();
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.IsSuccess.Should().BeTrue(); 
         result.Value.Should().HaveCount(6);
         var firstResult = result.Value.First();
         firstResult.Type.Name.Should().Be("EU-90 Fuel");

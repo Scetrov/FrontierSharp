@@ -7,10 +7,10 @@ public class GameType {
     public int Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     [JsonPropertyName("mass")]
     public double Mass { get; set; }
@@ -25,17 +25,17 @@ public class GameType {
     public int PortionSize { get; set; }
 
     [JsonPropertyName("groupName")]
-    public string? GroupName { get; set; }
+    public string GroupName { get; set; } = string.Empty;
 
     [JsonPropertyName("groupId")]
     public int GroupId { get; set; }
 
     [JsonPropertyName("categoryName")]
-    public string? CategoryName { get; set; }
+    public string CategoryName { get; set; } = string.Empty;
 
     [JsonPropertyName("categoryId")]
     public int CategoryId { get; set; }
 
     [JsonPropertyName("iconUrl")]
-    public string? IconUrl { get; set; }
+    public string IconUrl { get; set; } = string.Empty;
 }
