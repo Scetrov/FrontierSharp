@@ -138,7 +138,7 @@ public class WorldApiClientTests {
         var client = SetupApiClientWithResponses(TypesResourcePage1, TypesResourcePage2, TypesResourcePage3);
 
         // Act
-        var result = await client.GetAllTypes(100);
+        var result = await client.GetAllTypes();
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -151,11 +151,22 @@ public class WorldApiClientTests {
         var client = SetupApiClientWithResponses(FuelsResourcePage1);
 
         // Act
-        var result = await client.GetAllFuels(100);
+        var result = await client.GetAllFuels();
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().HaveCount(6);
+        var firstResult = result.Value.First();
+        firstResult.Type.Name.Should().Be("EU-90 Fuel");
+        firstResult.Type.Id.Should().Be(78437);
+        firstResult.Type.GroupName.Should().Be("Crude Fuel");
+        firstResult.Type.CategoryName.Should().Be("Commodity");
+        firstResult.Type.Description.Should().NotBe(null);
+        firstResult.Type.Mass.Should().Be(30.0);
+        firstResult.Type.Volume.Should().BeGreaterThan(0);
+        firstResult.Type.PortionSize.Should().Be(357143);
+        firstResult.Type.IconUrl.Should().Be("https://artifacts.evefrontier.com/types/78437.png");
+        firstResult.Efficiency.Should().Be(90);
     }
 
     [Fact]

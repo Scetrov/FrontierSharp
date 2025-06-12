@@ -31,13 +31,13 @@ public class WorldApiClient(
         return await GetAll(GetTypesPage, limit, cancellationToken);
     }
 
-    public async Task<Result<WorldApiPayload<GameType>>> GetFuelsPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+    public async Task<Result<WorldApiPayload<Fuel>>> GetFuelsPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
         var requestModel = new GetListOfFuels { Limit = limit, Offset = offset };
-        var result = await Get<GetListOfFuels, WorldApiPayload<GameType>>(requestModel, cancellationToken);
+        var result = await Get<GetListOfFuels, WorldApiPayload<Fuel>>(requestModel, cancellationToken);
         return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
     }
 
-    public async Task<Result<IEnumerable<GameType>>> GetAllFuels(long limit = 100, CancellationToken cancellationToken = default) {
+    public async Task<Result<IEnumerable<Fuel>>> GetAllFuels(long limit = 100, CancellationToken cancellationToken = default) {
         return await GetAll(GetFuelsPage, limit, cancellationToken);
     }
 
