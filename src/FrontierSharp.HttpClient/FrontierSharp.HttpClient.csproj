@@ -4,7 +4,9 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>0.0.0</Version>
+        <Version>0.0.1</Version>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>0.0.1</FileVersion>
         <Title>FrontierSharp Generic HTTP Client</Title>
         <Authors>Scetrov</Authors>
         <Description>Base HTTP Client implementation wrapper for .NET HttpClient</Description>

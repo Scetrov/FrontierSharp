@@ -4,7 +4,9 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>0.0.0</Version>
+        <Version>0.0.1</Version>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>0.0.1</FileVersion>
         <Title>FrontierSharp WorldApiClient</Title>
         <Authors>Scetrov</Authors>
         <Description>Access to the World API for EVE Frontier from .NET</Description>
