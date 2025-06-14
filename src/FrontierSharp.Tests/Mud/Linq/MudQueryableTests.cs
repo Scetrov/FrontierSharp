@@ -1,5 +1,5 @@
 using System.Numerics;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.Mud.Linq;
 using FrontierSharp.Mud.Linq.Attributes;
 using Xunit;

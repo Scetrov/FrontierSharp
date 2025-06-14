@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.HttpClient;
 using FrontierSharp.Tests.Utils.FakeHttpClientFactory;
 using FrontierSharp.Tests.Utils.FakeHybridCache;
@@ -75,7 +75,6 @@ public class FrontierSharpHttpPostTests {
         var result = await client.Post<FakePostRequest, FakeResponse>(requestModel);
 
         result.IsFailed.Should().BeTrue();
-        result.Errors[0].Message.Should().Be(
-            "Unable to deserialize the response into a JSON object, resulted in a null object.");
+        result.Errors[0].Message.Should().Contain("Unable to deserialize the response into a JSON object, resulted in a null object:");
     }
 }

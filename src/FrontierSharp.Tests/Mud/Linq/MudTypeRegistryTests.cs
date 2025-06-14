@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 using FrontierSharp.Mud.Linq;
-using FluentAssertions;
+using AwesomeAssertions;
 using JetBrains.Annotations;
 using NSubstitute;
 using Xunit;
