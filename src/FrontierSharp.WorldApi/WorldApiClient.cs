@@ -81,7 +81,7 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
     public async Task<Result<IEnumerable<SmartCharacter>>> GetAllSmartCharacters(long limit = 100, CancellationToken cancellationToken = default) {
         return await GetAll(GetSmartCharacterPage, limit, cancellationToken);
     }
-    
+
     public async Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
         var requestModel = new GetListOfKillmails { Limit = limit, Offset = offset };
         var result = await httpClient.Get<GetListOfKillmails, WorldApiPayload<Killmail>>(requestModel, cancellationToken);
