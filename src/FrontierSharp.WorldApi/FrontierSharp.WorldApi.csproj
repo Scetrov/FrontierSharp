@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Title>FrontierSharp WorldApiClient</Title>
+        <Authors>Scetrov</Authors>
+        <Description>Access to the World API for EVE Frontier from .NET</Description>
+        <Copyright>© 2025, Scetrov</Copyright>
+        <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>eve,frontier,games</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>FrontierSharp.png</PackageIcon>
+        <AssemblyName>FrontierSharp.WorldApi</AssemblyName>
+        <RootNamespace>FrontierSharp.WorldApi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\assets\FrontierSharp.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+            <Link>FrontierSharp.png</Link>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentResults" Version="3.16.0"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
+    </ItemGroup>
+
+</Project>

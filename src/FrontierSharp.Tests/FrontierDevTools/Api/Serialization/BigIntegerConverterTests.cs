@@ -1,8 +1,8 @@
 using System.Numerics;
 using System.Text;
 using System.Text.Json;
-using FluentAssertions;
-using FrontierSharp.FrontierDevTools.Api.Serialization;
+using AwesomeAssertions;
+using FrontierSharp.HttpClient.Serialization;
 using Xunit;
 
 namespace FrontierSharp.Tests.FrontierDevTools.Api.Serialization;

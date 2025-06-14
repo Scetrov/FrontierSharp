@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.Data.Static;
 using Xunit;
 

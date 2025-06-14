@@ -1,10 +1,9 @@
 ﻿using System.Net;
 using System.Text;
 using System.Text.Json;
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.HttpClient;
 using FrontierSharp.Tests.Utils.FakeHttpClientFactory;
-using FrontierSharp.Tests.Utils.FakeHybridCache;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -109,6 +108,6 @@ public class GetTests {
         // Assert
         result.IsFailed.Should().BeTrue();
         result.Errors[0].Message.Should()
-            .Be("Unable to deserialize the response into a JSON object, resulted in a null object.");
+            .Contain("Unable to deserialize the response into a JSON object, resulted in a null object:");
     }
 }

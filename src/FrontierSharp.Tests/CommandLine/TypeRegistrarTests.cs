@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using FrontierSharp.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;

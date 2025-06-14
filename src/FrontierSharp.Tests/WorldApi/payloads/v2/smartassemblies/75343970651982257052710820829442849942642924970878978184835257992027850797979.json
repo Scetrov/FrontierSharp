@@ -1,0 +1,46 @@
+{
+  "id": "75343970651982257052710820829442849942642924970878978184835257992027850797979",
+  "type": "Manufacturing",
+  "name": "",
+  "state": "anchored",
+  "solarSystem": {
+    "id": 30012580,
+    "name": "USR-21H",
+    "location": {
+      "x": -3446295502205747000,
+      "y": -100055051321475070,
+      "z": 9596258211275473000
+    }
+  },
+  "owner": {
+    "address": "0x69898f12f920832458609442d5afab9ba68887f6",
+    "name": "Bull",
+    "id": "84599722058431940285285062988086044414659287579074488044166947650185462704496"
+  },
+  "energyUsage": 0,
+  "typeId": 87161,
+  "typeDetails": {
+    "id": 87161,
+    "name": "Portable Refinery",
+    "description": "Cheap and portable refinery that goes anywhere with you.",
+    "mass": 22200000,
+    "radius": 1,
+    "volume": 10000,
+    "portionSize": 1,
+    "groupName": "Core",
+    "groupId": 0,
+    "categoryName": "Deployable",
+    "categoryId": 22,
+    "iconUrl": ""
+  },
+  "description": "",
+  "dappURL": "",
+  "manufacturing": {
+    "isParentNodeOnline": false
+  },
+  "location": {
+    "x": 121834326528,
+    "y": -5201916416,
+    "z": 241142638592
+  }
+}
