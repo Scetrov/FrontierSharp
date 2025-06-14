@@ -26,8 +26,3 @@ public class SmartAssembly {
     [JsonPropertyName("typeId")]
     public int TypeId { get; set; } = 0;
 }
-
-public class SmartAssemblyWithSolarSystem : SmartAssembly {
-    [JsonPropertyName("solarSystem")]
-    public SolarSystem SolarSystem { get; set; } = new();
-}

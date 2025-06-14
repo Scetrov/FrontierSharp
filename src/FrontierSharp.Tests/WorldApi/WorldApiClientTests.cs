@@ -230,6 +230,30 @@ public class WorldApiClientTests {
         result.Value.First().Name.Should().Be("vookid");
         result.Value.First().Address.Should().Be("0xcda43b6f62c3ccebdaf50afe2b9b1b46e196581a");
     }
+    
+    [Fact]
+    public async Task GetAllKillmails_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData() {
+        // Arrange
+        var client = SetupApiClientWithResponses(LoadResources("killmails", 100, 140));
+
+        // Act
+        var result = await client.GetAllKillmails();
+
+        // Assert
+        result.Errors.Should().BeEmpty();
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().HaveCount(140);
+        var first = result.Value.First();
+        first.Victim.Address.Should().Be("0x19957f367b81bd7711d316a451ade0d8fa8cb5bf");
+        first.Victim.Name.Should().Be("vayan");
+        first.Victim.Id.Should().Be("89979072328616633636445914640704752155006469856397668317334881359961980144528");
+        first.Killer.Address.Should().Be("0x1c00b9c6525eefb6ba5ea79b18900144bd1c1b96");
+        first.Killer.Name.Should().Be("New Era");
+        first.Killer.Id.Should().Be("76134959349393584698700525761287368698302289866672872406221736705180151228261");
+        first.SolarSystemId.Should().Be(30012542);
+        first.LossType.Should().Be(LossType.Ship);
+        first.Time.Should().Be(new DateTimeOffset(2025, 06, 11, 13, 58, 03, TimeSpan.Zero));
+    }
 
     [Fact]
     public async Task GetAllFuels_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData() {
