@@ -7,7 +7,6 @@
         <OutputType>Exe</OutputType>
         <AssemblyName>frontierctl</AssemblyName>
         <PackageId>FrontierSharp.CommandLine</PackageId>
-        <Version>0.0.0</Version>
         <Title>FrontierSharp CLI Tool</Title>
         <Authors>Scetrov, Zlake</Authors>
         <Description>Command Line Interface to FrontierSharp and EVE Frontier</Description>

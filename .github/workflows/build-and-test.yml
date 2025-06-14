@@ -39,7 +39,7 @@ jobs:
         working-directory: ./src
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release /p:Version=0.0.0
+        run: dotnet build --no-restore --configuration Release -p:Version=0.0.0
         working-directory: ./src
 
       - name: Test
@@ -47,7 +47,7 @@ jobs:
         working-directory: ./src
 
       - name: Pack NuGet Package
-        run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=0.0.0
+        run: dotnet pack --no-build --configuration Release --output ./nupkg -p:Version=0.0.0
         working-directory: ./src
 
   publish:
@@ -89,11 +89,15 @@ jobs:
         working-directory: ./src
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.version_step.outputs.FullSemVer }} /p:AssemblyVersion=${{ steps.version_step.outputs.AssemblySemVer }} /p:FileVersion=${{ steps.version_step.outputs.AssemblySemFileVer }}
+        run: dotnet build --no-restore --configuration Release -p:Version=${{ steps.version_step.outputs.FullSemVer }} -p:AssemblyVersion=${{ steps.version_step.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.version_step.outputs.AssemblySemFileVer }}
         working-directory: ./src
 
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
+        working-directory: ./src
+
+      - name: Pack NuGet Package
+        run: dotnet pack --no-build --configuration Release --output ./nupkg -p:Version=${{ steps.version_step.outputs.FullSemVer }} -p:AssemblyVersion=${{ steps.version_step.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.version_step.outputs.AssemblySemFileVer }}
         working-directory: ./src
 
       - name: Publish Commandline (linux-x64)
@@ -119,10 +123,6 @@ jobs:
       - name: Publish Commandline (win-arm64)
         run: dotnet publish -c Release -r win-arm64 --self-contained
         working-directory: ./src/FrontierSharp.CommandLine
-
-      - name: Pack NuGet Package
-        run: dotnet pack --no-build --configuration Release --output ./nupkg /p:Version=${{ steps.version_step.outputs.FullSemVer }} /p:AssemblyVersion=${{ steps.version_step.outputs.AssemblySemVer }} /p:FileVersion=${{ steps.version_step.outputs.AssemblySemFileVer }}
-        working-directory: ./src
 
       - name: Publish NuGet Package to NuGet.org
         env:
