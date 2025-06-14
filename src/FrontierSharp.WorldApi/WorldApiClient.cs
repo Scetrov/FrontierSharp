@@ -82,7 +82,17 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetSmartCharacterPage, limit, cancellationToken);
     }
 
-    private async Task<Result<IEnumerable<T>>> GetAll<T>(Func<long, long, CancellationToken, Task<Result<WorldApiPayload<T>>>> pageFunction, long limit = 100, CancellationToken cancellationToken = default) {
+    public async Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+        var requestModel = new GetListOfKillmails { Limit = limit, Offset = offset };
+        var result = await httpClient.Get<GetListOfKillmails, WorldApiPayload<Killmail>>(requestModel, cancellationToken);
+        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
+    }
+
+    public async Task<Result<IEnumerable<Killmail>>> GetAllKillmails(long limit = 100, CancellationToken cancellationToken = default) {
+        return await GetAll(GetKillmailPage, limit, cancellationToken);
+    }
+
+    private static async Task<Result<IEnumerable<T>>> GetAll<T>(Func<long, long, CancellationToken, Task<Result<WorldApiPayload<T>>>> pageFunction, long limit = 100, CancellationToken cancellationToken = default) {
         var allItems = new List<T>();
         long offset = 0;
         var total = long.MaxValue;

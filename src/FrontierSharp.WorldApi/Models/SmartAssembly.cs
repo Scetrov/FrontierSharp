@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace FrontierSharp.WorldApi.Models;
 
+[ExcludeFromCodeCoverage]
 public class SmartAssembly {
     [JsonPropertyName("id")]
     public string Id { get; set; } = string.Empty;
@@ -25,9 +27,4 @@ public class SmartAssembly {
 
     [JsonPropertyName("typeId")]
     public int TypeId { get; set; } = 0;
-}
-
-public class SmartAssemblyWithSolarSystem : SmartAssembly {
-    [JsonPropertyName("solarSystem")]
-    public SolarSystem SolarSystem { get; set; } = new();
 }

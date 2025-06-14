@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace FrontierSharp.WorldApi.Models;
 
+[ExcludeFromCodeCoverage]
 public class GameType {
     [JsonPropertyName("id")]
     public int Id { get; set; }
