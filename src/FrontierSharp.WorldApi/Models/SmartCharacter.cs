@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace FrontierSharp.WorldApi.Models;
 
+[ExcludeFromCodeCoverage]
 public class SmartCharacter {
     [JsonPropertyName("address")]
     public string Address { get; set; } = string.Empty;

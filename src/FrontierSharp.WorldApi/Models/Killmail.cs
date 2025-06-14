@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace FrontierSharp.WorldApi.Models;
 
+[ExcludeFromCodeCoverage]
 public class Killmail {
     [JsonPropertyName("victim")]
     public SmartCharacter Victim { get; set; } = new();

@@ -230,7 +230,7 @@ public class WorldApiClientTests {
         result.Value.First().Name.Should().Be("vookid");
         result.Value.First().Address.Should().Be("0xcda43b6f62c3ccebdaf50afe2b9b1b46e196581a");
     }
-    
+
     [Fact]
     public async Task GetAllKillmails_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData() {
         // Arrange

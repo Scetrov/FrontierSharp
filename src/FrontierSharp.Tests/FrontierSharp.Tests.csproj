@@ -420,10 +420,10 @@
         <EmbeddedResource Include="WorldApi\payloads\v2\smartcharacters\0x19957f367b81bd7711d316a451ade0d8fa8cb5bf.json"/>
         <None Remove="WorldApi\payloads\v2\smartassemblies\75343970651982257052710820829442849942642924970878978184835257992027850797979.json"/>
         <EmbeddedResource Include="WorldApi\payloads\v2\smartassemblies\75343970651982257052710820829442849942642924970878978184835257992027850797979.json"/>
-        <None Remove="WorldApi\payloads\v2\killmails_limit=100_offset=0.json" />
-        <EmbeddedResource Include="WorldApi\payloads\v2\killmails_limit=100_offset=0.json" />
-        <None Remove="WorldApi\payloads\v2\killmails_limit=100_offset=100.json" />
-        <EmbeddedResource Include="WorldApi\payloads\v2\killmails_limit=100_offset=100.json" />
+        <None Remove="WorldApi\payloads\v2\killmails_limit=100_offset=0.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\killmails_limit=100_offset=0.json"/>
+        <None Remove="WorldApi\payloads\v2\killmails_limit=100_offset=100.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\killmails_limit=100_offset=100.json"/>
     </ItemGroup>
 
 </Project>

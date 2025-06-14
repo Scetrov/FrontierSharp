@@ -25,11 +25,10 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=885b98c1_002D1c70_002D4ec4_002Db11c_002Da896ee4fb614/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Solution /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=88cefad1_002D3152_002D48e6_002D9dfb_002D94504d075751/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllKillmails_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::B904B7B7-E8D2-453C-A268-F5CE42451D30::net9.0::FrontierSharp.Tests.WorldApi.WorldApiClientTests.GetAllKillmails_ShouldReturnAllPages_WhenMultiplePagesExist_WithRealData&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a4c82570_002D96ab_002D46ac_002D84a6_002De9b8536ebe73/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Solution /&gt;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	
