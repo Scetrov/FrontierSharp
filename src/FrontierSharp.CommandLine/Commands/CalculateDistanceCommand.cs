@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using FluentResults;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
@@ -18,7 +17,7 @@ public class CalculateDistanceCommand(
         var result = await devToolsClient.CalculateDistance(settings.SystemA, settings.SystemB, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            foreach (var err in result.Errors) logger.LogError(err.Message);
 
             return 1;
         }
@@ -36,11 +35,11 @@ public class CalculateDistanceCommand(
     public class Settings : CommandSettings {
         [CommandArgument(0, "<a>")]
         [Description("Start Solarsystem, i.e. ICT-SVL")]
-        public required string SystemA { get; set; }
+        public required string SystemA { get; init; }
 
         [CommandArgument(1, "<b>")]
         [Description("End Solarsystem, i.e. UB3-3QJ")]
-        public required string SystemB { get; set; }
+        public required string SystemB { get; init; }
 
         public override ValidationResult Validate() {
             if (string.IsNullOrWhiteSpace(SystemA))

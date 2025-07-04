@@ -17,7 +17,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="AwesomeAssertions.Json" Version="9.0.0"/>
-        <PackageReference Include="FluentResults" Version="3.16.0"/>
+        <PackageReference Include="FluentResults" Version="4.0.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.6"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.6"/>
