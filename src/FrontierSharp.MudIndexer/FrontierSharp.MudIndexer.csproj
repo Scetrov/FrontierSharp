@@ -4,14 +4,14 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Title>FrontierSharp Generic HTTP Client</Title>
+        <Title>FrontierSharp Mud Indexer Client</Title>
         <Authors>Scetrov</Authors>
-        <Description>Base HTTP Client implementation wrapper for .NET HttpClient</Description>
+        <Description>Mud Indexer Client implementation</Description>
         <Copyright>© 2025, Scetrov</Copyright>
         <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
-        <PackageTags>eve,frontier,games</PackageTags>
+        <PackageTags>eve,frontier,mud,games</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
@@ -28,13 +28,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentResults" Version="4.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.7" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.7.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.7" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.7" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.7" />
+      <PackageReference Include="FluentResults" Version="4.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.7" />
     </ItemGroup>
 
 </Project>

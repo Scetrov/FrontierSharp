@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using FluentResults;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
@@ -15,12 +16,17 @@ public class FindTravelRouteCommand(
     ILogger<FindTravelRouteCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
+    [SuppressMessage("Usage", "CA2254:Template should be a static expression")]
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates,
             settings.MaxDistance, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            foreach (var err in result.Errors) {
+                if (err is not null) {
+                    logger.LogError(err.Message);                    
+                }
+            }
 
             return 1;
         }

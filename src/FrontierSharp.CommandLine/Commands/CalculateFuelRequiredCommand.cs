@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using FluentResults;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
@@ -13,12 +14,17 @@ public class CalculateFuelRequiredCommand(
     ILogger<CalculateFuelRequiredCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelRequiredCommand.Settings> {
+    [SuppressMessage("Usage", "CA2254:Template should be a static expression")]
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.CalculateFuelRequired(settings.Mass, settings.Lightyears,
             settings.FuelEfficiency, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            foreach (var err in result.Errors) {
+                if (err is not null) {
+                    logger.LogError(err.Message);                    
+                }
+            }
 
             return 1;
         }
