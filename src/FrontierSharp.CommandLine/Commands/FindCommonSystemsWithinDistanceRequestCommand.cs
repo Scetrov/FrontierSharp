@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using FluentResults;
+using System.Diagnostics.CodeAnalysis;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
@@ -14,12 +14,17 @@ public class FindCommonSystemsWithinDistanceRequestCommand(
     ILogger<FindCommonSystemsWithinDistanceRequestCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<FindCommonSystemsWithinDistanceRequestCommand.Settings> {
+    [SuppressMessage("Usage", "CA2254:Template should be a static expression")]
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB,
             settings.MaxDistance, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            foreach (var err in result.Errors) {
+                if (err is not null) {
+                    logger.LogError(err.Message);                    
+                }
+            }
 
             return 1;
         }

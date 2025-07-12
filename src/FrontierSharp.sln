@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.Data", "Front
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.WorldApi", "FrontierSharp.WorldApi\FrontierSharp.WorldApi.csproj", "{8CB00C49-A0BE-4820-8AF5-648C95464A13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.MudIndexer", "FrontierSharp.MudIndexer\FrontierSharp.MudIndexer.csproj", "{D55A783E-7207-436B-8EFE-5F10552BEB8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{8CB00C49-A0BE-4820-8AF5-648C95464A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CB00C49-A0BE-4820-8AF5-648C95464A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CB00C49-A0BE-4820-8AF5-648C95464A13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D55A783E-7207-436B-8EFE-5F10552BEB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D55A783E-7207-436B-8EFE-5F10552BEB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D55A783E-7207-436B-8EFE-5F10552BEB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D55A783E-7207-436B-8EFE-5F10552BEB8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

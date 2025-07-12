@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using FluentResults;
+using System.Diagnostics.CodeAnalysis;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
@@ -13,13 +13,18 @@ public class CalculateFuelPerLightyearCommand(
     ILogger<CalculateFuelPerLightyearCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelPerLightyearCommand.Settings> {
+    [SuppressMessage("Usage", "CA2254:Template should be a static expression")]
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result =
             await devToolsClient.CalculateFuelPerLightyear(settings.Mass, settings.FuelEfficiency,
                 CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            foreach (var err in result.Errors) {
+                if (err is not null) {
+                    logger.LogError(err.Message);
+                }
+            }
 
             return 1;
         }

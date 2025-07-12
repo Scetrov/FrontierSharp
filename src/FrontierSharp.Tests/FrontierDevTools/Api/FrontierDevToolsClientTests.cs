@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Nodes;
 using AwesomeAssertions;
 using FluentResults;
@@ -10,6 +11,8 @@ using Xunit;
 
 namespace FrontierSharp.Tests.FrontierDevTools.Api;
 
+[SuppressMessage("Substitute creation", "NS2002:Constructor parameters count mismatch.")]
+[SuppressMessage("Non-substitutable member", "NS1004:Argument matcher used with a non-virtual member of a class.")]
 public class FrontierDevToolsClientTests {
     private readonly IFrontierSharpHttpClient _httpClient = Substitute.For<IFrontierSharpHttpClient>();
     private readonly FrontierDevToolsClient _sut;

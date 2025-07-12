@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using FluentResults;
+using System.Diagnostics.CodeAnalysis;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.FrontierDevTools.Api.RequestModels;
@@ -16,12 +16,17 @@ public class OptimizeStargateNetworkPlacementCommand(
     ILogger<OptimizeStargateNetworkPlacementCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<OptimizeStargateNetworkPlacementCommand.Settings> {
+    [SuppressMessage("Usage", "CA2254:Template should be a static expression")]
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
         var result = await devToolsClient.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End,
             settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            foreach (var err in result.Errors) {
+                if (err is not null) {
+                    logger.LogError(err.Message);                    
+                }
+            }
 
             return 1;
         }

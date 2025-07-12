@@ -67,7 +67,6 @@ using var host = Host.CreateDefaultBuilder(args)
                     staticData.SetDescription("Commands for static data");
                     staticData.AddBranch("resources",
                         resources => {
-                            ;
                             resources.AddCommand<ResourceListCommand>("list").WithAlias("l").WithAlias("ls");
                             resources.AddCommand<ResourceUnpickleCommand>("unpickle").WithAlias("u").WithAlias("unp");
                         }).WithAlias("res").WithAlias("r");
