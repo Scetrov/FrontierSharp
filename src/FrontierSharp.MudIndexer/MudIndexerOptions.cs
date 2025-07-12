@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace FrontierSharp.HttpClient;
+namespace FrontierSharp.MudIndexer;
 
 [ExcludeFromCodeCoverage]
 public class MudIndexerOptions {
-    public required string WorldAddress { get; set; }
-    public required string IndexerAddress { get; set; }
+    public required string WorldAddress { get; init; }
+    public required string IndexerAddress { get; init; }
 
-    public string QueryEndpoint { get; set; } = "/q";
-
-    public string IndexerUrl => $"{IndexerAddress}{QueryEndpoint}";
+    public string QueryEndpoint { get; init; } = "/q";
 }

@@ -5,7 +5,7 @@ using FluentResults;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FrontierSharp.HttpClient;
+namespace FrontierSharp.MudIndexer;
 
 public class MudIndexerClient(ILogger<MudIndexerClient> logger, IHttpClientFactory clientFactory, IOptions<MudIndexerOptions> options) : IMudIndexerClient {
     private readonly MudIndexerOptions _options = options.Value;

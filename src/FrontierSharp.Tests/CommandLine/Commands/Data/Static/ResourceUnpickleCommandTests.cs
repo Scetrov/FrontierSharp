@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Spectre.Console;
 using Xunit;
+using AwesomeAssertions;
 
 namespace FrontierSharp.Tests.CommandLine.Commands.Data.Static;
 
@@ -37,7 +38,7 @@ public class ResourceUnpickleCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(1, result);
+        result.Should().Be(1);
     }
 
     [Fact]
@@ -63,7 +64,7 @@ public class ResourceUnpickleCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(1, result);
+        result.Should().Be(1);
     }
 
     [Fact]
@@ -93,9 +94,9 @@ public class ResourceUnpickleCommandTests {
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
 
         // Assert
-        Assert.Equal(0, result);
+        result.Should().Be(0);
         var expectedJson = JsonSerializer.Serialize(unpickledContent, new JsonSerializerOptions { WriteIndented = true });
-        Assert.Equal(expectedJson, fileSystem.File.ReadAllText("output.json"));
+        fileSystem.File.ReadAllText("output.json").Should().Be(expectedJson);
     }
 
     private class ResIndexMock(IEnumerable<ResFile> files) : ResIndex(files) {

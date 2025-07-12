@@ -16,7 +16,6 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
         <AssemblyName>FrontierSharp.MudIndexer</AssemblyName>
-        <RootNamespace>FrontierSharp.MudIndexert</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,5 +1,5 @@
 using AwesomeAssertions;
-using FrontierSharp.HttpClient;
+using FrontierSharp.MudIndexer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Xunit;

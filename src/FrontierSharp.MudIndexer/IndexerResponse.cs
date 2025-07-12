@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace FrontierSharp.HttpClient;
+namespace FrontierSharp.MudIndexer;
 
 [ExcludeFromCodeCoverage]
 public class IndexerResponse {
-    public long BlockHeight { get; set; }
-    public required IEnumerable<QueryResult> Result { get; set; }
+    public long BlockHeight { get; init; }
+    public required IEnumerable<QueryResult> Result { get; init; }
 }

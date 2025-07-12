@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace FrontierSharp.HttpClient;
+namespace FrontierSharp.MudIndexer;
 
 [ExcludeFromCodeCoverage]
 public class QueryResult {
