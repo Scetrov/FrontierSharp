@@ -15,8 +15,8 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
-        <AssemblyName>FrontierSharp.HttpClient</AssemblyName>
-        <RootNamespace>FrontierSharp.HttpClient</RootNamespace>
+        <AssemblyName>FrontierSharp.MudIndexer</AssemblyName>
+        <RootNamespace>FrontierSharp.MudIndexert</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -30,6 +30,10 @@
     <ItemGroup>
       <PackageReference Include="FluentResults" Version="4.0.0" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj" />
     </ItemGroup>
 
 </Project>
