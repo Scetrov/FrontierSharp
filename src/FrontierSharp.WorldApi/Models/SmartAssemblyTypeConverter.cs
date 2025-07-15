@@ -19,8 +19,6 @@ public class SmartAssemblyTypeConverter : JsonConverter<SmartAssemblyType> {
             default:
                 return SmartAssemblyType.Unknown;
         }
-
-        return SmartAssemblyType.Unknown; // Fallback
     }
 
     public override void Write(Utf8JsonWriter writer, SmartAssemblyType value, JsonSerializerOptions options) {
