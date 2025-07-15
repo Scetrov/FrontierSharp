@@ -18,7 +18,7 @@ public class CalculateFuelRequiredCommand(
             settings.FuelEfficiency, CancellationToken.None);
 
         if (result.IsFailed) {
-            logger.LogError("Failed to calculate fuel requirments:\n{Error}", result.ToErrorString());
+            logger.LogError("Failed to calculate fuel requirements:\n{Error}", result.ToErrorString());
 
             return 1;
         }
