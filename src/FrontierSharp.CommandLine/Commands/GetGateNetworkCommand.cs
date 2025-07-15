@@ -1,6 +1,6 @@
 using System.ComponentModel;
-using FluentResults;
 using FrontierSharp.CommandLine.Utils;
+using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
@@ -25,7 +25,7 @@ public class GetGateNetworkCommand(
         var result = await devToolsClient.GetGateNetwork(settings.Identifier, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            logger.LogError("Failed to get gate network:\n{Error}", result.ToErrorString());
 
             return 1;
         }

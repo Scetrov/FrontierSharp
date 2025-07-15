@@ -1,6 +1,6 @@
 using System.ComponentModel;
-using FluentResults;
 using FrontierSharp.CommandLine.Utils;
+using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
@@ -30,7 +30,7 @@ public class GetCharacterCommand(
         };
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            logger.LogError("Failed to get character:\n{Error}", result.ToErrorString());
 
             return 1;
         }

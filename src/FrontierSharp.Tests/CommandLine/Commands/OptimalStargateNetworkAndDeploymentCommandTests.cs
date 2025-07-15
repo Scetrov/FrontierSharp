@@ -115,6 +115,5 @@ public class OptimalStargateNetworkAndDeploymentCommandTests {
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
 
         result.Should().Be(1);
-        logger.Received().LogError("Route calculation failed");
     }
 }

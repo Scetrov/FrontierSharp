@@ -1,6 +1,6 @@
 using System.ComponentModel;
-using FluentResults;
 using FrontierSharp.CommandLine.Utils;
+using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using FrontierSharp.FrontierDevTools.Api.ResponseModels;
@@ -21,7 +21,7 @@ public class OptimizeStargateNetworkPlacementCommand(
             settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            logger.LogError("Failed to optimize stargate network placement:\n{Error}", result.ToErrorString());
 
             return 1;
         }

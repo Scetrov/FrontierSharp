@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Globalization;
-using FluentResults;
 using FrontierSharp.CommandLine.Utils;
+using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.FrontierDevTools.Api.RequestModels;
 using Microsoft.Extensions.Logging;
@@ -22,7 +22,7 @@ public class OptimalStargateNetworkAndDeploymentCommand(
             CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            logger.LogError("Failed to calculate fuel per lightyear:\n{Error}", result.ToErrorString());
 
             return 1;
         }

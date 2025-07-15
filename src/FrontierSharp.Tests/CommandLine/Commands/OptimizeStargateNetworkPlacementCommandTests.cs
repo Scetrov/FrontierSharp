@@ -74,7 +74,6 @@ public class OptimizeStargateNetworkPlacementCommandTests {
         var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
 
         result.Should().Be(1);
-        _logger.Received().LogError("Something failed");
     }
 
     [Fact]

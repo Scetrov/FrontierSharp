@@ -48,6 +48,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\FrontierSharp.Common\FrontierSharp.Common.csproj" />
         <ProjectReference Include="..\FrontierSharp.Data\FrontierSharp.Data.csproj"/>
         <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
     </ItemGroup>

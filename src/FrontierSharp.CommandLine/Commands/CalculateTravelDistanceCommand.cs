@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using FluentResults;
+using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
@@ -18,7 +18,7 @@ public class CalculateTravelDistanceCommand(
             settings.FuelEfficiency, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            logger.LogError("Calculate travel distance failed:\n{Error}", result.ToErrorString());
 
             return 1;
         }

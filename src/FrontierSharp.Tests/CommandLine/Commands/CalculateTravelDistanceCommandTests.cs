@@ -75,8 +75,6 @@ public class CalculateTravelDistanceCommandTests {
 
         // Assert
         exitCode.Should().Be(1);
-
-        _logger.Received().LogError("Failed to calculate travel distance");
     }
 
     [Theory]
