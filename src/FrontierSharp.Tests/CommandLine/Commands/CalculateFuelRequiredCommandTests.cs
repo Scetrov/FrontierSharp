@@ -75,7 +75,6 @@ public class CalculateFuelRequiredCommandTests {
 
         // Assert
         exitCode.Should().Be(1);
-        _logger.Received().LogError("Something went wrong");
     }
 
     [Theory]

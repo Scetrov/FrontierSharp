@@ -7,7 +7,8 @@ public class FakeHybridCache : HybridCache {
     // Could make public since it's a fake cache anyway, and that could be useful for testing purposes
     private readonly Dictionary<string, object?> _cache = new();
 
-    public override async ValueTask<T> GetOrCreateAsync<TState, T>(string key, TState state, Func<TState, CancellationToken, ValueTask<T>> factory, HybridCacheEntryOptions? options = null,
+    public override async ValueTask<T> GetOrCreateAsync<TState, T>(string key, TState state, Func<TState, CancellationToken, ValueTask<T>> factory,
+        HybridCacheEntryOptions? options = null,
         IEnumerable<string>? tags = null, CancellationToken cancellationToken = default) {
         var cached = _cache.TryGetValue(key, out var value);
         if (cached) return (T?)value!;

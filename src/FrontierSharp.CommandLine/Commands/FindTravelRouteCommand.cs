@@ -1,6 +1,6 @@
 using System.ComponentModel;
-using FluentResults;
 using FrontierSharp.CommandLine.Utils;
+using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
 using FrontierSharp.FrontierDevTools.Api.ResponseModels;
 using Microsoft.Extensions.Logging;
@@ -20,7 +20,7 @@ public class FindTravelRouteCommand(
             settings.MaxDistance, CancellationToken.None);
 
         if (result.IsFailed) {
-            foreach (var err in result.Errors.OfType<IError>()) logger.LogError(err.Message);
+            logger.LogError("Failed to find travel route:\n{Error}", result.ToErrorString());
 
             return 1;
         }

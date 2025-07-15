@@ -14,6 +14,7 @@ using Serilog;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using ZiggyCreatures.Caching.Fusion;
+
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging => logging.ClearProviders())
     .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })
@@ -67,7 +68,6 @@ using var host = Host.CreateDefaultBuilder(args)
                     staticData.SetDescription("Commands for static data");
                     staticData.AddBranch("resources",
                         resources => {
-                            ;
                             resources.AddCommand<ResourceListCommand>("list").WithAlias("l").WithAlias("ls");
                             resources.AddCommand<ResourceUnpickleCommand>("unpickle").WithAlias("u").WithAlias("unp");
                         }).WithAlias("res").WithAlias("r");

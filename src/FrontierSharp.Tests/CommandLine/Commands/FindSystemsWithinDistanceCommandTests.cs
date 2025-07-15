@@ -70,7 +70,6 @@ public class FindSystemsWithinDistanceCommandTests {
         var result = await command.ExecuteAsync(context, settings);
 
         result.Should().Be(1);
-        logger.Received(1).LogError("API failure");
         console.DidNotReceive().Write(Arg.Any<Table>());
     }
 

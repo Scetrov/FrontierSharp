@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <Title>FrontierSharp WorldApiClient</Title>
+        <Authors>Scetrov</Authors>
+        <Description>Common Library for Frontier Sharp</Description>
+        <Copyright>© 2025, Scetrov</Copyright>
+        <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>eve,frontier,games</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentResults" Version="4.0.0"/>
+    </ItemGroup>
+
+</Project>

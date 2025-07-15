@@ -11,7 +11,8 @@ public class SubstitutableHttpClientFactory(Func<HttpRequestMessage, Cancellatio
         };
     }
 
-    public static IHttpClientFactory CreateWithPayload(string responseBody, HttpStatusCode statusCode = HttpStatusCode.OK, Encoding? encoding = null, string mediaType = "application/json") {
+    public static IHttpClientFactory CreateWithPayload(string responseBody, HttpStatusCode statusCode = HttpStatusCode.OK, Encoding? encoding = null,
+        string mediaType = "application/json") {
         var factory = new SubstitutableHttpClientFactory((_, _) =>
             Task.FromResult(new HttpResponseMessage {
                 Content = new StringContent(responseBody, encoding ?? Encoding.UTF8, mediaType),
@@ -32,7 +33,6 @@ public class SubstitutableHttpClientFactory(Func<HttpRequestMessage, Cancellatio
     }
 
     private class DelegatingHandlerStub(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> handlerFunc) : HttpMessageHandler {
-
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
             return handlerFunc(request, cancellationToken);
         }

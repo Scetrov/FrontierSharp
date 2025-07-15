@@ -7,8 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FrontierSharp.FrontierDevTools.Api;
 
 public class FrontierDevToolsClient(
-    [FromKeyedServices(nameof(FrontierDevToolsClient))]
-    IFrontierSharpHttpClient httpClient) : IFrontierDevToolsClient {
+    [FromKeyedServices(nameof(FrontierDevToolsClient))] IFrontierSharpHttpClient httpClient) : IFrontierDevToolsClient {
     public async Task<IResult<OptimalStargateNetworkAndDeploymentResponse>> OptimalStargateNetworkAndDeployment(
         string start, string end, decimal maxDistance = 499m, NpcAvoidanceLevel avoidanceLevel = NpcAvoidanceLevel.High,
         bool avoidGates = false, string includeShips = "Flegel", CancellationToken ct = default) {

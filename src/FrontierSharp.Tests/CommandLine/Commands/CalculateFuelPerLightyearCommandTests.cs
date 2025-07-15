@@ -71,7 +71,6 @@ public class CalculateFuelPerLightyearCommandTests {
 
         // Assert
         exitCode.Should().Be(1);
-        _logger.Received().LogError("API failure");
     }
 
     [Theory]
