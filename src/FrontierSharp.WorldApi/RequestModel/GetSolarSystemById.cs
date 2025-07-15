@@ -15,6 +15,6 @@ public class GetSolarSystemById : GetRequestModel<GetSolarSystemById>, IGetReque
     }
 
     public override string GetEndpoint() {
-        return $"/v2/types/{SolarSystemId}";
+        return $"/v2/solarsystems/{SolarSystemId}";
     }
 }
