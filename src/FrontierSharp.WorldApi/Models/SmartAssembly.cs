@@ -9,8 +9,8 @@ public class SmartAssembly {
     public string Id { get; set; } = string.Empty;
 
     [JsonPropertyName("type")]
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public SmartAssemblyType Type { get; set; } = SmartAssemblyType.NetworkNode;
+    [JsonConverter(typeof(SmartAssemblyTypeConverter))]
+    public SmartAssemblyType Type { get; set; } = SmartAssemblyType.Unknown;
 
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;

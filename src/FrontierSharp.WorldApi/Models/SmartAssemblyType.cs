@@ -6,5 +6,6 @@ public enum SmartAssemblyType {
     SmartStorageUnit,
     SmartGate,
     SmartTurret,
-    SmartHangar
+    SmartHangar,
+    Unknown
 }
