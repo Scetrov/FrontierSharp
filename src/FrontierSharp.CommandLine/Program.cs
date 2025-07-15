@@ -14,6 +14,7 @@ using Serilog;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using ZiggyCreatures.Caching.Fusion;
+
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging => logging.ClearProviders())
     .ConfigureAppConfiguration((_, config) => { config.AddJsonFile("config.json", true); })

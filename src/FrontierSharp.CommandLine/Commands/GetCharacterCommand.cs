@@ -48,7 +48,8 @@ public class GetCharacterCommand(
 
             foreach (var character in characters.Characters)
                 table.AddRow(character.Name, character.Address, character.CorpId.ToString());
-        } else {
+        }
+        else {
             var character = characters.Characters.Single();
             table = SpectreUtils.CreateAnsiListing("Character", new Dictionary<string, string> {
                 {

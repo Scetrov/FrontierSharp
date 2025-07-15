@@ -4,7 +4,6 @@ using FrontierSharp.HttpClient.Models;
 namespace FrontierSharp.WorldApi.RequestModel;
 
 public class GetListOfSolarSystems : GetRequestModel<GetListOfSolarSystems>, IGetRequestModel, IWorldApiEnumerableEndpoint {
-
     public override string GetCacheKey() {
         return this.GenerateCacheKey();
     }

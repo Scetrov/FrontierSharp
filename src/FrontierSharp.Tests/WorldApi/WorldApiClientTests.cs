@@ -329,7 +329,8 @@ public class WorldApiClientTests {
     [Fact]
     public async Task GetSmartAssemblyById_ShouldReturn_WithRealData() {
         // Arrange
-        var payload = GetResourceString("FrontierSharp.Tests.WorldApi.payloads.v2.smartassemblies.75343970651982257052710820829442849942642924970878978184835257992027850797979.json");
+        var payload = GetResourceString(
+            "FrontierSharp.Tests.WorldApi.payloads.v2.smartassemblies.75343970651982257052710820829442849942642924970878978184835257992027850797979.json");
         var factory = SubstitutableHttpClientFactory.CreateWithPayload(payload);
         var client = CreateWorldApiClient(factory);
 

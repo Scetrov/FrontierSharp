@@ -7,8 +7,11 @@ public static class Helpers {
 
     public static Dictionary<string, string> GenerateParams(this IWorldApiEnumerableEndpoint endpoint) {
         return new Dictionary<string, string> {
-            { "limit", endpoint.Limit.ToString() },
-            { "offset", endpoint.Offset.ToString() }
+            {
+                "limit", endpoint.Limit.ToString()
+            }, {
+                "offset", endpoint.Offset.ToString()
+            }
         };
     }
 }

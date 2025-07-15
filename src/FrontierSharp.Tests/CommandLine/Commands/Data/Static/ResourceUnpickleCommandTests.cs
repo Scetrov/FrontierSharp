@@ -83,18 +83,24 @@ public class ResourceUnpickleCommandTests {
         };
 
         var file = new ResFile("valid.file", "relative/path", "hash");
-        _hiveMock.GetIndex().Returns(new ResIndexMock(new List<ResFile> { file }));
+        _hiveMock.GetIndex().Returns(new ResIndexMock(new List<ResFile> {
+            file
+        }));
         _hiveMock.GetResIndex().Returns(new ResIndexMock(new List<ResFile>()));
         _hiveMock.ResolvePath("relative/path").Returns("absolute/path");
 
-        var unpickledContent = new { key = "value" };
+        var unpickledContent = new {
+            key = "value"
+        };
 
         // Act
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
 
         // Assert
         Assert.Equal(0, result);
-        var expectedJson = JsonSerializer.Serialize(unpickledContent, new JsonSerializerOptions { WriteIndented = true });
+        var expectedJson = JsonSerializer.Serialize(unpickledContent, new JsonSerializerOptions {
+            WriteIndented = true
+        });
         Assert.Equal(expectedJson, fileSystem.File.ReadAllText("output.json"));
     }
 

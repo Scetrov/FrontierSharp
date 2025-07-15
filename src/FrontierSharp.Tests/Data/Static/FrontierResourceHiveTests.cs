@@ -146,7 +146,8 @@ public class FrontierResourceHiveTests {
         // Arrange
         var mockFileSystem = new MockFileSystem();
         mockFileSystem.AddFile("/root/index_stillness.txt", new MockFileData("/resfileindex.txt,resfileindex.txt,someHash"));
-        mockFileSystem.AddFile("/root/ResFiles/resfileindex.txt", new MockFileData("/localizationfsd/localization_fsd_main.pickle,/localizationfsd/localization_fsd_main.pickle,someOtherHash"));
+        mockFileSystem.AddFile("/root/ResFiles/resfileindex.txt",
+            new MockFileData("/localizationfsd/localization_fsd_main.pickle,/localizationfsd/localization_fsd_main.pickle,someOtherHash"));
         mockFileSystem.AddFile("/root/ResFiles/localizationfsd/localization_fsd_main.pickle", new MockFileData("content"));
         mockFileSystem.AddFile("/localizationfsd/localization_fsd_main.pickle", new MockFileData("content"));
 

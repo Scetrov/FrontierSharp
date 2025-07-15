@@ -16,7 +16,10 @@ public interface IWorldApiClient {
     Task<Result<SolarSystemDetail>> GetSolarSystemById(long id, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<Fuel>>> GetFuelsPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<GameType>>> GetTypesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
-    Task<Result<WorldApiPayload<SmartAssemblyWithSolarSystem>>> GetSmartAssemblyPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
+
+    Task<Result<WorldApiPayload<SmartAssemblyWithSolarSystem>>> GetSmartAssemblyPage(long limit = 100, long offset = 0,
+        CancellationToken cancellationToken = default);
+
     Task<Result<WorldApiPayload<SmartCharacter>>> GetSmartCharacterPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<SolarSystem>>> GetSolarSystemPage(long limit = 1000, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);

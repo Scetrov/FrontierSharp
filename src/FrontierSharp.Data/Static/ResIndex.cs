@@ -20,9 +20,7 @@ public class ResIndex {
 
     public virtual ResFile FindByFilename(string filename) {
         Func<ResFile, bool> predicate = x => x.Filename == filename;
-        if (Files.Any(predicate)) {
-            return Files.Single(predicate);
-        }
+        if (Files.Any(predicate)) return Files.Single(predicate);
 
         throw new FileNotFoundException($"File not found: {filename}\n" +
                                         $"Available files: {string.Join(", ", Files.Select(x => x.Filename))}");
