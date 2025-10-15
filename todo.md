@@ -21,6 +21,4 @@ A concise list of high-level tasks and the World API endpoints they relate to.
 - Tests, fixtures & infra
   - Add unit tests and embedded payloads for each new endpoint/format variant
   - Add request models and update `IWorldApiClient` + `WorldApiClient` implementations
-
-
-
+  - remove any extra `filepath:` comments in files

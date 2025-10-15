@@ -30,7 +30,7 @@ Keep this concise and specific to patterns discoverable in the codebase.
     - dotnet restore (run in `./src`), dotnet build --configuration Release, dotnet test --configuration Release
     - Publishing: `dotnet publish -c Release -r <rid> --self-contained` for `FrontierSharp.CommandLine`.
   - Developer shortest path to iterate locally:
-    - From repo root: `cd src` then `dotnet restore` then `dotnet build` then `dotnet test`.
+    - From repo root: `cd [full path to ./src]` then `dotnet restore` then `dotnet build` then `dotnet test`.
 
 - Integration points & external dependencies
 

@@ -99,5 +99,36 @@ public class WorldApiClientSingleEntityTests {
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle();
     }
-}
 
+    [Fact]
+    public async Task VerifyPod_ShouldReturnSuccess_WhenResponseIsValid() {
+        // Arrange
+        var payload = GetResourceString("FrontierSharp.Tests.WorldApi.payloads.v2.podverify_response.json");
+        var factory = SubstitutableHttpClientFactory.CreateWithPayload(payload);
+        var client = CreateWorldApiClient(factory);
+        var podData = new { test = "data" };
+
+        // Act
+        var result = await client.VerifyPod(podData);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Result.Should().BeTrue();
+        result.Value.Error.Should().Be("none");
+    }
+
+    [Fact]
+    public async Task VerifyPod_ShouldReturnFailure_WhenInnerCallFails() {
+        // Arrange
+        var factory = SubstitutableHttpClientFactory.CreateInternalServerError();
+        var client = CreateWorldApiClient(factory);
+        var podData = new { test = "data" };
+
+        // Act
+        var result = await client.VerifyPod(podData);
+
+        // Assert
+        result.IsFailed.Should().BeTrue();
+        result.Errors.Should().ContainSingle();
+    }
+}

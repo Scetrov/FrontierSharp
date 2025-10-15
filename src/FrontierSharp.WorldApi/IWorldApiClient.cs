@@ -5,19 +5,19 @@ using FrontierSharp.WorldApi.Models;
 namespace FrontierSharp.WorldApi;
 
 public interface IWorldApiClient {
-    Task<Result<GameType>> GetTypeById(long id, CancellationToken cancellationToken = default);
+    Task<Result<GameType>> GetTypeById(long id, string? format = null, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<Fuel>>> GetAllFuels(long limit = 100, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<GameType>>> GetAllTypes(long limit = 100, CancellationToken cancellationToken = default);
-    Task<Result<IEnumerable<SmartAssemblyWithSolarSystem>>> GetAllSmartAssemblies(long limit = 100, CancellationToken cancellationToken = default);
+    Task<Result<IEnumerable<SmartAssemblyWithSolarSystem>>> GetAllSmartAssemblies(long limit = 100, long? type = null, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<SmartCharacter>>> GetAllSmartCharacters(long limit = 100, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<SolarSystem>>> GetAllSolarSystems(long limit = 1000, CancellationToken cancellationToken = default);
-    Task<Result<SmartAssemblyDetail>> GetSmartAssemblyById(BigInteger id, CancellationToken cancellationToken = default);
-    Task<Result<SmartCharacterDetail>> GetSmartCharacterById(string address, CancellationToken cancellationToken = default);
-    Task<Result<SolarSystemDetail>> GetSolarSystemById(long id, CancellationToken cancellationToken = default);
+    Task<Result<SmartAssemblyDetail>> GetSmartAssemblyById(BigInteger id, string? format = null, CancellationToken cancellationToken = default);
+    Task<Result<SmartCharacterDetail>> GetSmartCharacterById(string address, string? format = null, CancellationToken cancellationToken = default);
+    Task<Result<SolarSystemDetail>> GetSolarSystemById(long id, string? format = null, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<Fuel>>> GetFuelsPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<GameType>>> GetTypesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
 
-    Task<Result<WorldApiPayload<SmartAssemblyWithSolarSystem>>> GetSmartAssemblyPage(long limit = 100, long offset = 0,
+    Task<Result<WorldApiPayload<SmartAssemblyWithSolarSystem>>> GetSmartAssemblyPage(long limit = 100, long offset = 0, long? type = null,
         CancellationToken cancellationToken = default);
 
     Task<Result<WorldApiPayload<SmartCharacter>>> GetSmartCharacterPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
@@ -29,6 +29,12 @@ public interface IWorldApiClient {
     Task<Result<IEnumerable<FrontierSharp.WorldApi.Models.Tribe>>> GetAllTribes(long limit = 100, CancellationToken cancellationToken = default);
 
     // Single-entity endpoints (P0)
-    Task<Result<Killmail>> GetKillmailById(string id, CancellationToken cancellationToken = default);
-    Task<Result<Tribe>> GetTribeById(long id, CancellationToken cancellationToken = default);
+    Task<Result<Killmail>> GetKillmailById(string id, string? format = null, CancellationToken cancellationToken = default);
+    Task<Result<Tribe>> GetTribeById(long id, string? format = null, CancellationToken cancellationToken = default);
+
+    // POD verification (P1)
+    Task<Result<VerifyPodResponse>> VerifyPod(object podData, CancellationToken cancellationToken = default);
+
+    // Meta
+    Task<Result<string>> GetHealth(CancellationToken cancellationToken = default);
 }

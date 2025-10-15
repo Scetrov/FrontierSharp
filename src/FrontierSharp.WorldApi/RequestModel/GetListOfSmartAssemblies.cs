@@ -5,11 +5,14 @@ namespace FrontierSharp.WorldApi.RequestModel;
 
 public class GetListOfSmartAssemblies : GetRequestModel<GetListOfSmartAssemblies>, IGetRequestModel, IWorldApiEnumerableEndpoint {
     public override string GetCacheKey() {
-        return this.GenerateCacheKey();
+        var baseKey = this.GenerateCacheKey();
+        return string.IsNullOrEmpty(Type?.ToString()) ? baseKey : baseKey + $"_type={Type}";
     }
 
     public override Dictionary<string, string> GetQueryParams() {
-        return this.GenerateParams();
+        var d = this.GenerateParams();
+        if (Type.HasValue) d["type"] = Type.Value.ToString();
+        return d;
     }
 
     public override string GetEndpoint() {
@@ -18,4 +21,7 @@ public class GetListOfSmartAssemblies : GetRequestModel<GetListOfSmartAssemblies
 
     public long Limit { get; set; }
     public long Offset { get; set; }
+
+    // optional filter: type
+    public long? Type { get; set; }
 }

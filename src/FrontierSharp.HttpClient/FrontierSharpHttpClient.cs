@@ -53,8 +53,60 @@ public class FrontierSharpHttpClient(
         }, cancellationToken: cancellationToken);
     }
 
+    public async Task<IResult<TResponseModel>> Post<TRequestModel, TResponseModel>(TRequestModel requestModel,
+        CancellationToken cancellationToken = default) where TRequestModel : PostRequestModel<TRequestModel>, new()
+        where TResponseModel : class {
+        var client = httpClientFactory.CreateClient(options.Value.HttpClientName);
+        var url = FormatUrlForPost(requestModel);
+        logger.LogInformation("HTTP POST {url}", url);
+        using var request = new HttpRequestMessage(HttpMethod.Post, url) {
+            Content = requestModel.GetHttpContent()
+        };
+
+        var response = await client.SendAsync(request, cancellationToken);
+
+        if (!response.IsSuccessStatusCode) {
+            logger.LogError("Request failed with status code {code} ({reason}).", response.StatusCode,
+                response.ReasonPhrase);
+            return Result.Fail<TResponseModel>(
+                $"Request failed with status code {(int)response.StatusCode} ({response.ReasonPhrase}).");
+        }
+
+        var content = await response.Content.ReadAsStreamAsync(cancellationToken);
+
+        TResponseModel? result = null;
+        Exception? exception = null;
+
+        try {
+            result = JsonSerializer.Deserialize<TResponseModel>(content);
+        }
+        catch (Exception ex) {
+            exception = ex;
+        }
+
+        if (result != null) return Result.Ok(result);
+
+        content.Seek(0, SeekOrigin.Begin);
+        var errorContent = await new StreamReader(content).ReadToEndAsync(cancellationToken);
+        logger.LogError("Unable to deserialize the response into a JSON object with '{exception}': {errorContent}",
+            exception?.Message ?? "No Exception", errorContent);
+
+        return Result.Fail<TResponseModel>(
+            $"Unable to deserialize the response into a JSON object, resulted in a null object: {exception?.Message}");
+    }
+
     private string FormatUrl<TRequestModel>(TRequestModel requestModel)
         where TRequestModel : GetRequestModel<TRequestModel>, new() {
+        var builder = new UriBuilder(options.Value.BaseUri) {
+            Path = requestModel.GetEndpoint(),
+            Query = FormatQueryString(requestModel.GetQueryParams())
+        };
+
+        return builder.ToString();
+    }
+
+    private string FormatUrlForPost<TRequestModel>(TRequestModel requestModel)
+        where TRequestModel : PostRequestModel<TRequestModel>, new() {
         var builder = new UriBuilder(options.Value.BaseUri) {
             Path = requestModel.GetEndpoint(),
             Query = FormatQueryString(requestModel.GetQueryParams())

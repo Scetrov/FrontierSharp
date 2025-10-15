@@ -7,4 +7,8 @@ public interface IFrontierSharpHttpClient {
     Task<IResult<TResponseModel>> Get<TRequestModel, TResponseModel>(TRequestModel requestModel,
         CancellationToken cancellationToken = default) where TRequestModel : GetRequestModel<TRequestModel>, new()
         where TResponseModel : class;
+
+    Task<IResult<TResponseModel>> Post<TRequestModel, TResponseModel>(TRequestModel requestModel,
+        CancellationToken cancellationToken = default) where TRequestModel : PostRequestModel<TRequestModel>, new()
+        where TResponseModel : class;
 }
