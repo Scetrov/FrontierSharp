@@ -1,0 +1,389 @@
+{
+  "data": [
+    {
+      "id": 98000053,
+      "name": "C C P",
+      "nameShort": "GAMES",
+      "description": "",
+      "memberCount": 4,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-20T16:19:26Z"
+    },
+    {
+      "id": 98000054,
+      "name": "ExoTech Industrial",
+      "nameShort": "EXTI",
+      "description": "",
+      "memberCount": 88,
+      "taxRate": 0,
+      "tribeUrl": "https://discord.gg/hYDJjqxapd",
+      "foundedAt": "2025-08-21T22:34:38Z"
+    },
+    {
+      "id": 98000055,
+      "name": "Reapers",
+      "nameShort": "REAP",
+      "description": "",
+      "memberCount": 68,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-21T23:03:43Z"
+    },
+    {
+      "id": 98000056,
+      "name": "Silver",
+      "nameShort": "SLV",
+      "description": "",
+      "memberCount": 111,
+      "taxRate": 0,
+      "tribeUrl": "http://efsilver.org",
+      "foundedAt": "2025-08-22T14:11:19Z"
+    },
+    {
+      "id": 98000057,
+      "name": "Conflict Curators",
+      "nameShort": "PLZ",
+      "description": "",
+      "memberCount": 31,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-23T20:26:06Z"
+    },
+    {
+      "id": 98000058,
+      "name": "Onyx Industries",
+      "nameShort": "ONYX",
+      "description": "",
+      "memberCount": 5,
+      "taxRate": 0,
+      "tribeUrl": "http://onyxindustries.org",
+      "foundedAt": "2025-08-25T18:12:26Z"
+    },
+    {
+      "id": 98000059,
+      "name": "Wandering Order of the Last Frontier",
+      "nameShort": "WOLF",
+      "description": "",
+      "memberCount": 36,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-26T01:22:14Z"
+    },
+    {
+      "id": 98000060,
+      "name": "Rift Raiders",
+      "nameShort": "RR",
+      "description": "\"ad astra per aspera\"",
+      "memberCount": 20,
+      "taxRate": 0.01,
+      "tribeUrl": "https://discord.gg/8udDJxTDjJ",
+      "foundedAt": "2025-08-26T19:32:34Z"
+    },
+    {
+      "id": 98000061,
+      "name": "Cosmic Brain Maggots",
+      "nameShort": "WORMS",
+      "description": "Let the worms feed",
+      "memberCount": 10,
+      "taxRate": 0.069,
+      "tribeUrl": "https://www.ord-x.com/item/Bitcoin-Cyborgs-10K",
+      "foundedAt": "2025-08-26T21:26:53Z"
+    },
+    {
+      "id": 98000062,
+      "name": "Game Masters",
+      "nameShort": "GMS",
+      "description": "Game Masters",
+      "memberCount": 10,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-27T15:42:06Z"
+    },
+    {
+      "id": 98000063,
+      "name": "Trimark Industries",
+      "nameShort": "TIS",
+      "description": "Trimark Industries is a forward-driven industrial corporation built on three pillars: Resource Extraction, Advanced Manufacturing, and Strategic Logistics. Operating across the frontier, Trimark leverages cutting-edge technology and disciplined teamwork to turn raw resources into power, influence, a",
+      "memberCount": 51,
+      "taxRate": 0,
+      "tribeUrl": "https://discord.gg/FUByrSWa2C",
+      "foundedAt": "2025-08-28T01:51:26Z"
+    },
+    {
+      "id": 98000064,
+      "name": "Algorithmic Warfare",
+      "nameShort": "AWAR",
+      "description": "",
+      "memberCount": 31,
+      "taxRate": 0,
+      "tribeUrl": "http://awar.dev",
+      "foundedAt": "2025-08-30T14:40:58Z"
+    },
+    {
+      "id": 98000065,
+      "name": "The Saints",
+      "nameShort": "SAINT",
+      "description": "",
+      "memberCount": 13,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-30T16:07:32Z"
+    },
+    {
+      "id": 98000066,
+      "name": "Evil Tiger Clan",
+      "nameShort": "ETC",
+      "description": "",
+      "memberCount": 33,
+      "taxRate": 0.11,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-30T19:56:47Z"
+    },
+    {
+      "id": 98000067,
+      "name": "Crimson Union CN",
+      "nameShort": "CN",
+      "description": "build by NaoTouWang、amiao、linglu、TT、91d、NaiCC、CU-StarSea、ming22、 Justic、CU-StarSea、Maple、xibei 、Sanssss",
+      "memberCount": 20,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-31T12:20:07Z"
+    },
+    {
+      "id": 98000068,
+      "name": "VULTUR",
+      "nameShort": "VLTR",
+      "description": "JOIN THE FEED<br><br>BECOME DRIFTBORN<br><br>https://vultur.one",
+      "memberCount": 17,
+      "taxRate": 0,
+      "tribeUrl": "https://vultur.one",
+      "foundedAt": "2025-09-01T16:29:46Z"
+    },
+    {
+      "id": 98000069,
+      "name": "The Eldross Collective",
+      "nameShort": "EDC",
+      "description": "The Eldross Collective is a people shaped by harmony with the Regions they inhabit. Descended from the first settlers, they merged science with tradition, building living habitats, crafting organic starships, and mastering tech that bridges humanity and harmony in spacee.<br><br>Guided by Founders—e",
+      "memberCount": 3,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-02T16:11:42Z"
+    },
+    {
+      "id": 98000070,
+      "name": "Deterministic Systems",
+      "nameShort": "DPS",
+      "description": "Spontaneous order.",
+      "memberCount": 1,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-02T21:22:47Z"
+    },
+    {
+      "id": 98000071,
+      "name": "OMG",
+      "nameShort": "OMG",
+      "description": "",
+      "memberCount": 3,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-04T13:31:19Z"
+    },
+    {
+      "id": 98000072,
+      "name": "Keepers of the Secret",
+      "nameShort": "KOTS",
+      "description": "",
+      "memberCount": 3,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-05T19:26:57Z"
+    },
+    {
+      "id": 98000073,
+      "name": "Chosen",
+      "nameShort": "ONE",
+      "description": "",
+      "memberCount": 1,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-05T23:03:20Z"
+    },
+    {
+      "id": 98000074,
+      "name": "XingChen",
+      "nameShort": "XING",
+      "description": "欢迎国人及华人玩家加入！",
+      "memberCount": 5,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-07T07:35:35Z"
+    },
+    {
+      "id": 98000075,
+      "name": "Eidolon Protocol",
+      "nameShort": "EP",
+      "description": "",
+      "memberCount": 3,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-07T17:00:44Z"
+    },
+    {
+      "id": 98000076,
+      "name": "Blue Scorpion",
+      "nameShort": "BLUE",
+      "description": "",
+      "memberCount": 2,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-16T00:26:48Z"
+    },
+    {
+      "id": 98000077,
+      "name": "Forge and Frontier Guild",
+      "nameShort": "FFG",
+      "description": "",
+      "memberCount": 1,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-21T13:22:43Z"
+    },
+    {
+      "id": 98000078,
+      "name": "Hypernova Corporation",
+      "nameShort": "HYPE",
+      "description": "",
+      "memberCount": 6,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-22T10:17:24Z"
+    },
+    {
+      "id": 98000079,
+      "name": "Japan Gaming Guild",
+      "nameShort": "JGG",
+      "description": "Japan Gmaing Guildでは主に日本語でコミュニケーションが取れるメンバーを募集しております。",
+      "memberCount": 2,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-24T05:39:40Z"
+    },
+    {
+      "id": 98000080,
+      "name": "SpaceCats",
+      "nameShort": "SC",
+      "description": "",
+      "memberCount": 7,
+      "taxRate": 0.1,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-24T12:44:56Z"
+    },
+    {
+      "id": 98000081,
+      "name": "Bobiverse",
+      "nameShort": "BOBI",
+      "description": "",
+      "memberCount": 2,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-26T19:50:14Z"
+    },
+    {
+      "id": 98000082,
+      "name": "ValeeraNova Corporation",
+      "nameShort": "BBQ69",
+      "description": "",
+      "memberCount": 1,
+      "taxRate": 0.01,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-28T08:27:04Z"
+    },
+    {
+      "id": 98000083,
+      "name": "Azure Crusader Corps",
+      "nameShort": "AZURE",
+      "description": "",
+      "memberCount": 1,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-09-29T22:15:22Z"
+    },
+    {
+      "id": 98000084,
+      "name": "Ravagers",
+      "nameShort": "RVG",
+      "description": "",
+      "memberCount": 2,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-10-03T13:28:26Z"
+    },
+    {
+      "id": 98000085,
+      "name": "Poor Old Ornery Noobs",
+      "nameShort": "p00n",
+      "description": "",
+      "memberCount": 2,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-10-06T16:30:33Z"
+    },
+    {
+      "id": 98000086,
+      "name": "Interstellar Contract Agency",
+      "nameShort": "ICA",
+      "description": "Join a neutral interstellar agency specializing in assassination and mercenary services. We are on the hunt for elite operatives to execute covert operations and precision strikes.<br><br>What We Offer:<br><br>    Merit-Based Advancement: Your performance determines your rank—excel and rise swiftly!",
+      "memberCount": 5,
+      "taxRate": 0,
+      "tribeUrl": "https://discord.com/invite/NDTkzw678E",
+      "foundedAt": "2025-10-08T01:05:08Z"
+    },
+    {
+      "id": 98000087,
+      "name": "Carry On Regardless",
+      "nameShort": "COR",
+      "description": "",
+      "memberCount": 1,
+      "taxRate": 0,
+      "tribeUrl": "http://phelony.net",
+      "foundedAt": "2025-10-13T10:00:46Z"
+    },
+    {
+      "id": 98000088,
+      "name": "710 Corporation",
+      "nameShort": "KRMPD",
+      "description": "",
+      "memberCount": 1,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-10-13T17:53:34Z"
+    },
+    {
+      "id": 98000089,
+      "name": "Heng Corporation",
+      "nameShort": "HENG",
+      "description": "",
+      "memberCount": 2,
+      "taxRate": 0,
+      "tribeUrl": "",
+      "foundedAt": "2025-10-15T06:13:09Z"
+    },
+    {
+      "id": 1000167,
+      "name": "Clonebank 86",
+      "nameShort": "CO86",
+      "description": "",
+      "memberCount": 0,
+      "taxRate": 0.11,
+      "tribeUrl": "",
+      "foundedAt": "2025-08-20T14:00:00Z"
+    }
+  ],
+  "metadata": {
+    "total": 38,
+    "limit": 100,
+    "offset": 0
+  }
+}

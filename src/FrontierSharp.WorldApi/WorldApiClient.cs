@@ -123,9 +123,23 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
     }
 
     public async Task<Result<IEnumerable<WorldApiConfig>>> GetConfig(CancellationToken cancellationToken = default) {
-        var requestModel = new RequestModel.GetConfig();
-        var result = await httpClient.Get<RequestModel.GetConfig, IEnumerable<WorldApiConfig>>(requestModel, cancellationToken);
+        var requestModel = new GetConfig();
+        var result = await httpClient.Get<GetConfig, IEnumerable<WorldApiConfig>>(requestModel, cancellationToken);
         return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
+    }
+
+    // Tribes
+    public async Task<Result<WorldApiPayload<Tribe>>> GetTribesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+        var requestModel = new GetListOfTribes {
+            Limit = limit,
+            Offset = offset
+        };
+        var result = await httpClient.Get<GetListOfTribes, WorldApiPayload<Tribe>>(requestModel, cancellationToken);
+        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
+    }
+
+    public async Task<Result<IEnumerable<Tribe>>> GetAllTribes(long limit = 100, CancellationToken cancellationToken = default) {
+        return await GetAll(GetTribesPage, limit, cancellationToken);
     }
 
     private async static Task<Result<IEnumerable<T>>> GetAll<T>(Func<long, long, CancellationToken, Task<Result<WorldApiPayload<T>>>> pageFunction,

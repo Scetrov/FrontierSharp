@@ -1,0 +1,2054 @@
+{
+  "schemes": [],
+  "swagger": "2.0",
+  "info": {
+    "description": "EVE Frontier World API",
+    "title": "World API",
+    "termsOfService": "https://evefrontier.com/en",
+    "contact": {},
+    "version": "v0.1.38"
+  },
+  "host": "",
+  "basePath": "/",
+  "paths": {
+    "/abis/config": {
+      "get": {
+        "description": "retrieve the world contracts ABIs with some config",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "meta"
+        ],
+        "summary": "get ABI with some config",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/routes.ABIConfig"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/config": {
+      "get": {
+        "description": "retrieve all the config needed to connect to our services",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "meta"
+        ],
+        "summary": "get config",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.ChainConfig"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Tells you if the World API is ok",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "meta"
+        ],
+        "summary": "health endpoint",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/routes.heatlhy"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/metatransaction": {
+      "post": {
+        "description": "submit a meta transaction\nOnly bringOnline, bringOffline and setEntityMetadata are allowed",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "submit a meta transaction",
+        "parameters": [
+          {
+            "description": "ERC2771 Meta TX object",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1.ERC2771"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/fuels": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "available fuels for the smart assemblies",
+        "responses": {
+          "200": {
+            "description": "fuels with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.fuelResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/killmails": {
+      "get": {
+        "description": "Retrieve all killmails that have been saved to the chain\nEndpoint is paginated, use the `limit`/`offset` query param to paginate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "get all reported killmails",
+        "parameters": [
+          {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number",
+            "example": 10,
+            "description": "Maximum number of killmail to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "example": 0,
+            "description": "Number of killmail to skip before starting to collect the results",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "killmail response with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.killMailResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/killmails/{id}": {
+      "get": {
+        "description": "returns a single killmail by the given id",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "get a single killmail",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "1745854210705",
+            "description": "Killmail ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the detailed killmail",
+            "schema": {
+              "$ref": "#/definitions/v2.killMailResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/pod/verify": {
+      "post": {
+        "description": "verify a Provable Object Datatype object",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "meta"
+        ],
+        "summary": "verify a POD",
+        "parameters": [
+          {
+            "description": "POD to verify",
+            "name": "pod",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v2.verifyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/smartassemblies": {
+      "get": {
+        "description": "list all the smart assemblies currently in the world\nEndpoint is paginated, use the `limit`/`offset` query param to paginate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "get all the smart assemblies",
+        "parameters": [
+          {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number",
+            "example": 10,
+            "description": "Maximum number of smart assemblies to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "example": 0,
+            "description": "Number of smart assemblies to skip before starting to collect the results",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "SmartStorageUnit, SmartGate, SmartTurret",
+            "description": "Type of smart assembly to return",
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "smart assemblies with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.smartAssemblyResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/smartassemblies/{id}": {
+      "get": {
+        "description": "Retrieve one Smart Assembly with the given id\nif the assembly is a gate then the `.gate{}` will be filled\nif the assembly is a storage unit then the `.storage{}` object will be filled",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "get a single smart assembly",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "45731444223951840915743646025801713404901938965911491786681215016516925828631",
+            "description": "Smart Assembly ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response",
+            "schema": {
+              "$ref": "#/definitions/v2.detailedSmartAssemblyResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/smartcharacters": {
+      "get": {
+        "description": "list all the smart characters currently in the world\nEndpoint is paginated, use the `limit`/`offset` query param to paginate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "get all the smart characters",
+        "parameters": [
+          {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number",
+            "example": 10,
+            "description": "Maximum number of smart characters to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "example": 0,
+            "description": "Number of smart characters to skip before starting to collect the results",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "smart characters with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.smartCharacterResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/smartcharacters/me/jumps": {
+      "get": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "returns all the gate jumps that the current authenticated user made",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "list all the jumps for the current user",
+        "responses": {
+          "200": {
+            "description": "jumps with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.jumpResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/smartcharacters/me/jumps/{id}": {
+      "get": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "returns a single jump by the given id that the current authenticated user made",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get a single jump",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "1745854210705",
+            "description": "Jump ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the detailed jump",
+            "schema": {
+              "$ref": "#/definitions/v2.jumpResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/smartcharacters/{address}": {
+      "get": {
+        "description": "retrieve one smart character with the given address",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "chain"
+        ],
+        "summary": "get a single smart character",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "0x7578ca43f52db0d859b3f2081c1464080fe47c00",
+            "description": "character hex address",
+            "name": "address",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v2.detailedSmartCharacterResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/solarsystems": {
+      "get": {
+        "description": "list all the solar systems currently in the game\nEndpoint is paginated, use the `limit`/`offset` query param to paginate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get all the solar systems",
+        "parameters": [
+          {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "number",
+            "example": 10,
+            "description": "Maximum number of solar systems to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "example": 0,
+            "description": "Number of solar systems to skip before starting to collect the results",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "solar systems with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.solarSystemResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/solarsystems/{id}": {
+      "get": {
+        "description": "get details about a single solar system",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get one solar system",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "30000001",
+            "description": "Solar System ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v2.detailedSolarSystemResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/tribes": {
+      "get": {
+        "description": "list all the tribes currently in the game\nEndpoint is paginated, use the `limit`/`offset` query param to paginate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get all the tribes",
+        "parameters": [
+          {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "number",
+            "example": 10,
+            "description": "Maximum number of tribes to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "example": 0,
+            "description": "Number of tribes to skip before starting to collect the results",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "tribes with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.tribeResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/tribes/{id}": {
+      "get": {
+        "description": "get details about a single tribe",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get one tribe",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "1000167",
+            "description": "Tribe ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v2.detailedTribeResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v2/types": {
+      "get": {
+        "description": "list all the game types\nEndpoint is paginated, use the `limit`/`offset` query param to paginate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get all the game types",
+        "parameters": [
+          {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "number",
+            "example": 100,
+            "description": "Maximum number of types to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "example": 0,
+            "description": "Number of types to skip before starting to collect the results",
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "game types with some metadata",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/v2.paginatedResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/v2.typeResponse"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/types/{id}": {
+      "get": {
+        "description": "get details about a single game type",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "game"
+        ],
+        "summary": "get game type",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "73192",
+            "description": "game type ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "pod"
+            ],
+            "type": "string",
+            "description": "Format of the response (default to json)",
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/v2.typeResponse"
+            }
+          },
+          "201": {
+            "description": "when generating a POD (with ?format=pod)",
+            "schema": {
+              "$ref": "#/definitions/pod.Pod"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "big.Int": {
+      "type": "object"
+    },
+    "models.AddressConfig": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "models.ChainConfig": {
+      "type": "object",
+      "properties": {
+        "EVEToLuxExchangeRate": {
+          "type": "number"
+        },
+        "baseDappUrl": {
+          "type": "string"
+        },
+        "blockExplorerUrl": {
+          "type": "string"
+        },
+        "chainId": {
+          "type": "integer"
+        },
+        "contracts": {
+          "$ref": "#/definitions/models.Contracts"
+        },
+        "cycleStartDate": {
+          "type": "string"
+        },
+        "exchangeWalletAddress": {
+          "type": "string"
+        },
+        "indexerUrl": {
+          "type": "string"
+        },
+        "ipfsApiUrl": {
+          "type": "string"
+        },
+        "itemTypeIDs": {
+          "$ref": "#/definitions/models.ItemTypeIDs"
+        },
+        "metadataApiUrl": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nativeCurrency": {
+          "$ref": "#/definitions/models.NativeCurrency"
+        },
+        "podPublicSigningKey": {
+          "type": "string"
+        },
+        "rpcUrls": {
+          "$ref": "#/definitions/models.RPCs"
+        },
+        "systems": {
+          "$ref": "#/definitions/models.SystemIds"
+        },
+        "vaultDappUrl": {
+          "type": "string"
+        },
+        "walletApiUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "models.Contracts": {
+      "type": "object",
+      "properties": {
+        "contractsVersion": {
+          "type": "string"
+        },
+        "eveToken": {
+          "$ref": "#/definitions/models.AddressConfig"
+        },
+        "forwarder": {
+          "$ref": "#/definitions/models.AddressConfig"
+        },
+        "lensSeller": {
+          "$ref": "#/definitions/models.AddressConfig"
+        },
+        "world": {
+          "$ref": "#/definitions/models.AddressConfig"
+        }
+      }
+    },
+    "models.ItemTypeIDs": {
+      "type": "object",
+      "properties": {
+        "fuel": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.NativeCurrency": {
+      "type": "object",
+      "properties": {
+        "decimals": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        }
+      }
+    },
+    "models.RPCURls": {
+      "type": "object",
+      "properties": {
+        "http": {
+          "type": "string"
+        },
+        "webSocket": {
+          "type": "string"
+        }
+      }
+    },
+    "models.RPCs": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "$ref": "#/definitions/models.RPCURls"
+        },
+        "public": {
+          "$ref": "#/definitions/models.RPCURls"
+        }
+      }
+    },
+    "models.SystemIds": {
+      "type": "object",
+      "properties": {
+        "approveEVE": {
+          "type": "string"
+        },
+        "bringOffline": {
+          "type": "string"
+        },
+        "bringOnline": {
+          "type": "string"
+        },
+        "createAndAnchorSmartGate": {
+          "type": "string"
+        },
+        "createAndAnchorSmartStorageUnit": {
+          "type": "string"
+        },
+        "createAndAnchorSmartTurret": {
+          "type": "string"
+        },
+        "createAndDepositItemsToEphemeralInventory": {
+          "type": "string"
+        },
+        "createAndDepositItemsToInventory": {
+          "type": "string"
+        },
+        "createCharacter": {
+          "type": "string"
+        },
+        "depositFuel": {
+          "type": "string"
+        },
+        "depositToSSU": {
+          "type": "string"
+        },
+        "destroyDeployable": {
+          "type": "string"
+        },
+        "purchaseItem": {
+          "type": "string"
+        },
+        "reportKill": {
+          "type": "string"
+        },
+        "transfer": {
+          "type": "string"
+        },
+        "unanchor": {
+          "type": "string"
+        },
+        "updateFuel": {
+          "type": "string"
+        },
+        "withdrawFromEphemeralInventory": {
+          "type": "string"
+        },
+        "withdrawFromInventory": {
+          "type": "string"
+        },
+        "withdrawFuel": {
+          "type": "string"
+        }
+      }
+    },
+    "pod.Pod": {
+      "type": "object",
+      "properties": {
+        "entries": {
+          "$ref": "#/definitions/pod.PodEntries"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "signerPublicKey": {
+          "type": "string"
+        }
+      }
+    },
+    "pod.PodEntries": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/pod.PodValue"
+      }
+    },
+    "pod.PodValue": {
+      "type": "object",
+      "properties": {
+        "bigVal": {
+          "$ref": "#/definitions/big.Int"
+        },
+        "boolVal": {
+          "type": "boolean"
+        },
+        "bytesVal": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "stringVal": {
+          "type": "string"
+        },
+        "timeVal": {
+          "type": "string"
+        },
+        "valueType": {
+          "$ref": "#/definitions/pod.PodValueType"
+        }
+      }
+    },
+    "pod.PodValueType": {
+      "type": "string",
+      "enum": [
+        "null",
+        "string",
+        "bytes",
+        "cryptographic",
+        "int",
+        "boolean",
+        "eddsa_pubkey",
+        "date"
+      ],
+      "x-enum-varnames": [
+        "PodNullValue",
+        "PodStringValue",
+        "PodBytesValue",
+        "PodCryptographicValue",
+        "PodIntValue",
+        "PodBooleanValue",
+        "PodEdDSAPubkeyValue",
+        "PodDateValue"
+      ]
+    },
+    "routes.ABIConfig": {
+      "type": "object",
+      "properties": {
+        "EVE_to_LUX_exchange_rate": {
+          "type": "number"
+        },
+        "base_dapp_url": {
+          "type": "string"
+        },
+        "cfg": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/routes.AbiCfg"
+          }
+        },
+        "exchange_wallet_address": {
+          "type": "string"
+        },
+        "system_ids": {
+          "$ref": "#/definitions/models.SystemIds"
+        },
+        "systems": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "vault_dapp_url": {
+          "type": "string"
+        }
+      }
+    },
+    "routes.AbiCfg": {
+      "type": "object",
+      "properties": {
+        "abi": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "chain_id": {
+          "type": "integer"
+        },
+        "deployed_to": {
+          "type": "string"
+        },
+        "eip712": {
+          "$ref": "#/definitions/routes.EIP712"
+        },
+        "name": {
+          "type": "string"
+        },
+        "urls": {
+          "$ref": "#/definitions/routes.URLs"
+        }
+      }
+    },
+    "routes.EIP712": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "routes.URLs": {
+      "type": "object",
+      "properties": {
+        "private": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "public": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "routes.heatlhy": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1.ERC2771": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "deadline": {
+          "type": "integer"
+        },
+        "from": {
+          "type": "string"
+        },
+        "gas": {
+          "type": "integer"
+        },
+        "nonce": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.burnResponse": {
+      "type": "object",
+      "properties": {
+        "isBurning": {
+          "type": "boolean"
+        },
+        "previousCycleElapsedTimeInSec": {
+          "type": "integer"
+        },
+        "startTime": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.detailedSmartAssemblyResponse": {
+      "type": "object",
+      "properties": {
+        "dappURL": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "energyUsage": {
+          "type": "integer"
+        },
+        "gate": {
+          "$ref": "#/definitions/v2.gateResponse"
+        },
+        "id": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/v2.gameLocationResponse"
+        },
+        "manufacturing": {
+          "$ref": "#/definitions/v2.manufacturingResponse"
+        },
+        "name": {
+          "type": "string"
+        },
+        "networkNode": {
+          "$ref": "#/definitions/v2.networkNodeResponse"
+        },
+        "owner": {
+          "$ref": "#/definitions/v2.smartCharacterResponse"
+        },
+        "refinery": {
+          "$ref": "#/definitions/v2.refineryResponse"
+        },
+        "solarSystem": {
+          "$ref": "#/definitions/v2.solarSystemResponse"
+        },
+        "state": {
+          "$ref": "#/definitions/v2.smartAssemblyStateEnum"
+        },
+        "storage": {
+          "$ref": "#/definitions/v2.storageResponse"
+        },
+        "turret": {
+          "$ref": "#/definitions/v2.turretResponse"
+        },
+        "type": {
+          "$ref": "#/definitions/v2.smartAssemblyTypeEnum"
+        },
+        "typeDetails": {
+          "$ref": "#/definitions/v2.typeResponse"
+        },
+        "typeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.detailedSmartCharacterResponse": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "eveBalanceInWei": {
+          "type": "string"
+        },
+        "gasBalanceInWei": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "portraitUrl": {
+          "type": "string"
+        },
+        "smartAssemblies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.smartAssemblyResponse"
+          }
+        },
+        "tribeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.detailedSolarSystemResponse": {
+      "type": "object",
+      "properties": {
+        "constellationId": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "location": {
+          "$ref": "#/definitions/v2.gameLocationResponse"
+        },
+        "name": {
+          "type": "string"
+        },
+        "regionId": {
+          "type": "integer"
+        },
+        "smartAssemblies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.smartAssemblyResponse"
+          }
+        }
+      }
+    },
+    "v2.detailedTribeResponse": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "foundedAt": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "memberCount": {
+          "type": "integer"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.smartCharacterResponse"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "nameShort": {
+          "type": "string"
+        },
+        "taxRate": {
+          "type": "number"
+        },
+        "tribeUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.ephemeralInventoryResponse": {
+      "type": "object",
+      "properties": {
+        "capacity": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.itemResponse"
+          }
+        },
+        "owner": {
+          "$ref": "#/definitions/v2.smartCharacterResponse"
+        },
+        "usedCapacity": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.fuelResponse": {
+      "type": "object",
+      "properties": {
+        "efficiency": {
+          "type": "integer"
+        },
+        "type": {
+          "$ref": "#/definitions/v2.typeResponse"
+        }
+      }
+    },
+    "v2.gameLocationResponse": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      }
+    },
+    "v2.gateResponse": {
+      "type": "object",
+      "properties": {
+        "destinationId": {
+          "type": "string"
+        },
+        "inRange": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.smartAssemblyResponse"
+          }
+        },
+        "isParentNodeOnline": {
+          "type": "boolean"
+        },
+        "linked": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v2.inventoryResponse": {
+      "type": "object",
+      "properties": {
+        "capacity": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.itemResponse"
+          }
+        },
+        "usedCapacity": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.itemResponse": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "itemId": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "typeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.jumpResponse": {
+      "type": "object",
+      "properties": {
+        "destination": {
+          "$ref": "#/definitions/v2.solarSystemResponse"
+        },
+        "id": {
+          "description": "for now the Id is the jump Time as a UNIX ms timestamp",
+          "type": "integer"
+        },
+        "origin": {
+          "$ref": "#/definitions/v2.solarSystemResponse"
+        },
+        "ship": {
+          "$ref": "#/definitions/v2.jumpShipResponse"
+        },
+        "time": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.jumpShipResponse": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer"
+        },
+        "typeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.killMailResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "killer": {
+          "$ref": "#/definitions/v2.smartCharacterResponse"
+        },
+        "solarSystemId": {
+          "type": "integer"
+        },
+        "time": {
+          "type": "string"
+        },
+        "victim": {
+          "$ref": "#/definitions/v2.smartCharacterResponse"
+        }
+      }
+    },
+    "v2.loadedFuelResponse": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "burnRateInSec": {
+          "type": "integer"
+        },
+        "efficiency": {
+          "type": "integer"
+        },
+        "typeId": {
+          "type": "integer"
+        },
+        "unitVolume": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.manufacturingResponse": {
+      "type": "object",
+      "properties": {
+        "isParentNodeOnline": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v2.networkNodeResponse": {
+      "type": "object",
+      "properties": {
+        "burn": {
+          "$ref": "#/definitions/v2.burnResponse"
+        },
+        "energyMaxCapacity": {
+          "type": "integer"
+        },
+        "energyProduction": {
+          "type": "integer"
+        },
+        "fuel": {
+          "$ref": "#/definitions/v2.loadedFuelResponse"
+        },
+        "linkedAssemblies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.smartAssemblyResponse"
+          }
+        },
+        "totalReservedEnergy": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.paginatedResponse": {
+      "type": "object",
+      "properties": {
+        "data": {},
+        "metadata": {
+          "$ref": "#/definitions/v2.paginationMetadata"
+        }
+      }
+    },
+    "v2.paginationMetadata": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer"
+        },
+        "offset": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.refineryResponse": {
+      "type": "object",
+      "properties": {
+        "isParentNodeOnline": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v2.scanResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "location": {
+          "$ref": "#/definitions/v2.solarSystemResponse"
+        },
+        "scannedObject": {
+          "$ref": "#/definitions/v2.scannedObjectResponse"
+        },
+        "time": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.scannedObjectResponse": {
+      "type": "object",
+      "properties": {
+        "mass": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "typeID": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.smartAssemblyResponse": {
+      "type": "object",
+      "properties": {
+        "energyUsage": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/definitions/v2.smartCharacterResponse"
+        },
+        "solarSystem": {
+          "$ref": "#/definitions/v2.solarSystemResponse"
+        },
+        "state": {
+          "$ref": "#/definitions/v2.smartAssemblyStateEnum"
+        },
+        "type": {
+          "$ref": "#/definitions/v2.smartAssemblyTypeEnum"
+        },
+        "typeDetails": {
+          "$ref": "#/definitions/v2.typeResponse"
+        },
+        "typeId": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.smartAssemblyStateEnum": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "unanchored",
+        "anchored",
+        "online",
+        "offline",
+        "destroyed"
+      ],
+      "x-enum-varnames": [
+        "smartAssemblyStateUnknown",
+        "smartAssemblyStateUnanchored",
+        "smartAssemblyStateAnchored",
+        "smartAssemblyStateOnline",
+        "smartAssemblyStateOffline",
+        "smartAssemblyStateDestroyed"
+      ]
+    },
+    "v2.smartAssemblyTypeEnum": {
+      "type": "string",
+      "enum": [
+        "SmartStorageUnit",
+        "SmartTurret",
+        "SmartGate",
+        "NetworkNode",
+        "Refinery",
+        "Manufacturing",
+        "SmartHangar",
+        "Unknown"
+      ],
+      "x-enum-varnames": [
+        "smartStorageUnitTypeEnum",
+        "smartTurretTypeEnum",
+        "smartGateTypeEnum",
+        "networkNodeTypeEnum",
+        "refineryTypeEnum",
+        "manufacturingTypeEnum",
+        "smartHangarTypeEnum",
+        "unknownTypeEnum"
+      ]
+    },
+    "v2.smartCharacterResponse": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.solarSystemResponse": {
+      "type": "object",
+      "properties": {
+        "constellationId": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "location": {
+          "$ref": "#/definitions/v2.gameLocationResponse"
+        },
+        "name": {
+          "type": "string"
+        },
+        "regionId": {
+          "type": "integer"
+        }
+      }
+    },
+    "v2.storageResponse": {
+      "type": "object",
+      "properties": {
+        "ephemeralInventories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.ephemeralInventoryResponse"
+          }
+        },
+        "isParentNodeOnline": {
+          "type": "boolean"
+        },
+        "mainInventory": {
+          "$ref": "#/definitions/v2.inventoryResponse"
+        }
+      }
+    },
+    "v2.tribeResponse": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "foundedAt": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "memberCount": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nameShort": {
+          "type": "string"
+        },
+        "taxRate": {
+          "type": "number"
+        },
+        "tribeUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "v2.turretResponse": {
+      "type": "object",
+      "properties": {
+        "isParentNodeOnline": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v2.typeResponse": {
+      "type": "object",
+      "properties": {
+        "categoryId": {
+          "type": "integer"
+        },
+        "categoryName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "integer"
+        },
+        "groupName": {
+          "type": "string"
+        },
+        "iconUrl": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "mass": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "portionSize": {
+          "type": "integer"
+        },
+        "radius": {
+          "type": "number"
+        },
+        "volume": {
+          "type": "number"
+        }
+      }
+    },
+    "v2.verifyResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "isValid": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

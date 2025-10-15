@@ -25,4 +25,6 @@ public interface IWorldApiClient {
     Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<Killmail>>> GetAllKillmails(long limit = 100, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<WorldApiConfig>>> GetConfig(CancellationToken cancellationToken = default);
+    Task<Result<WorldApiPayload<Tribe>>> GetTribesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
+    Task<Result<IEnumerable<Tribe>>> GetAllTribes(long limit = 100, CancellationToken cancellationToken = default);
 }

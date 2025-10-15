@@ -56,6 +56,8 @@
         <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=100.json"/>
         <None Remove="WorldApi\payloads\v2\types_limit=100_offset=200.json"/>
         <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=200.json"/>
+        <None Remove="WorldApi\payloads\v2\tribes_limit=100_offset=0.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\tribes_limit=100_offset=0.json"/>
         <None Remove="WorldApi\payloads\v2\fuels_limit=100_offset=0.json"/>
         <EmbeddedResource Include="WorldApi\payloads\v2\fuels_limit=100_offset=0.json"/>
         <None Remove="WorldApi\payloads\v2\solarsystems_limit=1000_offset=0.json"/>

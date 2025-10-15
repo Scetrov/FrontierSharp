@@ -27,7 +27,7 @@ namespace FrontierSharp.Tests.Common
         {
             var result = Result.Fail<int>(new[] { "First", "Second" });
             var s = result.ToErrorString();
-            var lines = s.Split(new[] { System.Environment.NewLine }, System.StringSplitOptions.None);
+            var lines = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             Assert.Equal(2, lines.Length);
             Assert.Equal("- First", lines[0]);
             Assert.Equal("- Second", lines[1]);
