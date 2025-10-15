@@ -428,6 +428,8 @@
         <EmbeddedResource Include="WorldApi\payloads\v2\killmails_limit=100_offset=0.json"/>
         <None Remove="WorldApi\payloads\v2\killmails_limit=100_offset=100.json"/>
         <EmbeddedResource Include="WorldApi\payloads\v2\killmails_limit=100_offset=100.json"/>
+        <None Remove="WorldApi\payloads\v2\config.json"/>
+        <EmbeddedResource Include="WorldApi\payloads\v2\config.json"/>
     </ItemGroup>
 
 </Project>

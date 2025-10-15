@@ -1,0 +1,72 @@
+[
+  {
+    "chainId": 695569,
+    "name": "EVE pyrope Game",
+    "nativeCurrency": {
+      "decimals": 18,
+      "name": "Gas",
+      "symbol": "GAS"
+    },
+    "contracts": {
+      "contractsVersion": "",
+      "world": {
+        "address": "0x7b71fe480ac4e7e96d150a1454411c5cbfb2b1f1"
+      },
+      "eveToken": {
+        "address": "0x14822e59e6498a067B274F813f94098c23C59940"
+      },
+      "forwarder": {
+        "address": "0x96e025a74cb7cced2ab59c547d4a1df6f220926b"
+      },
+      "lensSeller": {
+        "address": "0x0"
+      }
+    },
+    "rpcUrls": {
+      "default": {
+        "http": "https://pyrope-external-sync-node-rpc.live.tech.evefrontier.com",
+        "webSocket": ""
+      },
+      "public": {
+        "http": "https://rpc.pyropechain.com",
+        "webSocket": ""
+      }
+    },
+    "blockExplorerUrl": "https://explorer.pyropechain.com",
+    "metadataApiUrl": "",
+    "ipfsApiUrl": "",
+    "indexerUrl": "https://graphql-stillness-internal.live.evefrontier.tech/v1/graphql",
+    "vaultDappUrl": "https://vault.evefrontier.com",
+    "walletApiUrl": "https://wallet-api.live.tech.evefrontier.com",
+    "baseDappUrl": "https://smart-assembly-base.stillness.evefrontier.com/",
+    "systems": {
+      "createCharacter": "0x7379657665776f726c64000000000000536d6172744368617261637465725379",
+      "createAndAnchorSmartStorageUnit": "0x7379657665776f726c64000000000000536d61727453746f72616765556e6974",
+      "destroyDeployable": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "unanchor": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "bringOnline": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "bringOffline": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "createAndDepositItemsToInventory": "0x7379657665776f726c64000000000000536d61727453746f72616765556e6974",
+      "createAndDepositItemsToEphemeralInventory": "0x7379657665776f726c64000000000000536d61727453746f72616765556e6974",
+      "withdrawFromInventory": "0x7379657665776f726c64000000000000496e76656e746f727953797374656d00",
+      "withdrawFromEphemeralInventory": "0x7379657665776f726c64000000000000457068656d6572616c496e7653797374",
+      "depositFuel": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "withdrawFuel": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "updateFuel": "0x7379657665776f726c64000000000000536d6172744465706c6f7961626c6553",
+      "depositToSSU": "0x7379676174656b656570657200000000476174656b656570657253797374656d",
+      "purchaseItem": "0x73796974656d747261646500000000004974656d547261646553797374656d00",
+      "approveEVE": "0x73796576656572633230000000000000455243323053797374656d0000000000",
+      "createAndAnchorSmartTurret": "0x7379657665776f726c64000000000000536d6172745475727265745379737465",
+      "createAndAnchorSmartGate": "0x7379657665776f726c64000000000000536d6172744761746553797374656d00",
+      "reportKill": "0x7379657665776f726c640000000000004b696c6c4d61696c53797374656d0000",
+      "transfer": "0x73796576656572633230000000000000455243323053797374656d0000000000"
+    },
+    "itemTypeIDs": {
+      "fuel": 83839
+    },
+    "exchangeWalletAddress": "0xE294Ee4F54235Fd80e6DD0779ebc0f3A4339D267",
+    "EVEToLuxExchangeRate": 10000,
+    "podPublicSigningKey": "3qZtgFE30kxJToevQi5CzKrjtvdyzRViPM+W8+DqhSM",
+    "cycleStartDate": "2025-08-20T14:00:00Z"
+  }
+]
