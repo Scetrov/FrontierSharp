@@ -122,24 +122,40 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetKillmailPage, limit, cancellationToken);
     }
 
+    public async Task<Result<Killmail>> GetKillmailById(string id, CancellationToken cancellationToken = default) {
+        var requestModel = new RequestModel.GetKillmailById {
+            KillmailId = id
+        };
+        var result = await httpClient.Get<RequestModel.GetKillmailById, Killmail>(requestModel, cancellationToken);
+        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
+    }
+
     public async Task<Result<IEnumerable<WorldApiConfig>>> GetConfig(CancellationToken cancellationToken = default) {
-        var requestModel = new GetConfig();
-        var result = await httpClient.Get<GetConfig, IEnumerable<WorldApiConfig>>(requestModel, cancellationToken);
+        var requestModel = new RequestModel.GetConfig();
+        var result = await httpClient.Get<RequestModel.GetConfig, IEnumerable<WorldApiConfig>>(requestModel, cancellationToken);
         return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
     }
 
     // Tribes
-    public async Task<Result<WorldApiPayload<Tribe>>> GetTribesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+    public async Task<Result<WorldApiPayload<FrontierSharp.WorldApi.Models.Tribe>>> GetTribesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
         var requestModel = new GetListOfTribes {
             Limit = limit,
             Offset = offset
         };
-        var result = await httpClient.Get<GetListOfTribes, WorldApiPayload<Tribe>>(requestModel, cancellationToken);
+        var result = await httpClient.Get<GetListOfTribes, WorldApiPayload<FrontierSharp.WorldApi.Models.Tribe>>(requestModel, cancellationToken);
         return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
     }
 
-    public async Task<Result<IEnumerable<Tribe>>> GetAllTribes(long limit = 100, CancellationToken cancellationToken = default) {
+    public async Task<Result<IEnumerable<FrontierSharp.WorldApi.Models.Tribe>>> GetAllTribes(long limit = 100, CancellationToken cancellationToken = default) {
         return await GetAll(GetTribesPage, limit, cancellationToken);
+    }
+
+    public async Task<Result<Tribe>> GetTribeById(long id, CancellationToken cancellationToken = default) {
+        var requestModel = new RequestModel.GetTribeById {
+            TribeId = id
+        };
+        var result = await httpClient.Get<RequestModel.GetTribeById, Tribe>(requestModel, cancellationToken);
+        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
     }
 
     private async static Task<Result<IEnumerable<T>>> GetAll<T>(Func<long, long, CancellationToken, Task<Result<WorldApiPayload<T>>>> pageFunction,

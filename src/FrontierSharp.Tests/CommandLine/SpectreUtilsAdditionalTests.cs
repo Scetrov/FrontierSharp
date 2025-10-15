@@ -13,7 +13,7 @@ namespace FrontierSharp.Tests.CommandLine
         {
             var table = SpectreUtils.CreateAnsiTable("Title", "Col1", "Col2");
             Assert.NotNull(table);
-            Assert.Equal("Title", table.Title.Text);
+            Assert.Equal("Title", table.Title?.Text);
             Assert.Equal(2, table.Columns.Count);
             // Avoid asserting header markup string content; Spectre columns use markup renderables.
         }
