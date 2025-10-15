@@ -1,4 +1,3 @@
-// ...existing code...
 using Xunit;
 using FrontierSharp.WorldApi;
 using System.Collections.Generic;
@@ -33,4 +32,3 @@ namespace FrontierSharp.Tests.WorldApi
         }
     }
 }
-// ...existing code...

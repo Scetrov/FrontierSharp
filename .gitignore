@@ -68,6 +68,7 @@ Temporary Items
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/copilotDiffState.xml
 
 # AWS User-specific
 .idea/**/aws.xml
