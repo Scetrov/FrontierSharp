@@ -122,6 +122,12 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetKillmailPage, limit, cancellationToken);
     }
 
+    public async Task<Result<IEnumerable<WorldApiConfig>>> GetConfig(CancellationToken cancellationToken = default) {
+        var requestModel = new RequestModel.GetConfig();
+        var result = await httpClient.Get<RequestModel.GetConfig, IEnumerable<WorldApiConfig>>(requestModel, cancellationToken);
+        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
+    }
+
     private async static Task<Result<IEnumerable<T>>> GetAll<T>(Func<long, long, CancellationToken, Task<Result<WorldApiPayload<T>>>> pageFunction,
         long limit = 100, CancellationToken cancellationToken = default) {
         var allItems = new List<T>();
