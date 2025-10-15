@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="FrontierDevTools\"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="AwesomeAssertions" Version="9.2.0" />
         <PackageReference Include="AwesomeAssertions.Analyzers" Version="9.0.8">
             <PrivateAssets>all</PrivateAssets>
