@@ -142,6 +142,14 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetTribesPage, limit, cancellationToken);
     }
 
+    public async Task<Result<TribeDetail>> GetTribeById(long id, CancellationToken cancellationToken = default) {
+        var requestModel = new GetTribeById {
+            TribeId = id
+        };
+        var result = await httpClient.Get<GetTribeById, TribeDetail>(requestModel, cancellationToken);
+        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
+    }
+
     private async static Task<Result<IEnumerable<T>>> GetAll<T>(Func<long, long, CancellationToken, Task<Result<WorldApiPayload<T>>>> pageFunction,
         long limit = 100, CancellationToken cancellationToken = default) {
         var allItems = new List<T>();

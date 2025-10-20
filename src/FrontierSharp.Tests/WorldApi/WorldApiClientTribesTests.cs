@@ -90,6 +90,42 @@ public class WorldApiClientTribesTests {
         result.Value.Should().HaveCount(38);
     }
 
+    [Fact]
+    public async Task GetTribeById_ShouldReturnTribeDetail_WhenResponseIsValid() {
+        // Arrange
+        var payload = GetResourceString("FrontierSharp.Tests.WorldApi.payloads.tribes.98000314.json");
+        var factory = SubstitutableHttpClientFactory.CreateWithPayload(payload);
+        var client = CreateWorldApiClient(factory);
+
+        // Act
+        var result = await client.GetTribeById(98000314);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Id.Should().Be(98000314);
+        result.Value.Name.Should().Be("REAPERS");
+        result.Value.NameShort.Should().Be("REAP");
+        result.Value.MemberCount.Should().Be(33);
+        result.Value.Members.Should().HaveCount(33);
+        var firstMember = result.Value.Members.First();
+        firstMember.Address.Should().Be("0x87e015b96fe7cce7915b1fe893e153eefe0f6eb2");
+        firstMember.Name.Should().Be("Jabolko");
+    }
+
+    [Fact]
+    public async Task GetTribeById_ShouldReturnFailure_WhenInnerCallFails() {
+        // Arrange
+        var factory = SubstitutableHttpClientFactory.CreateInternalServerError();
+        var client = CreateWorldApiClient(factory);
+
+        // Act
+        var result = await client.GetTribeById(98000314);
+
+        // Assert
+        result.IsFailed.Should().BeTrue();
+        result.Errors.Should().ContainSingle();
+    }
+
     private WorldApiClient SetupApiClientWithResponses(params string[] responses) {
         var responseQueue = new Queue<string>(responses);
         var factory = new SubstitutableHttpClientFactory((_, _) => {
