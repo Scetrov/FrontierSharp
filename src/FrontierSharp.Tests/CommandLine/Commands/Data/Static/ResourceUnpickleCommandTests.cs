@@ -1,5 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions.TestingHelpers;
 using System.Text.Json;
+using AwesomeAssertions;
 using FrontierSharp.CommandLine.Commands.Data.Static;
 using FrontierSharp.Data.Static;
 using Microsoft.Extensions.Logging;
@@ -37,7 +39,7 @@ public class ResourceUnpickleCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(1, result);
+        result.Should().Be(1);
     }
 
     [Fact]
@@ -63,14 +65,15 @@ public class ResourceUnpickleCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(1, result);
+        result.Should().Be(1);
     }
 
     [Fact]
+    [SuppressMessage("ReSharper", "MethodHasAsyncOverload")]
     public async Task ExecuteAsync_ValidFile_UnpicklesAndOutputsJson() {
         // Arrange
         var fileSystem = new MockFileSystem();
-        var base64 = "gASVEgAAAAAAAAB9lIwDa2V5lIwFdmFsdWWUcy4=";
+        const string base64 = "gASVEgAAAAAAAAB9lIwDa2V5lIwFdmFsdWWUcy4=";
         var bytes = Convert.FromBase64String(base64);
         fileSystem.AddFile("absolute/path", new MockFileData(bytes));
         var command = new ResourceUnpickleCommand(_loggerMock, _hiveFactoryMock, fileSystem, _ansiConsoleMock);
@@ -97,11 +100,11 @@ public class ResourceUnpickleCommandTests {
         var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
 
         // Assert
-        Assert.Equal(0, result);
+        result.Should().Be(0);
         var expectedJson = JsonSerializer.Serialize(unpickledContent, new JsonSerializerOptions {
             WriteIndented = true
         });
-        Assert.Equal(expectedJson, fileSystem.File.ReadAllText("output.json"));
+        fileSystem.File.ReadAllText("output.json").Should().Be(expectedJson);
     }
 
     private class ResIndexMock(IEnumerable<ResFile> files) : ResIndex(files) {

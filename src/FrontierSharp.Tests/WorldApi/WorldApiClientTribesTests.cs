@@ -1,11 +1,11 @@
 // filepath: c:\source\FrontierSharp\src\FrontierSharp.Tests\WorldApi\WorldApiClientTribesTests.cs
+
 using System.Net;
 using System.Reflection;
 using System.Text;
 using AwesomeAssertions;
 using FrontierSharp.HttpClient;
 using FrontierSharp.WorldApi;
-using FrontierSharp.WorldApi.Models;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -139,4 +139,3 @@ public class WorldApiClientTribesTests {
         return new WorldApiClient(httpClient);
     }
 }
-

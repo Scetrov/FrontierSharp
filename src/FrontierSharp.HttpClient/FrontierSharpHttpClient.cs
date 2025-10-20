@@ -36,8 +36,7 @@ public class FrontierSharpHttpClient(
 
             try {
                 result = JsonSerializer.Deserialize<TResponseModel>(content);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 exception = ex;
             }
 

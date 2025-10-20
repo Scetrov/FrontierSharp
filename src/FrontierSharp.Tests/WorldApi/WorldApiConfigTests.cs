@@ -55,4 +55,3 @@ public class WorldApiConfigTests {
         c.Systems["createCharacter"].Should().StartWith("0x");
     }
 }
-

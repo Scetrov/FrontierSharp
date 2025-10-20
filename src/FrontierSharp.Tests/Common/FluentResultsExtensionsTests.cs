@@ -1,36 +1,32 @@
-using Xunit;
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.Common.Utils;
+using Xunit;
 
-namespace FrontierSharp.Tests.Common
-{
-    public class FluentResultsExtensionsTests
-    {
-        [Fact]
-        public void ToErrorString_ReturnsEmpty_WhenSuccess()
-        {
-            var result = Result.Ok<int>(0);
-            var s = result.ToErrorString();
-            Assert.Equal(string.Empty, s);
-        }
+namespace FrontierSharp.Tests.Common;
 
-        [Fact]
-        public void ToErrorString_FormatsSingleError()
-        {
-            var result = Result.Fail<int>("Something went wrong");
-            var s = result.ToErrorString();
-            Assert.Equal("- Something went wrong", s);
-        }
+public class FluentResultsExtensionsTests {
+    [Fact]
+    public void ToErrorString_ReturnsEmpty_WhenSuccess() {
+        var result = Result.Ok(0);
+        var s = result.ToErrorString();
+        s.Should().Be(string.Empty);
+    }
 
-        [Fact]
-        public void ToErrorString_JoinsMultipleErrors_WithNewLines()
-        {
-            var result = Result.Fail<int>(new[] { "First", "Second" });
-            var s = result.ToErrorString();
-            var lines = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            Assert.Equal(2, lines.Length);
-            Assert.Equal("- First", lines[0]);
-            Assert.Equal("- Second", lines[1]);
-        }
+    [Fact]
+    public void ToErrorString_FormatsSingleError() {
+        var result = Result.Fail<int>("Something went wrong");
+        var s = result.ToErrorString();
+        s.Should().Be("- Something went wrong");
+    }
+
+    [Fact]
+    public void ToErrorString_JoinsMultipleErrors_WithNewLines() {
+        var result = Result.Fail<int>(["First", "Second"]);
+        var s = result.ToErrorString();
+        var lines = s.Split([Environment.NewLine], StringSplitOptions.None);
+        lines.Should().HaveCount(2);
+        lines[0].Should().Be("- First");
+        lines[1].Should().Be("- Second");
     }
 }

@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FrontierSharp.CommandLine.Commands.Data.Static;
 using FrontierSharp.Data.Static;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ public class ResourceListCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(1, result);
+        result.Should().Be(1);
     }
 
     [Fact]
@@ -59,7 +60,7 @@ public class ResourceListCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(0, result);
+        result.Should().Be(0);
     }
 
     [Fact]
@@ -85,7 +86,7 @@ public class ResourceListCommandTests {
         var result = await command.ExecuteAsync(null!, settings);
 
         // Assert
-        Assert.Equal(0, result);
+        result.Should().Be(0);
     }
 
     private class ResIndexMock : ResIndex {

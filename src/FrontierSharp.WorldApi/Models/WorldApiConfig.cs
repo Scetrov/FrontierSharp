@@ -19,9 +19,16 @@ public class WorldApiConfig {
     [JsonPropertyName("baseDappUrl")] public string BaseDappUrl { get; set; } = string.Empty;
     [JsonPropertyName("systems")] public Dictionary<string, string> Systems { get; set; } = new();
     [JsonPropertyName("itemTypeIDs")] public ItemTypeIds ItemTypeIDs { get; set; } = new();
-    [JsonPropertyName("exchangeWalletAddress")] public string ExchangeWalletAddress { get; set; } = string.Empty;
-    [JsonPropertyName("EVEToLuxExchangeRate")] public long EVEToLuxExchangeRate { get; set; }
-    [JsonPropertyName("podPublicSigningKey")] public string PodPublicSigningKey { get; set; } = string.Empty;
+
+    [JsonPropertyName("exchangeWalletAddress")]
+    public string ExchangeWalletAddress { get; set; } = string.Empty;
+
+    [JsonPropertyName("EVEToLuxExchangeRate")]
+    public long EVEToLuxExchangeRate { get; set; }
+
+    [JsonPropertyName("podPublicSigningKey")]
+    public string PodPublicSigningKey { get; set; } = string.Empty;
+
     [JsonPropertyName("cycleStartDate")] public DateTimeOffset CycleStartDate { get; set; }
 }
 
