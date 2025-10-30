@@ -39,7 +39,7 @@ public class CalculateDistanceCommandTests {
         var context = CommandContextHelper.Create();
 
         // Act
-        var exitCode = await command.ExecuteAsync(context, settings);
+        var exitCode = await command.ExecuteAsync(context, settings, CancellationToken.None);
 
         // Assert
         exitCode.Should().Be(0);
@@ -66,7 +66,7 @@ public class CalculateDistanceCommandTests {
         var context = CommandContextHelper.Create();
 
         // Act
-        var exitCode = await command.ExecuteAsync(context, settings);
+        var exitCode = await command.ExecuteAsync(context, settings, CancellationToken.None);
 
         // Assert
         exitCode.Should().Be(1);

@@ -16,10 +16,11 @@ public class OptimalStargateNetworkAndDeploymentCommand(
     ILogger<OptimalStargateNetworkAndDeploymentCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<OptimalStargateNetworkAndDeploymentCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.OptimalStargateNetworkAndDeployment(settings.Start, settings.End,
             settings.MaxStargateDistance, settings.NpcAvoidanceLevel, settings.AvoidGates, settings.IncludeShips,
-            CancellationToken.None);
+            cancellationToken);
 
         if (result.IsFailed) {
             logger.LogError("Failed to calculate fuel per lightyear:\n{Error}", result.ToErrorString());

@@ -13,7 +13,7 @@ public class CalculateFuelPerLightyearCommand(
     ILogger<CalculateFuelPerLightyearCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelPerLightyearCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result =
             await devToolsClient.CalculateFuelPerLightyear(settings.Mass, settings.FuelEfficiency,
                 CancellationToken.None);

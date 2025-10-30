@@ -69,7 +69,7 @@ public class FindTravelRouteCommandTests {
                 Arg.Any<CancellationToken>())
             .Returns(Result.Fail<RouteResponse>(error));
 
-        var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(1);
     }
@@ -89,7 +89,7 @@ public class FindTravelRouteCommandTests {
                 Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
-        var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(1);
         _logger.Received().LogError("No valid route found for the specified placement.");
@@ -116,7 +116,7 @@ public class FindTravelRouteCommandTests {
                 Arg.Any<CancellationToken>())
             .Returns(Result.Ok(response));
 
-        var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await _command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(0);
         _console.Received().Write(Arg.Any<Table>());

@@ -45,7 +45,7 @@ public class FindCommonSystemsWithinDistanceRequestCommandTests {
                 Arg.Any<CancellationToken>())
             .Returns(error);
 
-        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(1);
     }
@@ -64,7 +64,7 @@ public class FindCommonSystemsWithinDistanceRequestCommandTests {
                 Arg.Any<CancellationToken>())
             .Returns(success);
 
-        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(1);
     }
@@ -92,7 +92,7 @@ public class FindCommonSystemsWithinDistanceRequestCommandTests {
                 Arg.Any<CancellationToken>())
             .Returns(success);
 
-        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(0);
         _console.Received().Write(Arg.Any<IRenderable>());

@@ -16,7 +16,7 @@ public class OptimizeStargateNetworkPlacementCommand(
     ILogger<OptimizeStargateNetworkPlacementCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<OptimizeStargateNetworkPlacementCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.OptimizeStargateAndNetworkPlacement(settings.Start, settings.End,
             settings.MaxDistance, settings.NpcAvoidanceLevel, CancellationToken.None);
 

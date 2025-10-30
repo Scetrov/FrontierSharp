@@ -13,7 +13,7 @@ public class CalculateDistanceCommand(
     ILogger<CalculateDistanceCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<CalculateDistanceCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.CalculateDistance(settings.SystemA, settings.SystemB, CancellationToken.None);
 
         if (result.IsFailed) {

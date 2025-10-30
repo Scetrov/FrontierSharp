@@ -44,7 +44,7 @@ public class FindSystemsWithinDistanceCommandTests {
             MaxDistance = 50
         };
 
-        var result = await command.ExecuteAsync(context, settings);
+        var result = await command.ExecuteAsync(context, settings, CancellationToken.None);
 
         result.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
@@ -67,7 +67,7 @@ public class FindSystemsWithinDistanceCommandTests {
             MaxDistance = 50
         };
 
-        var result = await command.ExecuteAsync(context, settings);
+        var result = await command.ExecuteAsync(context, settings, CancellationToken.None);
 
         result.Should().Be(1);
         console.DidNotReceive().Write(Arg.Any<Table>());
@@ -92,7 +92,7 @@ public class FindSystemsWithinDistanceCommandTests {
             MaxDistance = 100
         };
 
-        var result = await command.ExecuteAsync(context, settings);
+        var result = await command.ExecuteAsync(context, settings, CancellationToken.None);
 
         result.Should().Be(1);
         console.DidNotReceive().Write(Arg.Any<Table>());

@@ -14,7 +14,7 @@ public class FindCommonSystemsWithinDistanceRequestCommand(
     ILogger<FindCommonSystemsWithinDistanceRequestCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<FindCommonSystemsWithinDistanceRequestCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.FindCommonSystemsWithinDistance(settings.SystemA, settings.SystemB,
             settings.MaxDistance, CancellationToken.None);
 

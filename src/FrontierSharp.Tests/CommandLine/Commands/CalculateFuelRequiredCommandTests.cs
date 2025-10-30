@@ -46,7 +46,7 @@ public class CalculateFuelRequiredCommandTests {
             .Returns(result);
 
         // Act
-        var exitCode = await _sut.ExecuteAsync(context, settings);
+        var exitCode = await _sut.ExecuteAsync(context, settings, CancellationToken.None);
 
         // Assert
         exitCode.Should().Be(0);
@@ -71,7 +71,7 @@ public class CalculateFuelRequiredCommandTests {
             .Returns(result);
 
         // Act
-        var exitCode = await _sut.ExecuteAsync(context, settings);
+        var exitCode = await _sut.ExecuteAsync(context, settings, CancellationToken.None);
 
         // Assert
         exitCode.Should().Be(1);

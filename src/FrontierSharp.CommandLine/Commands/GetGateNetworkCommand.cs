@@ -21,7 +21,7 @@ public class GetGateNetworkCommand(
         Player
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.GetGateNetwork(settings.Identifier, CancellationToken.None);
 
         if (result.IsFailed) {

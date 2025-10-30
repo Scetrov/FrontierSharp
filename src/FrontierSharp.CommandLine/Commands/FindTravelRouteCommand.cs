@@ -15,7 +15,7 @@ public class FindTravelRouteCommand(
     ILogger<FindTravelRouteCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<FindTravelRouteCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.FindTravelRoute(settings.Start, settings.End, settings.AvoidGates,
             settings.MaxDistance, CancellationToken.None);
 

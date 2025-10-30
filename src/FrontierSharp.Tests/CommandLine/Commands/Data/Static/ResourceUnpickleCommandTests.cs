@@ -36,7 +36,7 @@ public class ResourceUnpickleCommandTests {
         _hiveMock.GetResIndex().Returns(new ResIndexMock(new List<ResFile>()));
 
         // Act
-        var result = await command.ExecuteAsync(null!, settings);
+        var result = await command.ExecuteAsync(null!, settings, CancellationToken.None);
 
         // Assert
         result.Should().Be(1);
@@ -62,7 +62,7 @@ public class ResourceUnpickleCommandTests {
         _hiveMock.GetResIndex().Returns(new ResIndexMock(new List<ResFile>()));
 
         // Act
-        var result = await command.ExecuteAsync(null!, settings);
+        var result = await command.ExecuteAsync(null!, settings, CancellationToken.None);
 
         // Assert
         result.Should().Be(1);
@@ -97,7 +97,7 @@ public class ResourceUnpickleCommandTests {
         };
 
         // Act
-        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         // Assert
         result.Should().Be(0);

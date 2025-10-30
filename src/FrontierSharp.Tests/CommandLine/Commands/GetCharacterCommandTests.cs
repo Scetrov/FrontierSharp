@@ -87,7 +87,7 @@ public class GetCharacterCommandTests {
         };
 
         var command = CreateCommand(devToolsClientMock, ansiConsoleMock, loggerMock);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(0);
         await devToolsClientMock.Received().GetCharactersByAddress(settings.Address, Arg.Any<CancellationToken>());
@@ -107,7 +107,7 @@ public class GetCharacterCommandTests {
         };
 
         var command = CreateCommand(devToolsClientMock, ansiConsoleMock, loggerMock);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
     }
@@ -125,7 +125,7 @@ public class GetCharacterCommandTests {
         };
 
         var command = CreateCommand(devToolsClientMock);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
     }
@@ -155,7 +155,7 @@ public class GetCharacterCommandTests {
 
         var consoleMock = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(devToolsClientMock, consoleMock);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(0);
         consoleMock.Received().Write(Arg.Any<Table>());

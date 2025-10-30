@@ -21,7 +21,7 @@ public class GetCharacterCommand(
         Address
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = settings.SearchType switch {
             CharacterSearchType.Name => await devToolsClient.GetCharactersByName(settings.Name, CancellationToken.None),
             CharacterSearchType.Address => await devToolsClient.GetCharactersByAddress(settings.Address,

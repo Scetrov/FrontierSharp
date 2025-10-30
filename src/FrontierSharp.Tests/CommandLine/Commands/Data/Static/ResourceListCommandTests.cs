@@ -32,7 +32,7 @@ public class ResourceListCommandTests {
         _hiveMock.GetResIndex().Returns(new ResIndexMock(new List<ResFile>()));
 
         // Act
-        var result = await command.ExecuteAsync(null!, settings);
+        var result = await command.ExecuteAsync(null!, settings, CancellationToken.None);
 
         // Assert
         result.Should().Be(1);
@@ -57,7 +57,7 @@ public class ResourceListCommandTests {
         _hiveMock.GetResIndex().Returns(new ResIndexMock(new List<ResFile>()));
 
         // Act
-        var result = await command.ExecuteAsync(null!, settings);
+        var result = await command.ExecuteAsync(null!, settings, CancellationToken.None);
 
         // Assert
         result.Should().Be(0);
@@ -83,7 +83,7 @@ public class ResourceListCommandTests {
         _hiveMock.GetResIndex().Returns(new ResIndexMock(new List<ResFile>()));
 
         // Act
-        var result = await command.ExecuteAsync(null!, settings);
+        var result = await command.ExecuteAsync(null!, settings, CancellationToken.None);
 
         // Assert
         result.Should().Be(0);

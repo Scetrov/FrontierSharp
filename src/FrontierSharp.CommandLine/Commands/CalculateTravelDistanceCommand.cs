@@ -13,7 +13,7 @@ public class CalculateTravelDistanceCommand(
     ILogger<CalculateTravelDistanceCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<CalculateTravelDistanceCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.CalculateTravelDistance(settings.CurrentFuel, settings.Mass,
             settings.FuelEfficiency, CancellationToken.None);
 

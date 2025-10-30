@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using System.Text.Json;
 using Dumpify;
@@ -21,7 +22,7 @@ public class ResourceUnpickleCommand(
     IFrontierResourceHiveFactory frontierResourcesHiveFactory,
     IFileSystem fileSystem,
     IAnsiConsole ansiConsole) : AsyncCommand<ResourceUnpickleCommand.Settings> {
-    public override Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var frontierResourcesHive = frontierResourcesHiveFactory.Create(settings.Root);
         var index = frontierResourcesHive.GetIndex().Files;
         var resIndex = frontierResourcesHive.GetResIndex().Files;
@@ -85,6 +86,7 @@ public class ResourceUnpickleCommand(
         return unpiclker.load(fileStream);
     }
 
+    [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Global")]
     public class Settings : BaseStaticDataCommandSettings {
         public enum OutputFormatOption {
             Json,
@@ -103,7 +105,7 @@ public class ResourceUnpickleCommand(
         public int MaxItems { get; set; } = 5;
 
         [CommandOption("--output <output>")]
-        public string? Output { get; set; } = null;
+        public string? Output { get; set; }
 
         [CommandOption("--outputFormat <outputFormat>")]
         public OutputFormatOption OutputFormat { get; set; } = OutputFormatOption.Json;

@@ -15,7 +15,7 @@ public class FindSystemsWithinDistanceCommand(
     ILogger<FindSystemsWithinDistanceCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<FindSystemsWithinDistanceCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result =
             await devToolsClient.FindSystemsWithinDistance(settings.SystemName, settings.MaxDistance,
                 CancellationToken.None);

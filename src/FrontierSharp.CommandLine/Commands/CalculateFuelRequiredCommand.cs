@@ -13,7 +13,7 @@ public class CalculateFuelRequiredCommand(
     ILogger<CalculateFuelRequiredCommand> logger,
     IFrontierDevToolsClient devToolsClient,
     IAnsiConsole ansiConsole) : AsyncCommand<CalculateFuelRequiredCommand.Settings> {
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = await devToolsClient.CalculateFuelRequired(settings.Mass, settings.Lightyears,
             settings.FuelEfficiency, CancellationToken.None);
 

@@ -54,7 +54,7 @@ public class GetGateNetworkCommandTests {
             Identifier = "98000001"
         };
 
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
     }
@@ -72,7 +72,7 @@ public class GetGateNetworkCommandTests {
             Identifier = "98000001"
         };
 
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
     }
@@ -103,7 +103,7 @@ public class GetGateNetworkCommandTests {
             Identifier = "Scetrov"
         };
 
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(0);
         console.Received().Write(Arg.Any<Table>());

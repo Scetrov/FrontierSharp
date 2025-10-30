@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.Common.Utils;
 using FrontierSharp.FrontierDevTools.Api;
@@ -21,7 +22,7 @@ public class GetCorporationCommand(
         Player
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var result = settings.SearchType switch {
             CorporationSearchType.Id => await devToolsClient.GetCharactersByCorpId(settings.Id!.Value,
                 CancellationToken.None),
@@ -52,10 +53,11 @@ public class GetCorporationCommand(
         return 0;
     }
 
+    [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Global")]
     public class Settings : CommandSettings {
         [CommandOption("--id <id>")]
         [Description("The ID of the corporation")]
-        public int? Id { get; set; } = null;
+        public int? Id { get; set; }
 
         [CommandOption("--player <player>")]
         [Description("The name of a player in the corporation")]

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.Data.Static;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ public class ResourceListCommand(
     ILogger<ResourceListCommand> logger,
     IFrontierResourceHiveFactory frontierResourcesHiveFactory,
     IAnsiConsole ansiConsole) : AsyncCommand<ResourceListCommand.Settings> {
-    public override Task<int> ExecuteAsync(CommandContext context, Settings settings) {
+    public override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var frontierResourcesHive = frontierResourcesHiveFactory.Create(settings.Root);
         var index = frontierResourcesHive.GetIndex().Files;
         var resIndex = frontierResourcesHive.GetResIndex().Files;
@@ -49,6 +50,7 @@ public class ResourceListCommand(
         }
     }
 
+    [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Global")]
     public class Settings : BaseStaticDataCommandSettings {
         [CommandOption("--filter <filter>")]
         [Description("Case-insensitive substring matching")]

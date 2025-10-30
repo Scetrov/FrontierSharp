@@ -31,7 +31,7 @@ public class GetCorporationCommandTests {
         };
 
         var command = CreateCommand(client);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
         await client.Received(1).GetCharactersByCorpId(123, Arg.Any<CancellationToken>());
@@ -48,7 +48,7 @@ public class GetCorporationCommandTests {
         };
 
         var command = CreateCommand(client);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
         await client.Received(1).GetCharactersByPlayer("Alice", Arg.Any<CancellationToken>());
@@ -67,7 +67,7 @@ public class GetCorporationCommandTests {
         };
 
         var command = CreateCommand(client);
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(1);
     }
@@ -92,7 +92,7 @@ public class GetCorporationCommandTests {
             Id = 98000001
         };
 
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(0);
         console.Received().Write(Arg.Any<Table>());
@@ -117,7 +117,7 @@ public class GetCorporationCommandTests {
             PlayerName = "Scetrov"
         };
 
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         exitCode.Should().Be(0);
         console.Received().Write(Arg.Any<Table>());

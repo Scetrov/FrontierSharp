@@ -83,7 +83,7 @@ public class OptimalStargateNetworkAndDeploymentCommandTests {
             AvoidGates = false
         };
 
-        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(0);
 
@@ -112,7 +112,7 @@ public class OptimalStargateNetworkAndDeploymentCommandTests {
             NpcAvoidanceLevel = NpcAvoidanceLevel.High
         };
 
-        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings);
+        var result = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
         result.Should().Be(1);
     }
