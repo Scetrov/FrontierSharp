@@ -50,8 +50,8 @@ public class ResFileTests {
     }
 
     [Theory]
-    [InlineData("app:", "")]
-    [InlineData("res:", "")]
+    [InlineData("app:x", "x")]
+    [InlineData("res:x", "x")]
     [InlineData("app:onlyprefix", "onlyprefix")]
     [InlineData("res:onlyprefix", "onlyprefix")]
     public void Constructor_ShouldHandle_EdgeCasesForFilename(string inputFilename, string expectedFilename) {

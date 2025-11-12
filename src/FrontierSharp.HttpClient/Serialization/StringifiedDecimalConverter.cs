@@ -7,7 +7,7 @@ namespace FrontierSharp.HttpClient.Serialization;
 
 public class StringifiedDecimalConverter : JsonConverter<decimal> {
     public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
-        var valueSpan = Encoding.UTF8.GetString(reader.ValueSpan);
+        var valueSpan = Encoding.UTF8.GetString(reader.ValueSpan.ToArray());
 
         return reader.TokenType switch {
             JsonTokenType.Number when decimal.TryParse(valueSpan, out var decimalString) => decimalString,

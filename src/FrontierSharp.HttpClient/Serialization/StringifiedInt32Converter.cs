@@ -6,7 +6,7 @@ namespace FrontierSharp.HttpClient.Serialization;
 
 public class StringifiedInt32Converter : JsonConverter<int> {
     public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
-        var valueSpan = Encoding.UTF8.GetString(reader.ValueSpan);
+        var valueSpan = Encoding.UTF8.GetString(reader.ValueSpan.ToArray());
 
         return reader.TokenType switch {
             JsonTokenType.Number when int.TryParse(valueSpan, out var intNumeric) => intNumeric,

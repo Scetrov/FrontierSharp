@@ -4,7 +4,7 @@ using FrontierSharp.HttpClient.Models;
 namespace FrontierSharp.WorldApi.RequestModel;
 
 public class GetSmartCharacterById : GetRequestModel<GetSmartCharacterById>, IGetRequestModel {
-    public string CharacterAddress { get; init; } = string.Empty;
+    public string CharacterAddress { get; set; } = string.Empty;
 
     public override string GetCacheKey() {
         return $"WorldApi_Type_{CharacterAddress}";

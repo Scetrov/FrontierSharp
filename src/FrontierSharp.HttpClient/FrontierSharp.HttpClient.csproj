@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Title>FrontierSharp Generic HTTP Client</Title>
@@ -17,6 +16,8 @@
         <PackageIcon>FrontierSharp.png</PackageIcon>
         <AssemblyName>FrontierSharp.HttpClient</AssemblyName>
         <RootNamespace>FrontierSharp.HttpClient</RootNamespace>
+        <TargetFrameworks>net9.0;netstandard2.0</TargetFrameworks>
+        <LangVersion>13.0</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

@@ -29,7 +29,7 @@ public class FrontierSharpHttpClient(
                     $"Request failed with status code {(int)response.StatusCode} ({response.ReasonPhrase}).");
             }
 
-            var content = await response.Content.ReadAsStreamAsync(ct);
+            var content = await response.Content.ReadAsStreamAsync();
 
             TResponseModel? result = null;
             Exception? exception = null;
@@ -43,7 +43,7 @@ public class FrontierSharpHttpClient(
             if (result != null) return Result.Ok(result);
 
             content.Seek(0, SeekOrigin.Begin);
-            var errorContent = await new StreamReader(content).ReadToEndAsync(ct);
+            var errorContent = await new StreamReader(content).ReadToEndAsync();
             logger.LogError("Unable to deserialize the response into a JSON object with '{exception}': {errorContent}",
                 exception?.Message ?? "No Exception", errorContent);
 

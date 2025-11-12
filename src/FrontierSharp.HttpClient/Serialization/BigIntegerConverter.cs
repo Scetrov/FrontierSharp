@@ -11,8 +11,8 @@ public class BigIntegerConverter : JsonConverter<BigInteger> {
         return reader.TokenType switch {
             JsonTokenType.String when decimal.TryParse(reader.GetString(), out var decimalString) => new BigInteger(
                 decimalString),
-            JsonTokenType.String when BigInteger.TryParse(reader.GetString(), out var bigIntString) => bigIntString,
-            JsonTokenType.Number when BigInteger.TryParse(Encoding.UTF8.GetString(reader.ValueSpan),
+            JsonTokenType.String when BigInteger.TryParse(reader.GetString() ?? "0", out var bigIntString) => bigIntString,
+            JsonTokenType.Number when BigInteger.TryParse(Encoding.UTF8.GetString(reader.ValueSpan.ToArray()),
                 out var bigIntNumeric) => bigIntNumeric,
             _ => throw new JsonException("Invalid JSON value for BigInteger.")
         };

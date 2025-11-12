@@ -11,7 +11,7 @@ public class ResIndex {
         if (!fileSystem.File.Exists(indexFile)) throw new FileNotFoundException("Index file not found", indexFile);
 
         Files = fileSystem.File.ReadAllLines(indexFile)
-            .Select(line => line.Split(","))
+            .Select(line => line.Split(','))
             .Select(fields => new ResFile(fields[0], fields[1], fields[2]))
             .AsEnumerable();
     }

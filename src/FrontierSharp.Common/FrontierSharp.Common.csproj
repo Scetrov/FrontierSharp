@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
@@ -13,6 +12,8 @@
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>eve,frontier,games</PackageTags>
+        <TargetFrameworks>net9.0;netstandard2.0</TargetFrameworks>
+        <LangVersion>13.0</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
