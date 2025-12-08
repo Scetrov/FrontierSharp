@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <OutputType>Exe</OutputType>
         <AssemblyName>frontierctl</AssemblyName>
         <PackageId>FrontierSharp.CommandLine</PackageId>
         <Title>FrontierSharp CLI Tool</Title>
@@ -20,6 +18,8 @@
         <PackageIcon>FrontierSharp.png</PackageIcon>
         <IsPackable>false</IsPackable>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <TargetFramework>net10.0</TargetFramework>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>

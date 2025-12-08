@@ -12,8 +12,8 @@
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
         <PackageTags>eve,frontier,games</PackageTags>
-        <TargetFrameworks>net9.0;netstandard2.0</TargetFrameworks>
-        <LangVersion>13.0</LangVersion>
+        <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
