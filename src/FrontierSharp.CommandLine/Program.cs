@@ -34,6 +34,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
             .Configure<FrontierSharpHttpClientOptions>(options => {
                 options.HttpClientName = "WorldApi";
+                options.BaseUri = "https://world-api-stillness.live.tech.evefrontier.com/";
             });
         services.AddSingleton<IWorldApiClient, WorldApiClient>();
         services.AddSingleton<IFrontierResourceHiveFactory, FrontierResourceHiveFactory>();
@@ -41,14 +42,14 @@ var host = Host.CreateDefaultBuilder(args)
 
         var app = new CommandApp(new TypeRegistrar(services));
         app.Configure(config => {
-            config.AddCommand<GetTribeCommand>("tribe").WithAlias("t").WithAlias("corporation").WithAlias("corp");
+            config.AddCommand<GetTribeCommand>("tribe").WithDescription("Tribe data from the World API").WithAlias("t").WithAlias("corporation").WithAlias("corp");
 
             config.ConfigureExceptions();
 
             config.AddBranch("data", data => {
                 data.SetDescription("Commands for data management");
                 data.AddBranch("static", staticData => {
-                    staticData.SetDescription("Commands for static data");
+                    staticData.SetDescription("Static data extract and manipulation commands");
                     staticData.AddBranch("resources",
                         resources => {
                             resources.AddCommand<ResourceListCommand>("list").WithAlias("l").WithAlias("ls");
