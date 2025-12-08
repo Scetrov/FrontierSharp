@@ -43,7 +43,7 @@ To build `frontierctl` from source, you can use the following steps:
 
 ### Usage
 
-After installation, you can use the CLI tool by finding `frontierctl` in the `bin/Release/net9.0` directory of the
+After installation, you can use the CLI tool by finding `frontierctl` in the `bin/Release/net10.0` directory of the
 project. You can run it directly from the command line:
 
 ```sh

@@ -4,7 +4,7 @@ Keep this concise and specific to patterns discoverable in the codebase.
 
 - Big picture
 
-    - FrontierSharp is a .NET 9 multi-project solution (see `src/FrontierSharp.sln`).
+    - FrontierSharp is a .NET 10 multi-project solution (see `src/FrontierSharp.sln`).
     - Major components:
         - `FrontierSharp.CommandLine` — CLI app (binary `frontierctl`) using Spectre.Console.Cli and DI (see
           `Program.cs`).
@@ -36,7 +36,7 @@ Keep this concise and specific to patterns discoverable in the codebase.
 
 - Build / test / CI
 
-    - The project targets net9.0. CI uses .NET 9 and the usual dotnet commands in
+    - The project targets net10.0. CI uses .NET 10 and the usual dotnet commands in
       `/.github/workflows/build-and-test.yml`:
         - dotnet restore (run in `./src`), dotnet build --configuration Release, dotnet test --configuration Release
         - Publishing: `dotnet publish -c Release -r <rid> --self-contained` for `FrontierSharp.CommandLine`.

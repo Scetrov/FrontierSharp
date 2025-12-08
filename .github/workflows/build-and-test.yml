@@ -21,10 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET 9
+      - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.x
+          dotnet-version: 10.x
 
       - name: Cache NuGet Packages
         uses: actions/cache@v4
@@ -67,10 +67,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET 9
+      - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.x
+          dotnet-version: 10.x
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.1.11
@@ -138,27 +138,27 @@ jobs:
 
       - name: Create Linux-x64 Archive
         run: tar -czf "$GITHUB_WORKSPACE/src/frontierctl-linux-x64.tar.gz" .
-        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-x64/publish
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net10.0/linux-x64/publish
 
       - name: Create Linux-arm64 Archive
         run: tar -czf "$GITHUB_WORKSPACE/src/frontierctl-linux-arm64.tar.gz" .
-        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/linux-arm64/publish
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net10.0/linux-arm64/publish
 
       - name: Create OSX-x64 Archive
         run: tar -czf "$GITHUB_WORKSPACE/src/frontierctl-osx-x64.tar.gz" .
-        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/osx-x64/publish
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net10.0/osx-x64/publish
 
       - name: Create OSX-arm64 Archive
         run: tar -czf "$GITHUB_WORKSPACE/src/frontierctl-osx-arm64.tar.gz" .
-        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/osx-arm64/publish
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net10.0/osx-arm64/publish
 
       - name: Create Windows-x64 Archive
         run: zip -qr "$GITHUB_WORKSPACE/src/frontierctl-win-x64.zip" .
-        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-x64/publish
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net10.0/win-x64/publish
 
       - name: Create Windows-arm64 Archive
         run: zip -qr "$GITHUB_WORKSPACE/src/frontierctl-win-arm64.zip" .
-        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net9.0/win-arm64/publish
+        working-directory: ./src/FrontierSharp.CommandLine/bin/Release/net10.0/win-arm64/publish
 
       - name: Create Release
         uses: ncipollo/release-action@v1

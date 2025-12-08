@@ -4,16 +4,16 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
-        <TargetFrameworks>net9.0;netstandard2.0</TargetFrameworks>
-        <LangVersion>13.0</LangVersion>
+        <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+        <LangVersion>14</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.11" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.11" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.11" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0" />
     </ItemGroup>
 
 </Project>
