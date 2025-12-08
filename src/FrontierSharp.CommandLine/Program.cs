@@ -1,4 +1,6 @@
-﻿using System.IO.Abstractions;
+﻿using System;
+using System.IO.Abstractions;
+using System.Threading.Tasks;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.CommandLine.Commands.Data.Static;

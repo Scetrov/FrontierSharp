@@ -34,10 +34,6 @@ public static class DependencyInjectionUtils {
             return -1;
         });
 
-#if DEBUG
-        return config.PropagateExceptions();
-#else
         return config;
-#endif
     }
 }
