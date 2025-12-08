@@ -20,7 +20,9 @@ public interface IWorldApiClient {
     Task<Result<WorldApiPayload<SmartAssemblyWithSolarSystem>>> GetSmartAssemblyPage(long limit = 100, long offset = 0,
         CancellationToken cancellationToken = default);
 
-    Task<Result<WorldApiPayload<SmartCharacter>>> GetSmartCharacterPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
+    Task<Result<WorldApiPayload<SmartCharacter>>> GetSmartCharacterPage(long limit = 100, long offset = 0,
+        CancellationToken cancellationToken = default);
+
     Task<Result<WorldApiPayload<SolarSystem>>> GetSolarSystemPage(long limit = 1000, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default);
     Task<Result<IEnumerable<Killmail>>> GetAllKillmails(long limit = 100, CancellationToken cancellationToken = default);

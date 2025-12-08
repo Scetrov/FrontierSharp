@@ -7,25 +7,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AwesomeAssertions" Version="9.3.0" />
+        <PackageReference Include="AwesomeAssertions" Version="9.3.0"/>
         <PackageReference Include="AwesomeAssertions.Analyzers" Version="9.0.8">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="AwesomeAssertions.Json" Version="9.0.0"/>
         <PackageReference Include="FluentResults" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
         <PackageReference Include="NSubstitute" Version="5.3.0"/>
         <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Spectre.Console" Version="0.54.0" />
-        <PackageReference Include="Spectre.Console.Cli" Version="0.53.1" />
-        <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.1.0" />
+        <PackageReference Include="Spectre.Console" Version="0.54.0"/>
+        <PackageReference Include="Spectre.Console.Cli" Version="0.53.1"/>
+        <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.1.0"/>
         <PackageReference Include="xunit" Version="2.9.3"/>
         <PackageReference Include="xunit.analyzers" Version="1.26.0">
             <PrivateAssets>all</PrivateAssets>
@@ -39,17 +39,12 @@
 
     <ItemGroup>
         <ProjectReference Include="..\FrontierSharp.CommandLine\FrontierSharp.CommandLine.csproj"/>
-        <ProjectReference Include="..\FrontierSharp.FrontierDevTools.Api\FrontierSharp.FrontierDevTools.Api.csproj"/>
         <ProjectReference Include="..\FrontierSharp.HttpClient\FrontierSharp.HttpClient.csproj"/>
         <ProjectReference Include="..\FrontierSharp.Starmap\FrontierSharp.Starmap.csproj"/>
         <ProjectReference Include="..\FrontierSharp.WorldApi\FrontierSharp.WorldApi.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="FrontierDevTools\openapi.json"/>
-        <EmbeddedResource Include="FrontierDevTools\openapi.json"/>
-        <None Remove="FrontierDevTools\Api\Serialization\OptimalStargateNetworkAndDeploymentResponsePayload.json"/>
-        <EmbeddedResource Include="FrontierDevTools\Api\Serialization\OptimalStargateNetworkAndDeploymentResponsePayload.json"/>
         <None Remove="WorldApi\payloads\v2\types_limit=100_offset=0.json"/>
         <EmbeddedResource Include="WorldApi\payloads\v2\types_limit=100_offset=0.json"/>
         <None Remove="WorldApi\payloads\v2\types_limit=100_offset=100.json"/>

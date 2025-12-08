@@ -1,5 +1,6 @@
 namespace FrontierSharp.CommandLine;
 
 public class ConfigurationOptions {
-    public Uri BaseUri { get; init; } = new("https://api.frontierdevtools.com/");
+    public int TribeMembersLimit { get; init; } = 25;
+    public int TribeFuzzyWarningThreshold { get; init; } = 3;
 }

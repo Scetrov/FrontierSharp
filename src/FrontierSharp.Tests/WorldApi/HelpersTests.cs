@@ -5,7 +5,6 @@ using Xunit;
 namespace FrontierSharp.Tests.WorldApi;
 
 public class HelpersTests {
-
     [Fact]
     public void GenerateCacheKey_IncludesTypeAndParams() {
         var endpoint = new DummyEndpoint { Limit = 100, Offset = 200 };

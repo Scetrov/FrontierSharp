@@ -75,7 +75,8 @@ public class ResourceUnpickleCommand(
 
         bool Predicate(ResFile x) {
             var filenamePredicate = settings.Filename == null || x.Filename.Equals(settings.Filename.Trim(), StringComparison.OrdinalIgnoreCase);
-            var pathPredicate = settings.RelativePath == null || x.RelativePath.Equals(settings.RelativePath.Trim(), StringComparison.OrdinalIgnoreCase);
+            var pathPredicate = settings.RelativePath == null ||
+                                x.RelativePath.Equals(settings.RelativePath.Trim(), StringComparison.OrdinalIgnoreCase);
             return filenamePredicate && pathPredicate;
         }
     }
@@ -104,8 +105,7 @@ public class ResourceUnpickleCommand(
         [CommandOption("--maxItems <maxItems>")]
         public int MaxItems { get; set; } = 5;
 
-        [CommandOption("--output <output>")]
-        public string? Output { get; set; }
+        [CommandOption("--output <output>")] public string? Output { get; set; }
 
         [CommandOption("--outputFormat <outputFormat>")]
         public OutputFormatOption OutputFormat { get; set; } = OutputFormatOption.Json;

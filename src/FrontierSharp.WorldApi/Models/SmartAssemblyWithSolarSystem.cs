@@ -5,6 +5,5 @@ namespace FrontierSharp.WorldApi.Models;
 
 [ExcludeFromCodeCoverage]
 public class SmartAssemblyWithSolarSystem : SmartAssembly {
-    [JsonPropertyName("solarSystem")]
-    public SolarSystem SolarSystem { get; set; } = new();
+    [JsonPropertyName("solarSystem")] public SolarSystem SolarSystem { get; set; } = new();
 }

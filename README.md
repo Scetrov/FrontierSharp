@@ -30,31 +30,39 @@ third-party services.
 You can install the FrontierSharp packages via NuGet:
 
 ```sh
-dotnet add package FrontierSharp.FrontierDevTools.Api
+wdotnet add package FrontierSharp.WorldApi
 ```
 
 ## Usage
 
 ### API Client
 
-FrontierShip is Dependency Injection ready, so all you need to do to add it to an existing project is Install the NuGet
-packages and setup the DI container, for example:
+FrontierShip is Dependency Injection ready, so all you need to do to add it to an existing project is install the NuGet
+packages and configure the World API client, for example:
 
 ```csharp
 services.AddHttpClient();
 services.AddFusionCache().AsHybridCache();
-services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(FrontierDevToolsClient))
+services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
     .Configure<FrontierSharpHttpClientOptions>(options => {
         options.BaseUri = "https://api.frontierdevtools.com/";
-        options.HttpClientName = "FrontierDevTools";
+        options.HttpClientName = "WorldApi";
     });
-services.AddSingleton<IFrontierDevToolsClient, FrontierDevToolsClient>();
+services.AddSingleton<IWorldApiClient, WorldApiClient>();
 ```
 
 ### Command-Line Tool
 
 FrontierSharp comes with a command-line tool that can be used to interact with the EVE Frontier services. The tool is
 available from the Releases page.
+
+#### Tribe Command
+
+The CLI exposes a single `tribe` command (aliased as `t`, `corporation`, and `corp`) backed entirely by the WorldApi `/v2/tribes` endpoints. It supports three mutually exclusive modes:
+
+- `--id <tribeId>`: show detailed tribe information, including members (capable of limiting output with `--members-limit` or removing the cap via `--show-all-members`).
+- `--name <name>`: look up a tribe by name; the command first tries an exact match, then falls back to Levenshtein-based fuzzy search, warns when the match distance exceeds 3, and lists tie candidates with their IDs so you can rerun with `--id` for precision.
+- `--show-all`: stream every tribe in pages of 100 entries (or a user-provided `--page-size`) to the console.
 
 ## Configuration
 
@@ -65,7 +73,9 @@ configuration to your `appsettings.json` file:
 {
   "FrontierSharp": {
     "BaseUri": "https://api.frontierdevtools.com/",
-    "HttpClientName": "FrontierDevTools"
+    "HttpClientName": "WorldApi",
+    "TribeMembersLimit": 25,
+    "TribeFuzzyWarningThreshold": 3
   }
 }
 ```
