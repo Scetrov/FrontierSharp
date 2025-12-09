@@ -101,8 +101,7 @@ frontierctl tpe --id 34
 ### Fuel Efficiency Data
 
 > [!NOTE]
-> Efficiency is a rating (0-255, with 90 being the practical maximum). Higher values mean better fuel economy.  
-> Formula: `Fuel consumed = Distance (LY) / Efficiency`
+> Efficiency is a rating (0-255, with 90 being the practical maximum). Higher efficiency values mean better fuel economy (less fuel consumed per lightyear).
 
 ```sh
 # List all fuels and their efficiency ratings
