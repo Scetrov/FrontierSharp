@@ -39,7 +39,7 @@ public class GetTribeCommand(
             }
 
             foreach (var tribe in page.Value.Data)
-                table.AddRow(tribe.Id.ToString(), tribe.Name, tribe.MemberCount.ToString(),
+                table.AddRow(tribe.Id.ToString(), tribe.Name.EscapeMarkup(), tribe.MemberCount.ToString(),
                     tribe.TaxRate.ToString("0.00"), tribe.FoundedAt.ToAnsiString());
 
             offset += page.Value.Data.LongCount();
@@ -114,10 +114,10 @@ public class GetTribeCommand(
             ? int.MaxValue
             : settings.MembersLimit switch { <= 0 => int.MaxValue, > 0 => settings.MembersLimit.Value, _ => Configuration.TribeMembersLimit };
 
-        var table = SpectreUtils.CreateAnsiTable(tribe.Name, "Key", "Value");
+        var table = SpectreUtils.CreateAnsiTable(tribe.Name.EscapeMarkup(), "Key", "Value");
         table.AddRow("Id", tribe.Id.ToString());
-        table.AddRow("Short", tribe.NameShort);
-        table.AddRow("Description", tribe.Description);
+        table.AddRow("Short", tribe.NameShort.EscapeMarkup());
+        table.AddRow("Description", tribe.Description.EscapeMarkup());
         table.AddRow("Tax", tribe.TaxRate.ToString("0.00"));
         table.AddRow("Founded", tribe.FoundedAt.ToAnsiString());
 
@@ -125,7 +125,7 @@ public class GetTribeCommand(
             table.AddRow("Members", "[grey]None[/]");
         }
         else {
-            var displayed = tribe.Members.Take(limit).Select(m => m.Name).ToList();
+            var displayed = tribe.Members.Take(limit).Select(m => m.Name.EscapeMarkup()).ToList();
             table.AddRow("Members", string.Join(", ", displayed));
 
             if (limit != int.MaxValue && tribe.Members.Count() > limit)

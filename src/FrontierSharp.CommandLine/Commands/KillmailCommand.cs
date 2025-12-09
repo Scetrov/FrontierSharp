@@ -42,7 +42,7 @@ public class KillmailCommand(
             var idx = 0L;
             foreach (var k in page.Value.Data) {
                 var seq = (offset + idx + 1).ToString();
-                table.AddRow(seq, k.Victim.Name, k.Time.ToAnsiString());
+                table.AddRow(seq, k.Victim.Name.EscapeMarkup(), k.Time.ToAnsiString());
                 idx++;
             }
 

@@ -38,7 +38,7 @@ public class SolarSystemCommand(
             }
 
             foreach (var sys in page.Value.Data)
-                table.AddRow(sys.Id.ToString(), sys.Name);
+                table.AddRow(sys.Id.ToString(), sys.Name.EscapeMarkup());
 
             offset += page.Value.Data.LongCount();
             if (offset >= page.Value.Metadata.Total) break;
@@ -60,9 +60,9 @@ public class SolarSystemCommand(
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable(res.Value.Name, "Key", "Value");
+        var table = SpectreUtils.CreateAnsiTable(res.Value.Name.EscapeMarkup(), "Key", "Value");
         table.AddRow("Id", res.Value.Id.ToString());
-        table.AddRow("Name", res.Value.Name);
+        table.AddRow("Name", res.Value.Name.EscapeMarkup());
         AnsiConsole.Write(table);
         return 0;
     }
@@ -83,9 +83,9 @@ public class SolarSystemCommand(
                 return 1;
             }
 
-            var table = SpectreUtils.CreateAnsiTable(detail.Value.Name, "Key", "Value");
+            var table = SpectreUtils.CreateAnsiTable(detail.Value.Name.EscapeMarkup(), "Key", "Value");
             table.AddRow("Id", detail.Value.Id.ToString());
-            table.AddRow("Name", detail.Value.Name);
+            table.AddRow("Name", detail.Value.Name.EscapeMarkup());
             AnsiConsole.Write(table);
             return 0;
         }
@@ -107,9 +107,9 @@ public class SolarSystemCommand(
             return 1;
         }
 
-        var tbl = SpectreUtils.CreateAnsiTable(final.Value.Name, "Key", "Value");
+        var tbl = SpectreUtils.CreateAnsiTable(final.Value.Name.EscapeMarkup(), "Key", "Value");
         tbl.AddRow("Id", final.Value.Id.ToString());
-        tbl.AddRow("Name", final.Value.Name);
+        tbl.AddRow("Name", final.Value.Name.EscapeMarkup());
         AnsiConsole.Write(tbl);
         return 0;
     }

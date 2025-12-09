@@ -1,7 +1,9 @@
 using System.ComponentModel;
+using System.Text;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.Common.Utils;
 using FrontierSharp.WorldApi;
+using FrontierSharp.WorldApi.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Spectre.Console;
@@ -40,22 +42,32 @@ public class SmartCharacterCommand(
 
         var detail = res.Value;
 
-        var table = SpectreUtils.CreateAnsiTable(detail.Name, "Key", "Value");
-        table.AddRow("Address", detail.Address);
-        table.AddRow("Name", detail.Name);
-        table.AddRow("Portrait", detail.PortraitUrl);
+        var table = SpectreUtils.CreateAnsiTable(detail.Name.EscapeMarkup(), "Key", "Value");
+        table.AddRow("Address", detail.Address.EscapeMarkup());
+        table.AddRow("Name", detail.Name.EscapeMarkup());
+        table.AddRow("Portrait", detail.PortraitUrl.EscapeMarkup());
         table.AddRow("TribeId", detail.TribeId.ToString());
         table.AddRow("EVE Balance", detail.EveBalanceInWei.AsWeiToEther());
         table.AddRow("Gas Balance", detail.GasBalanceInWei.AsWeiToEther());
         var assemblies = detail.SmartAssemblies.ToList();
         table.AddRow("Assemblies", assemblies.Count.ToString());
-        if (assemblies.Any()) {
-            var assemblyDisplay = assemblies.Take(8)
-                .Select(a => string.IsNullOrWhiteSpace(a.Name) ? a.Type.ToString() : a.Name);
-            table.AddRow("Assembly Types", string.Join(", ", assemblyDisplay));
+        if (assemblies.Count != 0) {
+            var assemblyDisplay = assemblies
+                .Where(x => x.Type != SmartAssemblyType.Unknown)
+                .Take(25)
+                .Select(FormatAssembly);
+            table.AddRow("Assembly Types", string.Join(Environment.NewLine, assemblyDisplay));
         }
         AnsiConsole.Write(table);
         return 0;
+    }
+
+    private static string FormatAssembly(SmartAssembly a) {
+        var builder = new StringBuilder();
+        builder.Append(string.IsNullOrWhiteSpace(a.Name) ? a.Type.ToString() : a.Name);
+        builder.Append(' ');
+        builder.Append($"({a.State})");
+        return builder.ToString();
     }
 
     private async Task<int> ShowAllAsync(int pageSize, Settings settings, CancellationToken cancellationToken) {
@@ -72,7 +84,7 @@ public class SmartCharacterCommand(
             }
 
             foreach (var ch in page.Value.Data)
-                table.AddRow(ch.Address, ch.Name);
+                table.AddRow(ch.Address.EscapeMarkup(), ch.Name.EscapeMarkup());
 
             AnsiConsole.Write(table);
             return 0;
@@ -88,7 +100,7 @@ public class SmartCharacterCommand(
             }
 
             foreach (var ch in page.Value.Data)
-                table.AddRow(ch.Address, ch.Name);
+                table.AddRow(ch.Address.EscapeMarkup(), ch.Name.EscapeMarkup());
 
             offset += page.Value.Data.LongCount();
             if (offset >= page.Value.Metadata.Total) break;
@@ -115,16 +127,22 @@ public class SmartCharacterCommand(
             }
 
             var detail = detailRes.Value;
-            var table = SpectreUtils.CreateAnsiTable(detail.Name, "Key", "Value");
-            table.AddRow("Address", detail.Address);
-            table.AddRow("Name", detail.Name);
-            table.AddRow("Portrait", detail.PortraitUrl);
+            var table = SpectreUtils.CreateAnsiTable(detail.Name.EscapeMarkup(), "Key", "Value");
+            table.AddRow("Address", detail.Address.EscapeMarkup());
+            table.AddRow("Name", detail.Name.EscapeMarkup());
+            table.AddRow("Portrait", detail.PortraitUrl.EscapeMarkup());
             table.AddRow("TribeId", detail.TribeId.ToString());
             table.AddRow("EVE Balance", detail.EveBalanceInWei.AsWeiToEther());
             table.AddRow("Gas Balance", detail.GasBalanceInWei.AsWeiToEther());
             var assemblies = detail.SmartAssemblies.ToList();
             table.AddRow("Assemblies", assemblies.Count.ToString());
-            if (assemblies.Any()) table.AddRow("Assembly Names", string.Join(", ", assemblies.Take(8).Select(a => a.Name)));
+            if (assemblies.Count != 0) {
+                var assemblyDisplay = assemblies
+                    .Where(x => x.Type != SmartAssemblyType.Unknown)
+                    .Take(25)
+                    .Select(FormatAssembly);
+                table.AddRow("Assembly Types", string.Join(Environment.NewLine, assemblyDisplay));
+            }
             AnsiConsole.Write(table);
             return 0;
         }

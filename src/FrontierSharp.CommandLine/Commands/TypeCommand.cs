@@ -37,7 +37,7 @@ public class TypeCommand(
             }
 
             foreach (var t in page.Value.Data)
-                table.AddRow(t.Id.ToString(), t.Name, t.GroupName);
+                table.AddRow(t.Id.ToString(), t.Name.EscapeMarkup(), t.GroupName.EscapeMarkup());
 
             offset += page.Value.Data.LongCount();
             if (offset >= page.Value.Metadata.Total) break;
@@ -60,10 +60,10 @@ public class TypeCommand(
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable(t.Name, "Key", "Value");
+        var table = SpectreUtils.CreateAnsiTable(t.Name.EscapeMarkup(), "Key", "Value");
         table.AddRow("Id", t.Id.ToString());
-        table.AddRow("Name", t.Name);
-        table.AddRow("Group", t.GroupName);
+        table.AddRow("Name", t.Name.EscapeMarkup());
+        table.AddRow("Group", t.GroupName.EscapeMarkup());
         AnsiConsole.Write(table);
         return 0;
     }
@@ -84,10 +84,10 @@ public class TypeCommand(
                 return 1;
             }
 
-            var table = SpectreUtils.CreateAnsiTable(detail.Value.Name, "Key", "Value");
+            var table = SpectreUtils.CreateAnsiTable(detail.Value.Name.EscapeMarkup(), "Key", "Value");
             table.AddRow("Id", detail.Value.Id.ToString());
-            table.AddRow("Name", detail.Value.Name);
-            table.AddRow("Group", detail.Value.GroupName);
+            table.AddRow("Name", detail.Value.Name.EscapeMarkup());
+            table.AddRow("Group", detail.Value.GroupName.EscapeMarkup());
             AnsiConsole.Write(table);
             return 0;
         }
@@ -109,10 +109,10 @@ public class TypeCommand(
             return 1;
         }
 
-        var tbl = SpectreUtils.CreateAnsiTable(final.Value.Name, "Key", "Value");
+        var tbl = SpectreUtils.CreateAnsiTable(final.Value.Name.EscapeMarkup(), "Key", "Value");
         tbl.AddRow("Id", final.Value.Id.ToString());
-        tbl.AddRow("Name", final.Value.Name);
-        tbl.AddRow("Group", final.Value.GroupName);
+        tbl.AddRow("Name", final.Value.Name.EscapeMarkup());
+        tbl.AddRow("Group", final.Value.GroupName.EscapeMarkup());
         AnsiConsole.Write(tbl);
         return 0;
     }

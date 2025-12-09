@@ -38,7 +38,7 @@ public class FuelCommand(
             }
 
             foreach (var f in page.Value.Data)
-                table.AddRow(f.Type.Id.ToString(), f.Type.Name, ((int)f.Efficiency).FuelToAnsiString());
+                table.AddRow(f.Type.Id.ToString(), f.Type.Name.EscapeMarkup(), ((int)f.Efficiency).FuelToAnsiString());
 
             offset += page.Value.Data.LongCount();
             if (offset >= page.Value.Metadata.Total) break;
@@ -61,9 +61,9 @@ public class FuelCommand(
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable(f.Type.Name, "Key", "Value");
+        var table = SpectreUtils.CreateAnsiTable(f.Type.Name.EscapeMarkup(), "Key", "Value");
         table.AddRow("TypeId", f.Type.Id.ToString());
-        table.AddRow("TypeName", f.Type.Name);
+        table.AddRow("TypeName", f.Type.Name.EscapeMarkup());
         table.AddRow("Efficiency", ((int)f.Efficiency).FuelToAnsiString());
         AnsiConsole.Write(table);
         return 0;

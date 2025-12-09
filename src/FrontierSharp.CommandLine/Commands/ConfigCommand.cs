@@ -28,21 +28,21 @@ public class ConfigCommand(
 
         if (settings.ShowAll) {
             var table = SpectreUtils.CreateAnsiTable("World API Configs", "ChainId", "Name", "Explorer", "Indexer");
-            foreach (var c in configs) table.AddRow(c.ChainId.ToString(), c.Name, c.BlockExplorerUrl, c.IndexerUrl);
+            foreach (var c in configs) table.AddRow(c.ChainId.ToString(), c.Name.EscapeMarkup(), c.BlockExplorerUrl.EscapeMarkup(), c.IndexerUrl.EscapeMarkup());
             AnsiConsole.Write(table);
             return 0;
         }
 
         // Show details of the first config by default (there's usually one)
         var cfg = configs.First();
-        var detail = SpectreUtils.CreateAnsiTable(cfg.Name, "Key", "Value");
+        var detail = SpectreUtils.CreateAnsiTable(cfg.Name.EscapeMarkup(), "Key", "Value");
         detail.AddRow("ChainId", cfg.ChainId.ToString());
-        detail.AddRow("Name", cfg.Name);
-        detail.AddRow("BlockExplorerUrl", cfg.BlockExplorerUrl);
-        detail.AddRow("IndexerUrl", cfg.IndexerUrl);
-        detail.AddRow("VaultDappUrl", cfg.VaultDappUrl);
-        detail.AddRow("MetadataApiUrl", cfg.MetadataApiUrl);
-        detail.AddRow("IPFS API", cfg.IpfsApiUrl);
+        detail.AddRow("Name", cfg.Name.EscapeMarkup());
+        detail.AddRow("BlockExplorerUrl", cfg.BlockExplorerUrl.EscapeMarkup());
+        detail.AddRow("IndexerUrl", cfg.IndexerUrl.EscapeMarkup());
+        detail.AddRow("VaultDappUrl", cfg.VaultDappUrl.EscapeMarkup());
+        detail.AddRow("MetadataApiUrl", cfg.MetadataApiUrl.EscapeMarkup());
+        detail.AddRow("IPFS API", cfg.IpfsApiUrl.EscapeMarkup());
         detail.AddRow("CycleStart", cfg.CycleStartDate.ToAnsiString());
         AnsiConsole.Write(detail);
         return 0;

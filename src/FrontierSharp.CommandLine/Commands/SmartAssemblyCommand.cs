@@ -39,7 +39,7 @@ public class SmartAssemblyCommand(
             }
 
             foreach (var asm in page.Value.Data)
-                table.AddRow(asm.Id, asm.Name, asm.SolarSystem.Name);
+                table.AddRow(asm.Id.EscapeMarkup(), asm.Name.EscapeMarkup(), asm.SolarSystem.Name.EscapeMarkup());
 
             offset += page.Value.Data.LongCount();
             if (offset >= page.Value.Metadata.Total) break;
@@ -61,10 +61,10 @@ public class SmartAssemblyCommand(
             return 1;
         }
 
-        var table = SpectreUtils.CreateAnsiTable(res.Value.Id, "Key", "Value");
-        table.AddRow("Id", res.Value.Id);
-        table.AddRow("Type", res.Value.Name);
-        table.AddRow("SolarSystem", res.Value.SolarSystem.Name);
+        var table = SpectreUtils.CreateAnsiTable(res.Value.Id.EscapeMarkup(), "Key", "Value");
+        table.AddRow("Id", res.Value.Id.EscapeMarkup());
+        table.AddRow("Type", res.Value.Name.EscapeMarkup());
+        table.AddRow("SolarSystem", res.Value.SolarSystem.Name.EscapeMarkup());
         AnsiConsole.Write(table);
         return 0;
     }
@@ -85,10 +85,10 @@ public class SmartAssemblyCommand(
                 return 1;
             }
 
-            var table = SpectreUtils.CreateAnsiTable(detail.Value.Id, "Key", "Value");
-            table.AddRow("Id", detail.Value.Id);
-            table.AddRow("Type", detail.Value.Name);
-            table.AddRow("SolarSystem", detail.Value.SolarSystem.Name);
+            var table = SpectreUtils.CreateAnsiTable(detail.Value.Id.EscapeMarkup(), "Key", "Value");
+            table.AddRow("Id", detail.Value.Id.EscapeMarkup());
+            table.AddRow("Type", detail.Value.Name.EscapeMarkup());
+            table.AddRow("SolarSystem", detail.Value.SolarSystem.Name.EscapeMarkup());
             AnsiConsole.Write(table);
             return 0;
         }
@@ -110,10 +110,10 @@ public class SmartAssemblyCommand(
             return 1;
         }
 
-        var tbl = SpectreUtils.CreateAnsiTable(final.Value.Id, "Key", "Value");
-        tbl.AddRow("Id", final.Value.Id);
-        tbl.AddRow("Type", final.Value.Name);
-        tbl.AddRow("SolarSystem", final.Value.SolarSystem.Name);
+        var tbl = SpectreUtils.CreateAnsiTable(final.Value.Id.EscapeMarkup(), "Key", "Value");
+        tbl.AddRow("Id", final.Value.Id.EscapeMarkup());
+        tbl.AddRow("Type", final.Value.Name.EscapeMarkup());
+        tbl.AddRow("SolarSystem", final.Value.SolarSystem.Name.EscapeMarkup());
         AnsiConsole.Write(tbl);
         return 0;
     }
