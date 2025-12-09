@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO.Abstractions;
-using System.Threading.Tasks;
+﻿using System.IO.Abstractions;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
 using FrontierSharp.CommandLine.Commands.Data.Static;
@@ -44,7 +42,18 @@ var host = Host.CreateDefaultBuilder(args)
 
         var app = new CommandApp(new TypeRegistrar(services));
         app.Configure(config => {
-            config.AddCommand<GetTribeCommand>("tribe").WithDescription("Tribe data from the World API").WithAlias("t").WithAlias("corporation").WithAlias("corp");
+            config.AddCommand<GetTribeCommand>("tribe").WithDescription("Tribe data from the World API").WithAlias("t").WithAlias("corporation")
+                .WithAlias("corp");
+            config.AddCommand<SolarSystemCommand>("solarsystem").WithDescription("Solar system data from the World API").WithAlias("system")
+                .WithAlias("ss");
+            config.AddCommand<SmartCharacterCommand>("character").WithDescription("Smart character data from the World API").WithAlias("char")
+                .WithAlias("c");
+            config.AddCommand<SmartAssemblyCommand>("assembly").WithDescription("Smart assembly data from the World API").WithAlias("asm")
+                .WithAlias("a");
+            config.AddCommand<KillmailCommand>("killmail").WithDescription("Killmail data from the World API").WithAlias("km");
+            config.AddCommand<TypeCommand>("type").WithDescription("Game type data from the World API").WithAlias("tpe").WithAlias("tp");
+            config.AddCommand<FuelCommand>("fuel").WithDescription("Fuel data from the World API").WithAlias("f");
+            config.AddCommand<ConfigCommand>("config").WithDescription("World API configuration").WithAlias("cfg");
 
             config.ConfigureExceptions();
 

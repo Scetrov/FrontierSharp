@@ -2,7 +2,7 @@ namespace FrontierSharp.CommandLine.Utils;
 
 public static class Levenshtein {
     public static int Distance(string source, string target) {
-        if (string.IsNullOrEmpty(source)) return target?.Length ?? 0;
+        if (string.IsNullOrEmpty(source)) return target.Length;
         if (string.IsNullOrEmpty(target)) return source.Length;
 
         var sourceLength = source.Length;

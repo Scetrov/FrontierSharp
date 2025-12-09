@@ -50,6 +50,185 @@ project. You can run it directly from the command line:
 frontierctl --help
 ```
 
+For detailed usage examples, see [EXAMPLES.md](EXAMPLES.md).
+
+## Commands
+
+`frontierctl` provides several commands for interacting with the EVE Frontier World API:
+
+### Tribe Command
+
+Query tribe (corporation) data from the World API with fuzzy name matching.
+
+```sh
+# List all tribes
+frontierctl tribe --show-all
+
+# Get tribe by exact ID
+frontierctl tribe --id 12345
+
+# Search for a tribe by name (supports fuzzy matching)
+frontierctl tribe --name "Frontier Explorers"
+
+# Aliases: t, corporation, corp
+frontierctl t --name "Explorers"
+```
+
+### Solar System Command
+
+Query solar system data from the World API.
+
+```sh
+# List all solar systems
+frontierctl solarsystem --show-all
+
+# Get solar system by ID
+frontierctl solarsystem --id 1001
+
+# Search for a solar system by name (supports fuzzy matching)
+frontierctl solarsystem --name "Jita"
+
+# Aliases: system, ss
+frontierctl ss --name "Jita"
+```
+
+### Smart Character Command
+
+Query smart character data including balances and smart assemblies.
+
+```sh
+# List all characters
+frontierctl character --show-all
+
+# Get character by wallet address
+frontierctl character --address "0x1234567890abcdef..."
+
+# Search for a character by name (supports fuzzy matching)
+frontierctl character --name "PlayerName"
+
+# Aliases: char, c
+frontierctl c --address "0x1234..."
+```
+
+### Smart Assembly Command
+
+Query smart assembly (structures/ships) data from the World API.
+
+```sh
+# List all assemblies
+frontierctl assembly --show-all
+
+# Get assembly by ID
+frontierctl assembly --id "assembly-id-123"
+
+# Search for an assembly by name (supports fuzzy matching)
+frontierctl assembly --name "Titan"
+
+# Aliases: asm, a
+frontierctl asm --name "Titan"
+```
+
+### Killmail Command
+
+Query killmail data from the World API.
+
+```sh
+# List all killmails
+frontierctl killmail --show-all
+
+# Filter killmails by victim name (supports fuzzy matching)
+frontierctl killmail --victim-name "PlayerName"
+
+# Aliases: km
+frontierctl km --show-all
+```
+
+### Type Command
+
+Query game type (item/ship/structure types) data from the World API.
+
+```sh
+# List all types
+frontierctl type --show-all
+
+# Get type by ID
+frontierctl type --id 587
+
+# Search for a type by name (supports fuzzy matching)
+frontierctl type --name "Tritanium"
+
+# Aliases: tpe, tp
+frontierctl tp --name "Ore"
+```
+
+### Fuel Command
+
+Query fuel efficiency data for different fuel types.
+
+```sh
+# List all fuels
+frontierctl fuel --show-all
+
+# Get fuel data by type ID
+frontierctl fuel --id 123
+
+# Search for fuel by type name (supports fuzzy matching)
+frontierctl fuel --name "Hydrogen"
+
+# Aliases: f
+frontierctl f --show-all
+```
+
+### Config Command
+
+View World API configuration including chain information and API endpoints.
+
+```sh
+# Show detailed config information
+frontierctl config
+
+# Show all configs in table format
+frontierctl config --show-all
+
+# Aliases: cfg
+frontierctl cfg
+```
+
+### Data Commands
+
+Commands for managing static game data.
+
+```sh
+# List static resources
+frontierctl data static resources list
+
+# Unpickle (extract) a static resource
+frontierctl data static resources unpickle --name "resource-name"
+
+# Aliases for resources: res, r
+frontierctl data static res l
+```
+
+## Common Options
+
+Most commands support the following options:
+
+- `--show-all`: Display all items in paginated format
+- `--id <id>`: Query by specific ID
+- `--name <name>`: Search by name with fuzzy matching support
+- `--page-size <size>`: Control pagination size (default varies by command)
+
+**Fuzzy Matching**: When searching by name, the tool will warn you if the match distance exceeds the configured threshold (default: 3). You can adjust this in `config.json`:
+
+```json
+{
+  "Configuration": {
+    "FuzzyWarningThreshold": 3,
+    "TribeMembersLimit": 25
+  }
+}
+```
+
 ## Contributing
 
 We welcome contributions to FrontierSharp.CommandLine! If you would like to contribute, please follow these steps:

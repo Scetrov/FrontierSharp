@@ -11,8 +11,8 @@ third-party services.
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [API Client](#api-client)
-    - [Command-Line Tool](#command-line-tool)
+  - [API Client](#api-client)
+  - [Command-Line Tool](#command-line-tool)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
@@ -30,7 +30,7 @@ third-party services.
 You can install the FrontierSharp packages via NuGet:
 
 ```sh
-wdotnet add package FrontierSharp.WorldApi
+dotnet add package FrontierSharp.WorldApi
 ```
 
 ## Usage
@@ -44,10 +44,10 @@ packages and configure the World API client, for example:
 services.AddHttpClient();
 services.AddFusionCache().AsHybridCache();
 services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
-    .Configure<FrontierSharpHttpClientOptions>(options => {
-        options.BaseUri = "https://api.frontierdevtools.com/";
-        options.HttpClientName = "WorldApi";
-    });
+  .Configure<FrontierSharpHttpClientOptions>(options => {
+    options.BaseUri = "https://blockchain-gateway-stillness.live.tech.evefrontier.com";
+    options.HttpClientName = nameof(WorldApiClient);
+  });
 services.AddSingleton<IWorldApiClient, WorldApiClient>();
 ```
 
@@ -84,6 +84,50 @@ You can then load this into the dependency injection provider with:
 
 ```csharp
 services.Configure<FrontierSharpHttpClientOptions>(Configuration.GetSection("FrontierSharp"));
+```
+
+## Complete Example
+
+Here is a complete example of how to use the FrontierSharp API client in a .NET application:
+
+```csharp
+var services = new ServiceCollection();
+
+services.AddHttpClient();
+services.AddFusionCache().AsHybridCache();
+services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
+  .Configure<FrontierSharpHttpClientOptions>(options => {
+    options.BaseUri = "https://blockchain-gateway-stillness.live.tech.evefrontier.com";
+    options.HttpClientName = nameof(WorldApiClient);
+  });
+services.AddSingleton<IWorldApiClient, WorldApiClient>();
+
+var provider = services.BuildServiceProvider();
+var client = provider.GetRequiredService<IWorldApiClient>();
+var result = await client.GetTribesPage();
+
+if (result.IsFailed) {
+  Console.WriteLine("Failed with the following reasons:");
+  foreach (var reason in result.Reasons) {
+    Console.WriteLine($" - {reason.Message}");
+  }
+  return;
+}
+
+foreach (var member in result.Value.Data) {
+  Console.WriteLine($"{member.Id}: {member.Name} [{member.NameShort}]");
+}
+```
+
+## ASP.NET Core Integration
+
+You can easily integrate FrontierSharp into an ASP.NET Core application by adding the necessary services in the `Startup.cs` file, then consuming the `IResult` returned by the FrontierSharp:
+
+```csharp
+[HttpGet]
+public async Task<ActionResult<Tribe>> GetTribes() {
+    return await client.GetTribes().ToActionResult();
+}
 ```
 
 ## Contributing
