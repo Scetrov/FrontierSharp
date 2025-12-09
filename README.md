@@ -54,15 +54,7 @@ services.AddSingleton<IWorldApiClient, WorldApiClient>();
 ### Command-Line Tool
 
 FrontierSharp comes with a command-line tool that can be used to interact with the EVE Frontier services. The tool is
-available from the Releases page.
-
-#### Tribe Command
-
-The CLI exposes a single `tribe` command (aliased as `t`, `corporation`, and `corp`) backed entirely by the WorldApi `/v2/tribes` endpoints. It supports three mutually exclusive modes:
-
-- `--id <tribeId>`: show detailed tribe information, including members (capable of limiting output with `--members-limit` or removing the cap via `--show-all-members`).
-- `--name <name>`: look up a tribe by name; the command first tries an exact match, then falls back to Levenshtein-based fuzzy search, warns when the match distance exceeds 3, and lists tie candidates with their IDs so you can rerun with `--id` for precision.
-- `--show-all`: stream every tribe in pages of 100 entries (or a user-provided `--page-size`) to the console.
+available from the Releases page and is documented in the [FrontierSharp.CommandLine README.md](./src/FrontierSharp.CommandLine/README.md).
 
 ## Configuration
 
