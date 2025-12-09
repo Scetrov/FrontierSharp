@@ -99,15 +99,20 @@ frontierctl tpe --id 34
 ## Fuel Examples
 
 ### Fuel Efficiency Data
+
+> [!NOTE]
+> Efficiency is a rating (0-255, with 90 being the practical maximum). Higher values mean better fuel economy.  
+> Formula: `Fuel consumed = Distance (LY) / Efficiency`
+
 ```sh
-# List all fuels and their efficiency
+# List all fuels and their efficiency ratings
 frontierctl fuel --show-all
 
 # Find fuel by type name
-frontierctl f --name "Hydrogen"
+frontierctl f --name "EU-90 Fuel"
 
 # Get fuel data by type ID
-frontierctl fuel --id 123
+frontierctl fuel --id 78437
 ```
 
 ## Config Examples

@@ -139,7 +139,7 @@ Query killmail data from the World API.
 frontierctl killmail --show-all
 
 # Filter killmails by victim name (supports fuzzy matching)
-frontierctl killmail --victim-name "PlayerName"
+frontierctl killmail --victim-name "Scetrov"
 
 # Aliases: km
 frontierctl km --show-all
@@ -154,18 +154,20 @@ Query game type (item/ship/structure types) data from the World API.
 frontierctl type --show-all
 
 # Get type by ID
-frontierctl type --id 587
+frontierctl type --id 88765
 
 # Search for a type by name (supports fuzzy matching)
-frontierctl type --name "Tritanium"
+frontierctl type --name "Shipyard L"
 
 # Aliases: tpe, tp
-frontierctl tp --name "Ore"
+frontierctl tp --name "Silicate Minerals"
 ```
 
 ### Fuel Command
 
 Query fuel efficiency data for different fuel types.
+
+**Note:** Efficiency is a rating (0-255, with 90 being the practical maximum) where higher values mean better fuel economy. Formula: `Fuel consumed = Distance (LY) / Efficiency`
 
 ```sh
 # List all fuels

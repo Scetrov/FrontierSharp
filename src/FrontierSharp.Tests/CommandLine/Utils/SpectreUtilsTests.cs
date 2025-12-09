@@ -89,12 +89,12 @@ public class SpectreUtilsTests {
     [InlineData(50, "[orange1]50[/]")]
     [InlineData(150, "[yellow]150[/]")]
     [InlineData(300, "[green]300[/]")]
-    public void FuelToAnsiString_Should_Format_Fuel_With_Color_And_Time(int value, string expectedStart) {
+    public void FuelToAnsiString_Should_Format_Fuel_With_Color(int value, string expected) {
         // Act
         var result = value.FuelToAnsiString();
 
         // Assert
-        result.Should().StartWith(expectedStart);
+        result.Should().Be(expected);
     }
 
     [Fact]

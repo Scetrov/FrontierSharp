@@ -34,13 +34,13 @@ public class SpectreUtilsAdditionalTests {
     }
 
     [Theory]
-    [InlineData(99, "[orange1]99[")] // contains marker
-    [InlineData(100, "[yellow]100[")]
-    [InlineData(239, "[yellow]239[")]
-    [InlineData(240, "[green]240[")]
-    public void FuelToAnsiString_BoundaryValues(int value, string expectedStart) {
+    [InlineData(99, "[orange1]99[/]")]
+    [InlineData(100, "[yellow]100[/]")]
+    [InlineData(239, "[yellow]239[/]")]
+    [InlineData(240, "[green]240[/]")]
+    public void FuelToAnsiString_BoundaryValues(int value, string expected) {
         var s = value.FuelToAnsiString();
-        s.Should().Contain(expectedStart);
+        s.Should().Be(expected);
     }
 
     [Fact]
