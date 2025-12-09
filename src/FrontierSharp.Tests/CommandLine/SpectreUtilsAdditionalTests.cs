@@ -34,10 +34,14 @@ public class SpectreUtilsAdditionalTests {
     }
 
     [Theory]
-    [InlineData(99, "[orange1]99[/]")]
-    [InlineData(100, "[yellow]100[/]")]
-    [InlineData(239, "[yellow]239[/]")]
-    [InlineData(240, "[green]240[/]")]
+    [InlineData(0, "[red]0[/]")]
+    [InlineData(1, "[red]1[/]")]
+    [InlineData(20, "[red]20[/]")]
+    [InlineData(21, "[yellow]21[/]")]
+    [InlineData(50, "[yellow]50[/]")]
+    [InlineData(79, "[yellow]79[/]")]
+    [InlineData(80, "[green]80[/]")]
+    [InlineData(90, "[green]90[/]")]
     public void FuelToAnsiString_BoundaryValues(int value, string expected) {
         var s = value.FuelToAnsiString();
         s.Should().Be(expected);

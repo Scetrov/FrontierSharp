@@ -48,11 +48,9 @@ public static class SpectreUtils {
 
     public static string FuelToAnsiString(this int value) {
         return value switch {
-            0 => "[red]Empty[/]",
-            > 0 and < 100 => $"[orange1]{value}[/]",
-            >= 100 and < 240 => $"[yellow]{value}[/]",
-            >= 240 => $"[green]{value}[/]",
-            _ => value.ToString()
+            >= 80 => $"[green]{value}[/]",
+            > 20 => $"[yellow]{value}[/]",
+            _ => $"[red]{value}[/]"
         };
     }
 

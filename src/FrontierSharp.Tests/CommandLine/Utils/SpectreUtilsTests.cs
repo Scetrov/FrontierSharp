@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿﻿using System.Numerics;
 using AwesomeAssertions;
 using FrontierSharp.CommandLine.Utils;
 using Xunit;
@@ -85,10 +85,14 @@ public class SpectreUtilsTests {
     }
 
     [Theory]
-    [InlineData(0, "[red]Empty[/]")]
-    [InlineData(50, "[orange1]50[/]")]
-    [InlineData(150, "[yellow]150[/]")]
-    [InlineData(300, "[green]300[/]")]
+    [InlineData(0, "[red]0[/]")]
+    [InlineData(10, "[red]10[/]")]
+    [InlineData(20, "[red]20[/]")]
+    [InlineData(21, "[yellow]21[/]")]
+    [InlineData(50, "[yellow]50[/]")]
+    [InlineData(79, "[yellow]79[/]")]
+    [InlineData(80, "[green]80[/]")]
+    [InlineData(90, "[green]90[/]")]
     public void FuelToAnsiString_Should_Format_Fuel_With_Color(int value, string expected) {
         // Act
         var result = value.FuelToAnsiString();
