@@ -167,7 +167,7 @@ frontierctl tp --name "Silicate Minerals"
 
 Query fuel efficiency data for different fuel types.
 
-**Note:** Efficiency is a rating (0-255, with 90 being the practical maximum) where higher efficiency values mean better fuel economy (less fuel consumed per lightyear).
+**Note:** Efficiency is a rating value (with 90 being the practical maximum) where higher efficiency values mean better fuel economy (less fuel consumed per lightyear).
 
 ```sh
 # List all fuels
