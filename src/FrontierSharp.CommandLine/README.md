@@ -65,13 +65,13 @@ Query tribe (corporation) data from the World API with fuzzy name matching.
 frontierctl tribe --show-all
 
 # Get tribe by exact ID
-frontierctl tribe --id 12345
+frontierctl tribe --id 98000314
 
 # Search for a tribe by name (supports fuzzy matching)
-frontierctl tribe --name "Frontier Explorers"
+frontierctl tribe --name "Reapers"
 
 # Aliases: t, corporation, corp
-frontierctl t --name "Explorers"
+frontierctl t --name "Reapers"
 ```
 
 ### Solar System Command
@@ -83,31 +83,33 @@ Query solar system data from the World API.
 frontierctl solarsystem --show-all
 
 # Get solar system by ID
-frontierctl solarsystem --id 1001
+frontierctl solarsystem --id 30024077
 
 # Search for a solar system by name (supports fuzzy matching)
-frontierctl solarsystem --name "Jita"
+frontierctl solarsystem --name "Q:50K9"
 
 # Aliases: system, ss
-frontierctl ss --name "Jita"
+frontierctl ss --name "Q:50K9"
 ```
 
 ### Smart Character Command
 
 Query smart character data including balances and smart assemblies.
 
+**Note:** Assembly names are often empty in the API, so the command displays assembly types instead.
+
 ```sh
 # List all characters
 frontierctl character --show-all
 
 # Get character by wallet address
-frontierctl character --address "0x1234567890abcdef..."
+frontierctl character --address "0xb40b47e10a771cb0d997d866440459baab32df9c"
 
 # Search for a character by name (supports fuzzy matching)
-frontierctl character --name "PlayerName"
+frontierctl character --name "Scetrov"
 
 # Aliases: char, c
-frontierctl c --address "0x1234..."
+frontierctl c --address "0xb40b47e10a771cb0d997d866440459baab32df9c"
 ```
 
 ### Smart Assembly Command

@@ -49,7 +49,11 @@ public class SmartCharacterCommand(
         table.AddRow("Gas Balance", detail.GasBalanceInWei.AsWeiToEther());
         var assemblies = detail.SmartAssemblies.ToList();
         table.AddRow("Assemblies", assemblies.Count.ToString());
-        if (assemblies.Any()) table.AddRow("Assembly Names", string.Join(", ", assemblies.Take(8).Select(a => a.Name)));
+        if (assemblies.Any()) {
+            var assemblyDisplay = assemblies.Take(8)
+                .Select(a => string.IsNullOrWhiteSpace(a.Name) ? a.Type.ToString() : a.Name);
+            table.AddRow("Assembly Types", string.Join(", ", assemblyDisplay));
+        }
         AnsiConsole.Write(table);
         return 0;
     }
