@@ -46,9 +46,9 @@ var host = Host.CreateDefaultBuilder(args)
                 .WithAlias("corp");
             config.AddCommand<SolarSystemCommand>("solarsystem").WithDescription("Solar system data from the World API").WithAlias("system")
                 .WithAlias("ss");
-            config.AddCommand<SmartCharacterCommand>("character").WithDescription("Smart character data from the World API").WithAlias("char")
+            config.AddCommand<SmartCharacterCommand>("character").WithDescription("Smart character data from the World API").WithAlias("char").WithAlias("rider")
                 .WithAlias("c");
-            config.AddCommand<SmartAssemblyCommand>("assembly").WithDescription("Smart assembly data from the World API").WithAlias("asm")
+            config.AddCommand<SmartAssemblyCommand>("assembly").WithDescription("Smart assembly data from the World API").WithAlias("asm").WithAlias("deployable")
                 .WithAlias("a");
             config.AddCommand<KillmailCommand>("killmail").WithDescription("Killmail data from the World API").WithAlias("km");
             config.AddCommand<TypeCommand>("type").WithDescription("Game type data from the World API").WithAlias("tpe").WithAlias("tp");
