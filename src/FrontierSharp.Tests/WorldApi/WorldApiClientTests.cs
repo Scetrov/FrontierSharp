@@ -335,7 +335,8 @@ public class WorldApiClientTests {
         var client = CreateWorldApiClient(factory);
 
         // Act
-        var result = await client.GetSmartAssemblyById(BigInteger.Parse("75343970651982257052710820829442849942642924970878978184835257992027850797979"));
+        var result = await client.GetSmartAssemblyById(
+            BigInteger.Parse("75343970651982257052710820829442849942642924970878978184835257992027850797979"));
 
         // Assert
         result.Errors.Should().BeEmpty();

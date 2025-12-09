@@ -16,7 +16,8 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
     }
 
-    public async Task<Result<WorldApiPayload<GameType>>> GetTypesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+    public async Task<Result<WorldApiPayload<GameType>>> GetTypesPage(long limit = 100, long offset = 0,
+        CancellationToken cancellationToken = default) {
         var requestModel = new GetListOfTypes {
             Limit = limit,
             Offset = offset
@@ -109,7 +110,8 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetSmartCharacterPage, limit, cancellationToken);
     }
 
-    public async Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+    public async Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0,
+        CancellationToken cancellationToken = default) {
         var requestModel = new GetListOfKillmails {
             Limit = limit,
             Offset = offset
@@ -129,7 +131,8 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
     }
 
     // Tribes
-    public async Task<Result<WorldApiPayload<Tribe>>> GetTribesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
+    public async Task<Result<WorldApiPayload<Tribe>>>
+        GetTribesPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
         var requestModel = new GetListOfTribes {
             Limit = limit,
             Offset = offset

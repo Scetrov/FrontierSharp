@@ -10,21 +10,21 @@ Keep this concise and specific to patterns discoverable in the codebase.
           `Program.cs`).
         - `FrontierSharp.HttpClient` — small HTTP wrapper providing a typed `Get<TRequest, TResponse>` that uses a named
           HttpClient, FusionCache and returns FluentResults (see `FrontierSharpHttpClient.cs`).
-        - `FrontierSharp.FrontierDevTools.Api` and `FrontierSharp.WorldApi` — high-level API clients that compose the
-          HttpClient requests (see `FrontierDevToolsClient.cs`, `WorldApiClient.cs`).
+        - `FrontierSharp.WorldApi` — high-level API clients that compose the
+          HttpClient requests (see `WorldApiClient.cs`).
         - `FrontierSharp.Tests` — xUnit tests that embed large JSON fixtures for WorldApi payloads (see
           `FrontierSharp.Tests.csproj` and `WorldApi/payloads`).
 
 - How to make small, safe changes
 
     - Prefer editing library projects (`.csproj`) or adding tests under `src/FrontierSharp.Tests`.
-    - Preserve APIs: public interfaces in `IFrontierSharpHttpClient`, `IFrontierDevToolsClient`, and `IWorldApiClient`
+    - Preserve APIs: public interfaces in `IFrontierSharpHttpClient`, and `IWorldApiClient`
       are used cross-project — update implementations and tests together.
 
 - Important patterns and conventions
 
     - Configuration: options objects are bound via `services.Configure<...>(Configuration.GetSection(...))` and the
-      default BaseUri + a named HttpClient "FrontierDevTools" are set in `Program.cs`.
+      default BaseUri + a named HttpClient "WorldApiClient" are set in `Program.cs`.
     - Caching: HTTP GET results are cached using `ZiggyCreatures.FusionCache` (HybridCache). Use the request model's
       `GetCacheKey()` to control cache keys.
     - Errors: Methods return FluentResults (`Result.Ok`/`Result.Fail`). Follow existing error patterns (propagate errors
@@ -45,8 +45,8 @@ Keep this concise and specific to patterns discoverable in the codebase.
 
 - Integration points & external dependencies
 
-    - External APIs: the FrontierDevTools API and World API — code calls them via `IFrontierSharpHttpClient` using a
-      configured `HttpClient` name (default: "FrontierDevTools"). Update options in
+    - External APIs: the World API — code calls them via `IFrontierSharpHttpClient` using a
+      configured `HttpClient` name (default: "WorldApiClient"). Update options in
       `FrontierSharp.CommandLine/Program.cs` or config files.
     - NuGet packages: Serilog, Spectre.Console, FluentResults, FusionCache, System.IO.Abstractions. Tests use
       NSubstitute and xUnit.
@@ -58,14 +58,13 @@ Keep this concise and specific to patterns discoverable in the codebase.
     - To add a new CLI command: add a `Command` class under `FrontierSharp.CommandLine/Commands`, register it in
       `Program.cs` using `config.AddCommand<YourCommand>("your-name").WithAlias("yn")` and add tests in
       `FrontierSharp.Tests/CommandLine`.
-    - To call the API client from a new service: inject `IFrontierDevToolsClient` or `IWorldApiClient` (registered as
+    - To call the API client from a new service: inject `IWorldApiClient` (registered as
       singletons in `Program.cs`) and call the high-level methods (e.g., `CalculateDistance`, `FindTravelRoute`).
 
 - Files to inspect first when debugging
 
     - `src/FrontierSharp.CommandLine/Program.cs` — DI, logging, command registration.
     - `src/FrontierSharp.HttpClient/FrontierSharpHttpClient.cs` — HTTP, caching, serialization, error handling.
-    - `src/FrontierSharp.FrontierDevTools.Api/FrontierDevToolsClient.cs` — high-level API operations.
     - `src/FrontierSharp.WorldApi/WorldApiClient.cs` — paging helpers and payload handling.
     - `src/FrontierSharp.Tests/` — where fixtures and tests live; use them to validate behavior.
 

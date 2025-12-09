@@ -11,8 +11,8 @@ third-party services.
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [API Client](#api-client)
-    - [Command-Line Tool](#command-line-tool)
+  - [API Client](#api-client)
+  - [Command-Line Tool](#command-line-tool)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
@@ -30,31 +30,39 @@ third-party services.
 You can install the FrontierSharp packages via NuGet:
 
 ```sh
-dotnet add package FrontierSharp.FrontierDevTools.Api
+dotnet add package FrontierSharp.WorldApi
 ```
 
 ## Usage
 
 ### API Client
 
-FrontierShip is Dependency Injection ready, so all you need to do to add it to an existing project is Install the NuGet
-packages and setup the DI container, for example:
+FrontierShip is Dependency Injection ready, so all you need to do to add it to an existing project is install the NuGet
+packages and configure the World API client, for example:
 
 ```csharp
 services.AddHttpClient();
 services.AddFusionCache().AsHybridCache();
-services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(FrontierDevToolsClient))
-    .Configure<FrontierSharpHttpClientOptions>(options => {
-        options.BaseUri = "https://api.frontierdevtools.com/";
-        options.HttpClientName = "FrontierDevTools";
-    });
-services.AddSingleton<IFrontierDevToolsClient, FrontierDevToolsClient>();
+services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
+  .Configure<FrontierSharpHttpClientOptions>(options => {
+    options.BaseUri = "https://blockchain-gateway-stillness.live.tech.evefrontier.com";
+    options.HttpClientName = nameof(WorldApiClient);
+  });
+services.AddSingleton<IWorldApiClient, WorldApiClient>();
 ```
 
 ### Command-Line Tool
 
 FrontierSharp comes with a command-line tool that can be used to interact with the EVE Frontier services. The tool is
 available from the Releases page.
+
+#### Tribe Command
+
+The CLI exposes a single `tribe` command (aliased as `t`, `corporation`, and `corp`) backed entirely by the WorldApi `/v2/tribes` endpoints. It supports three mutually exclusive modes:
+
+- `--id <tribeId>`: show detailed tribe information, including members (capable of limiting output with `--members-limit` or removing the cap via `--show-all-members`).
+- `--name <name>`: look up a tribe by name; the command first tries an exact match, then falls back to Levenshtein-based fuzzy search, warns when the match distance exceeds 3, and lists tie candidates with their IDs so you can rerun with `--id` for precision.
+- `--show-all`: stream every tribe in pages of 100 entries (or a user-provided `--page-size`) to the console.
 
 ## Configuration
 
@@ -65,7 +73,9 @@ configuration to your `appsettings.json` file:
 {
   "FrontierSharp": {
     "BaseUri": "https://api.frontierdevtools.com/",
-    "HttpClientName": "FrontierDevTools"
+    "HttpClientName": "WorldApi",
+    "TribeMembersLimit": 25,
+    "TribeFuzzyWarningThreshold": 3
   }
 }
 ```
@@ -74,6 +84,50 @@ You can then load this into the dependency injection provider with:
 
 ```csharp
 services.Configure<FrontierSharpHttpClientOptions>(Configuration.GetSection("FrontierSharp"));
+```
+
+## Complete Example
+
+Here is a complete example of how to use the FrontierSharp API client in a .NET application:
+
+```csharp
+var services = new ServiceCollection();
+
+services.AddHttpClient();
+services.AddFusionCache().AsHybridCache();
+services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
+  .Configure<FrontierSharpHttpClientOptions>(options => {
+    options.BaseUri = "https://blockchain-gateway-stillness.live.tech.evefrontier.com";
+    options.HttpClientName = nameof(WorldApiClient);
+  });
+services.AddSingleton<IWorldApiClient, WorldApiClient>();
+
+var provider = services.BuildServiceProvider();
+var client = provider.GetRequiredService<IWorldApiClient>();
+var result = await client.GetTribesPage();
+
+if (result.IsFailed) {
+  Console.WriteLine("Failed with the following reasons:");
+  foreach (var reason in result.Reasons) {
+    Console.WriteLine($" - {reason.Message}");
+  }
+  return;
+}
+
+foreach (var member in result.Value.Data) {
+  Console.WriteLine($"{member.Id}: {member.Name} [{member.NameShort}]");
+}
+```
+
+## ASP.NET Core Integration
+
+You can easily integrate FrontierSharp into an ASP.NET Core application by adding the necessary services in the `Startup.cs` file, then consuming the `IResult` returned by the FrontierSharp:
+
+```csharp
+[HttpGet]
+public async Task<ActionResult<Tribe>> GetTribes() {
+    return await client.GetTribes().ToActionResult();
+}
 ```
 
 ## Contributing

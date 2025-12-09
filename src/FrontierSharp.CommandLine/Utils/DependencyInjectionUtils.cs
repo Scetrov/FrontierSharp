@@ -1,4 +1,5 @@
 using Serilog.Events;
+using Spectre.Console;
 using Spectre.Console.Cli;
 
 namespace FrontierSharp.CommandLine.Utils;
@@ -23,10 +24,16 @@ public static class DependencyInjectionUtils {
     }
 
     public static IConfigurator ConfigureExceptions(this IConfigurator config) {
-#if DEBUG
-        return config.PropagateExceptions();
-#else
+        config.SetExceptionHandler((ex, _) => {
+            if (ex is CommandRuntimeException commandEx) {
+                AnsiConsole.MarkupLine($"[red]Error:[/] {commandEx.Message.EscapeMarkup()}");
+                return -1;
+            }
+
+            AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
+            return -1;
+        });
+
         return config;
-#endif
     }
 }

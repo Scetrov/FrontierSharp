@@ -35,17 +35,13 @@ public class SpectreUtilsTests {
 
     [Fact]
     public void FuelToAnsiString_Boundaries() {
-        0.FuelToAnsiString().Should().Be("[red]Empty[/]");
-
-        var fifty = 50.FuelToAnsiString();
-        fifty.Should().Contain("[orange1]50[/]");
-        fifty.Should().Contain("(");
-
-        var hundred = 100.FuelToAnsiString();
-        hundred.Should().Contain("[yellow]100[/]");
-
-        var twoForty = 240.FuelToAnsiString();
-        twoForty.Should().Contain("[green]240[/]");
+        0.FuelToAnsiString().Should().Be("[red]0[/]");
+        20.FuelToAnsiString().Should().Be("[red]20[/]");
+        21.FuelToAnsiString().Should().Be("[yellow]21[/]");
+        50.FuelToAnsiString().Should().Be("[yellow]50[/]");
+        79.FuelToAnsiString().Should().Be("[yellow]79[/]");
+        80.FuelToAnsiString().Should().Be("[green]80[/]");
+        90.FuelToAnsiString().Should().Be("[green]90[/]");
     }
 
     [Fact]

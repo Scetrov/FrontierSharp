@@ -5,8 +5,7 @@ using FrontierSharp.HttpClient.Serialization;
 namespace FrontierSharp.WorldApi.Models;
 
 public class SmartCharacterDetail : SmartCharacter {
-    [JsonPropertyName("tribeId")]
-    public int TribeId { get; set; } = 0;
+    [JsonPropertyName("tribeId")] public int TribeId { get; set; } = 0;
 
     [JsonPropertyName("eveBalanceInWei")]
     [JsonConverter(typeof(BigIntegerConverter))]
@@ -16,9 +15,7 @@ public class SmartCharacterDetail : SmartCharacter {
     [JsonConverter(typeof(BigIntegerConverter))]
     public BigInteger GasBalanceInWei { get; set; } = 0;
 
-    [JsonPropertyName("smartAssemblies")]
-    public IEnumerable<SmartAssembly> SmartAssemblies { get; set; } = [];
+    [JsonPropertyName("smartAssemblies")] public IEnumerable<SmartAssembly> SmartAssemblies { get; set; } = [];
 
-    [JsonPropertyName("portraitUrl")]
-    public string PortraitUrl { get; set; } = string.Empty;
+    [JsonPropertyName("portraitUrl")] public string PortraitUrl { get; set; } = string.Empty;
 }

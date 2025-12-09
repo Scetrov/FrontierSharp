@@ -11,9 +11,7 @@ public class SmartAssemblyTypeConverter : JsonConverter<SmartAssemblyType> {
         switch (reader.TokenType) {
             case JsonTokenType.String: {
                 var enumText = reader.GetString();
-                if (Enum.TryParse<SmartAssemblyType>(enumText, true, out var value)) {
-                    return value;
-                }
+                if (Enum.TryParse<SmartAssemblyType>(enumText, true, out var value)) return value;
 
                 break;
             }
