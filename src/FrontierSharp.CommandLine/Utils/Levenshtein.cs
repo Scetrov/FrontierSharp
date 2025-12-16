@@ -10,7 +10,9 @@ public static class Levenshtein {
         var previousRow = new int[targetLength + 1];
         var currentRow = new int[targetLength + 1];
 
-        for (var j = 0; j <= targetLength; j++) previousRow[j] = j;
+        for (var j = 0; j <= targetLength; j++) {
+            previousRow[j] = j;
+        }
 
         for (var i = 1; i <= sourceLength; i++) {
             currentRow[0] = i;

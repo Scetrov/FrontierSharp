@@ -1,4 +1,4 @@
-﻿﻿using System.Numerics;
+﻿using System.Numerics;
 using AwesomeAssertions;
 using FrontierSharp.CommandLine.Utils;
 using Xunit;

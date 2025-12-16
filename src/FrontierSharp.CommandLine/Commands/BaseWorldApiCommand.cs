@@ -43,11 +43,12 @@ public abstract class BaseWorldApiCommand<TSettings> : AsyncCommand<TSettings> w
     // Build fuzzy candidates based on Levenshtein distance; returns candidates ordered by distance then name
     protected IReadOnlyList<Candidate<T>> BuildFuzzyCandidates<T>(IEnumerable<T> items, string inputName, Func<T, string> nameSelector) {
         var candidates = items.Select(item => new Candidate<T>(item, Levenshtein.Distance(inputName, nameSelector(item))))
-            .GroupBy(c => c.Distance)
-            .OrderBy(g => g.Key)
-            .FirstOrDefault()
-            ?.OrderBy(c => nameSelector(c.Value), StringComparer.OrdinalIgnoreCase)
-            .ToList() ?? new List<Candidate<T>>();
+                             .GroupBy(c => c.Distance)
+                             .OrderBy(g => g.Key)
+                             .FirstOrDefault()
+                             ?.OrderBy(c => nameSelector(c.Value), StringComparer.OrdinalIgnoreCase)
+                             .ToList() ??
+                         new List<Candidate<T>>();
 
         return candidates;
     }

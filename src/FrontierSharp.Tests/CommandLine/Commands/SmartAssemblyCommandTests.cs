@@ -1,4 +1,5 @@
 using System.Numerics;
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -28,9 +29,9 @@ public class SmartAssemblyCommandTests {
         var client = Substitute.For<IWorldApiClient>();
         client.GetSmartAssemblyPage(Arg.Any<long>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new WorldApiPayload<SmartAssemblyWithSolarSystem> {
-                Data = new[] {
+                Data = [
                     new SmartAssemblyWithSolarSystem { Id = "1", Name = "Widget", SolarSystem = new SolarSystem { Id = 1, Name = "Sol" } }
-                },
+                ],
                 Metadata = new WorldApiMetadata { Total = 1, Limit = 100, Offset = 0 }
             }));
 
@@ -39,7 +40,7 @@ public class SmartAssemblyCommandTests {
         var settings = new SmartAssemblyCommand.Settings { ShowAll = true };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 
@@ -54,7 +55,7 @@ public class SmartAssemblyCommandTests {
         var settings = new SmartAssemblyCommand.Settings { Id = BigInteger.Parse("2") };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
         await client.Received().GetSmartAssemblyById(BigInteger.Parse("2"), Arg.Any<CancellationToken>());
     }

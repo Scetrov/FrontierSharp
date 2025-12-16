@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -25,14 +26,14 @@ public class BaseWorldApiCommandTests {
         Task<Result<WorldApiPayload<int>>> PageFunc(long limit, long offset, CancellationToken ct) {
             if (offset == 0)
                 return Task.FromResult(Result.Ok(new WorldApiPayload<int>
-                    { Data = new[] { 1, 2 }, Metadata = new WorldApiMetadata { Total = 3, Limit = limit, Offset = offset } }));
+                    { Data = [1, 2], Metadata = new WorldApiMetadata { Total = 3, Limit = limit, Offset = offset } }));
             return Task.FromResult(Result.Ok(new WorldApiPayload<int>
-                { Data = new[] { 3 }, Metadata = new WorldApiMetadata { Total = 3, Limit = limit, Offset = offset } }));
+                { Data = [3], Metadata = new WorldApiMetadata { Total = 3, Limit = limit, Offset = offset } }));
         }
 
         var res = await cmd.InvokeLoadAllPages(PageFunc, 2, CancellationToken.None);
-        Assert.True(res.IsSuccess);
-        Assert.Equal(3, res.Value.Count);
+        res.IsSuccess.Should().BeTrue();
+        res.Value.Count.Should().Be(3);
     }
 
     [Fact]
@@ -46,14 +47,12 @@ public class BaseWorldApiCommandTests {
         // Use a concrete type so we can assert on the Name property
         var items = new[] { new Item { Name = "Alpha" }, new Item { Name = "Alfa" }, new Item { Name = "Beta" } };
         var candidates = cmd.InvokeBuildFuzzyCandidates(items, "Alf", x => x.Name);
-        Assert.NotEmpty(candidates);
-        Assert.Contains(candidates, c => c.Value.Name == "Alfa");
+        candidates.Should().NotBeEmpty();
+        candidates.Select(x => x.Value.Name).Should().Contain("Alfa");
     }
 
-    private class TestCommand : BaseWorldApiCommand<BaseWorldApiSettings> {
-        public TestCommand(ILogger logger, IWorldApiClient client, IAnsiConsole console, IOptions<ConfigurationOptions> options)
-            : base(logger, client, console, options) {
-        }
+    private class TestCommand(ILogger logger, IWorldApiClient client, IAnsiConsole console, IOptions<ConfigurationOptions> options)
+        : BaseWorldApiCommand<BaseWorldApiSettings>(logger, client, console, options) {
 
         // Implement abstract ExecuteAsync to satisfy AsyncCommand contract for tests
         public override Task<int> ExecuteAsync(CommandContext context, BaseWorldApiSettings settings, CancellationToken cancellationToken) {

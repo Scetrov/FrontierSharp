@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -27,7 +28,7 @@ public class SmartCharacterCommandTests {
         var client = Substitute.For<IWorldApiClient>();
         client.GetSmartCharacterPage(Arg.Any<long>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new WorldApiPayload<SmartCharacter> {
-                Data = new[] { new SmartCharacter { Address = "0x1", Name = "Alice" } },
+                Data = [new SmartCharacter { Address = "0x1", Name = "Alice" }],
                 Metadata = new WorldApiMetadata { Total = 1, Limit = 100, Offset = 0 }
             }));
 
@@ -36,7 +37,7 @@ public class SmartCharacterCommandTests {
         var settings = new SmartCharacterCommand.Settings { ShowAll = true };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 
@@ -51,7 +52,7 @@ public class SmartCharacterCommandTests {
         var settings = new SmartCharacterCommand.Settings { Address = "0x2" };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
         await client.Received().GetSmartCharacterById("0x2", Arg.Any<CancellationToken>());
     }

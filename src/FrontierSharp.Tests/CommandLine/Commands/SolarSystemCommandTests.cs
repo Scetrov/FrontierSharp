@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -27,7 +28,7 @@ public class SolarSystemCommandTests {
         var client = Substitute.For<IWorldApiClient>();
         client.GetSolarSystemPage(Arg.Any<long>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new WorldApiPayload<SolarSystem> {
-                Data = new[] { new SolarSystem { Id = 1, Name = "Sol" } },
+                Data = [new SolarSystem { Id = 1, Name = "Sol" }],
                 Metadata = new WorldApiMetadata { Total = 1, Limit = 1000, Offset = 0 }
             }));
 
@@ -36,7 +37,7 @@ public class SolarSystemCommandTests {
         var settings = new SolarSystemCommand.Settings { ShowAll = true };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 
@@ -51,7 +52,7 @@ public class SolarSystemCommandTests {
         var settings = new SolarSystemCommand.Settings { Id = 2 };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
         await client.Received().GetSolarSystemById(2, Arg.Any<CancellationToken>());
     }

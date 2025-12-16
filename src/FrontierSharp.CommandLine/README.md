@@ -167,7 +167,8 @@ frontierctl tp --name "Silicate Minerals"
 
 Query fuel efficiency data for different fuel types.
 
-**Note:** Efficiency is a rating value (with 90 being the practical maximum) where higher efficiency values mean better fuel economy (less fuel consumed per lightyear).
+**Note:** Efficiency is a rating value (with 90 being the practical maximum) where higher efficiency values mean better
+fuel economy (less fuel consumed per lightyear).
 
 ```sh
 # List all fuels
@@ -222,7 +223,8 @@ Most commands support the following options:
 - `--name <name>`: Search by name with fuzzy matching support
 - `--page-size <size>`: Control pagination size (default varies by command)
 
-**Fuzzy Matching**: When searching by name, the tool will warn you if the match distance exceeds the configured threshold (default: 3). You can adjust this in `config.json`:
+**Fuzzy Matching**: When searching by name, the tool will warn you if the match distance exceeds the configured
+threshold (default: 3). You can adjust this in `config.json`:
 
 ```json
 {

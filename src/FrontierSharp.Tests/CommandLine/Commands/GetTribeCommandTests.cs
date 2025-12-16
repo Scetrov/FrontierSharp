@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -17,28 +18,28 @@ public class GetTribeCommandSettingsTests {
     public void Validate_Fails_WhenNoOptionSpecified() {
         var settings = new GetTribeCommand.Settings();
         var result = settings.Validate();
-        Assert.False(result.Successful);
+        result.Successful.Should().BeFalse();
     }
 
     [Fact]
     public void Validate_Succeeds_WhenIdSpecified() {
         var settings = new GetTribeCommand.Settings { Id = 1 };
         var result = settings.Validate();
-        Assert.True(result.Successful);
+        result.Successful.Should().BeTrue();
     }
 
     [Fact]
     public void Validate_Succeeds_WhenNameSpecified() {
         var settings = new GetTribeCommand.Settings { Name = "Sky" };
         var result = settings.Validate();
-        Assert.True(result.Successful);
+        result.Successful.Should().BeTrue();
     }
 
     [Fact]
     public void Validate_Fails_WhenMultipleOptionsSpecified() {
         var settings = new GetTribeCommand.Settings { Id = 1, Name = "Sky" };
         var result = settings.Validate();
-        Assert.False(result.Successful);
+        result.Successful.Should().BeFalse();
     }
 }
 
@@ -59,9 +60,9 @@ public class GetTribeCommandTests {
         var worldApiClient = Substitute.For<IWorldApiClient>();
         worldApiClient.GetTribesPage(Arg.Any<long>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new WorldApiPayload<Tribe> {
-                Data = new[] {
+                Data = [
                     new Tribe { Id = 10, Name = "Alpha", MemberCount = 1, TaxRate = 5.5, FoundedAt = DateTimeOffset.UtcNow }
-                },
+                ],
                 Metadata = new WorldApiMetadata { Total = 1, Limit = 100, Offset = 0 }
             }));
 
@@ -70,7 +71,7 @@ public class GetTribeCommandTests {
         var settings = new GetTribeCommand.Settings { ShowAll = true };
         var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
 
-        Assert.Equal(0, exitCode);
+        exitCode.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 
@@ -79,7 +80,7 @@ public class GetTribeCommandTests {
         var detail = new TribeDetail {
             Id = 1,
             Name = "Zar",
-            Members = new[] { new TribeMember { Name = "Joe" }, new TribeMember { Name = "Mary" } }
+            Members = [new TribeMember { Name = "Joe" }, new TribeMember { Name = "Mary" }]
         };
 
         var worldApiClient = Substitute.For<IWorldApiClient>();
@@ -100,10 +101,10 @@ public class GetTribeCommandTests {
         var worldApiClient = Substitute.For<IWorldApiClient>();
         worldApiClient.GetTribesPage(Arg.Any<long>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
             .Returns(Result.Ok(new WorldApiPayload<Tribe> {
-                Data = new[] {
+                Data = [
                     new Tribe { Id = 10, Name = "Alfa" },
                     new Tribe { Id = 12, Name = "Alfo" }
-                },
+                ],
                 Metadata = new WorldApiMetadata { Total = 2, Offset = 0, Limit = 100 }
             }));
 

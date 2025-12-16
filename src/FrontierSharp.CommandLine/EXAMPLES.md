@@ -108,7 +108,8 @@ frontierctl tpe --id 34
 ### Fuel Efficiency Data
 
 > [!NOTE]
-> Efficiency is a rating value (with 90 being the practical maximum). Higher efficiency values mean better fuel economy (less fuel consumed per lightyear).
+> Efficiency is a rating value (with 90 being the practical maximum). Higher efficiency values mean better fuel
+> economy (less fuel consumed per lightyear).
 
 ```sh
 # List all fuels and their efficiency ratings

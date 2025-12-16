@@ -123,8 +123,7 @@ public class GetTribeCommand(
 
         if (!tribe.Members.Any()) {
             table.AddRow("Members", "[grey]None[/]");
-        }
-        else {
+        } else {
             var displayed = tribe.Members.Take(limit).Select(m => m.Name.EscapeMarkup()).ToList();
             table.AddRow("Members", string.Join(", ", displayed));
 

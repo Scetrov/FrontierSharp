@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -26,7 +27,7 @@ public class KillmailCommandTests {
     public async Task ExecuteAsync_ShowAll_WritesTable() {
         var client = Substitute.For<IWorldApiClient>();
         var payload = new WorldApiPayload<Killmail> {
-            Data = new[] { new Killmail { Victim = new SmartCharacter { Name = "Joe" }, Time = DateTimeOffset.UtcNow } },
+            Data = [new Killmail { Victim = new SmartCharacter { Name = "Joe" }, Time = DateTimeOffset.UtcNow }],
             Metadata = new WorldApiMetadata { Total = 1, Limit = 100, Offset = 0 }
         };
         var pageResult = Task.FromResult(Result.Ok(payload));
@@ -37,7 +38,7 @@ public class KillmailCommandTests {
         var settings = new KillmailCommand.Settings { ShowAll = true };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 
@@ -45,7 +46,7 @@ public class KillmailCommandTests {
     public async Task ExecuteAsync_Id_ShowsDetails() {
         var km = new Killmail { Victim = new SmartCharacter { Name = "Bob" }, Time = DateTimeOffset.UtcNow };
         var client = Substitute.For<IWorldApiClient>();
-        var killmailPayload = (IEnumerable<Killmail>)new[] { km };
+        var killmailPayload = (IEnumerable<Killmail>)[km];
         var killmailResult = Task.FromResult(Result.Ok(killmailPayload));
         client.GetAllKillmails(Arg.Any<long>(), Arg.Any<CancellationToken>()).Returns(killmailResult);
 
@@ -54,7 +55,7 @@ public class KillmailCommandTests {
         var settings = new KillmailCommand.Settings { VictimName = "Bob" };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 }

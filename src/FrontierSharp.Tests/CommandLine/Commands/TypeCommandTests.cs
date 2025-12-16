@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using FluentResults;
 using FrontierSharp.CommandLine;
 using FrontierSharp.CommandLine.Commands;
@@ -25,7 +26,7 @@ public class TypeCommandTests {
     public async Task ExecuteAsync_ShowAll_WritesTable() {
         var client = Substitute.For<IWorldApiClient>();
         var payload = new WorldApiPayload<GameType> {
-            Data = new[] { new GameType { Id = 1, Name = "Widget", GroupName = "Gadgets" } },
+            Data = [new GameType { Id = 1, Name = "Widget", GroupName = "Gadgets" }],
             Metadata = new WorldApiMetadata { Total = 1, Limit = 100, Offset = 0 }
         };
         client.GetTypesPage(Arg.Any<long>(), Arg.Any<long>(), Arg.Any<CancellationToken>()).Returns(Task.FromResult(Result.Ok(payload)));
@@ -35,7 +36,7 @@ public class TypeCommandTests {
         var settings = new TypeCommand.Settings { ShowAll = true };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 
@@ -50,7 +51,7 @@ public class TypeCommandTests {
         var settings = new TypeCommand.Settings { Id = 2 };
 
         var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
-        Assert.Equal(0, rc);
+        rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
 }

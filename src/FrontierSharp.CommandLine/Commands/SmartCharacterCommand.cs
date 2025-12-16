@@ -58,6 +58,7 @@ public class SmartCharacterCommand(
                 .Select(FormatAssembly);
             table.AddRow("Assembly Types", string.Join(Environment.NewLine, assemblyDisplay));
         }
+
         AnsiConsole.Write(table);
         return 0;
     }
@@ -143,6 +144,7 @@ public class SmartCharacterCommand(
                     .Select(FormatAssembly);
                 table.AddRow("Assembly Types", string.Join(Environment.NewLine, assemblyDisplay));
             }
+
             AnsiConsole.Write(table);
             return 0;
         }
