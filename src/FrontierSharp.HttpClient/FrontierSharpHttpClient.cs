@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using FluentResults;
 using FrontierSharp.HttpClient.Models;
 using Microsoft.Extensions.Caching.Hybrid;
@@ -35,7 +36,25 @@ public class FrontierSharpHttpClient(
             Exception? exception = null;
 
             try {
-                result = JsonSerializer.Deserialize<TResponseModel>(content);
+                // Use configured JsonSerializerOptions if provided, otherwise ensure
+                // reflection-based serialization is available by providing a
+                // DefaultJsonTypeInfoResolver. This makes the client work in
+                // trimmed / AOT applications that disable reflection-based
+                // serialization by default.
+                var serializerOptions = options.Value.JsonSerializerOptions;
+
+                if (serializerOptions == null) {
+                    serializerOptions = new JsonSerializerOptions {
+                        TypeInfoResolver = new DefaultJsonTypeInfoResolver()
+                    };
+                } else if (serializerOptions.TypeInfoResolver == null) {
+                    // Clone and set a resolver so we don't mutate the caller's instance
+                    var cloned = new JsonSerializerOptions(serializerOptions);
+                    cloned.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
+                    serializerOptions = cloned;
+                }
+
+                result = JsonSerializer.Deserialize<TResponseModel>(content, serializerOptions);
             } catch (Exception ex) {
                 exception = ex;
             }
