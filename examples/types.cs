@@ -1,4 +1,4 @@
-#:package FrontierSharp.WorldApi@0.15.19
+#:package FrontierSharp.WorldApi@0.15.20
 #:package ZiggyCreatures.FusionCache@2.4.0
 #:sdk Microsoft.NET.Sdk
 
@@ -12,7 +12,7 @@ var services = new ServiceCollection();
 services.AddHttpClient();
 services.AddFusionCache().AsHybridCache();
 services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(nameof(WorldApiClient))
-	.Configure<FrontierSharpHttpClientOptions>(options => {
+	.Configure<FrontierSharpHttpClientOptions>(static options => {
 		options.BaseUri = "https://blockchain-gateway-stillness.live.tech.evefrontier.com";
 		options.HttpClientName = nameof(WorldApiClient);
 	});
