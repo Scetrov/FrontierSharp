@@ -3,10 +3,13 @@ updates:
   - package-ecosystem: "nuget"
     directory: "/src"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    open-pull-requests-limit: 10
     target-branch: "main"
-    allow:
-      - dependency-type: "direct"
     commit-message:
       prefix: "deps"
       include: "scope"
+    groups:
+      all-deps:
+        patterns:
+          - "*"
