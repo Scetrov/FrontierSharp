@@ -11,7 +11,6 @@ commit-date-format: yyyy-MM-dd
 merge-message-formats: { }
 update-build-number: true
 semantic-version-format: Strict
-next-version: 1.0.0
 strategies:
   - ConfiguredNextVersion
   - Mainline
