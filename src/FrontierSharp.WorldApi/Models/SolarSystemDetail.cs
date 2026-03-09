@@ -5,7 +5,7 @@ namespace FrontierSharp.WorldApi.Models;
 
 [ExcludeFromCodeCoverage]
 public class SolarSystemDetail : SolarSystem {
-    [JsonPropertyName("smartAssemblies")] public IEnumerable<SmartAssembly> SmartAssemblies { get; set; } = [];
+    [JsonPropertyName("smartAssemblies")] public IEnumerable<SolarSystemSmartAssembly> SmartAssemblies { get; set; } = [];
 
     [JsonPropertyName("regionId")] public long RegionId { get; set; } = 0;
 }

@@ -2,8 +2,8 @@
 
 ## Description
 
-`frontierctl` is a cross-platform command line application designed for interacting with the EVE Frontier world via the
-API, Blockchain and Mud Tables.
+`frontierctl` is a cross-platform command line application designed for interacting with EVE Frontier static data through the
+World API and local data utilities.
 
 ## Downloading Binaries
 
@@ -14,7 +14,7 @@ You can download binaries from the [Releases](https://github.com/Scetrov/Frontie
 You can run `frontierctl` using Docker. The following command will run the latest version of `frontierctl`:
 
 ```sh
-docker run ghcr.io/scetrov/frontiersharp:latest rider --name Scetrov
+docker run ghcr.io/scetrov/frontiersharp:latest tribe --name Scetrov
 ```
 
 ## Building from Source
@@ -54,7 +54,8 @@ For detailed usage examples, see [EXAMPLES.md](EXAMPLES.md).
 
 ## Commands
 
-`frontierctl` provides several commands for interacting with the EVE Frontier World API:
+`frontierctl` currently provides commands for the World API routes that still expose static game data, plus local static
+data utilities:
 
 ### Tribe Command
 
@@ -92,59 +93,6 @@ frontierctl solarsystem --name "Q:50K9"
 frontierctl ss --name "Q:50K9"
 ```
 
-### Smart Character Command
-
-Query smart character data including balances and smart assemblies.
-
-**Note:** Assembly names are often empty in the API, so the command displays assembly types instead.
-
-```sh
-# List all characters
-frontierctl character --show-all
-
-# Get character by wallet address
-frontierctl character --address "0xb40b47e10a771cb0d997d866440459baab32df9c"
-
-# Search for a character by name (supports fuzzy matching)
-frontierctl character --name "Scetrov"
-
-# Aliases: char, c
-frontierctl c --address "0xb40b47e10a771cb0d997d866440459baab32df9c"
-```
-
-### Smart Assembly Command
-
-Query smart assembly (structures/ships) data from the World API.
-
-```sh
-# List all assemblies
-frontierctl assembly --show-all
-
-# Get assembly by ID
-frontierctl assembly --id "assembly-id-123"
-
-# Search for an assembly by name (supports fuzzy matching)
-frontierctl assembly --name "Titan"
-
-# Aliases: asm, a
-frontierctl asm --name "Titan"
-```
-
-### Killmail Command
-
-Query killmail data from the World API.
-
-```sh
-# List all killmails
-frontierctl killmail --show-all
-
-# Filter killmails by victim name (supports fuzzy matching)
-frontierctl killmail --victim-name "Scetrov"
-
-# Aliases: km
-frontierctl km --show-all
-```
-
 ### Type Command
 
 Query game type (item/ship/structure types) data from the World API.
@@ -161,42 +109,6 @@ frontierctl type --name "Shipyard L"
 
 # Aliases: tpe, tp
 frontierctl tp --name "Silicate Minerals"
-```
-
-### Fuel Command
-
-Query fuel efficiency data for different fuel types.
-
-**Note:** Efficiency is a rating value (with 90 being the practical maximum) where higher efficiency values mean better
-fuel economy (less fuel consumed per lightyear).
-
-```sh
-# List all fuels
-frontierctl fuel --show-all
-
-# Get fuel data by type ID
-frontierctl fuel --id 123
-
-# Search for fuel by type name (supports fuzzy matching)
-frontierctl fuel --name "Hydrogen"
-
-# Aliases: f
-frontierctl f --show-all
-```
-
-### Config Command
-
-View World API configuration including chain information and API endpoints.
-
-```sh
-# Show detailed config information
-frontierctl config
-
-# Show all configs in table format
-frontierctl config --show-all
-
-# Aliases: cfg
-frontierctl cfg
 ```
 
 ### Data Commands
@@ -216,7 +128,7 @@ frontierctl data static res l
 
 ## Common Options
 
-Most commands support the following options:
+Most World API commands support the following options:
 
 - `--show-all`: Display all items in paginated format
 - `--id <id>`: Query by specific ID

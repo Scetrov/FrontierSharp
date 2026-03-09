@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using FluentResults;
+﻿using FluentResults;
 using FrontierSharp.HttpClient;
 using FrontierSharp.WorldApi.Models;
 using FrontierSharp.WorldApi.RequestModel;
@@ -30,19 +29,6 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetTypesPage, limit, cancellationToken);
     }
 
-    public async Task<Result<WorldApiPayload<Fuel>>> GetFuelsPage(long limit = 100, long offset = 0, CancellationToken cancellationToken = default) {
-        var requestModel = new GetListOfFuels {
-            Limit = limit,
-            Offset = offset
-        };
-        var result = await httpClient.Get<GetListOfFuels, WorldApiPayload<Fuel>>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
-
-    public async Task<Result<IEnumerable<Fuel>>> GetAllFuels(long limit = 100, CancellationToken cancellationToken = default) {
-        return await GetAll(GetFuelsPage, limit, cancellationToken);
-    }
-
     public async Task<Result<SolarSystemDetail>> GetSolarSystemById(long id, CancellationToken cancellationToken = default) {
         var requestModel = new GetSolarSystemById {
             SolarSystemId = id
@@ -65,70 +51,6 @@ public class WorldApiClient([FromKeyedServices(nameof(WorldApiClient))] IFrontie
         return await GetAll(GetSolarSystemPage, limit, cancellationToken);
     }
 
-    public async Task<Result<SmartAssemblyDetail>> GetSmartAssemblyById(BigInteger id, CancellationToken cancellationToken = default) {
-        var requestModel = new GetSmartAssemblyById {
-            SmartObjectId = id
-        };
-        var result = await httpClient.Get<GetSmartAssemblyById, SmartAssemblyDetail>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
-
-    public async Task<Result<WorldApiPayload<SmartAssemblyWithSolarSystem>>> GetSmartAssemblyPage(long limit = 100, long offset = 0,
-        CancellationToken cancellationToken = default) {
-        var requestModel = new GetListOfSmartAssemblies {
-            Limit = limit,
-            Offset = offset
-        };
-        var result = await httpClient.Get<GetListOfSmartAssemblies, WorldApiPayload<SmartAssemblyWithSolarSystem>>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
-
-    public async Task<Result<IEnumerable<SmartAssemblyWithSolarSystem>>>
-        GetAllSmartAssemblies(long limit = 100, CancellationToken cancellationToken = default) {
-        return await GetAll(GetSmartAssemblyPage, limit, cancellationToken);
-    }
-
-    public async Task<Result<SmartCharacterDetail>> GetSmartCharacterById(string address, CancellationToken cancellationToken = default) {
-        var requestModel = new GetSmartCharacterById {
-            CharacterAddress = address
-        };
-        var result = await httpClient.Get<GetSmartCharacterById, SmartCharacterDetail>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
-
-    public async Task<Result<WorldApiPayload<SmartCharacter>>> GetSmartCharacterPage(long limit = 100, long offset = 0,
-        CancellationToken cancellationToken = default) {
-        var requestModel = new GetListOfSmartCharacters {
-            Limit = limit,
-            Offset = offset
-        };
-        var result = await httpClient.Get<GetListOfSmartCharacters, WorldApiPayload<SmartCharacter>>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
-
-    public async Task<Result<IEnumerable<SmartCharacter>>> GetAllSmartCharacters(long limit = 100, CancellationToken cancellationToken = default) {
-        return await GetAll(GetSmartCharacterPage, limit, cancellationToken);
-    }
-
-    public async Task<Result<WorldApiPayload<Killmail>>> GetKillmailPage(long limit = 100, long offset = 0,
-        CancellationToken cancellationToken = default) {
-        var requestModel = new GetListOfKillmails {
-            Limit = limit,
-            Offset = offset
-        };
-        var result = await httpClient.Get<GetListOfKillmails, WorldApiPayload<Killmail>>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
-
-    public async Task<Result<IEnumerable<Killmail>>> GetAllKillmails(long limit = 100, CancellationToken cancellationToken = default) {
-        return await GetAll(GetKillmailPage, limit, cancellationToken);
-    }
-
-    public async Task<Result<IEnumerable<WorldApiConfig>>> GetConfig(CancellationToken cancellationToken = default) {
-        var requestModel = new GetConfig();
-        var result = await httpClient.Get<GetConfig, IEnumerable<WorldApiConfig>>(requestModel, cancellationToken);
-        return result.IsFailed ? Result.Fail(result.Errors) : Result.Ok(result.Value);
-    }
 
     // Tribes
     public async Task<Result<WorldApiPayload<Tribe>>>

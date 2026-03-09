@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace FrontierSharp.WorldApi.Models;
 
 [ExcludeFromCodeCoverage]
-public class Manufacturing {
-    [JsonPropertyName("isParentNodeOnline")]
-    public bool IsParentNodeOnline { get; set; } = false;
+public class SolarSystemSmartAssembly {
+    [JsonPropertyName("id")] public string Id { get; set; } = string.Empty;
 }
+
