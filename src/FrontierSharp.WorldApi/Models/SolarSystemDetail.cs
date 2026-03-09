@@ -9,8 +9,3 @@ public class SolarSystemDetail : SolarSystem {
 
     [JsonPropertyName("regionId")] public long RegionId { get; set; } = 0;
 }
-
-[ExcludeFromCodeCoverage]
-public class SolarSystemSmartAssembly {
-    [JsonPropertyName("id")] public string Id { get; set; } = string.Empty;
-}

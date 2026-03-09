@@ -14,6 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.WorldApi", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontierSharp.Common", "FrontierSharp.Common\FrontierSharp.Common.csproj", "{5388DAC2-3219-4A11-A336-4C83062D52D4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RootFiles", "RootFiles", "{6F4C4D43-55CC-495C-B527-2B21F537625D}"
+	ProjectSection(SolutionItems) = preProject
+		..\VersionConfig.yml = ..\VersionConfig.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
