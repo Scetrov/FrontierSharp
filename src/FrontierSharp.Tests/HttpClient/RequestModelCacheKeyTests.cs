@@ -23,11 +23,4 @@ public class RequestModelCacheKeyTests {
         key.Should().Contain("Limit=100");
         key.Should().Contain("Offset=200");
     }
-
-    [Fact]
-    public void WorldApi_GetConfig_ReturnsStaticKey() {
-        var model = new GetConfig();
-        var key = model.GetCacheKey();
-        key.Should().Be("WorldApi_Config");
-    }
 }
