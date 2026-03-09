@@ -39,53 +39,8 @@ frontierctl solarsystem --show-all
 # Find a specific system by name
 frontierctl ss --name "Jita"
 
-# Get system by ID and see smart assemblies
+# Get system by ID
 frontierctl system --id 30000142
-```
-
-## Character Examples
-
-### Character Information
-
-```sh
-# Get character by wallet address
-frontierctl character --address "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
-
-# Search by character name
-frontierctl char --name "Scetrov"
-
-# List all characters (warning: may be large)
-frontierctl c --show-all --page-size 100
-```
-
-## Assembly Examples
-
-### Smart Assemblies
-
-```sh
-# List all assemblies in the universe
-frontierctl assembly --show-all
-
-# Find specific assembly by name
-frontierctl asm --name "Hauler"
-
-# Get detailed assembly info by ID
-frontierctl a --id "assembly-123456"
-```
-
-## Killmail Examples
-
-### Combat History
-
-```sh
-# View all killmails
-frontierctl killmail --show-all
-
-# Filter by victim name
-frontierctl km --victim-name "Scetrov"
-
-# Stream recent killmails with custom page size
-frontierctl km --show-all --page-size 50
 ```
 
 ## Type Examples
@@ -101,37 +56,6 @@ frontierctl tp --name "Tritanium"
 
 # Get type details by ID
 frontierctl tpe --id 34
-```
-
-## Fuel Examples
-
-### Fuel Efficiency Data
-
-> [!NOTE]
-> Efficiency is a rating value (with 90 being the practical maximum). Higher efficiency values mean better fuel
-> economy (less fuel consumed per lightyear).
-
-```sh
-# List all fuels and their efficiency ratings
-frontierctl fuel --show-all
-
-# Find fuel by type name
-frontierctl f --name "EU-90 Fuel"
-
-# Get fuel data by type ID
-frontierctl fuel --id 78437
-```
-
-## Config Examples
-
-### World API Configuration
-
-```sh
-# Show detailed config (default)
-frontierctl config
-
-# Show all configs in table format
-frontierctl cfg --show-all
 ```
 
 ## Data Management Examples
@@ -199,15 +123,15 @@ frontierctl tribe --show-all | ConvertFrom-Csv > tribes.csv
 #### Filter and Format (using bash/zsh)
 
 ```sh
-# Get specific system and format output
-frontierctl system --name "Q:50K9" | grep -A 10 "Smart Assemblies"
+# Get a specific solar system and inspect the output
+frontierctl system --name "Q:50K9" | grep -A 10 "USR-21H"
 ```
 
 #### Chain Commands
 
 ```sh
-# Get config and check a specific character
-frontierctl config && frontierctl char --name "Scetrov"
+# Look up a tribe, then inspect a solar system
+frontierctl tribe --name "Scetrov" && frontierctl ss --name "Q:50K9"
 ```
 
 ## Docker Usage Examples
