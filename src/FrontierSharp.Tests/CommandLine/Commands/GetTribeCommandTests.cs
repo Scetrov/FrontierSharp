@@ -69,7 +69,7 @@ public class GetTribeCommandTests {
         var console = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(worldApiClient, console);
         var settings = new GetTribeCommand.Settings { ShowAll = true };
-        var exitCode = await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
+        var exitCode = await CommandExecutionHelper.ExecuteAsync(command, settings, CancellationToken.None);
 
         exitCode.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
@@ -90,7 +90,7 @@ public class GetTribeCommandTests {
         var console = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(worldApiClient, console);
         var settings = new GetTribeCommand.Settings { Id = 1, MembersLimit = 1 };
-        await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
+        await CommandExecutionHelper.ExecuteAsync(command, settings, CancellationToken.None);
 
         console.Received(1).Write(Arg.Any<Table>());
         await worldApiClient.Received().GetTribeById(1, Arg.Any<CancellationToken>());
@@ -114,7 +114,7 @@ public class GetTribeCommandTests {
         var console = Substitute.For<IAnsiConsole>();
         var command = CreateCommand(worldApiClient, console);
         var settings = new GetTribeCommand.Settings { Name = "Alf" };
-        await command.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
+        await CommandExecutionHelper.ExecuteAsync(command, settings, CancellationToken.None);
 
         // MarkupLine is an extension method that calls Write(IRenderable) internally.
         // Verify Write was called multiple times: for the "Multiple close matches" warning lines and the table.

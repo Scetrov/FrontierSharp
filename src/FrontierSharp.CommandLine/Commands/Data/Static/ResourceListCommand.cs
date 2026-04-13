@@ -14,7 +14,7 @@ public class ResourceListCommand(
     ILogger<ResourceListCommand> logger,
     IFrontierResourceHiveFactory frontierResourcesHiveFactory,
     IAnsiConsole ansiConsole) : AsyncCommand<ResourceListCommand.Settings> {
-    public override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
+    protected override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         var frontierResourcesHive = frontierResourcesHiveFactory.Create(settings.Root);
         var index = frontierResourcesHive.GetIndex().Files;
         var resIndex = frontierResourcesHive.GetResIndex().Files;

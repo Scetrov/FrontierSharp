@@ -36,7 +36,7 @@ public class SolarSystemCommandTests {
         var cmd = CreateCommand(client, console);
         var settings = new SolarSystemCommand.Settings { ShowAll = true };
 
-        var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
+        var rc = await CommandExecutionHelper.ExecuteAsync(cmd, settings, CancellationToken.None);
         rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
     }
@@ -51,7 +51,7 @@ public class SolarSystemCommandTests {
         var cmd = CreateCommand(client, console);
         var settings = new SolarSystemCommand.Settings { Id = 2 };
 
-        var rc = await cmd.ExecuteAsync(CommandContextHelper.Create(), settings, CancellationToken.None);
+        var rc = await CommandExecutionHelper.ExecuteAsync(cmd, settings, CancellationToken.None);
         rc.Should().Be(0);
         console.Received(1).Write(Arg.Any<Table>());
         await client.Received().GetSolarSystemById(2, Arg.Any<CancellationToken>());
