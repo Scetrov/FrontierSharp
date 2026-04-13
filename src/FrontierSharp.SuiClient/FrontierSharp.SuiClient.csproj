@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Title>FrontierSharp Generic HTTP Client</Title>
+        <Title>FrontierSharp Sui Client</Title>
         <Authors>Scetrov</Authors>
-        <Description>Base HTTP Client implementation wrapper for .NET HttpClient</Description>
+        <Description>Access to EVE Frontier Sui Data</Description>
         <Copyright>© 2026, Scetrov</Copyright>
         <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
@@ -14,9 +15,8 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
-        <AssemblyName>FrontierSharp.HttpClient</AssemblyName>
-        <RootNamespace>FrontierSharp.HttpClient</RootNamespace>
-        <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+        <AssemblyName>FrontierSharp.SuiClient</AssemblyName>
+        <RootNamespace>FrontierSharp.SuiClient</RootNamespace>
         <LangVersion>14</LangVersion>
     </PropertyGroup>
 
@@ -30,12 +30,13 @@
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.4.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.4.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.5"/>
+        <PackageReference Include="System.Text.Json" Version="10.0.5"/>
     </ItemGroup>
 
 </Project>

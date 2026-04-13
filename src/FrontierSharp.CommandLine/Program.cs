@@ -5,6 +5,8 @@ using FrontierSharp.CommandLine.Commands.Data.Static;
 using FrontierSharp.CommandLine.Utils;
 using FrontierSharp.Data.Static;
 using FrontierSharp.HttpClient;
+using FrontierSharp.SuiClient;
+using FrontierSharp.SuiClient.GraphQl;
 using FrontierSharp.WorldApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +38,10 @@ var host = Host.CreateDefaultBuilder(args)
                 options.BaseUri = "https://world-api-stillness.live.tech.evefrontier.com/";
             });
         services.AddSingleton<IWorldApiClient, WorldApiClient>();
+        services.Configure<SuiClientOptions>(context.Configuration.GetSection("SuiClient"));
+        services.AddHttpClient("SuiGraphQl", client => client.Timeout = TimeSpan.FromSeconds(30));
+        services.AddSingleton<ISuiGraphQlClient, SuiGraphQlClient>();
+        services.AddSingleton<IWorldClient, WorldClient>();
         services.AddSingleton<IFrontierResourceHiveFactory, FrontierResourceHiveFactory>();
         services.AddSingleton<IFileSystem, FileSystem>();
 

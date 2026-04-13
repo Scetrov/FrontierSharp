@@ -6,7 +6,7 @@
         <Title>FrontierSharp WorldApiClient</Title>
         <Authors>Scetrov</Authors>
         <Description>Access to the World API for EVE Frontier from .NET</Description>
-        <Copyright>© 2025, Scetrov</Copyright>
+        <Copyright>© 2026, Scetrov</Copyright>
         <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
