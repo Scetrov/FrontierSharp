@@ -17,7 +17,7 @@ public class SolarSystemCommand(
     : BaseWorldApiCommand<SolarSystemCommand.Settings>(logger, worldApiClient, ansiConsole, configuration) {
     private const int DefaultPageSize = 1000;
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
+    protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken) {
         if (settings.ShowAll) return await ShowAllAsync(settings.PageSize ?? DefaultPageSize, cancellationToken);
         if (settings.Id.HasValue) return await ShowByIdAsync(settings, cancellationToken);
         if (!string.IsNullOrWhiteSpace(settings.Name)) return await ShowByNameAsync(settings, cancellationToken);
