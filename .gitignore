@@ -6,6 +6,7 @@ riderModule.iml
 /nupkg/
 /nupkg_inspect/
 src/FrontierSharp.sln.DotSettings.user
+test-output.txt
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,rider,visualstudio,visualstudiocode,vim
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,rider,visualstudio,visualstudiocode,vim

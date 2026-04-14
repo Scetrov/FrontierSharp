@@ -317,4 +317,31 @@ public class SuiGraphQlClientTests {
         secondResult.IsSuccess.Should().BeTrue();
         callCount.Should().Be(2);
     }
+
+    [Fact]
+    public async Task QueryAsync_DisposesHttpResponseAfterReading() {
+        var responseContent = new TrackingStringContent(ValidObjectsResponse, Encoding.UTF8, "application/json");
+        var factory = new SubstitutableHttpClientFactory((_, _) =>
+            Task.FromResult(new HttpResponseMessage {
+                StatusCode = HttpStatusCode.OK,
+                Content = responseContent
+            }));
+        var client = new SuiGraphQlClient(factory, _cache, _options, _logger);
+
+        var result = await client.QueryAsync<ObjectsQueryData>(WorldQueries.GetObjectsByType,
+            new Dictionary<string, object?> { ["type"] = "0xpkg::killmail::Killmail", ["first"] = 10 });
+
+        result.IsSuccess.Should().BeTrue();
+        responseContent.IsDisposed.Should().BeTrue();
+    }
+
+    private sealed class TrackingStringContent(string content, Encoding encoding, string mediaType)
+        : StringContent(content, encoding, mediaType) {
+        public bool IsDisposed { get; private set; }
+
+        protected override void Dispose(bool disposing) {
+            IsDisposed = true;
+            base.Dispose(disposing);
+        }
+    }
 }

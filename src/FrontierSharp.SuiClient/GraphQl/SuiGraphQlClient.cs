@@ -64,57 +64,56 @@ public class SuiGraphQlClient(
         };
 
         var requestJson = JsonSerializer.Serialize(request, SerializerOptions);
-        var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+        using var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
 
         logger.LogDebug("Sending GraphQL query to {Endpoint} with payload {Payload}", options.Value.GraphQlEndpoint,
             requestJson);
 
-        HttpResponseMessage response;
         try {
-            response = await client.PostAsync(options.Value.GraphQlEndpoint, content, cancellationToken);
+            using var response = await client.PostAsync(options.Value.GraphQlEndpoint, content, cancellationToken);
+
+            if (!response.IsSuccessStatusCode) {
+                var errorBody = await response.Content.ReadAsStringAsync();
+                logger.LogError("GraphQL request failed with status {StatusCode}: {Body}", response.StatusCode, errorBody);
+                return Result.Fail<T>(
+                    $"GraphQL request failed with status code {(int)response.StatusCode} ({response.ReasonPhrase}).");
+            }
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            logger.LogDebug("Received GraphQL response from {Endpoint} with payload {Payload}", options.Value.GraphQlEndpoint,
+                responseJson);
+
+            GraphQlResponse<T>? graphQlResponse;
+            try {
+                graphQlResponse = JsonSerializer.Deserialize<GraphQlResponse<T>>(responseJson, SerializerOptions);
+            }
+            catch (Exception ex) {
+                logger.LogError(ex, "Failed to deserialize GraphQL response: {Body}", responseJson);
+                return Result.Fail<T>($"Failed to deserialize GraphQL response: {ex.Message}");
+            }
+
+            if (graphQlResponse == null) {
+                logger.LogError("GraphQL response deserialized to null: {Body}", responseJson);
+                return Result.Fail<T>("GraphQL response deserialized to null.");
+            }
+
+            if (graphQlResponse.Errors is { Count: > 0 }) {
+                var errorMessages = string.Join("; ", graphQlResponse.Errors.Select(e => e.Message));
+                logger.LogError("GraphQL errors: {Errors}", errorMessages);
+                return Result.Fail<T>($"GraphQL errors: {errorMessages}");
+            }
+
+            if (graphQlResponse.Data == null) {
+                logger.LogError("GraphQL response contained no data: {Body}", responseJson);
+                return Result.Fail<T>("GraphQL response contained no data.");
+            }
+
+            return Result.Ok(graphQlResponse.Data);
         }
         catch (Exception ex) {
             logger.LogError(ex, "GraphQL request failed with exception");
             return Result.Fail<T>($"GraphQL request failed: {ex.Message}");
         }
-
-        if (!response.IsSuccessStatusCode) {
-            var errorBody = await response.Content.ReadAsStringAsync();
-            logger.LogError("GraphQL request failed with status {StatusCode}: {Body}", response.StatusCode, errorBody);
-            return Result.Fail<T>(
-                $"GraphQL request failed with status code {(int)response.StatusCode} ({response.ReasonPhrase}).");
-        }
-
-        var responseJson = await response.Content.ReadAsStringAsync();
-        logger.LogDebug("Received GraphQL response from {Endpoint} with payload {Payload}", options.Value.GraphQlEndpoint,
-            responseJson);
-
-        GraphQlResponse<T>? graphQlResponse;
-        try {
-            graphQlResponse = JsonSerializer.Deserialize<GraphQlResponse<T>>(responseJson, SerializerOptions);
-        }
-        catch (Exception ex) {
-            logger.LogError(ex, "Failed to deserialize GraphQL response: {Body}", responseJson);
-            return Result.Fail<T>($"Failed to deserialize GraphQL response: {ex.Message}");
-        }
-
-        if (graphQlResponse == null) {
-            logger.LogError("GraphQL response deserialized to null: {Body}", responseJson);
-            return Result.Fail<T>("GraphQL response deserialized to null.");
-        }
-
-        if (graphQlResponse.Errors is { Count: > 0 }) {
-            var errorMessages = string.Join("; ", graphQlResponse.Errors.Select(e => e.Message));
-            logger.LogError("GraphQL errors: {Errors}", errorMessages);
-            return Result.Fail<T>($"GraphQL errors: {errorMessages}");
-        }
-
-        if (graphQlResponse.Data == null) {
-            logger.LogError("GraphQL response contained no data: {Body}", responseJson);
-            return Result.Fail<T>("GraphQL response contained no data.");
-        }
-
-        return Result.Ok(graphQlResponse.Data);
     }
 
     private string CreateCacheKey<T>(string query, Dictionary<string, object?>? variables) {

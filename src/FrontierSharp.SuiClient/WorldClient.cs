@@ -316,8 +316,10 @@ public class WorldClient(
                     cancellationToken,
                     NoCacheQueryOptions);
 
-                if (latestAssembliesResult.IsFailed)
+                if (latestAssembliesResult.IsFailed) {
+                    LogSubscriptionFailure("Assembly", latestAssembliesResult.Errors);
                     throw CreateSubscriptionFailure("Assembly", latestAssembliesResult.Errors);
+                }
 
                 var latestAssemblies = latestAssembliesResult.Value.ToList();
                 var currentSnapshot = CreateAssemblySnapshot(latestAssemblies);
@@ -421,6 +423,11 @@ public class WorldClient(
         return new InvalidOperationException($"{subscriptionName} subscription polling failed: {message}");
     }
 
+    private void LogSubscriptionFailure(string subscriptionName, IReadOnlyList<IError> errors) {
+        var message = string.Join("; ", errors.Select(error => error.Message));
+        logger.LogError("{SubscriptionName} subscription polling failed: {Errors}", subscriptionName, message);
+    }
+
     private static JsonSerializerOptions CreateMoveJsonOptions() {
         var jsonOptions = new JsonSerializerOptions {
             PropertyNameCaseInsensitive = true,
@@ -470,8 +477,10 @@ public class WorldClient(
                     cancellationToken,
                     NoCacheQueryOptions);
 
-                if (latestKillmailsResult.IsFailed)
+                if (latestKillmailsResult.IsFailed) {
+                    LogSubscriptionFailure("Killmail", latestKillmailsResult.Errors);
                     throw CreateSubscriptionFailure("Killmail", latestKillmailsResult.Errors);
+                }
 
                 var latestKillmails = latestKillmailsResult.Value.ToList();
                 var currentSnapshot = CreateKillmailSnapshot(latestKillmails);
@@ -604,8 +613,10 @@ public class WorldClient(
                     cancellationToken,
                     NoCacheQueryOptions);
 
-                if (latestCharactersResult.IsFailed)
+                if (latestCharactersResult.IsFailed) {
+                    LogSubscriptionFailure("Character", latestCharactersResult.Errors);
                     throw CreateSubscriptionFailure("Character", latestCharactersResult.Errors);
+                }
 
                 var latestCharacters = latestCharactersResult.Value.ToList();
                 var currentSnapshot = CreateCharacterSnapshot(latestCharacters);

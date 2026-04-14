@@ -4,6 +4,7 @@ using FluentResults;
 using FrontierSharp.SuiClient;
 using FrontierSharp.SuiClient.GraphQl;
 using FrontierSharp.SuiClient.Models;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Xunit;
@@ -863,6 +864,45 @@ public class WorldClientTests {
 
         result.Value.Dispose();
         await result.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
+    }
+
+    [Fact]
+    public async Task SubscribeToAssemblyUpdatesAsync_LogsFailureBeforeCompletionFaults() {
+        var initialAssemblies = new[] {
+            CreateAssembly(1, AssemblyStatus.Anchored)
+        };
+
+        _graphQlClient.QueryAsync<ObjectsQueryData>(
+            Arg.Any<string>(),
+            Arg.Any<Dictionary<string, object?>>(),
+            Arg.Any<GraphQlQueryOptions?>(),
+            Arg.Any<CancellationToken>()).Returns(Result.Fail<ObjectsQueryData>("GraphQL error"));
+
+        var result = await _worldClient.SubscribeToAssemblyUpdatesAsync(
+            initialAssemblies,
+            (_, _) => Task.CompletedTask,
+            new AssemblySubscriptionOptions {
+                PollInterval = TimeSpan.FromMilliseconds(10),
+                PageSize = 10
+            });
+
+        result.IsSuccess.Should().BeTrue();
+
+        var exception = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await result.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1)));
+
+        exception.Message.Should().Contain("Assembly subscription polling failed");
+        exception.Message.Should().Contain("GraphQL error");
+        _logger.Received().Log(
+            LogLevel.Error,
+            Arg.Is<IDictionary<string, object>>(state =>
+                state.ContainsKey("SubscriptionName") &&
+                Equals(state["SubscriptionName"], "Assembly") &&
+                state.ContainsKey("Errors") &&
+                Equals(state["Errors"], "GraphQL error") &&
+                state.ContainsKey("{OriginalFormat}") &&
+                Equals(state["{OriginalFormat}"], "{SubscriptionName} subscription polling failed: {Errors}")),
+            Arg.Is<Exception?>(ex => ex == null));
     }
 
     [Fact]
