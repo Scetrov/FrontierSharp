@@ -114,6 +114,8 @@ Each `AssemblyChange` contains:
 
 ## Example
 
-- Compiled example project: [examples/AssemblyWatcherExample/Program.cs](https://github.com/Scetrov/FrontierSharp/blob/main/examples/AssemblyWatcherExample/Program.cs)
-- Script-style sample: [examples/assembly-watcher.cs](https://github.com/Scetrov/FrontierSharp/blob/main/examples/assembly-watcher.cs)
+- Compiled example
+  project: [examples/AssemblyWatcherExample/Program.cs](https://github.com/Scetrov/FrontierSharp/blob/main/examples/AssemblyWatcherExample/Program.cs)
+- Script-style
+  sample: [examples/assembly-watcher.cs](https://github.com/Scetrov/FrontierSharp/blob/main/examples/assembly-watcher.cs)
 

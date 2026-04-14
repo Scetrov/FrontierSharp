@@ -30,21 +30,23 @@ error handling, and test placement.
 
 - Solution root: `src/FrontierSharp.sln`
 - Main projects:
-   - `src/FrontierSharp.CommandLine` - Spectre.Console CLI app (`frontierctl`)
-   - `src/FrontierSharp.HttpClient` - typed HTTP wrapper with FusionCache and FluentResults
-   - `src/FrontierSharp.WorldApi` - World API client abstractions and implementations
-   - `src/FrontierSharp.SuiClient` - Sui GraphQL client and polling subscriptions
-   - `src/FrontierSharp.Tests` - xUnit tests, helpers, and embedded payload fixtures
+    - `src/FrontierSharp.CommandLine` - Spectre.Console CLI app (`frontierctl`)
+    - `src/FrontierSharp.HttpClient` - typed HTTP wrapper with FusionCache and FluentResults
+    - `src/FrontierSharp.WorldApi` - World API client abstractions and implementations
+    - `src/FrontierSharp.SuiClient` - Sui GraphQL client and polling subscriptions
+    - `src/FrontierSharp.Tests` - xUnit tests, helpers, and embedded payload fixtures
 - Read first when gathering context:
-   - `src/FrontierSharp.CommandLine/Program.cs`
-   - `src/FrontierSharp.HttpClient/FrontierSharpHttpClient.cs`
-   - `src/FrontierSharp.WorldApi/WorldApiClient.cs`
-   - Relevant tests under `src/FrontierSharp.Tests`
+    - `src/FrontierSharp.CommandLine/Program.cs`
+    - `src/FrontierSharp.HttpClient/FrontierSharpHttpClient.cs`
+    - `src/FrontierSharp.WorldApi/WorldApiClient.cs`
+    - Relevant tests under `src/FrontierSharp.Tests`
 - Guardrails:
-   - Preserve public interfaces unless the PR feedback explicitly requires an API change.
-   - Keep FluentResults-based error propagation where that pattern already exists.
-   - Be careful changing request cache key behavior or embedded JSON payload fixtures; update tests alongside any such change.
-   - CLI command registration and aliases live in `src/FrontierSharp.CommandLine/Program.cs`; update tests when command behavior changes.
+    - Preserve public interfaces unless the PR feedback explicitly requires an API change.
+    - Keep FluentResults-based error propagation where that pattern already exists.
+    - Be careful changing request cache key behavior or embedded JSON payload fixtures; update tests alongside any such
+      change.
+    - CLI command registration and aliases live in `src/FrontierSharp.CommandLine/Program.cs`; update tests when command
+      behavior changes.
 
 ## User Input
 
@@ -63,18 +65,18 @@ The user may provide:
 ### Phase 1: PR Discovery & Context Gathering
 
 1. **Determine the target PR**:
-   - If PR number provided in `$ARGUMENTS`, use it directly
-   - If PR URL provided, extract the PR number
-   - If no argument, detect PR from current branch:
+    - If PR number provided in `$ARGUMENTS`, use it directly
+    - If PR URL provided, extract the PR number
+    - If no argument, detect PR from current branch:
 
-     ```bash
-     gh pr view --json number --jq '.number'
-     ```
+      ```bash
+      gh pr view --json number --jq '.number'
+      ```
 
 2. **Verify branch alignment**:
-   - Get current git branch: `git branch --show-current`
-   - Get PR head branch via `gh pr view <number> --json headRefName --jq '.headRefName'`
-   - If branches don't match, STOP and ask user to switch branches first
+    - Get current git branch: `git branch --show-current`
+    - Get PR head branch via `gh pr view <number> --json headRefName --jq '.headRefName'`
+    - If branches don't match, STOP and ask user to switch branches first
 
 3. **Fetch PR metadata**:
 
@@ -122,21 +124,21 @@ The user may provide:
    ```
 
 3. **Filter to unresolved threads only**:
-   - `isResolved: false`
-   - Optionally include `isOutdated: false` to skip comments on old code
+    - `isResolved: false`
+    - Optionally include `isOutdated: false` to skip comments on old code
 
 ### Phase 3: Analyze & Categorize Comments
 
 For each unresolved comment, categorize as:
 
-| Category          | Action Required                          |
-| ----------------- | ---------------------------------------- |
-| **Code Change**   | Modify source file at specified location |
+| Category          | Action Required                                      |
+|-------------------|------------------------------------------------------|
+| **Code Change**   | Modify source file at specified location             |
 | **Documentation** | Update README, examples, config docs, or inline docs |
-| **Test Addition** | Add or modify test cases                 |
-| **Clarification** | Reply with explanation (no code change)  |
-| **Out of Scope**  | Mark for follow-up issue creation        |
-| **Disagree**      | Prepare response explaining rationale    |
+| **Test Addition** | Add or modify test cases                             |
+| **Clarification** | Reply with explanation (no code change)              |
+| **Out of Scope**  | Mark for follow-up issue creation                    |
+| **Disagree**      | Prepare response explaining rationale                |
 
 Create a structured todo list:
 
@@ -163,22 +165,25 @@ Create a structured todo list:
 For each comment requiring code changes:
 
 1. **Read the relevant file context**:
-   - Use `read_file` tool to get surrounding context (±20 lines around the comment line)
-   - Understand the current implementation
-   - Read the corresponding test area under `src/FrontierSharp.Tests` before changing behavior
+    - Use `read_file` tool to get surrounding context (±20 lines around the comment line)
+    - Understand the current implementation
+    - Read the corresponding test area under `src/FrontierSharp.Tests` before changing behavior
 
 2. **Implement the fix**:
-   - Use the repo's normal editing flow and keep changes minimal
-   - Follow FrontierSharp patterns for dependency injection, Spectre command wiring, System.Text.Json usage, and FluentResults error handling
-   - If the fix changes behavior, add or update tests in `src/FrontierSharp.Tests` before finishing the implementation
-   - When changing shared APIs such as `IFrontierSharpHttpClient`, `IWorldApiClient`, or public command surfaces, update all affected callers and tests together
+    - Use the repo's normal editing flow and keep changes minimal
+    - Follow FrontierSharp patterns for dependency injection, Spectre command wiring, System.Text.Json usage, and
+      FluentResults error handling
+    - If the fix changes behavior, add or update tests in `src/FrontierSharp.Tests` before finishing the implementation
+    - When changing shared APIs such as `IFrontierSharpHttpClient`, `IWorldApiClient`, or public command surfaces,
+      update all affected callers and tests together
 
 3. **Validate the change**:
-   - Use the same baseline commands as CI, from `./src`
-   - Run `dotnet restore`
-   - Run `dotnet build --configuration Release -p:Version=0.0.0`
-   - Run `dotnet test --configuration Release`
-   - If the change is isolated, run targeted tests first for quick feedback, then finish with the full solution validation above
+    - Use the same baseline commands as CI, from `./src`
+    - Run `dotnet restore`
+    - Run `dotnet build --configuration Release -p:Version=0.0.0`
+    - Run `dotnet test --configuration Release`
+    - If the change is isolated, run targeted tests first for quick feedback, then finish with the full solution
+      validation above
 
 4. **Prepare reply text** for each addressed comment:
 
@@ -190,9 +195,9 @@ For each comment requiring code changes:
    ```
 
 5. **Prepare batched review content**:
-   - Keep a per-thread reply for each unresolved thread
-   - Also prepare one overall review summary covering all addressed, clarified, and deferred items
-   - Keep broad rationale in the review summary and thread-specific details in the thread reply
+    - Keep a per-thread reply for each unresolved thread
+    - Also prepare one overall review summary covering all addressed, clarified, and deferred items
+    - Keep broad rationale in the review summary and thread-specific details in the thread reply
 
 ### Phase 5: Commit Changes
 
@@ -210,7 +215,8 @@ For each comment requiring code changes:
    - <change 2>"
    ```
 
-   Use project-relevant scopes where possible, for example `world-api`, `http-client`, `sui-client`, `commandline`, `tests`, or `docs`.
+   Use project-relevant scopes where possible, for example `world-api`, `http-client`, `sui-client`, `commandline`,
+   `tests`, or `docs`.
 
 2. **Alternative: Single commit for multiple related comments**:
 
@@ -304,9 +310,10 @@ attach all thread replies to it, then submit once so GitHub sends one grouped no
    ```
 
 4. **Fallback only if batching is unavailable**:
-   - Prefer GitHub MCP review tools if they support pending reviews and thread replies
-   - If review batching is not available, fall back to individual replies and warn that multiple notifications may be sent
-   - Avoid mixing batched review replies and individual replies unless the tooling forces it
+    - Prefer GitHub MCP review tools if they support pending reviews and thread replies
+    - If review batching is not available, fall back to individual replies and warn that multiple notifications may be
+      sent
+    - Avoid mixing batched review replies and individual replies unless the tooling forces it
 
 ### Phase 7: Summary Report
 
@@ -344,17 +351,22 @@ Output a summary:
 - **Restore/build/test failures**: Report the exact `dotnet` command that failed and the affected project or test suite
 - **Unclear comments**: Ask for clarification before making changes
 - **Permissions issues**: Report and suggest manual gh auth refresh
-- **Batch review unsupported**: Fall back to individual replies only after stating that multiple notifications may be sent
+- **Batch review unsupported**: Fall back to individual replies only after stating that multiple notifications may be
+  sent
 
 ## FrontierSharp-Specific Quality Bar
 
 This workflow MUST adhere to:
 
-- **Behavioral Safety**: Prefer focused fixes that preserve existing public APIs and command aliases unless the review explicitly requests a breaking change
-- **Tests**: Add or update xUnit coverage in `src/FrontierSharp.Tests` for changed behavior, especially HTTP/client parsing, CLI commands, and Sui polling logic
+- **Behavioral Safety**: Prefer focused fixes that preserve existing public APIs and command aliases unless the review
+  explicitly requests a breaking change
+- **Tests**: Add or update xUnit coverage in `src/FrontierSharp.Tests` for changed behavior, especially HTTP/client
+  parsing, CLI commands, and Sui polling logic
 - **Error Handling**: Follow existing FluentResults patterns instead of introducing exceptions into result-based flows
-- **Validation**: Finish with the repo's standard `dotnet restore`, `dotnet build --configuration Release -p:Version=0.0.0`, and `dotnet test --configuration Release` flow from `src`
-- **Commit Hygiene**: Use conventional commit messages and do not disable GPG or other security controls if signing fails
+- **Validation**: Finish with the repo's standard `dotnet restore`,
+  `dotnet build --configuration Release -p:Version=0.0.0`, and `dotnet test --configuration Release` flow from `src`
+- **Commit Hygiene**: Use conventional commit messages and do not disable GPG or other security controls if signing
+  fails
 
 ## Example Usage
 
