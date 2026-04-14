@@ -17,17 +17,17 @@ jobs:
     
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.x
 
       - name: Cache NuGet Packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.nuget/packages
           key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json', '**/*.csproj') }}
@@ -63,23 +63,23 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.x
 
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v3.1.11
+        uses: gittools/actions/gitversion/setup@v4.5.0
         with:
           versionSpec: '6.0.x'
 
       - name: Determine Version
         id: version_step # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v3.1.11
+        uses: gittools/actions/gitversion/execute@v4.5.0
         with:
           useConfigFile: true
           configFilePath: VersionConfig.yml
@@ -168,14 +168,14 @@ jobs:
           artifacts: "./src/nupkg/*.nupkg,./src/*.tar.gz,./src/*.zip"
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Set lowercase repository name
         run: |
@@ -183,7 +183,7 @@ jobs:
 
       - name: Extract release version
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ env.REPO_LC }}
           tags: |
@@ -193,7 +193,7 @@ jobs:
 
       - name: Build and push Docker image
         id: push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./src/FrontierSharp.CommandLine
           push: true
