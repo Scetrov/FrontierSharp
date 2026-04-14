@@ -1,16 +1,104 @@
 version: 2
 updates:
+  # NuGet — version updates
   - package-ecosystem: "nuget"
     directory: "/src"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
     open-pull-requests-limit: 10
     target-branch: "main"
+    rebase-strategy: "auto"
     commit-message:
       prefix: "deps"
       include: "scope"
+    labels:
+      - "dependencies"
+      - "nuget"
+    # Cooldown: let new releases stabilize before Dependabot proposes them.
+    # Does NOT delay security updates — those are always immediate.
+    cooldown:
+      semver-major-days: 14
+      semver-minor-days: 5
+      semver-patch-days: 2
     groups:
-      all-deps:
+      # Batch minor + patch into one PR per week — low risk, easy to review.
+      nuget-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Keep major bumps separate so they get individual attention.
+      nuget-major:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      # Group all security fixes (CVEs, malware advisories) into one PR.
+      # GitHub's Advisory Database — which includes supply-chain malware
+      # detections — drives these alerts automatically when Dependabot
+      # security updates are enabled for the repository.
+      nuget-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  # GitHub Actions — keep workflow actions up-to-date and patched.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    groups:
+      github-actions-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      github-actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  # Docker — keep base images patched.
+  - package-ecosystem: "docker"
+    directory: "/src/FrontierSharp.CommandLine"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
+    groups:
+      docker-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      docker-security:
+        applies-to: security-updates
         patterns:
           - "*"
   - package-ecosystem: "github-actions"
