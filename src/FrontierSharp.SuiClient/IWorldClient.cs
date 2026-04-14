@@ -33,5 +33,16 @@ public interface IWorldClient {
         int first = 50,
         Cursor? after = null,
         CancellationToken cancellationToken = default);
+
+    Task<Result<IAssemblyUpdateSubscription>> SubscribeToAssemblyUpdatesAsync(
+        Func<AssemblyUpdateBatch, CancellationToken, Task> onUpdate,
+        AssemblySubscriptionOptions? options = null,
+        CancellationToken cancellationToken = default);
+
+    Task<Result<IAssemblyUpdateSubscription>> SubscribeToAssemblyUpdatesAsync(
+        IEnumerable<Assembly> currentAssemblies,
+        Func<AssemblyUpdateBatch, CancellationToken, Task> onUpdate,
+        AssemblySubscriptionOptions? options = null,
+        CancellationToken cancellationToken = default);
 }
 

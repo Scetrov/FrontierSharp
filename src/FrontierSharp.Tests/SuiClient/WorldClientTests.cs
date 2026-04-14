@@ -80,17 +80,38 @@ public class WorldClientTests {
             """);
     }
 
-    private static JsonElement CreateAssemblyJson(ulong itemId) {
+    private static JsonElement CreateAssemblyJson(ulong itemId, int status = 2, string? energySourceId = null) {
         return ParseJson($$"""
             {
                 "key": { "item_id": "{{itemId}}", "tenant": "t" },
                 "type_id": "{{itemId}}",
                 "owner_cap_id": "0xcap{{itemId}}",
-                "status": 2,
+                "status": {{status}},
                 "location": "0xloc{{itemId}}",
-                "energy_source_id": null
+                "energy_source_id": {{(energySourceId == null ? "null" : $"\"{energySourceId}\"")}}
             }
             """);
+    }
+
+    private static Assembly CreateAssembly(
+        ulong itemId,
+        AssemblyStatus status = AssemblyStatus.Online,
+        ulong? typeId = null,
+        string? ownerCapId = null,
+        string? location = null,
+        string? energySourceId = null,
+        string tenant = "t") {
+        return new Assembly {
+            Key = new TenantItemId {
+                ItemId = itemId,
+                Tenant = tenant
+            },
+            TypeId = typeId ?? itemId,
+            OwnerCapId = ownerCapId ?? $"0xcap{itemId}",
+            Status = status,
+            Location = location ?? $"0xloc{itemId}",
+            EnergySourceId = energySourceId
+        };
     }
 
     #region Killmail Tests
@@ -657,6 +678,142 @@ public class WorldClientTests {
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Select(assembly => assembly.Key.ItemId).Should().Equal(1UL, 2UL);
+    }
+
+    [Fact]
+    public async Task SubscribeToAssemblyUpdatesAsync_EmitsInitialSnapshot_WhenEnabled() {
+        var initialAssemblies = new[] {
+            CreateAssembly(1, AssemblyStatus.Anchored),
+            CreateAssembly(2)
+        };
+        var initialBatch = new TaskCompletionSource<AssemblyUpdateBatch>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        var result = await _worldClient.SubscribeToAssemblyUpdatesAsync(
+            initialAssemblies,
+            (batch, _) => {
+                initialBatch.TrySetResult(batch);
+                return Task.CompletedTask;
+            },
+            new AssemblySubscriptionOptions {
+                EmitInitialSnapshot = true,
+                PollInterval = TimeSpan.FromMinutes(1)
+            });
+
+        result.IsSuccess.Should().BeTrue();
+        var batch = await initialBatch.Task.WaitAsync(TimeSpan.FromSeconds(1));
+
+        batch.IsInitialSnapshot.Should().BeTrue();
+        batch.CurrentAssemblies.Select(assembly => assembly.Key.ItemId).Should().Equal(1UL, 2UL);
+        batch.Changes.Should().BeEmpty();
+
+        result.Value.Dispose();
+        await result.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
+    }
+
+    [Fact]
+    public async Task SubscribeToAssemblyUpdatesAsync_EmitsAddedUpdatedAndRemovedChanges() {
+        var initialAssemblies = new[] {
+            CreateAssembly(1, AssemblyStatus.Anchored),
+            CreateAssembly(2)
+        };
+        var updatedBatch = new TaskCompletionSource<AssemblyUpdateBatch>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        _graphQlClient.QueryAsync<ObjectsQueryData>(
+            Arg.Any<string>(),
+            Arg.Any<Dictionary<string, object?>>(),
+            Arg.Any<GraphQlQueryOptions?>(),
+            Arg.Any<CancellationToken>()).Returns(Result.Ok(BuildObjectsResponse(
+            CreateAssemblyJson(1, status: 3),
+            CreateAssemblyJson(3, status: 0))));
+
+        var subscriptionResult = await _worldClient.SubscribeToAssemblyUpdatesAsync(
+            initialAssemblies,
+            (batch, _) => {
+                if (!batch.IsInitialSnapshot)
+                    updatedBatch.TrySetResult(batch);
+
+                return Task.CompletedTask;
+            },
+            new AssemblySubscriptionOptions {
+                PollInterval = TimeSpan.FromMilliseconds(10),
+                PageSize = 10
+            });
+
+        subscriptionResult.IsSuccess.Should().BeTrue();
+        var batch = await updatedBatch.Task.WaitAsync(TimeSpan.FromSeconds(1));
+
+        batch.IsInitialSnapshot.Should().BeFalse();
+        batch.Changes.Should().HaveCount(3);
+        batch.Changes.Should().Contain(change =>
+            change.ChangeType == AssemblyChangeType.Updated
+            && change.Previous != null
+            && change.Current != null
+            && change.Previous.Key.ItemId == 1UL
+            && change.Previous.Status == AssemblyStatus.Anchored
+            && change.Current.Status == AssemblyStatus.Offline);
+        batch.Changes.Should().Contain(change =>
+            change.ChangeType == AssemblyChangeType.Added
+            && change.Current != null
+            && change.Current.Key.ItemId == 3UL
+            && change.Previous == null);
+        batch.Changes.Should().Contain(change =>
+            change.ChangeType == AssemblyChangeType.Removed
+            && change.Previous != null
+            && change.Previous.Key.ItemId == 2UL
+            && change.Current == null);
+
+        await _graphQlClient.Received().QueryAsync<ObjectsQueryData>(
+            WorldQueries.GetObjectsByType,
+            Arg.Is<Dictionary<string, object?>>(variables =>
+                variables["type"]!.ToString() == $"{PackageAddress}::assembly::Assembly" &&
+                Equals(variables["first"], 10) &&
+                variables["after"] == null),
+            Arg.Is<GraphQlQueryOptions?>(queryOptions => queryOptions != null && queryOptions.BypassCache),
+            Arg.Any<CancellationToken>());
+
+        subscriptionResult.Value.Dispose();
+        await subscriptionResult.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
+    }
+
+    [Fact]
+    public async Task SubscribeToAssemblyUpdatesAsync_FromFreshBaseline_UsesUncachedInitialLoad() {
+        var initialBatch = new TaskCompletionSource<AssemblyUpdateBatch>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        _graphQlClient.QueryAsync<ObjectsQueryData>(
+            Arg.Any<string>(),
+            Arg.Any<Dictionary<string, object?>>(),
+            Arg.Any<GraphQlQueryOptions?>(),
+            Arg.Any<CancellationToken>()).Returns(Result.Ok(BuildObjectsResponse(CreateAssemblyJson(7))));
+
+        var result = await _worldClient.SubscribeToAssemblyUpdatesAsync(
+            (batch, _) => {
+                if (batch.IsInitialSnapshot)
+                    initialBatch.TrySetResult(batch);
+
+                return Task.CompletedTask;
+            },
+            new AssemblySubscriptionOptions {
+                EmitInitialSnapshot = true,
+                PollInterval = TimeSpan.FromMinutes(1),
+                PageSize = 25
+            });
+
+        result.IsSuccess.Should().BeTrue();
+        var batch = await initialBatch.Task.WaitAsync(TimeSpan.FromSeconds(1));
+
+        batch.CurrentAssemblies.Select(assembly => assembly.Key.ItemId).Should().Equal(7UL);
+
+        await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
+            WorldQueries.GetObjectsByType,
+            Arg.Is<Dictionary<string, object?>>(variables =>
+                variables["type"]!.ToString() == $"{PackageAddress}::assembly::Assembly" &&
+                Equals(variables["first"], 25) &&
+                variables["after"] == null),
+            Arg.Is<GraphQlQueryOptions?>(queryOptions => queryOptions != null && queryOptions.BypassCache),
+            Arg.Any<CancellationToken>());
+
+        result.Value.Dispose();
+        await result.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
     }
 
 

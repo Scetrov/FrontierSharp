@@ -2,9 +2,8 @@
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scetrov/frontiersharp/build-and-test.yml?style=flat-square) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/scetrov/frontiersharp/total?style=flat-square&label=github%20release%20downloads) ![NuGet Downloads](https://img.shields.io/nuget/dt/FrontierSharp.HttpClient?style=flat-square&label=all%20nuget%20downloads) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/scetrov/frontiersharp?style=flat-square) ![GitHub License](https://img.shields.io/github/license/scetrov/frontiersharp?style=flat-square) ![GitHub Release](https://img.shields.io/github/v/release/scetrov/frontiersharp?style=flat-square)
 
-FrontierSharp is a .NET library that provides access to basic Character and Starmap Information for EVE Frontier. It
-includes an API client and a command-line tool for interacting with the EVE Frontier services via both official and
-third-party services.
+FrontierSharp is a .NET library that provides access to EVE Frontier data through both the World API and Sui GraphQL.
+It includes API clients and a command-line tool for interacting with official and third-party services.
 
 ## Table of Contents
 
@@ -19,8 +18,9 @@ third-party services.
 
 ## Features
 
-- Access to character information,
-- Access to starmap information,
+- Access to World API data such as tribes, solar systems, and types,
+- Access to Sui GraphQL data such as killmails, characters, and assemblies,
+- Polling-based assembly watchers for reacting to on-chain assembly changes,
 - Command-line interface for easy interaction from the prompt.
 
 ## Installation
@@ -31,11 +31,14 @@ You can install the FrontierSharp packages via NuGet:
 
 ```sh
 dotnet add package FrontierSharp.WorldApi
+dotnet add package FrontierSharp.SuiClient
 ```
 
 ## Usage
 
 ### API Client
+
+#### World API Client
 
 FrontierShip is Dependency Injection ready, so all you need to do to add it to an existing project is install the NuGet
 packages and configure the World API client, for example:
@@ -50,6 +53,14 @@ services.AddKeyedSingleton<IFrontierSharpHttpClient, FrontierSharpHttpClient>(na
   });
 services.AddSingleton<IWorldApiClient, WorldApiClient>();
 ```
+
+#### Sui Client
+
+`FrontierSharp.SuiClient` exposes snapshot queries such as `GetAllAssembliesAsync()` and a polling-based watcher API for
+subscribing to assembly changes.
+
+- Sui client docs: [`src/FrontierSharp.SuiClient/README.md`](./src/FrontierSharp.SuiClient/README.md)
+- Runnable watcher example: [`examples/AssemblyWatcherExample/Program.cs`](./examples/AssemblyWatcherExample/Program.cs)
 
 ### Command-Line Tool
 

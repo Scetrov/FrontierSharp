@@ -230,6 +230,33 @@ public class SuiGraphQlClientTests {
     }
 
     [Fact]
+    public async Task QueryAsync_BypassCache_HitsTransportForEachRequest() {
+        var callCount = 0;
+        var factory = new SubstitutableHttpClientFactory((_, _) => {
+            callCount++;
+            return Task.FromResult(new HttpResponseMessage {
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Content = new StringContent(ValidObjectsResponse, Encoding.UTF8, "application/json")
+            });
+        });
+        var client = new SuiGraphQlClient(factory, _cache, _options, _logger);
+        var variables = new Dictionary<string, object?> {
+            ["type"] = "0xpkg::killmail::Killmail",
+            ["first"] = 10
+        };
+        var queryOptions = new GraphQlQueryOptions {
+            BypassCache = true
+        };
+
+        var firstResult = await client.QueryAsync<ObjectsQueryData>(WorldQueries.GetObjectsByType, variables, queryOptions);
+        var secondResult = await client.QueryAsync<ObjectsQueryData>(WorldQueries.GetObjectsByType, variables, queryOptions);
+
+        firstResult.IsSuccess.Should().BeTrue();
+        secondResult.IsSuccess.Should().BeTrue();
+        callCount.Should().Be(2);
+    }
+
+    [Fact]
     public async Task QueryAsync_SameVariablesDifferentOrder_UsesSameCacheEntry() {
         var callCount = 0;
         var factory = new SubstitutableHttpClientFactory((_, _) => {

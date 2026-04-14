@@ -24,8 +24,19 @@ public class SuiGraphQlClient(
         Expiration = options.Value.GraphQlCacheDuration
     };
 
-    public async Task<Result<T>> QueryAsync<T>(string query, Dictionary<string, object?>? variables = null,
+    public Task<Result<T>> QueryAsync<T>(string query, Dictionary<string, object?>? variables = null,
         CancellationToken cancellationToken = default) where T : class {
+        return QueryAsync<T>(query, variables, queryOptions: null, cancellationToken);
+    }
+
+    public async Task<Result<T>> QueryAsync<T>(string query, Dictionary<string, object?>? variables,
+        GraphQlQueryOptions? queryOptions,
+        CancellationToken cancellationToken = default) where T : class {
+        queryOptions ??= new GraphQlQueryOptions();
+
+        if (queryOptions.BypassCache)
+            return await ExecuteQueryAsync<T>(query, variables, cancellationToken);
+
         var cacheKey = CreateCacheKey<T>(query, variables);
 
         try {
