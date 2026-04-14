@@ -69,4 +69,3 @@ public class MoveEnumConverter<TEnum> : JsonConverter<TEnum> where TEnum : struc
         writer.WriteNumberValue(Convert.ToInt32(value));
     }
 }
-

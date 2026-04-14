@@ -9,4 +9,3 @@ public class GraphQlRequest {
 
     [JsonPropertyName("variables")] public Dictionary<string, object?>? Variables { get; set; }
 }
-

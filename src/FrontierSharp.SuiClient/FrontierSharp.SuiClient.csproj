@@ -4,6 +4,7 @@
         <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>FrontierSharp.SuiClient</PackageId>
         <Title>FrontierSharp Sui Client</Title>
         <Authors>Scetrov</Authors>
         <Description>Access to EVE Frontier Sui Data</Description>
@@ -15,6 +16,7 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>FrontierSharp.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <AssemblyName>FrontierSharp.SuiClient</AssemblyName>
         <RootNamespace>FrontierSharp.SuiClient</RootNamespace>
         <LangVersion>14</LangVersion>
@@ -26,17 +28,21 @@
             <PackagePath></PackagePath>
             <Link>FrontierSharp.png</Link>
         </None>
+        <None Include="README.md">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.6"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.4.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.6" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.6" />
-        <PackageReference Include="System.Text.Json" Version="10.0.6" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.6"/>
+        <PackageReference Include="System.Text.Json" Version="10.0.6"/>
     </ItemGroup>
 
 </Project>

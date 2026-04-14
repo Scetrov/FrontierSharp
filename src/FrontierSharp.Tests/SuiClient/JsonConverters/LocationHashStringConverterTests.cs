@@ -47,4 +47,3 @@ public class LocationHashStringConverterTests {
         public string Value { get; set; } = string.Empty;
     }
 }
-

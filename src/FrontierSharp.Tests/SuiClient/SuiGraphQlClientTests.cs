@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using AwesomeAssertions;
 using FrontierSharp.SuiClient;
@@ -12,53 +13,54 @@ namespace FrontierSharp.Tests.SuiClient;
 
 public class SuiGraphQlClientTests {
     private const string ValidObjectsResponse = """
-        {
-          "data": {
-            "objects": {
-              "nodes": [
-                {
-                  "address": "0xabc123",
-                  "asMoveObject": {
-                    "contents": {
-                      "json": {
-                        "key": { "item_id": "100", "tenant": "0xtenant1" },
-                        "killer_id": "200",
-                        "victim_id": "300",
-                        "reported_by_character_id": "400",
-                        "kill_timestamp": "1700000000",
-                        "loss_type": 1,
-                        "solar_system_id": "500"
-                      },
-                      "type": {
-                        "repr": "0xpkg::killmail::Killmail"
-                      }
-                    }
-                  }
-                }
-              ],
-              "pageInfo": {
-                "hasNextPage": true,
-                "endCursor": "eyJjIjoxfQ"
-              }
-            }
-          }
-        }
-        """;
+                                                {
+                                                  "data": {
+                                                    "objects": {
+                                                      "nodes": [
+                                                        {
+                                                          "address": "0xabc123",
+                                                          "asMoveObject": {
+                                                            "contents": {
+                                                              "json": {
+                                                                "key": { "item_id": "100", "tenant": "0xtenant1" },
+                                                                "killer_id": "200",
+                                                                "victim_id": "300",
+                                                                "reported_by_character_id": "400",
+                                                                "kill_timestamp": "1700000000",
+                                                                "loss_type": 1,
+                                                                "solar_system_id": "500"
+                                                              },
+                                                              "type": {
+                                                                "repr": "0xpkg::killmail::Killmail"
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      ],
+                                                      "pageInfo": {
+                                                        "hasNextPage": true,
+                                                        "endCursor": "eyJjIjoxfQ"
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                                """;
 
     private const string GraphQlErrorResponse = """
-        {
-          "data": null,
-          "errors": [
-            {
-              "message": "Type not found",
-              "locations": [{ "line": 1, "column": 1 }]
-            }
-          ]
-        }
-        """;
+                                                {
+                                                  "data": null,
+                                                  "errors": [
+                                                    {
+                                                      "message": "Type not found",
+                                                      "locations": [{ "line": 1, "column": 1 }]
+                                                    }
+                                                  ]
+                                                }
+                                                """;
+
+    private readonly HybridCache _cache = new FakeHybridCache();
 
     private readonly MockLogger<SuiGraphQlClient> _logger = Substitute.For<MockLogger<SuiGraphQlClient>>();
-    private readonly HybridCache _cache = new FakeHybridCache();
     private readonly IOptions<SuiClientOptions> _options = Substitute.For<IOptions<SuiClientOptions>>();
 
     public SuiGraphQlClientTests() {
@@ -129,7 +131,7 @@ public class SuiGraphQlClientTests {
         var factory = new SubstitutableHttpClientFactory((_, _) => {
             callCount++;
             return Task.FromResult(new HttpResponseMessage {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(GraphQlErrorResponse, Encoding.UTF8, "application/json")
             });
         });
@@ -211,7 +213,7 @@ public class SuiGraphQlClientTests {
         var factory = new SubstitutableHttpClientFactory((_, _) => {
             callCount++;
             return Task.FromResult(new HttpResponseMessage {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(ValidObjectsResponse, Encoding.UTF8, "application/json")
             });
         });
@@ -235,7 +237,7 @@ public class SuiGraphQlClientTests {
         var factory = new SubstitutableHttpClientFactory((_, _) => {
             callCount++;
             return Task.FromResult(new HttpResponseMessage {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(ValidObjectsResponse, Encoding.UTF8, "application/json")
             });
         });
@@ -262,7 +264,7 @@ public class SuiGraphQlClientTests {
         var factory = new SubstitutableHttpClientFactory((_, _) => {
             callCount++;
             return Task.FromResult(new HttpResponseMessage {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(ValidObjectsResponse, Encoding.UTF8, "application/json")
             });
         });
@@ -292,7 +294,7 @@ public class SuiGraphQlClientTests {
         var factory = new SubstitutableHttpClientFactory((_, _) => {
             callCount++;
             return Task.FromResult(new HttpResponseMessage {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(ValidObjectsResponse, Encoding.UTF8, "application/json")
             });
         });
@@ -316,4 +318,3 @@ public class SuiGraphQlClientTests {
         callCount.Should().Be(2);
     }
 }
-

@@ -10,7 +10,8 @@ public class Character {
 
     [JsonPropertyName("tribe_id")] public uint TribeId { get; set; }
 
-    [JsonPropertyName("character_address")] public string CharacterAddress { get; set; } = string.Empty;
+    [JsonPropertyName("character_address")]
+    public string CharacterAddress { get; set; } = string.Empty;
 
     [JsonPropertyName("owner_cap_id")] public string OwnerCapId { get; set; } = string.Empty;
 
@@ -18,4 +19,3 @@ public class Character {
     [JsonConverter(typeof(CharacterMetadataConverter))]
     public CharacterMetadata? Metadata { get; set; }
 }
-

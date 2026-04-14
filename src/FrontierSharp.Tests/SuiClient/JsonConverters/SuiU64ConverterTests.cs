@@ -1,6 +1,6 @@
 using System.Text.Json;
-using FrontierSharp.SuiClient.JsonConverters;
 using AwesomeAssertions;
+using FrontierSharp.SuiClient.JsonConverters;
 using Xunit;
 
 namespace FrontierSharp.Tests.SuiClient.JsonConverters;
@@ -51,4 +51,3 @@ public class SuiU64ConverterTests {
         public ulong Value { get; set; }
     }
 }
-

@@ -24,4 +24,3 @@ public class UnixSecondsDateTimeOffsetConverter : JsonConverter<DateTimeOffset> 
         writer.WriteStringValue(value.ToUnixTimeSeconds().ToString());
     }
 }
-

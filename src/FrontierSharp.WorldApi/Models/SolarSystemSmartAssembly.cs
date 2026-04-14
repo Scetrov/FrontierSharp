@@ -7,4 +7,3 @@ namespace FrontierSharp.WorldApi.Models;
 public class SolarSystemSmartAssembly {
     [JsonPropertyName("id")] public string Id { get; set; } = string.Empty;
 }
-

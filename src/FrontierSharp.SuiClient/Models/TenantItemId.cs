@@ -12,4 +12,3 @@ public class TenantItemId {
 
     [JsonPropertyName("tenant")] public string Tenant { get; set; } = string.Empty;
 }
-

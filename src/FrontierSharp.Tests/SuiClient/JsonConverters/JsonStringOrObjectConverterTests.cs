@@ -60,5 +60,3 @@ public class JsonStringOrObjectConverterTests {
         public string? Value { get; set; }
     }
 }
-
-

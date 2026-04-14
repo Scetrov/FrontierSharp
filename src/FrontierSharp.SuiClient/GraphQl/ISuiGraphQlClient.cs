@@ -10,4 +10,3 @@ public interface ISuiGraphQlClient {
         GraphQlQueryOptions? queryOptions,
         CancellationToken cancellationToken = default) where T : class;
 }
-

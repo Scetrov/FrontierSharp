@@ -16,4 +16,3 @@ public class SuiU64Converter : JsonConverter<ulong> {
         writer.WriteStringValue(value.ToString());
     }
 }
-

@@ -4,4 +4,3 @@ public enum LossType {
     Ship = 1,
     Structure = 2
 }
-

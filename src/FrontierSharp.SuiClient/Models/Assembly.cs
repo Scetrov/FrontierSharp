@@ -24,4 +24,3 @@ public class Assembly {
 
     [JsonPropertyName("energy_source_id")] public string? EnergySourceId { get; set; }
 }
-

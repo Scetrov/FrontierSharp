@@ -7,4 +7,3 @@ public class AssemblyChange {
 
     public TenantItemId Key => Current?.Key ?? Previous?.Key ?? new TenantItemId();
 }
-

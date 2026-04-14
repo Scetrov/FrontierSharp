@@ -14,7 +14,6 @@ public class SuiGraphQlClient(
     HybridCache cache,
     IOptions<SuiClientOptions> options,
     ILogger<SuiGraphQlClient> logger) : ISuiGraphQlClient {
-
     private static readonly JsonSerializerOptions SerializerOptions = new() {
         PropertyNameCaseInsensitive = true,
         TypeInfoResolver = new DefaultJsonTypeInfoResolver()
@@ -26,7 +25,7 @@ public class SuiGraphQlClient(
 
     public Task<Result<T>> QueryAsync<T>(string query, Dictionary<string, object?>? variables = null,
         CancellationToken cancellationToken = default) where T : class {
-        return QueryAsync<T>(query, variables, queryOptions: null, cancellationToken);
+        return QueryAsync<T>(query, variables, null, cancellationToken);
     }
 
     public async Task<Result<T>> QueryAsync<T>(string query, Dictionary<string, object?>? variables,
@@ -46,10 +45,11 @@ public class SuiGraphQlClient(
                     throw new GraphQlQueryFailedException(result.Errors);
 
                 return result.Value;
-            }, options: _cacheOptions, cancellationToken: cancellationToken);
+            }, _cacheOptions, cancellationToken: cancellationToken);
 
             return Result.Ok(data);
-        } catch (GraphQlQueryFailedException ex) {
+        }
+        catch (GraphQlQueryFailedException ex) {
             return Result.Fail<T>(ex.Errors);
         }
     }
@@ -72,7 +72,8 @@ public class SuiGraphQlClient(
         HttpResponseMessage response;
         try {
             response = await client.PostAsync(options.Value.GraphQlEndpoint, content, cancellationToken);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             logger.LogError(ex, "GraphQL request failed with exception");
             return Result.Fail<T>($"GraphQL request failed: {ex.Message}");
         }
@@ -91,7 +92,8 @@ public class SuiGraphQlClient(
         GraphQlResponse<T>? graphQlResponse;
         try {
             graphQlResponse = JsonSerializer.Deserialize<GraphQlResponse<T>>(responseJson, SerializerOptions);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             logger.LogError(ex, "Failed to deserialize GraphQL response: {Body}", responseJson);
             return Result.Fail<T>($"Failed to deserialize GraphQL response: {ex.Message}");
         }
@@ -122,6 +124,7 @@ public class SuiGraphQlClient(
         using (var sha256 = SHA256.Create()) {
             hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(cacheMaterial));
         }
+
         var hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
         return $"SuiGraphQl_{typeof(T).FullName}_{hash}";
     }
@@ -138,6 +141,7 @@ public class SuiGraphQlClient(
             builder.Append(':');
             AppendNormalizedValue(builder, pair.Value);
         }
+
         builder.Append('}');
         return builder.ToString();
     }
@@ -165,6 +169,7 @@ public class SuiGraphQlClient(
                     first = false;
                     AppendNormalizedValue(builder, item);
                 }
+
                 builder.Append(']');
                 return;
             default:
@@ -177,4 +182,3 @@ public class SuiGraphQlClient(
         public IReadOnlyList<IError> Errors { get; } = errors;
     }
 }
-

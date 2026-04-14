@@ -1,0 +1,11 @@
+<Project>
+
+    <PropertyGroup Condition="'$(IsPackable)' != 'false' and '$(OutputType)' != 'Exe'">
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
+
+</Project>

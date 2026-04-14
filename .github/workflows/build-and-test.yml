@@ -129,6 +129,12 @@ jobs:
         run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
         working-directory: ./src
 
+      - name: Publish NuGet Symbol Package to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./nupkg/*.snupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        working-directory: ./src
+
       - name: Publish NuGet Package to GitHub Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -164,7 +170,7 @@ jobs:
         with:
           tag: ${{ steps.version_step.outputs.FullSemVer }}
           commit: ${{ github.sha }}
-          artifacts: "./src/nupkg/*.nupkg,./src/*.tar.gz,./src/*.zip"
+          artifacts: "./src/nupkg/*.nupkg,./src/nupkg/*.snupkg,./src/*.tar.gz,./src/*.zip"
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v4

@@ -1,10 +1,10 @@
 namespace FrontierSharp.SuiClient;
 
-internal sealed class AssemblyUpdateSubscription : IAssemblyUpdateSubscription {
+internal sealed class KillmailUpdateSubscription : IKillmailUpdateSubscription {
     private readonly CancellationTokenSource _cancellationTokenSource;
     private int _disposed;
 
-    public AssemblyUpdateSubscription(CancellationTokenSource cancellationTokenSource, Task completion) {
+    public KillmailUpdateSubscription(CancellationTokenSource cancellationTokenSource, Task completion) {
         _cancellationTokenSource = cancellationTokenSource;
         Completion = completion.ContinueWith(task => {
             _cancellationTokenSource.Dispose();

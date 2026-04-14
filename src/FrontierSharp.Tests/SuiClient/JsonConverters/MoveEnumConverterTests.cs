@@ -1,8 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using AwesomeAssertions;
 using FrontierSharp.SuiClient.JsonConverters;
 using FrontierSharp.SuiClient.Models;
-using AwesomeAssertions;
 using Xunit;
 
 namespace FrontierSharp.Tests.SuiClient.JsonConverters;
@@ -109,4 +109,3 @@ public class MoveEnumConverterTests {
         public AssemblyStatus Value { get; set; }
     }
 }
-

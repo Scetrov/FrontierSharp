@@ -1,5 +1,5 @@
 namespace FrontierSharp.SuiClient;
 
-public interface IAssemblyUpdateSubscription : IDisposable {
+public interface IKillmailUpdateSubscription : IDisposable {
     Task Completion { get; }
 }

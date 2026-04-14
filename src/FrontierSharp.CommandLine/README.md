@@ -2,7 +2,8 @@
 
 ## Description
 
-`frontierctl` is a cross-platform command line application designed for interacting with EVE Frontier static data through the
+`frontierctl` is a cross-platform command line application designed for interacting with EVE Frontier static data
+through the
 World API and local data utilities.
 
 ## Downloading Binaries
@@ -22,21 +23,25 @@ docker run ghcr.io/scetrov/frontiersharp:latest tribe --name Scetrov
 To build `frontierctl` from source, you can use the following steps:
 
 1. Clone the repository:
+
     ```sh
     git clone https://github.com/scetrov/FrontierSharp.git
     ```
 
 2. Navigate to the project directory:
+
     ```sh
     cd FrontierSharp.CommandLine
     ```
 
 3. Install the required dependencies:
+
     ```sh
     dotnet restore
     ```
 
 4. Build the project:
+
     ```sh
     dotnet build --configuration Release
     ```

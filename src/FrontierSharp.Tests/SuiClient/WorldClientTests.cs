@@ -20,7 +20,7 @@ public class WorldClientTests {
 
     public WorldClientTests() {
         _options.Value.Returns(new SuiClientOptions {
-            WorldPackageAddress = PackageAddress
+            DefaultWorldPackageAddress = PackageAddress
         });
         _worldClient = new WorldClient(_graphQlClient, _options, _logger);
     }
@@ -55,42 +55,42 @@ public class WorldClientTests {
 
     private static JsonElement CreateKillmailJson(ulong itemId) {
         return ParseJson($$"""
-            {
-                "id": "0xkillmail{{itemId}}",
-                "key": { "item_id": "{{itemId}}", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" },
-                "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" },
-                "kill_timestamp": "0",
-                "loss_type": 1,
-                "solar_system_id": { "item_id": "400", "tenant": "t" }
-            }
-            """);
+                           {
+                               "id": "0xkillmail{{itemId}}",
+                               "key": { "item_id": "{{itemId}}", "tenant": "t" },
+                               "killer_id": { "item_id": "100", "tenant": "t" },
+                               "victim_id": { "item_id": "200", "tenant": "t" },
+                               "reported_by_character_id": { "item_id": "300", "tenant": "t" },
+                               "kill_timestamp": "0",
+                               "loss_type": 1,
+                               "solar_system_id": { "item_id": "400", "tenant": "t" }
+                           }
+                           """);
     }
 
     private static JsonElement CreateCharacterJson(ulong itemId) {
         return ParseJson($$"""
-            {
-                "key": { "item_id": "{{itemId}}", "tenant": "t" },
-                "tribe_id": 42,
-                "character_address": "0xchar{{itemId}}",
-                "owner_cap_id": "0xcap{{itemId}}",
-                "metadata": null
-            }
-            """);
+                           {
+                               "key": { "item_id": "{{itemId}}", "tenant": "t" },
+                               "tribe_id": 42,
+                               "character_address": "0xchar{{itemId}}",
+                               "owner_cap_id": "0xcap{{itemId}}",
+                               "metadata": null
+                           }
+                           """);
     }
 
     private static JsonElement CreateAssemblyJson(ulong itemId, int status = 2, string? energySourceId = null) {
         return ParseJson($$"""
-            {
-                "key": { "item_id": "{{itemId}}", "tenant": "t" },
-                "type_id": "{{itemId}}",
-                "owner_cap_id": "0xcap{{itemId}}",
-                "status": {{status}},
-                "location": "0xloc{{itemId}}",
-                "energy_source_id": {{(energySourceId == null ? "null" : $"\"{energySourceId}\"")}}
-            }
-            """);
+                           {
+                               "key": { "item_id": "{{itemId}}", "tenant": "t" },
+                               "type_id": "{{itemId}}",
+                               "owner_cap_id": "0xcap{{itemId}}",
+                               "status": {{status}},
+                               "location": "0xloc{{itemId}}",
+                               "energy_source_id": {{(energySourceId == null ? "null" : $"\"{energySourceId}\"")}}
+                           }
+                           """);
     }
 
     private static Assembly CreateAssembly(
@@ -119,17 +119,17 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_ReturnsDeserializedKillmails() {
         var killmailJson = ParseJson("""
-            {
-                "id": "0xkillmail",
-                "key": { "item_id": "100", "tenant": "0xtenant" },
-                "killer_id": { "item_id": "200", "tenant": "0xtenant" },
-                "victim_id": { "item_id": "300", "tenant": "0xtenant" },
-                "reported_by_character_id": { "item_id": "400", "tenant": "0xtenant" },
-                "kill_timestamp": "1700000000",
-                "loss_type": 1,
-                "solar_system_id": { "item_id": "500", "tenant": "0xtenant" }
-            }
-            """);
+                                     {
+                                         "id": "0xkillmail",
+                                         "key": { "item_id": "100", "tenant": "0xtenant" },
+                                         "killer_id": { "item_id": "200", "tenant": "0xtenant" },
+                                         "victim_id": { "item_id": "300", "tenant": "0xtenant" },
+                                         "reported_by_character_id": { "item_id": "400", "tenant": "0xtenant" },
+                                         "kill_timestamp": "1700000000",
+                                         "loss_type": 1,
+                                         "solar_system_id": { "item_id": "500", "tenant": "0xtenant" }
+                                     }
+                                     """);
 
         var response = BuildObjectsResponse(killmailJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -156,21 +156,21 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_DoesNotApplyClientSideFiltering() {
         var km1 = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                            {
+                                "key": { "item_id": "1", "tenant": "t" },
+                                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                            }
+                            """);
         var km2 = ParseJson("""
-            {
-                "key": { "item_id": "2", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "999", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                            {
+                                "key": { "item_id": "2", "tenant": "t" },
+                                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "999", "tenant": "t" },
+                                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                            }
+                            """);
 
         var response = BuildObjectsResponse(km1, km2);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -186,20 +186,20 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_Pagination_PropagatesPageInfo() {
         var km = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                           {
+                               "key": { "item_id": "1", "tenant": "t" },
+                               "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                               "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                               "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                           }
+                           """);
 
         var response = BuildObjectsResponse(true, "cursor123", km);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
             Arg.Any<string>(), Arg.Any<Dictionary<string, object?>>(), Arg.Any<CancellationToken>()
         ).Returns(Result.Ok(response));
 
-        var result = await _worldClient.GetKillmailsAsync(first: 1);
+        var result = await _worldClient.GetKillmailsAsync(1);
 
         result.IsSuccess.Should().BeTrue();
         result.Value.HasNextPage.Should().BeTrue();
@@ -224,7 +224,7 @@ public class WorldClientTests {
             };
         });
 
-        var result = await _worldClient.GetAllKillmailsAsync(first: 1);
+        var result = await _worldClient.GetAllKillmailsAsync(1);
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Select(killmail => killmail.Key.ItemId).Should().Equal(1UL, 2UL);
@@ -247,7 +247,7 @@ public class WorldClientTests {
             };
         });
 
-        var result = await _worldClient.GetAllKillmailsAsync(first: 1);
+        var result = await _worldClient.GetAllKillmailsAsync(1);
 
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().Contain(error => error.Message.Contains("GraphQL error"));
@@ -260,7 +260,7 @@ public class WorldClientTests {
             Arg.Any<string>(), Arg.Any<Dictionary<string, object?>>(), Arg.Any<CancellationToken>()
         ).Returns(Result.Ok(response));
 
-        var result = await _worldClient.GetAllKillmailsAsync(first: 1);
+        var result = await _worldClient.GetAllKillmailsAsync(1);
 
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().Contain(error => error.Message.Contains("did not provide an end cursor"));
@@ -275,7 +275,7 @@ public class WorldClientTests {
 
         var after = new Cursor("cursor123");
 
-        var result = await _worldClient.GetKillmailsAsync(first: 10, after: after);
+        var result = await _worldClient.GetKillmailsAsync(10, after);
 
         result.IsSuccess.Should().BeTrue();
 
@@ -316,6 +316,24 @@ public class WorldClientTests {
             Arg.Any<CancellationToken>());
     }
 
+    [Fact]
+    public async Task GetKillmailsAsync_OverrideWorldPackageAddress_UsesOverride() {
+        var response = BuildObjectsResponse();
+        const string overridePackage = "0xoverride";
+
+        _graphQlClient.QueryAsync<ObjectsQueryData>(
+            Arg.Any<string>(), Arg.Any<Dictionary<string, object?>>(), Arg.Any<CancellationToken>()
+        ).Returns(Result.Ok(response));
+
+        await _worldClient.GetKillmailsAsync(worldPackageAddress: overridePackage);
+
+        await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
+            WorldQueries.GetObjectsByType,
+            Arg.Is<Dictionary<string, object?>>(v =>
+                v["type"]!.ToString() == $"{overridePackage}::killmail::Killmail"),
+            Arg.Any<CancellationToken>());
+    }
+
     #endregion
 
     #region Character Tests
@@ -323,19 +341,19 @@ public class WorldClientTests {
     [Fact]
     public async Task GetCharactersAsync_ReturnsDeserializedCharacters() {
         var charJson = ParseJson("""
-            {
-                "key": { "item_id": "10", "tenant": "0xtenant" },
-                "tribe_id": 42,
-                "character_address": "0xchar_addr",
-                "owner_cap_id": "0xcap_id",
-                "metadata": {
-                    "assembly_id": "0xassembly",
-                    "name": "EventHorizon",
-                    "description": "",
-                    "url": "https://example.test"
-                }
-            }
-            """);
+                                 {
+                                     "key": { "item_id": "10", "tenant": "0xtenant" },
+                                     "tribe_id": 42,
+                                     "character_address": "0xchar_addr",
+                                     "owner_cap_id": "0xcap_id",
+                                     "metadata": {
+                                         "assembly_id": "0xassembly",
+                                         "name": "EventHorizon",
+                                         "description": "",
+                                         "url": "https://example.test"
+                                     }
+                                 }
+                                 """);
 
         var response = BuildObjectsResponse(charJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -362,14 +380,14 @@ public class WorldClientTests {
     [Fact]
     public async Task GetCharactersAsync_NullMetadata_HandledCorrectly() {
         var charJson = ParseJson("""
-            {
-                "key": { "item_id": "10", "tenant": "0xtenant" },
-                "tribe_id": 42,
-                "character_address": "0xchar_addr",
-                "owner_cap_id": "0xcap_id",
-                "metadata": null
-            }
-            """);
+                                 {
+                                     "key": { "item_id": "10", "tenant": "0xtenant" },
+                                     "tribe_id": 42,
+                                     "character_address": "0xchar_addr",
+                                     "owner_cap_id": "0xcap_id",
+                                     "metadata": null
+                                 }
+                                 """);
 
         var response = BuildObjectsResponse(charJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -385,14 +403,14 @@ public class WorldClientTests {
     [Fact]
     public async Task GetCharactersAsync_StringMetadata_PreservesLegacyRawValue() {
         var charJson = ParseJson("""
-            {
-                "key": { "item_id": "10", "tenant": "0xtenant" },
-                "tribe_id": 42,
-                "character_address": "0xchar_addr",
-                "owner_cap_id": "0xcap_id",
-                "metadata": "some_meta"
-            }
-            """);
+                                 {
+                                     "key": { "item_id": "10", "tenant": "0xtenant" },
+                                     "tribe_id": 42,
+                                     "character_address": "0xchar_addr",
+                                     "owner_cap_id": "0xcap_id",
+                                     "metadata": "some_meta"
+                                 }
+                                 """);
 
         var response = BuildObjectsResponse(charJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -411,20 +429,20 @@ public class WorldClientTests {
     [Fact]
     public async Task GetCharactersAsync_ObjectMetadata_HandledCorrectly() {
         var charJson = ParseJson("""
-            {
-                "id": "0x0000066c06ea7fe23accf0264661256d0013e648c4e1087543439282a7ccd0a6",
-                "key": { "item_id": "2112087484", "tenant": "stillness" },
-                "tribe_id": 1000167,
-                "character_address": "0xcaefec396249d9852daea51285a0caf8917bbab9373d37d8bb78d452afd36626",
-                "metadata": {
-                    "assembly_id": "0x0000066c06ea7fe23accf0264661256d0013e648c4e1087543439282a7ccd0a6",
-                    "name": "EventHorizon",
-                    "description": "",
-                    "url": ""
-                },
-                "owner_cap_id": "0x5799295378c92c2cf3f45c3d6f73169b99592a034cd77b39064371472c8c0f3f"
-            }
-            """);
+                                 {
+                                     "id": "0x0000066c06ea7fe23accf0264661256d0013e648c4e1087543439282a7ccd0a6",
+                                     "key": { "item_id": "2112087484", "tenant": "stillness" },
+                                     "tribe_id": 1000167,
+                                     "character_address": "0xcaefec396249d9852daea51285a0caf8917bbab9373d37d8bb78d452afd36626",
+                                     "metadata": {
+                                         "assembly_id": "0x0000066c06ea7fe23accf0264661256d0013e648c4e1087543439282a7ccd0a6",
+                                         "name": "EventHorizon",
+                                         "description": "",
+                                         "url": ""
+                                     },
+                                     "owner_cap_id": "0x5799295378c92c2cf3f45c3d6f73169b99592a034cd77b39064371472c8c0f3f"
+                                 }
+                                 """);
 
         var response = BuildObjectsResponse(charJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -447,19 +465,19 @@ public class WorldClientTests {
     [Fact]
     public async Task GetCharactersAsync_DoesNotApplyClientSideFiltering() {
         var ch1 = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "tribe_id": 1, "character_address": "0xAlice",
-                "owner_cap_id": "0xcap1", "metadata": null
-            }
-            """);
+                            {
+                                "key": { "item_id": "1", "tenant": "t" },
+                                "tribe_id": 1, "character_address": "0xAlice",
+                                "owner_cap_id": "0xcap1", "metadata": null
+                            }
+                            """);
         var ch2 = ParseJson("""
-            {
-                "key": { "item_id": "2", "tenant": "t" },
-                "tribe_id": 2, "character_address": "0xBob",
-                "owner_cap_id": "0xcap2", "metadata": null
-            }
-            """);
+                            {
+                                "key": { "item_id": "2", "tenant": "t" },
+                                "tribe_id": 2, "character_address": "0xBob",
+                                "owner_cap_id": "0xcap2", "metadata": null
+                            }
+                            """);
 
         var response = BuildObjectsResponse(ch1, ch2);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -506,7 +524,7 @@ public class WorldClientTests {
             };
         });
 
-        var result = await _worldClient.GetAllCharactersAsync(first: 1);
+        var result = await _worldClient.GetAllCharactersAsync(1);
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Select(character => character.Key.ItemId).Should().Equal(1UL, 2UL);
@@ -519,15 +537,15 @@ public class WorldClientTests {
     [Fact]
     public async Task GetAssembliesAsync_ReturnsDeserializedAssemblies() {
         var asmJson = ParseJson("""
-            {
-                "key": { "item_id": "50", "tenant": "0xtenant" },
-                "type_id": "999",
-                "owner_cap_id": "0xowner_cap",
-                "status": 2,
-                "location": "0xhashed_location",
-                "energy_source_id": "0xenergy"
-            }
-            """);
+                                {
+                                    "key": { "item_id": "50", "tenant": "0xtenant" },
+                                    "type_id": "999",
+                                    "owner_cap_id": "0xowner_cap",
+                                    "status": 2,
+                                    "location": "0xhashed_location",
+                                    "energy_source_id": "0xenergy"
+                                }
+                                """);
 
         var response = BuildObjectsResponse(asmJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -551,15 +569,15 @@ public class WorldClientTests {
     [Fact]
     public async Task GetAssembliesAsync_NullEnergySourceId_HandledCorrectly() {
         var asmJson = ParseJson("""
-            {
-                "key": { "item_id": "50", "tenant": "0xtenant" },
-                "type_id": "999",
-                "owner_cap_id": "0xowner_cap",
-                "status": 0,
-                "location": "0xloc",
-                "energy_source_id": null
-            }
-            """);
+                                {
+                                    "key": { "item_id": "50", "tenant": "0xtenant" },
+                                    "type_id": "999",
+                                    "owner_cap_id": "0xowner_cap",
+                                    "status": 0,
+                                    "location": "0xloc",
+                                    "energy_source_id": null
+                                }
+                                """);
 
         var response = BuildObjectsResponse(asmJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -576,29 +594,29 @@ public class WorldClientTests {
     [Fact]
     public async Task GetAssembliesAsync_LivePayloadShape_Parses() {
         var asmJson = ParseJson("""
-            {
-                "id": "0x000414dd6ad31ff7cf37ecf299e704670d90a0e4bf8d514352f568d323435018",
-                "key": { "item_id": "1000004997350", "tenant": "stillness" },
-                "owner_cap_id": "0x428b1410b727d6632b85c08d71629a68f9831ef412fb076448dbe8d71c1a8694",
-                "type_id": "90184",
-                "status": { "status": { "@variant": "ONLINE" } },
-                "location": { "location_hash": "wtTe4ujlqU+yJxH95e+wVb8tV+3EFtMlR4NHxWfX54c=" },
-                "energy_source_id": "0x51839ec6657133e2ca55c02e50c27006e6015a18ac3252d5520422406cadbb20",
-                "metadata": {
-                    "assembly_id": "0x000414dd6ad31ff7cf37ecf299e704670d90a0e4bf8d514352f568d323435018",
-                    "name": "",
-                    "description": "",
-                    "url": ""
-                }
-            }
-            """);
+                                {
+                                    "id": "0x000414dd6ad31ff7cf37ecf299e704670d90a0e4bf8d514352f568d323435018",
+                                    "key": { "item_id": "1000004997350", "tenant": "stillness" },
+                                    "owner_cap_id": "0x428b1410b727d6632b85c08d71629a68f9831ef412fb076448dbe8d71c1a8694",
+                                    "type_id": "90184",
+                                    "status": { "status": { "@variant": "ONLINE" } },
+                                    "location": { "location_hash": "wtTe4ujlqU+yJxH95e+wVb8tV+3EFtMlR4NHxWfX54c=" },
+                                    "energy_source_id": "0x51839ec6657133e2ca55c02e50c27006e6015a18ac3252d5520422406cadbb20",
+                                    "metadata": {
+                                        "assembly_id": "0x000414dd6ad31ff7cf37ecf299e704670d90a0e4bf8d514352f568d323435018",
+                                        "name": "",
+                                        "description": "",
+                                        "url": ""
+                                    }
+                                }
+                                """);
 
         var response = BuildObjectsResponse(asmJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
             Arg.Any<string>(), Arg.Any<Dictionary<string, object?>>(), Arg.Any<CancellationToken>()
         ).Returns(Result.Ok(response));
 
-        var result = await _worldClient.GetAssembliesAsync(first: 1);
+        var result = await _worldClient.GetAssembliesAsync(1);
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Data.Should().HaveCount(1);
@@ -615,19 +633,19 @@ public class WorldClientTests {
     [Fact]
     public async Task GetAssembliesAsync_DoesNotApplyClientSideFiltering() {
         var asm1 = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "type_id": "100", "owner_cap_id": "0xcap1",
-                "status": 1, "location": "0xloc", "energy_source_id": null
-            }
-            """);
+                             {
+                                 "key": { "item_id": "1", "tenant": "t" },
+                                 "type_id": "100", "owner_cap_id": "0xcap1",
+                                 "status": 1, "location": "0xloc", "energy_source_id": null
+                             }
+                             """);
         var asm2 = ParseJson("""
-            {
-                "key": { "item_id": "2", "tenant": "t" },
-                "type_id": "200", "owner_cap_id": "0xcap2",
-                "status": 1, "location": "0xloc", "energy_source_id": null
-            }
-            """);
+                             {
+                                 "key": { "item_id": "2", "tenant": "t" },
+                                 "type_id": "200", "owner_cap_id": "0xcap2",
+                                 "status": 1, "location": "0xloc", "energy_source_id": null
+                             }
+                             """);
 
         var response = BuildObjectsResponse(asm1, asm2);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -674,7 +692,7 @@ public class WorldClientTests {
             };
         });
 
-        var result = await _worldClient.GetAllAssembliesAsync(first: 1);
+        var result = await _worldClient.GetAllAssembliesAsync(1);
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Select(assembly => assembly.Key.ItemId).Should().Equal(1UL, 2UL);
@@ -723,8 +741,8 @@ public class WorldClientTests {
             Arg.Any<Dictionary<string, object?>>(),
             Arg.Any<GraphQlQueryOptions?>(),
             Arg.Any<CancellationToken>()).Returns(Result.Ok(BuildObjectsResponse(
-            CreateAssemblyJson(1, status: 3),
-            CreateAssemblyJson(3, status: 0))));
+            CreateAssemblyJson(1, 3),
+            CreateAssemblyJson(3, 0))));
 
         var subscriptionResult = await _worldClient.SubscribeToAssemblyUpdatesAsync(
             initialAssemblies,
@@ -816,6 +834,90 @@ public class WorldClientTests {
         await result.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
     }
 
+    [Fact]
+    public async Task SubscribeToAssemblyUpdatesAsync_OverrideWorldPackageAddress_UsesOverrideForInitialLoad() {
+        const string overridePackage = "0xoverride";
+
+        _graphQlClient.QueryAsync<ObjectsQueryData>(
+            Arg.Any<string>(),
+            Arg.Any<Dictionary<string, object?>>(),
+            Arg.Any<GraphQlQueryOptions?>(),
+            Arg.Any<CancellationToken>()).Returns(Result.Ok(BuildObjectsResponse(CreateAssemblyJson(7))));
+
+        var result = await _worldClient.SubscribeToAssemblyUpdatesAsync(
+            (_, _) => Task.CompletedTask,
+            new AssemblySubscriptionOptions {
+                PollInterval = TimeSpan.FromMinutes(1),
+                PageSize = 25
+            },
+            worldPackageAddress: overridePackage);
+
+        result.IsSuccess.Should().BeTrue();
+
+        await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
+            WorldQueries.GetObjectsByType,
+            Arg.Is<Dictionary<string, object?>>(variables =>
+                variables["type"]!.ToString() == $"{overridePackage}::assembly::Assembly"),
+            Arg.Is<GraphQlQueryOptions?>(queryOptions => queryOptions != null && queryOptions.BypassCache),
+            Arg.Any<CancellationToken>());
+
+        result.Value.Dispose();
+        await result.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
+    }
+
+    [Fact]
+    public async Task SubscribeToCharacterUpdatesAsync_MetadataOnlyChanges_EmitUpdate() {
+        var initialCharacters = new[] {
+            new Character {
+                Key = new TenantItemId { ItemId = 1UL, Tenant = "t" },
+                TribeId = 42,
+                CharacterAddress = "0xchar1",
+                OwnerCapId = "0xcap1",
+                Metadata = new CharacterMetadata { RawValue = "old-metadata" }
+            }
+        };
+        var updatedBatch = new TaskCompletionSource<CharacterUpdateBatch>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        _graphQlClient.QueryAsync<ObjectsQueryData>(
+            Arg.Any<string>(),
+            Arg.Any<Dictionary<string, object?>>(),
+            Arg.Any<GraphQlQueryOptions?>(),
+            Arg.Any<CancellationToken>()).Returns(Result.Ok(BuildObjectsResponse(ParseJson("""
+                                                                                           {
+                                                                                               "key": { "item_id": "1", "tenant": "t" },
+                                                                                               "tribe_id": 42,
+                                                                                               "character_address": "0xchar1",
+                                                                                               "owner_cap_id": "0xcap1",
+                                                                                               "metadata": "new-metadata"
+                                                                                           }
+                                                                                           """))));
+
+        var subscriptionResult = await _worldClient.SubscribeToCharacterUpdatesAsync(
+            initialCharacters,
+            (batch, _) => {
+                if (!batch.IsInitialSnapshot)
+                    updatedBatch.TrySetResult(batch);
+
+                return Task.CompletedTask;
+            },
+            new CharacterSubscriptionOptions {
+                PollInterval = TimeSpan.FromMilliseconds(10),
+                PageSize = 10
+            });
+
+        subscriptionResult.IsSuccess.Should().BeTrue();
+        var batch = await updatedBatch.Task.WaitAsync(TimeSpan.FromSeconds(1));
+
+        batch.Changes.Should().ContainSingle(change =>
+            change.ChangeType == CharacterChangeType.Updated
+            && change.Previous != null
+            && change.Current != null
+            && change.Previous.Metadata!.RawValue == "old-metadata"
+            && change.Current.Metadata!.RawValue == "new-metadata");
+
+        subscriptionResult.Value.Dispose();
+        await subscriptionResult.Value.Completion.WaitAsync(TimeSpan.FromSeconds(1));
+    }
 
     #endregion
 
@@ -824,13 +926,13 @@ public class WorldClientTests {
     [Fact]
     public async Task QuerySkipsNodesWithNullMoveContent() {
         var validKm = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                                {
+                                    "key": { "item_id": "1", "tenant": "t" },
+                                    "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                                    "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                    "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                                }
+                                """);
 
         var data = new ObjectsQueryData {
             Objects = new ObjectConnection {
@@ -867,14 +969,14 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_LossTypeAsObjectVariant_Parses() {
         var killmailJson = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": {"Structure": {}},
-                "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                                     {
+                                         "key": { "item_id": "1", "tenant": "t" },
+                                         "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                                         "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                         "loss_type": {"Structure": {}},
+                                         "solar_system_id": { "item_id": "0", "tenant": "t" }
+                                     }
+                                     """);
 
         var response = BuildObjectsResponse(killmailJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -890,17 +992,17 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_LivePayloadShape_Parses() {
         var killmailJson = ParseJson("""
-            {
-                "id": "0x0011b762d28a065fbcfe79bb2b4a277bc3d43806aff00f94cf48f85ccca8ab74",
-                "key": { "item_id": "9300", "tenant": "stillness" },
-                "killer_id": { "item_id": "2112085059", "tenant": "stillness" },
-                "victim_id": { "item_id": "2112082572", "tenant": "stillness" },
-                "reported_by_character_id": { "item_id": "2112081168", "tenant": "stillness" },
-                "kill_timestamp": "1775418259",
-                "loss_type": { "@variant": "STRUCTURE" },
-                "solar_system_id": { "item_id": "30016335", "tenant": "stillness" }
-            }
-            """);
+                                     {
+                                         "id": "0x0011b762d28a065fbcfe79bb2b4a277bc3d43806aff00f94cf48f85ccca8ab74",
+                                         "key": { "item_id": "9300", "tenant": "stillness" },
+                                         "killer_id": { "item_id": "2112085059", "tenant": "stillness" },
+                                         "victim_id": { "item_id": "2112082572", "tenant": "stillness" },
+                                         "reported_by_character_id": { "item_id": "2112081168", "tenant": "stillness" },
+                                         "kill_timestamp": "1775418259",
+                                         "loss_type": { "@variant": "STRUCTURE" },
+                                         "solar_system_id": { "item_id": "30016335", "tenant": "stillness" }
+                                     }
+                                     """);
 
         var response = BuildObjectsResponse(killmailJson);
         _graphQlClient.QueryAsync<ObjectsQueryData>(
@@ -920,21 +1022,21 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_InvalidNodeAlongsideValidNode_ReturnsFailure() {
         var validKillmailJson = ParseJson("""
-            {
-                "key": { "item_id": "1", "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                                          {
+                                              "key": { "item_id": "1", "tenant": "t" },
+                                              "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                                              "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                              "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                                          }
+                                          """);
         var invalidKillmailJson = ParseJson("""
-            {
-                "key": { "item_id": { "nested": "not-a-u64" }, "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                                            {
+                                                "key": { "item_id": { "nested": "not-a-u64" }, "tenant": "t" },
+                                                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                                                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                                            }
+                                            """);
 
         var response = new ObjectsQueryData {
             Objects = new ObjectConnection {
@@ -970,13 +1072,13 @@ public class WorldClientTests {
     [Fact]
     public async Task GetKillmailsAsync_AllInvalidNodes_ReturnsFailureInsteadOfEmptySuccess() {
         var invalidKillmailJson = ParseJson("""
-            {
-                "key": { "item_id": { "nested": "not-a-u64" }, "tenant": "t" },
-                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
-                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
-                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
-            }
-            """);
+                                            {
+                                                "key": { "item_id": { "nested": "not-a-u64" }, "tenant": "t" },
+                                                "killer_id": { "item_id": "100", "tenant": "t" }, "victim_id": { "item_id": "200", "tenant": "t" },
+                                                "reported_by_character_id": { "item_id": "300", "tenant": "t" }, "kill_timestamp": "0",
+                                                "loss_type": 1, "solar_system_id": { "item_id": "0", "tenant": "t" }
+                                            }
+                                            """);
 
         var response = new ObjectsQueryData {
             Objects = new ObjectConnection {
@@ -1021,4 +1123,3 @@ public class WorldClientTests {
 
     #endregion
 }
-

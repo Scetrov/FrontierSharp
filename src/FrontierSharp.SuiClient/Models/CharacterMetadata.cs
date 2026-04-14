@@ -18,4 +18,3 @@ public class CharacterMetadata {
 
     [JsonIgnore] public string? RawValue { get; set; }
 }
-

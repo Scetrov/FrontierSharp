@@ -9,7 +9,8 @@
 - assemblies
 - polling-based assembly update subscriptions
 
-The assembly watcher API is designed for the common flow of loading a snapshot with `GetAllAssembliesAsync()` and then subscribing to incremental changes.
+The assembly watcher API is designed for the common flow of loading a snapshot with `GetAllAssembliesAsync()` and then
+subscribing to incremental changes.
 
 ## Installation
 
@@ -21,42 +22,34 @@ dotnet add package ZiggyCreatures.FusionCache
 ## Dependency Injection Setup
 
 ```csharp
-using FrontierSharp.SuiClient;
-using FrontierSharp.SuiClient.GraphQl;
-using Microsoft.Extensions.DependencyInjection;
-using ZiggyCreatures.Caching.Fusion;
-
 var services = new ServiceCollection();
 
+const string HTTP_CLIENT_NAME = "SuiGraphQl";
+
 services.AddLogging();
-services.AddHttpClient("SuiGraphQl");
+services.AddHttpClient(HTTP_CLIENT_NAME);
 services.AddFusionCache().AsHybridCache();
 services.Configure<SuiClientOptions>(options => {
-    options.HttpClientName = "SuiGraphQl";
-
-    // Optional overrides:
-    // options.GraphQlEndpoint = "https://graphql.testnet.sui.io/graphql";
-    // options.WorldPackageAddress = "0x...";
-    // options.GraphQlCacheDuration = TimeSpan.FromSeconds(30);
+    options.HttpClientName = HTTP_CLIENT_NAME;
+    options.WithNetwork(SuiNetwork.Testnet);
+    options.WithDefaultWorldPackageAddress("0x28b497559d65ab320d9da4613bf2498d5946b2c0ae3597ccfda3072ce127448c");
 });
 services.AddSingleton<ISuiGraphQlClient, SuiGraphQlClient>();
 services.AddSingleton<IWorldClient, WorldClient>();
-```
 
-## Watching for Assembly Updates
+var serviceProvider = services.BuildServiceProvider();
 
-If you already have a snapshot, pass it into `SubscribeToAssemblyUpdatesAsync(...)` and react only to future changes:
-
-```csharp
 var client = serviceProvider.GetRequiredService<IWorldClient>();
 
-var initialAssembliesResult = await client.GetAllAssembliesAsync(first: 100);
+var initialAssembliesResult = await client.GetAllAssembliesAsync(first: 50);
 if (initialAssembliesResult.IsFailed) {
     foreach (var error in initialAssembliesResult.Errors) {
         Console.WriteLine($"Failed to load assemblies: {error.Message}");
     }
     return;
 }
+
+Console.WriteLine($"Loaded {initialAssembliesResult.Value.Count()} Assemblies from initial batch");
 
 var subscriptionResult = await client.SubscribeToAssemblyUpdatesAsync(
     initialAssembliesResult.Value,
@@ -70,7 +63,7 @@ var subscriptionResult = await client.SubscribeToAssemblyUpdatesAsync(
     },
     new AssemblySubscriptionOptions {
         PollInterval = TimeSpan.FromSeconds(5),
-        PageSize = 100
+        PageSize = 50
     });
 
 if (subscriptionResult.IsFailed) {
@@ -82,29 +75,20 @@ if (subscriptionResult.IsFailed) {
 
 using var subscription = subscriptionResult.Value;
 
-// ... keep the process alive here ...
+await Task.Delay(-1);
 
 subscription.Dispose();
 await subscription.Completion;
 ```
 
-If you want the watcher to load its own baseline and emit it to the callback, use the overload without `currentAssemblies`:
+## Querying Different World Packages
+
+To query a different world package without creating another client, pass `worldPackageAddress` on the call:
 
 ```csharp
-var subscriptionResult = await client.SubscribeToAssemblyUpdatesAsync(
-    async (batch, cancellationToken) => {
-        if (batch.IsInitialSnapshot) {
-            Console.WriteLine($"Initial snapshot contains {batch.CurrentAssemblies.Count} assemblies.");
-            return;
-        }
-
-        Console.WriteLine($"Received {batch.Changes.Count} changes.");
-        await Task.CompletedTask;
-    },
-    new AssemblySubscriptionOptions {
-        EmitInitialSnapshot = true,
-        PollInterval = TimeSpan.FromSeconds(5)
-    });
+var result = await client.GetAllAssembliesAsync(
+    first: 100,
+    worldPackageAddress: "0xanotherworldpackage");
 ```
 
 ## Update Semantics
@@ -130,6 +114,6 @@ Each `AssemblyChange` contains:
 
 ## Example
 
-- Compiled example project: [`../../examples/AssemblyWatcherExample/Program.cs`](../../examples/AssemblyWatcherExample/Program.cs)
-- Script-style sample: [`../../examples/assembly-watcher.cs`](../../examples/assembly-watcher.cs)
+- Compiled example project: [examples/AssemblyWatcherExample/Program.cs](https://github.com/Scetrov/FrontierSharp/blob/main/examples/AssemblyWatcherExample/Program.cs)
+- Script-style sample: [examples/assembly-watcher.cs](https://github.com/Scetrov/FrontierSharp/blob/main/examples/assembly-watcher.cs)
 

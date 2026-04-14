@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace FrontierSharp.SuiClient.Models;
 
 /// <summary>
-/// Represents an opaque GraphQL pagination cursor.
+///     Represents an opaque GraphQL pagination cursor.
 /// </summary>
 [DebuggerDisplay("{Value}")]
 public sealed class Cursor : IEquatable<Cursor> {

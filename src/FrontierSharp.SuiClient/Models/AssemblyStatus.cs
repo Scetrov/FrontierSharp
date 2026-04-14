@@ -6,4 +6,3 @@ public enum AssemblyStatus {
     Online = 2,
     Offline = 3
 }
-

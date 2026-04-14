@@ -47,7 +47,8 @@ public class FrontierSharpHttpClient(
                     serializerOptions = new JsonSerializerOptions {
                         TypeInfoResolver = new DefaultJsonTypeInfoResolver()
                     };
-                } else if (serializerOptions.TypeInfoResolver == null) {
+                }
+                else if (serializerOptions.TypeInfoResolver == null) {
                     // Clone and set a resolver so we don't mutate the caller's instance
                     var cloned = new JsonSerializerOptions(serializerOptions);
                     cloned.TypeInfoResolver = new DefaultJsonTypeInfoResolver();
@@ -55,7 +56,8 @@ public class FrontierSharpHttpClient(
                 }
 
                 result = JsonSerializer.Deserialize<TResponseModel>(content, serializerOptions);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 exception = ex;
             }
 

@@ -24,4 +24,3 @@ public class CursorTests {
         act.Should().Throw<ArgumentException>();
     }
 }
-

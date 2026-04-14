@@ -79,6 +79,3 @@ public class CharacterMetadataConverterTests {
         public CharacterMetadata? Value { get; set; }
     }
 }
-
-
-

@@ -8,4 +8,3 @@ public class PagedResult<T> {
     public bool HasNextPage { get; set; }
     public Cursor? EndCursor { get; set; }
 }
-

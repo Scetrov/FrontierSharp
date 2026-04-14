@@ -1,19 +1,20 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using FrontierSharp.SuiClient.Models;
 
 namespace FrontierSharp.SuiClient.JsonConverters;
 
-public class CharacterMetadataConverter : JsonConverter<FrontierSharp.SuiClient.Models.CharacterMetadata?> {
-    public override FrontierSharp.SuiClient.Models.CharacterMetadata? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
+public class CharacterMetadataConverter : JsonConverter<CharacterMetadata?> {
+    public override CharacterMetadata? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
         return reader.TokenType switch {
             JsonTokenType.Null => null,
-            JsonTokenType.String => new FrontierSharp.SuiClient.Models.CharacterMetadata { RawValue = reader.GetString() },
+            JsonTokenType.String => new CharacterMetadata { RawValue = reader.GetString() },
             JsonTokenType.StartObject => ReadObject(ref reader),
             _ => throw new JsonException("Invalid JSON value for CharacterMetadata.")
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, FrontierSharp.SuiClient.Models.CharacterMetadata? value, JsonSerializerOptions options) {
+    public override void Write(Utf8JsonWriter writer, CharacterMetadata? value, JsonSerializerOptions options) {
         if (value == null) {
             writer.WriteNullValue();
             return;
@@ -31,22 +32,21 @@ public class CharacterMetadataConverter : JsonConverter<FrontierSharp.SuiClient.
         WriteStringProperty(writer, "description", value.Description);
         WriteStringProperty(writer, "url", value.Url);
 
-        if (value.AdditionalProperties != null) {
+        if (value.AdditionalProperties != null)
             foreach (var property in value.AdditionalProperties) {
                 writer.WritePropertyName(property.Key);
                 property.Value.WriteTo(writer);
             }
-        }
 
         writer.WriteEndObject();
     }
 
-    private static FrontierSharp.SuiClient.Models.CharacterMetadata ReadObject(ref Utf8JsonReader reader) {
+    private static CharacterMetadata ReadObject(ref Utf8JsonReader reader) {
         using var document = JsonDocument.ParseValue(ref reader);
-        var metadata = new FrontierSharp.SuiClient.Models.CharacterMetadata();
+        var metadata = new CharacterMetadata();
         Dictionary<string, JsonElement>? additionalProperties = null;
 
-        foreach (var property in document.RootElement.EnumerateObject()) {
+        foreach (var property in document.RootElement.EnumerateObject())
             switch (property.Name) {
                 case "assembly_id":
                     metadata.AssemblyId = ReadStringValue(property.Value, property.Name);
@@ -65,7 +65,6 @@ public class CharacterMetadataConverter : JsonConverter<FrontierSharp.SuiClient.
                     additionalProperties[property.Name] = property.Value.Clone();
                     break;
             }
-        }
 
         metadata.AdditionalProperties = additionalProperties;
         return metadata;
@@ -79,7 +78,7 @@ public class CharacterMetadataConverter : JsonConverter<FrontierSharp.SuiClient.
         };
     }
 
-    private static bool ShouldWriteRawValue(FrontierSharp.SuiClient.Models.CharacterMetadata value) {
+    private static bool ShouldWriteRawValue(CharacterMetadata value) {
         return value.RawValue != null &&
                value.AssemblyId == null &&
                value.Name == null &&
@@ -93,5 +92,3 @@ public class CharacterMetadataConverter : JsonConverter<FrontierSharp.SuiClient.
             writer.WriteString(propertyName, value);
     }
 }
-
-

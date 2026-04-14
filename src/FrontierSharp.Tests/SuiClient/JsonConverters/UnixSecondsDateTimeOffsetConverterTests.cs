@@ -53,4 +53,3 @@ public class UnixSecondsDateTimeOffsetConverterTests {
         public DateTimeOffset Value { get; set; }
     }
 }
-

@@ -34,4 +34,3 @@ public class Killmail {
     [JsonConverter(typeof(TenantItemIdItemIdConverter))]
     public ulong SolarSystemId { get; set; }
 }
-

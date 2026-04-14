@@ -23,4 +23,3 @@ public class GraphQlErrorLocation {
 
     [JsonPropertyName("column")] public int Column { get; set; }
 }
-

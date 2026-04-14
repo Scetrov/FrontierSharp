@@ -5,4 +5,3 @@ public class AssemblyUpdateBatch {
     public IReadOnlyList<Assembly> CurrentAssemblies { get; set; } = [];
     public IReadOnlyList<AssemblyChange> Changes { get; set; } = [];
 }
-

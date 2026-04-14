@@ -39,7 +39,8 @@ public class JsonStringOrObjectConverter : JsonConverter<string?> {
             using var document = JsonDocument.Parse(trimmed);
             document.RootElement.WriteTo(writer);
             return true;
-        } catch (JsonException) {
+        }
+        catch (JsonException) {
             return false;
         }
     }

@@ -6,4 +6,3 @@ namespace FrontierSharp.SuiClient.GraphQl;
 public class GraphQlQueryOptions {
     public bool BypassCache { get; set; }
 }
-

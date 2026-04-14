@@ -46,4 +46,3 @@ public class PageInfo {
 
     [JsonPropertyName("endCursor")] public string? EndCursor { get; set; }
 }
-
