@@ -21,3 +21,4 @@ internal sealed class KillmailUpdateSubscription : IKillmailUpdateSubscription {
         _cancellationTokenSource.Cancel();
     }
 }
+

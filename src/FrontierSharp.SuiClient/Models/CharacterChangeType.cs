@@ -5,3 +5,4 @@ public enum CharacterChangeType {
     Updated = 1,
     Removed = 2
 }
+

@@ -5,3 +5,4 @@ public class KillmailUpdateBatch {
     public IReadOnlyList<Killmail> CurrentKillmails { get; set; } = [];
     public IReadOnlyList<KillmailChange> Changes { get; set; } = [];
 }
+

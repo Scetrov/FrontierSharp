@@ -78,4 +78,6 @@ public interface IWorldClient {
         CharacterSubscriptionOptions? options = null,
         CancellationToken cancellationToken = default,
         string? worldPackageAddress = null);
+
 }
+

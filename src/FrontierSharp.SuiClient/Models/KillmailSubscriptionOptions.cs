@@ -5,3 +5,4 @@ public class KillmailSubscriptionOptions {
     public int PageSize { get; set; } = 50;
     public bool EmitInitialSnapshot { get; set; }
 }
+

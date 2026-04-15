@@ -5,3 +5,4 @@ public enum KillmailChangeType {
     Updated = 1,
     Removed = 2
 }
+
