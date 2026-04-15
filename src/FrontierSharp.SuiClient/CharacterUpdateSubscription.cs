@@ -21,3 +21,4 @@ internal sealed class CharacterUpdateSubscription : ICharacterUpdateSubscription
         _cancellationTokenSource.Cancel();
     }
 }
+

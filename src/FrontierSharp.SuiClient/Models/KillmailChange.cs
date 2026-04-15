@@ -7,3 +7,4 @@ public class KillmailChange {
 
     public string Id => Current?.Id ?? Previous?.Id ?? string.Empty;
 }
+

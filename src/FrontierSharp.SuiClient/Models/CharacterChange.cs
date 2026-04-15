@@ -7,3 +7,4 @@ public class CharacterChange {
 
     public TenantItemId Key => Current?.Key ?? Previous?.Key ?? new TenantItemId();
 }
+

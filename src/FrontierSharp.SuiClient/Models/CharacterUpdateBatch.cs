@@ -5,3 +5,4 @@ public class CharacterUpdateBatch {
     public IReadOnlyList<Character> CurrentCharacters { get; set; } = [];
     public IReadOnlyList<CharacterChange> Changes { get; set; } = [];
 }
+
