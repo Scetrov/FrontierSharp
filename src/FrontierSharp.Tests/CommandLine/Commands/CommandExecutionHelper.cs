@@ -8,4 +8,3 @@ public static class CommandExecutionHelper {
         return command.ExecuteAsync(CommandContextHelper.Create(), settings, cancellationToken);
     }
 }
-

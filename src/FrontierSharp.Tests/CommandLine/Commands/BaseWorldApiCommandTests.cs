@@ -53,7 +53,6 @@ public class BaseWorldApiCommandTests {
 
     private class TestCommand(ILogger logger, IWorldApiClient client, IAnsiConsole console, IOptions<ConfigurationOptions> options)
         : BaseWorldApiCommand<BaseWorldApiSettings>(logger, client, console, options) {
-
         // Implement abstract ExecuteAsync to satisfy AsyncCommand contract for tests
         protected override Task<int> ExecuteAsync(CommandContext context, BaseWorldApiSettings settings, CancellationToken cancellationToken) {
             return Task.FromResult(0);

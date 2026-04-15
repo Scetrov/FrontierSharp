@@ -6,7 +6,7 @@
         <Title>FrontierSharp Generic HTTP Client</Title>
         <Authors>Scetrov</Authors>
         <Description>Base HTTP Client implementation wrapper for .NET HttpClient</Description>
-        <Copyright>© 2025, Scetrov</Copyright>
+        <Copyright>© 2026, Scetrov</Copyright>
         <PackageProjectUrl>https://github.com/Scetrov/FrontierSharp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Scetrov/FrontierSharp</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
@@ -30,12 +30,12 @@
 
     <ItemGroup>
         <PackageReference Include="FluentResults" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.4.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.5" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.4.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.6"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.6"/>
     </ItemGroup>
 
 </Project>
