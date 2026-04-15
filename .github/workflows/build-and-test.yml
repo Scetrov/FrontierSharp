@@ -131,13 +131,13 @@ jobs:
       - name: Publish NuGet Package to NuGet.org
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
         working-directory: ./src
 
       - name: Publish NuGet Symbol Package to NuGet.org
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: dotnet nuget push ./nupkg/*.snupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./nupkg/*.snupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
         working-directory: ./src
 
       - name: Publish NuGet Package to GitHub Packages
