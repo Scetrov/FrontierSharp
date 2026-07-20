@@ -1,5 +1,9 @@
 <Project>
 
+    <PropertyGroup>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(IsPackable)' != 'false' and '$(OutputType)' != 'Exe'">
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
