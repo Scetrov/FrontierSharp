@@ -15,18 +15,18 @@
         </PackageReference>
         <PackageReference Include="AwesomeAssertions.Json" Version="9.0.0"/>
         <PackageReference Include="FluentResults" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.9"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.7.0"/>
-        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.9"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.7.0"/>
-        <PackageReference Include="NSubstitute" Version="5.3.0"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.8.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.10"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1"/>
+        <PackageReference Include="NSubstitute" Version="6.0.0"/>
         <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Spectre.Console" Version="0.57.2" />
         <PackageReference Include="Spectre.Console.Cli" Version="0.55.0"/>
-        <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.1.1"/>
+        <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.2.0"/>
         <PackageReference Include="xunit" Version="2.9.3"/>
         <PackageReference Include="xunit.analyzers" Version="1.27.0">
             <PrivateAssets>all</PrivateAssets>
