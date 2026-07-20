@@ -1,0 +1,50 @@
+name: Parser corpus replay
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.x
+      - run: dotnet restore --locked-mode
+        working-directory: src
+      - run: dotnet build FrontierSharp.Fuzz/FrontierSharp.Fuzz.csproj --no-restore --configuration Release
+        working-directory: src
+      - run: |
+          for target in sui resindex pickle world; do
+            dotnet run --project FrontierSharp.Fuzz --no-build --configuration Release -- replay "$target" "FrontierSharp.Fuzz/corpus/$target"
+          done
+        working-directory: src
+
+  fuzz:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.x
+      - run: sudo apt-get update && sudo apt-get install -y afl++
+      - run: dotnet restore --locked-mode
+        working-directory: src
+      - run: dotnet publish FrontierSharp.Fuzz/FrontierSharp.Fuzz.csproj -c Debug -r linux-x64 --self-contained false
+        working-directory: src
+      - run: |
+          export DOTNET_ReadyToRun=0
+          export DOTNET_TieredCompilation=0
+          for target in sui resindex pickle world; do
+            timeout 1800 afl-fuzz -V 1800 -i src/FrontierSharp.Fuzz/corpus/"$target" -o /tmp/out/"$target" -- dotnet src/FrontierSharp.Fuzz/bin/Debug/net10.0/linux-x64/FrontierSharp.Fuzz.dll fuzz "$target"
+          done

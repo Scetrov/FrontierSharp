@@ -1,0 +1,3 @@
+../../etc/passwd,/etc/passwd,hash
+../data.json,../assets/data,hash
+/data.json,/assets/data,hash
