@@ -35,9 +35,25 @@ Scorecard `v5.5.0` or later.
 - **Purpose:** create the GitHub release after publishing the verified packages and release artifacts.
 - **Owner:** repository maintainer.
 - **Validation evidence:** workflow YAML parsed successfully and a manual permission-boundary inspection on 2026-07-22 confirmed that `build-and-test` remains `contents: read`, while all publishing write scopes remain on `publish`.
-- **Exit criterion:** remove this authority when a narrower GitHub release-creation permission or a changed release design makes it unnecessary, or record a fresh Scorecard result that confirms resolution. Until then, alert #13 is an open, justified residual signal—not a resolved alert.
+- **Exit criterion:** remove this authority when a narrower GitHub release-creation permission or a changed release design makes it unnecessary, or record a fresh Scorecard result that confirms resolution. The fresh result below confirms resolution of the reported finding; this boundary record remains as the rationale for any future change.
 
-Alerts #14 and #15 are separate open TokenPermissionsID findings pending a fresh Scorecard analysis after the scoped `prerelease.yml` and `sync-release-notes.yml` changes. No TokenPermissionsID alert is claimed resolved without that fresh result.
+## External verification — 2026-07-22
+
+- **Scorecard source:** [GitHub code-scanning alerts](https://github.com/Scetrov/FrontierSharp/security/code-scanning)
+- **Observation time:** 2026-07-22T20:29:38Z (the latest `updated_at` reported for these alerts)
+- **Alert #13:** `TokenPermissionsID`, `fixed`
+- **Alert #14:** `TokenPermissionsID`, `fixed`
+- **Alert #15:** `TokenPermissionsID`, `fixed`
+
+This is a fresh observed service result, not an inference from the workflow edits. Alert #13's former required publishing scope remains documented above; the service now reports all three Token-Permissions alerts fixed.
+
+- **Best Practices source:** [`projects/13670.json`](https://www.bestpractices.dev/projects/13670.json)
+- **Public record updated:** 2026-07-22T20:53:33.357Z
+- **Badge level:** `passing` (Passing 100%, Silver 11%, Gold 17%)
+- **Submission and processing evidence:** the public record advanced from its 2026-07-20 `in_progress` snapshot after the truthful root `.bestpractices.json` evidence was submitted through the supported project flow. The service-reported record is authoritative for the result.
+- **Remaining required criteria:** none indicated for Passing. The record still has six `Unmet` status fields, which are outside the service-reported Passing threshold and are not represented as satisfied.
+- **README verification:** the badge link remains [`projects/13670`](https://www.bestpractices.dev/projects/13670), matching the service-reported Passing project.
+
 
 ## Best Practices baseline — 2026-07-21
 
@@ -45,16 +61,14 @@ Alerts #14 and #15 are separate open TokenPermissionsID findings pending a fresh
 - **Source:** [`projects/13670.json`](https://www.bestpractices.dev/projects/13670.json)
 - **Downloaded:** 2026-07-21
 - **Public record updated:** 2026-07-20T16:05:52.114Z
-- **Badge status:** `in_progress` (Passing 94%, Silver 7%, Gold 17%)
+- **Badge status at this baseline:** `in_progress` (Passing 94%, Silver 7%, Gold 17%)
 
-The downloaded record contains 196 criterion status fields: 45 `Met`, 13
+This historical snapshot contained 196 criterion status fields: 45 `Met`, 13
 `N/A`, 9 `Unmet`, 128 unknown (`?`), and one unsupported numeric value
-(`OSPS-BR-01.02_status: 0`). The `Met`, `N/A`, and `Unmet` entries are the
-currently answered inventory; unknown and unsupported entries are not claims.
-The public record includes both legacy Best Practices criteria and newer OSPS
-fields. Any repository automation input must use only keys and values accepted
-by the service at submission time, and must retain unknown criteria as unknown
-or omit them.
+(`OSPS-BR-01.02_status: 0`). The `Met`, `N/A`, and `Unmet` entries were the
+then-current answered inventory; unknown and unsupported entries were not
+claims. See the 2026-07-22 external verification above for the authoritative
+post-submission result.
 
 ## ClusterFuzzLite compatibility assessment — 2026-07-21
 
@@ -135,10 +149,12 @@ functioning, proven AFL++ integration and does not claim detection success.
 
 - **Local file:** `.bestpractices.json` at root
 - **Public record:** [project 13670](https://www.bestpractices.dev/projects/13670)
-- **Badge status:** `in_progress` (Passing 94%, Silver 7%, Gold 17%)
+- **Badge status at this evidence snapshot:** `in_progress` (Passing 94%, Silver 7%, Gold 17%)
 - **Criteria included:** 67 answerable (45 Met, 13 N/A, 9 Unmet)
 - **Unknown criteria:** 128 omitted (not fabricated)
 - **Mismatch with public record:** 0
+
+The later service result is recorded in the 2026-07-22 external verification above; this section deliberately preserves the pre-submission inventory.
 
 The local evidence file uses the documented criterion key naming convention,
 preserves the public project's truthful status values, and includes
