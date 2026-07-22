@@ -45,9 +45,17 @@ jobs:
         run: dotnet build --no-restore --configuration Release -p:Version=0.0.0
         working-directory: ./src
 
-      - name: Test
-        run: dotnet test --no-build --configuration Release --verbosity normal
+      - name: Test with coverage
+        run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults
         working-directory: ./src
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: coverage-${{ github.run_id }}
+          path: src/TestResults/**/coverage.cobertura.xml
+          if-no-files-found: warn
 
       - name: Pack NuGet Package
         run: dotnet pack --no-build --configuration Release --output ./nupkg -p:Version=0.0.0
@@ -56,7 +64,7 @@ jobs:
   publish:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
     environment: nuget-publish
     env:
       BUILDX_NO_DEFAULT_ATTESTATIONS: 1
@@ -101,9 +109,17 @@ jobs:
         run: dotnet build --no-restore --configuration Release -p:Version=${{ steps.version_step.outputs.FullSemVer }} -p:AssemblyVersion=${{ steps.version_step.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.version_step.outputs.AssemblySemFileVer }}
         working-directory: ./src
 
-      - name: Test
-        run: dotnet test --no-build --configuration Release --verbosity normal
+      - name: Test with coverage
+        run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults
         working-directory: ./src
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: coverage-${{ github.run_id }}
+          path: src/TestResults/**/coverage.cobertura.xml
+          if-no-files-found: warn
 
       - name: Pack NuGet Package
         run: dotnet pack --no-build --configuration Release --output ./nupkg -p:Version=${{ steps.version_step.outputs.FullSemVer }} -p:AssemblyVersion=${{ steps.version_step.outputs.AssemblySemVer }} -p:FileVersion=${{ steps.version_step.outputs.AssemblySemFileVer }}
@@ -183,6 +199,7 @@ jobs:
           tag: ${{ steps.version_step.outputs.FullSemVer }}
           commit: ${{ github.sha }}
           artifacts: "./src/nupkg/*.nupkg,./src/nupkg/*.snupkg,./src/*.tar.gz,./src/*.zip"
+          generateReleaseNotes: true
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0

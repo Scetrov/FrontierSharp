@@ -1,0 +1,57 @@
+name: Sync release notes to changelog
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+jobs:
+  sync-changelog:
+    if: ${{ !github.event.release.prerelease && !github.event.release.draft }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add published release notes to changelog
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          PUBLISHED_AT: ${{ github.event.release.published_at }}
+          RELEASE_NOTES: ${{ github.event.release.body }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const path = 'CHANGELOG.md';
+            const tag = process.env.TAG;
+            const date = process.env.PUBLISHED_AT.slice(0, 10);
+            const notes = (process.env.RELEASE_NOTES || 'No release notes were provided.').trim();
+            const heading = `## [${tag}] - ${date}`;
+            const file = await github.rest.repos.getContent({ owner, repo, path, ref: context.payload.repository.default_branch });
+            const changelog = Buffer.from(file.data.content, 'base64').toString('utf8');
+
+            if (changelog.includes(heading)) {
+              core.info(`Changelog already contains ${tag}.`);
+              return;
+            }
+
+            const unreleased = '## [Unreleased]\n';
+            if (!changelog.includes(unreleased)) {
+              core.setFailed('CHANGELOG.md must contain an Unreleased section.');
+              return;
+            }
+
+            const entry = `${heading}\n\n${notes}\n\n`;
+            const updated = changelog.replace(unreleased, `${unreleased}\n${entry}`);
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path,
+              message: `docs: add release notes for ${tag} [skip ci]`,
+              content: Buffer.from(updated).toString('base64'),
+              sha: file.data.sha,
+              branch: context.payload.repository.default_branch,
+              committer: { name: 'github-actions[bot]', email: '41898282+github-actions[bot]@users.noreply.github.com' },
+              author: { name: 'github-actions[bot]', email: '41898282+github-actions[bot]@users.noreply.github.com' }
+            });
