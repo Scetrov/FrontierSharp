@@ -27,6 +27,18 @@ independent coverage; its possible future detector recognition is not a reason
 to add it. Detection also depends on a released `scorecard-action` embedding
 Scorecard `v5.5.0` or later.
 
+## Token-Permissions residual risk — 2026-07-22
+
+- **Alert:** [#13 TokenPermissionsID](https://github.com/Scetrov/FrontierSharp/security/code-scanning/13), observed open on 2026-07-22T19:37:30Z.
+- **Required scope:** `contents: write` only on `.github/workflows/build-and-test.yml`'s `publish` job; that job also retains its required `packages: write` and `id-token: write` publication scopes.
+- **Trusted trigger boundary:** the job runs only after `build-and-test` succeeds for a `push` to `main`, excludes the `github-actions[bot]` actor, and uses the protected `nuget-publish` environment. It does not run for pull requests or untrusted fork code.
+- **Purpose:** create the GitHub release after publishing the verified packages and release artifacts.
+- **Owner:** repository maintainer.
+- **Validation evidence:** workflow YAML parsed successfully and a manual permission-boundary inspection on 2026-07-22 confirmed that `build-and-test` remains `contents: read`, while all publishing write scopes remain on `publish`.
+- **Exit criterion:** remove this authority when a narrower GitHub release-creation permission or a changed release design makes it unnecessary, or record a fresh Scorecard result that confirms resolution. Until then, alert #13 is an open, justified residual signal—not a resolved alert.
+
+Alerts #14 and #15 are separate open TokenPermissionsID findings pending a fresh Scorecard analysis after the scoped `prerelease.yml` and `sync-release-notes.yml` changes. No TokenPermissionsID alert is claimed resolved without that fresh result.
+
 ## Best Practices baseline — 2026-07-21
 
 - **Project:** [FrontierSharp 13670](https://www.bestpractices.dev/projects/13670)

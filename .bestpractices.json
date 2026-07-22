@@ -1,448 +1,117 @@
 {
-  "project_id": 13670,
-  "project_name": "FrontierSharp",
   "repo_url": "https://github.com/Scetrov/FrontierSharp",
-  "badge_level": "in_progress",
-  "badge_percentage_0": 94,
-  "badge_percentage_1": 7,
-  "badge_percentage_2": 17,
-  "service_url": "https://www.bestpractices.dev/projects/13670",
-  "generated_at": "2026-07-22T18:29:52.818Z",
-  "generated_from": "public bestpractices.dev JSON export",
-  "criteria": {
-    "sites_https": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Given only https: URLs.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "description_good": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp - About",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "interact": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/issues",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "contribution": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Projects on GitHub by default use issues and pull requests, as encouraged by documentation such as <https://guides.github.com/activities/contributing-to-open-source/>.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "license_location": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Non-trivial license location file in repository: <https://github.com/Scetrov/FrontierSharp/blob/main/LICENSE>.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/LICENSE"
-    },
-    "floss_license": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "The MIT license is approved by the Open Source Initiative (OSI).",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/LICENSE"
-    },
-    "floss_license_osi": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "The MIT license is approved by the Open Source Initiative (OSI).",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/LICENSE"
-    },
-    "documentation_basics": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Some documentation basics file contents found.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "documentation_interface": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/blob/main/docs/README.md",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "repo_public": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Repository on GitHub, which provides public git repositories with URLs.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "repo_track": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Repository on GitHub, which uses git. git can track the changes, who made them, and when they were made.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/commits"
-    },
-    "repo_interim": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Every same-repository pull request produces an explicitly marked GitHub pre-release containing evaluation packages for its current commit. The pre-release is replaced on each update and removed when the pull request closes.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/prerelease.yml"
-    },
-    "repo_distributed": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Repository on GitHub, which uses git. git is distributed.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "version_unique": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/releases",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/releases"
-    },
-    "version_semver": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/releases"
-    },
-    "version_tags": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "release_notes": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Stable GitHub Releases use generated release notes, and automation copies each published release's notes into CHANGELOG.md.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/sync-release-notes.yml"
-    },
-    "report_tracker": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/issues",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/issues"
-    },
-    "report_process": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Non-trivial SECURITY[.md] file found file in repository: <https://github.com/Scetrov/FrontierSharp/blob/main/SECURITY.md>. [osps_do_02_01]",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "report_responses": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/issues"
-    },
-    "enhancement_responses": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "There was only two requests, both were responded to.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/issues"
-    },
-    "report_archive": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/issues?q=is%3Aissue%20state%3Aclosed",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/issues"
-    },
-    "vulnerability_report_process": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/SECURITY.md"
-    },
-    "vulnerability_report_private": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "vulnerability_report_response": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "build": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/actions",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "build_common_tools": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/tree/main/.github/workflows",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "build_floss_tools": {
-      "status": "Unmet",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": ".NET Platform is not fully FLOSS"
-    },
-    "test": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "test_invocation": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "dotnet test: https://github.com/Scetrov/FrontierSharp/tree/main/src/FrontierSharp.Tests",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "test_most": {
-      "status": "Unmet",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Coverage not automated."
-    },
-    "test_policy": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp#contributing",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "tests_are_added": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp#contributing",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/commits"
-    },
-    "tests_documented_added": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp#contributing",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "warnings": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/blob/3d299796e5c5abfc617cbe84fe0dc0b41046b720/.github/workflows/build-and-test.yml#L45",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "warnings_fixed": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/actions/workflows/build-and-test.yml",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "warnings_strict": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "TreatWarningsAsErrors is enabled globally via src/Directory.Build.props. Build produces 0 warnings and 0 errors.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/src/Directory.Build.props"
-    },
-    "know_secure_design": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Sole Developer - multiply certified both in .NET and cloud software engineering.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "know_common_errors": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Sole Developer undergoes OWASP Top 10 training annually.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "crypto_published": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_call": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_floss": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_keylength": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_working": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_pfs": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_password_storage": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_random": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "delivery_mitm": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Distribution channels use HTTPS exclusively. [osps_br_03_02]",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "delivery_unsigned": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Distribution channels use HTTPS exclusively.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "vulnerabilities_fixed_60_days": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security/dependabot",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "vulnerabilities_critical_fixed": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security/dependabot",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "static_analysis": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security/code-scanning",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "static_analysis_common_vulnerabilities": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security/code-scanning",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "static_analysis_fixed": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security/code-scanning",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "static_analysis_often": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "dynamic_analysis": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Proven SharpFuzz/AFL++ coverage-guided fuzzing campaigns run in CI for all four parser targets (sui, resindex, pickle, world) with explicit time bounds and sanitized crash artifact retention.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/fuzz.yml"
-    },
-    "dynamic_analysis_unsafe": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "dynamic_analysis_enable_assertions": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Fuzz harness binaries are built in Debug configuration (dotnet publish -c Debug), which enables Debug.Assert assertions. Corpus replay in pull-request CI runs in Release configuration.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/fuzz.yml"
-    },
-    "dynamic_analysis_fixed": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "crypto_weaknesses": {
-      "status": "N/A",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "test_continuous_integration": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/actions",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/build-and-test.yml"
-    },
-    "discussion": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "GitHub supports discussions on issues and pull requests.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/issues"
-    },
-    "no_leaked_credentials": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/security/secret-scanning",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.gitignore"
-    },
-    "english": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "https://github.com/Scetrov/FrontierSharp/blob/main/docs/README.md",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
-    },
-    "achieve_passing": {
-      "status": "Unmet",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "achieve_silver": {
-      "status": "Unmet",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
-    },
-    "maintained": {
-      "status": "Met",
-      "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress",
-      "justification": "Dependabot maintains both security updates, and version bumps (with a 5-day cooldown).",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp"
-    }
-  },
-  "unknown_criteria_omitted": true,
-  "note": "Repository-local evidence record. Badge status is authoritative only from bestpractices.dev."
+  "sites_https_status": "Met",
+  "sites_https_justification": "Given only https: URLs.",
+  "description_good_status": "Met",
+  "description_good_justification": "https://github.com/Scetrov/FrontierSharp - About",
+  "interact_status": "Met",
+  "interact_justification": "https://github.com/Scetrov/FrontierSharp/issues",
+  "contribution_status": "Met",
+  "contribution_justification": "Projects on GitHub by default use issues and pull requests, as encouraged by documentation such as <https://guides.github.com/activities/contributing-to-open-source/>.",
+  "license_location_status": "Met",
+  "license_location_justification": "Non-trivial license location file in repository: <https://github.com/Scetrov/FrontierSharp/blob/main/LICENSE>.",
+  "floss_license_status": "Met",
+  "floss_license_justification": "The MIT license is approved by the Open Source Initiative (OSI).",
+  "floss_license_osi_status": "Met",
+  "floss_license_osi_justification": "The MIT license is approved by the Open Source Initiative (OSI).",
+  "documentation_basics_status": "Met",
+  "documentation_basics_justification": "Some documentation basics file contents found.",
+  "documentation_interface_status": "Met",
+  "documentation_interface_justification": "https://github.com/Scetrov/FrontierSharp/blob/main/docs/README.md",
+  "repo_public_status": "Met",
+  "repo_public_justification": "Repository on GitHub, which provides public git repositories with URLs.",
+  "repo_track_status": "Met",
+  "repo_track_justification": "Repository on GitHub, which uses git. git can track the changes, who made them, and when they were made.",
+  "repo_interim_status": "Met",
+  "repo_interim_justification": "Every same-repository pull request produces an explicitly marked GitHub pre-release containing evaluation packages for its current commit. The pre-release is replaced on each update and removed when the pull request closes.",
+  "repo_distributed_status": "Met",
+  "repo_distributed_justification": "Repository on GitHub, which uses git. git is distributed.",
+  "version_unique_status": "Met",
+  "version_unique_justification": "https://github.com/Scetrov/FrontierSharp/releases",
+  "version_semver_status": "Met",
+  "version_tags_status": "Met",
+  "release_notes_status": "Met",
+  "release_notes_justification": "Stable GitHub Releases use generated release notes, and automation copies each published release's notes into CHANGELOG.md.",
+  "report_tracker_status": "Met",
+  "report_tracker_justification": "https://github.com/Scetrov/FrontierSharp/issues",
+  "report_process_status": "Met",
+  "report_process_justification": "Non-trivial SECURITY[.md] file found file in repository: <https://github.com/Scetrov/FrontierSharp/blob/main/SECURITY.md>. [osps_do_02_01]",
+  "report_responses_status": "Met",
+  "enhancement_responses_status": "Met",
+  "enhancement_responses_justification": "There was only two requests, both were responded to.",
+  "report_archive_status": "Met",
+  "report_archive_justification": "https://github.com/Scetrov/FrontierSharp/issues?q=is%3Aissue%20state%3Aclosed",
+  "vulnerability_report_process_status": "Met",
+  "vulnerability_report_process_justification": "https://github.com/Scetrov/FrontierSharp/security",
+  "vulnerability_report_private_status": "N/A",
+  "vulnerability_report_response_status": "N/A",
+  "build_status": "Met",
+  "build_justification": "https://github.com/Scetrov/FrontierSharp/actions",
+  "build_common_tools_status": "Met",
+  "build_common_tools_justification": "https://github.com/Scetrov/FrontierSharp/tree/main/.github/workflows",
+  "build_floss_tools_status": "Unmet",
+  "build_floss_tools_justification": ".NET Platform is not fully FLOSS",
+  "test_status": "Met",
+  "test_invocation_status": "Met",
+  "test_invocation_justification": "dotnet test: https://github.com/Scetrov/FrontierSharp/tree/main/src/FrontierSharp.Tests",
+  "test_most_status": "Unmet",
+  "test_most_justification": "Coverage not automated.",
+  "test_policy_status": "Met",
+  "test_policy_justification": "https://github.com/Scetrov/FrontierSharp#contributing",
+  "tests_are_added_status": "Met",
+  "tests_are_added_justification": "https://github.com/Scetrov/FrontierSharp#contributing",
+  "tests_documented_added_status": "Met",
+  "tests_documented_added_justification": "https://github.com/Scetrov/FrontierSharp#contributing",
+  "warnings_status": "Met",
+  "warnings_justification": "https://github.com/Scetrov/FrontierSharp/blob/3d299796e5c5abfc617cbe84fe0dc0b41046b720/.github/workflows/build-and-test.yml#L45",
+  "warnings_fixed_status": "Met",
+  "warnings_fixed_justification": "https://github.com/Scetrov/FrontierSharp/actions/workflows/build-and-test.yml",
+  "warnings_strict_status": "Met",
+  "warnings_strict_justification": "TreatWarningsAsErrors is enabled globally via src/Directory.Build.props. Build produces 0 warnings and 0 errors.",
+  "know_secure_design_status": "Met",
+  "know_secure_design_justification": "Sole Developer - multiply certified both in .NET and cloud software engineering.",
+  "know_common_errors_status": "Met",
+  "know_common_errors_justification": "Sole Developer undergoes OWASP Top 10 training annually.",
+  "crypto_published_status": "N/A",
+  "crypto_call_status": "N/A",
+  "crypto_floss_status": "N/A",
+  "crypto_keylength_status": "N/A",
+  "crypto_working_status": "N/A",
+  "crypto_pfs_status": "N/A",
+  "crypto_password_storage_status": "N/A",
+  "crypto_random_status": "N/A",
+  "delivery_mitm_status": "Met",
+  "delivery_mitm_justification": "Distribution channels use HTTPS exclusively. [osps_br_03_02]",
+  "delivery_unsigned_status": "Met",
+  "delivery_unsigned_justification": "Distribution channels use HTTPS exclusively.",
+  "vulnerabilities_fixed_60_days_status": "Met",
+  "vulnerabilities_fixed_60_days_justification": "https://github.com/Scetrov/FrontierSharp/security/dependabot",
+  "vulnerabilities_critical_fixed_status": "Met",
+  "vulnerabilities_critical_fixed_justification": "https://github.com/Scetrov/FrontierSharp/security/dependabot",
+  "static_analysis_status": "Met",
+  "static_analysis_justification": "https://github.com/Scetrov/FrontierSharp/security/code-scanning",
+  "static_analysis_common_vulnerabilities_status": "Met",
+  "static_analysis_common_vulnerabilities_justification": "https://github.com/Scetrov/FrontierSharp/security/code-scanning",
+  "static_analysis_fixed_status": "Met",
+  "static_analysis_fixed_justification": "https://github.com/Scetrov/FrontierSharp/security/code-scanning",
+  "static_analysis_often_status": "Met",
+  "dynamic_analysis_status": "Met",
+  "dynamic_analysis_justification": "Proven SharpFuzz/AFL++ coverage-guided fuzzing campaigns run in CI for all four parser targets (sui, resindex, pickle, world) with explicit time bounds and sanitized crash artifact retention.",
+  "dynamic_analysis_unsafe_status": "N/A",
+  "dynamic_analysis_enable_assertions_status": "Met",
+  "dynamic_analysis_enable_assertions_justification": "Fuzz harness binaries are built in Debug configuration (dotnet publish -c Debug), which enables Debug.Assert assertions. Corpus replay in pull-request CI runs in Release configuration.",
+  "dynamic_analysis_fixed_status": "N/A",
+  "crypto_weaknesses_status": "N/A",
+  "test_continuous_integration_status": "Met",
+  "test_continuous_integration_justification": "https://github.com/Scetrov/FrontierSharp/actions",
+  "discussion_status": "Met",
+  "discussion_justification": "GitHub supports discussions on issues and pull requests.",
+  "no_leaked_credentials_status": "Met",
+  "no_leaked_credentials_justification": "https://github.com/Scetrov/FrontierSharp/security/secret-scanning",
+  "english_status": "Met",
+  "english_justification": "https://github.com/Scetrov/FrontierSharp/blob/main/docs/README.md",
+  "achieve_passing_status": "Unmet",
+  "achieve_silver_status": "Unmet",
+  "maintained_status": "Met",
+  "maintained_justification": "Dependabot maintains both security updates, and version bumps (with a 5-day cooldown)."
 }
