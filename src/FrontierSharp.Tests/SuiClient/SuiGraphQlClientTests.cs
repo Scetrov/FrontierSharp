@@ -101,6 +101,7 @@ public class SuiGraphQlClientTests {
         _logger.Received().Log(
             LogLevel.Debug,
             Arg.Is<IDictionary<string, object>>(state =>
+                state != null &&
                 state.ContainsKey("Endpoint") &&
                 Equals(state["Endpoint"], "https://test.local/graphql") &&
                 state.ContainsKey("Payload") &&
@@ -198,6 +199,7 @@ public class SuiGraphQlClientTests {
         _logger.Received().Log(
             LogLevel.Debug,
             Arg.Is<IDictionary<string, object>>(state =>
+                state != null &&
                 state.ContainsKey("Endpoint") &&
                 Equals(state["Endpoint"], "https://test.local/graphql") &&
                 state.ContainsKey("Payload") &&
