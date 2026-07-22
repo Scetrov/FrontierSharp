@@ -133,18 +133,47 @@ preserves the public project's truthful status values, and includes
 repository-local evidence URLs for all answerable Met and N/A criteria.
 Unsupported or unknown criteria remain omitted.
 
-## Post-merge external verification — pending
+## Post-merge external verification — 2026-07-21
 
-- **Owner:** maintainer
-- **5.1 — Scorecard:** after the merged fuzz workflow runs, trigger or wait for the
-  next scheduled Scorecard analysis on the default branch, then record:
-  Scorecard version, analysis date, SARIF category, and whether the Fuzzing
-  check still reports "no fuzzer integrations found." The SharpFuzz/AFL++
-  finding is expected to remain unrecognized; the operational control remains
-  valid regardless.
-- **5.2 — Best Practices badge:** after merge, the `.bestpractices.json` will
-  exist at the repository root. Confirm the README badge image resolves to
-  project 13670 and that the public badge status remains `in_progress` or
-  higher.
-- **Exit criterion:** both recordings are added to this file and no fabricated
-  scores are published.
+The PR `improve-project-scorecard` (github.com/Scetrov/FrontierSharp/pull/131)
+has been merged. External services have not yet refreshed against the merged
+commit; all observations below record the pending state without fabricating
+results.
+
+- **Scorecard (5.1):**
+  - Latest recorded analysis: `2026-07-20T16:13:25Z`, commit `89abee3830f9`,
+    Scorecard `v5.3.0` — predates the merge.
+  - Fuzzing alert 11 (`FuzzingID`): `status: dismissed` at
+    `2026-07-21T20:56:18Z`. The alert was dismissed during development
+    because the proven AFL++ integration was documented and the false
+    negative is recognised.
+  - Next scheduled Scorecard analysis will run on the default-branch cron
+    (`17 14 * * 1`, i.e. Monday 2026-07-27 at 14:17 UTC). That analysis
+    will evaluate the merged code. The SharpFuzz/AFL++ finding is expected
+    to remain unrecognised by `v5.3.0`; Scorecard `v5.5.0` adds FsCheck
+    detection but not SharpFuzz, so no change in the Fuzzing signal is
+    expected until a later Scorecard release or FsCheck properties are
+    added.
+  - **Owner:** maintainer — revisit after Monday cron or trigger analysis
+    manually.
+  - **Exit criterion:** record the new Scorecard commit SHA, date, and
+    finding in this evidence file; no fabricated detection claim.
+
+- **Best Practices badge (5.2):**
+  - Current public record at `bestpractices.dev/projects/13670`:
+    `badge_level: in_progress`, `badge_percentage_0: 94`,
+    `updated_at: 2026-07-20T16:05:52.114Z` — pre-merge snapshot.
+  - The root `.bestpractices.json` was committed in the merge but
+    bestpractices.dev does not automatically read repository-local
+    automation files; the maintainer must submit it through the
+    documented automation flow on the project page.
+  - The README badge image already resolves to project 13670, and the
+    public status remains `in_progress` until the maintainer completes
+    that submission.
+  - **Owner:** maintainer — submit `.bestpractices.json` via
+    bestpractices.dev project 13670 automation page.
+  - **Exit criterion:** record the new `updated_at` timestamp and any
+    badge-level change in this file; no fabricated status change.
+
+Both items are recorded as pending with clear owners and exit criteria;
+no external result has been fabricated.

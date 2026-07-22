@@ -283,6 +283,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(v =>
+                v != null &&
                 v["type"]!.ToString() == $"{PackageAddress}::killmail::Killmail" &&
                 Equals(v["first"], 10) &&
                 Equals(v["after"], "cursor123")),
@@ -313,6 +314,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(v =>
+                v != null &&
                 v["type"]!.ToString() == $"{PackageAddress}::killmail::Killmail"),
             Arg.Any<CancellationToken>());
     }
@@ -331,6 +333,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(v =>
+                v != null &&
                 v["type"]!.ToString() == $"{overridePackage}::killmail::Killmail"),
             Arg.Any<CancellationToken>());
     }
@@ -503,6 +506,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(v =>
+                v != null &&
                 v["type"]!.ToString() == $"{PackageAddress}::character::Character"),
             Arg.Any<CancellationToken>());
     }
@@ -671,6 +675,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(v =>
+                v != null &&
                 v["type"]!.ToString() == $"{PackageAddress}::assembly::Assembly"),
             Arg.Any<CancellationToken>());
     }
@@ -784,6 +789,7 @@ public class WorldClientTests {
         await _graphQlClient.Received().QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(variables =>
+                variables != null &&
                 variables["type"]!.ToString() == $"{PackageAddress}::assembly::Assembly" &&
                 Equals(variables["first"], 10) &&
                 variables["after"] == null),
@@ -825,6 +831,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(variables =>
+                variables != null &&
                 variables["type"]!.ToString() == $"{PackageAddress}::assembly::Assembly" &&
                 Equals(variables["first"], 25) &&
                 variables["after"] == null),
@@ -858,6 +865,7 @@ public class WorldClientTests {
         await _graphQlClient.Received(1).QueryAsync<ObjectsQueryData>(
             WorldQueries.GetObjectsByType,
             Arg.Is<Dictionary<string, object?>>(variables =>
+                variables != null &&
                 variables["type"]!.ToString() == $"{overridePackage}::assembly::Assembly"),
             Arg.Is<GraphQlQueryOptions?>(queryOptions => queryOptions != null && queryOptions.BypassCache),
             Arg.Any<CancellationToken>());
@@ -896,6 +904,7 @@ public class WorldClientTests {
         _logger.Received().Log(
             LogLevel.Error,
             Arg.Is<IDictionary<string, object>>(state =>
+                state != null &&
                 state.ContainsKey("SubscriptionName") &&
                 Equals(state["SubscriptionName"], "Assembly") &&
                 state.ContainsKey("Errors") &&

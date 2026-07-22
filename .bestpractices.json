@@ -88,9 +88,11 @@
       "evidence_url": "https://github.com/Scetrov/FrontierSharp/commits"
     },
     "repo_interim": {
-      "status": "Unmet",
+      "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
+      "badge_level": "in_progress",
+      "justification": "All development occurs in the main branch via pull requests. Each merge creates an interim version reviewable in the commit history between tagged releases.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/commits/main"
     },
     "repo_distributed": {
       "status": "Met",
@@ -119,10 +121,11 @@
       "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
     },
     "release_notes": {
-      "status": "Unmet",
+      "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
       "badge_level": "in_progress",
-      "justification": "No release notes file found."
+      "justification": "Human-readable release notes maintained in CHANGELOG.md covering all tagged releases.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/CHANGELOG.md"
     },
     "report_tracker": {
       "status": "Met",
@@ -250,9 +253,11 @@
       "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
     },
     "warnings_strict": {
-      "status": "Unmet",
+      "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
-      "badge_level": "in_progress"
+      "badge_level": "in_progress",
+      "justification": "TreatWarningsAsErrors is enabled globally via src/Directory.Build.props. Build produces 0 warnings and 0 errors.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/src/Directory.Build.props"
     },
     "know_secure_design": {
       "status": "Met",
@@ -364,10 +369,11 @@
       "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/README.md"
     },
     "dynamic_analysis": {
-      "status": "Unmet",
+      "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
       "badge_level": "in_progress",
-      "justification": "Currently in a early release state while game is in Alpha"
+      "justification": "Proven SharpFuzz/AFL++ coverage-guided fuzzing campaigns run in CI for all four parser targets (sui, resindex, pickle, world) with explicit time bounds and sanitized crash artifact retention.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/fuzz.yml"
     },
     "dynamic_analysis_unsafe": {
       "status": "N/A",
@@ -375,10 +381,11 @@
       "badge_level": "in_progress"
     },
     "dynamic_analysis_enable_assertions": {
-      "status": "Unmet",
+      "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
       "badge_level": "in_progress",
-      "justification": "Currently in a early release state while game is in Alpha"
+      "justification": "Fuzz harness binaries are built in Debug configuration (dotnet publish -c Debug), which enables Debug.Assert assertions. Corpus replay in pull-request CI runs in Release configuration.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/fuzz.yml"
     },
     "dynamic_analysis_fixed": {
       "status": "N/A",
