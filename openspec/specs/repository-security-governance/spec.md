@@ -37,7 +37,7 @@ The root security policy SHALL provide a working direct link to GitHub private v
 - **THEN** the policy provides concrete acknowledgement and update targets and a disclosure expectation that permits coordinated remediation
 
 ### Requirement: Best Practices evidence is truthful
-Any OpenSSF Best Practices link or badge published by the repository SHALL resolve to the registered FrontierSharp project and display its actual current status.
+Any OpenSSF Best Practices link or badge published by the repository SHALL resolve to registered FrontierSharp project 13670 and display its actual current status. The repository SHALL maintain a valid root `.bestpractices.json` containing every currently answerable Passing, Silver, and Gold criterion with truthful project evidence, while unsupported or unknown claims MUST remain unanswered or explicitly unknown.
 
 #### Scenario: Project is not yet registered
 - **WHEN** no public Best Practices project record exists for the repository
@@ -45,7 +45,15 @@ Any OpenSSF Best Practices link or badge published by the repository SHALL resol
 
 #### Scenario: Registration is completed
 - **WHEN** the repository's Best Practices project is publicly available
-- **THEN** any added link or badge resolves to that project and reflects the status returned by the service
+- **THEN** the README badge image and target resolve to project 13670 and reflect the status returned by the service
+
+#### Scenario: Repository evidence is proposed to Best Practices automation
+- **WHEN** bestpractices.dev reads the root `.bestpractices.json`
+- **THEN** the file uses supported criterion keys and statuses and provides repository-backed answers across Passing, Silver, and Gold without converting unknown criteria into claims
+
+#### Scenario: Criterion evidence is unavailable
+- **WHEN** a Passing, Silver, or Gold criterion cannot be demonstrated by current project or repository evidence
+- **THEN** that criterion is omitted or marked unknown and the badge continues to report only the status awarded by bestpractices.dev
 
 ### Requirement: Scorecard remediation evidence is auditable
 The change SHALL record the Scorecard version and run date, map every original alert number to validation evidence, and classify any remaining alert as external, temporal, accepted solo-maintainer risk, or reproduced scanner limitation with an owner and exit criterion.
@@ -68,4 +76,15 @@ No remediation SHALL disable an existing security check, loosen workflow permiss
 #### Scenario: Proposed metric fix reduces actual assurance
 - **WHEN** a proposed change would improve a Scorecard score by bypassing validation, fabricating evidence, or weakening an existing control
 - **THEN** the proposal is rejected and the residual finding is documented instead
+
+### Requirement: OpenSSF signal verification is reproducible
+The repository SHALL record enough non-sensitive evidence to reproduce verification of the Scorecard fuzzing signal and Best Practices automation input, including source revisions, service targets, validation dates, and residual limitations.
+
+#### Scenario: Assurance metadata changes
+- **WHEN** the recognized fuzzing integration, `.bestpractices.json`, or README Best Practices badge is added or materially changed
+- **THEN** maintainers validate the local configuration and record the corresponding external service result or a clearly owned pending-verification state
+
+#### Scenario: External service has not refreshed
+- **WHEN** GitHub, Scorecard, or bestpractices.dev has not yet processed a merged assurance change
+- **THEN** the repository records the pending state and does not fabricate a successful score, badge level, or criterion result
 
