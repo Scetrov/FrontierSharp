@@ -93,7 +93,7 @@ jobs:
           prerelease: true
           allowUpdates: true
           updateOnlyUnreleased: true
-          replacesArtifacts: true
+          removeArtifacts: true
           artifacts: ./src/nupkg/*.nupkg,./src/nupkg/*.snupkg
 
       - name: Mark pull request as a pre-release
