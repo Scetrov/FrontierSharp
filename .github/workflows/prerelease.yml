@@ -77,14 +77,14 @@ jobs:
         env:
           TAG: pr-${{ github.event.pull_request.number }}
         run: |
-          git tag --force "$TAG" "$GITHUB_SHA"
+          git tag --force "$TAG" "${{ github.event.pull_request.head.sha }}"
           git push origin "refs/tags/$TAG" --force
 
       - name: Publish pre-release
         uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
           tag: pr-${{ github.event.pull_request.number }}
-          commit: ${{ github.sha }}
+          commit: ${{ github.event.pull_request.head.sha }}
           name: Pre-release for PR #${{ github.event.pull_request.number }}
           body: >-
             Evaluation packages for pull request #${{ github.event.pull_request.number }}.
