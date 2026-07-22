@@ -85,7 +85,7 @@ jobs:
         with:
           tag: pr-${{ github.event.pull_request.number }}
           commit: ${{ github.event.pull_request.head.sha }}
-          name: Pre-release for PR #${{ github.event.pull_request.number }}
+          name: "Pre-release for PR #${{ github.event.pull_request.number }}"
           body: >-
             Evaluation packages for pull request #${{ github.event.pull_request.number }}.
             Package version: `${{ steps.version.outputs.fullSemVer }}`.
