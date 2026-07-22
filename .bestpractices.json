@@ -115,5 +115,7 @@
   "maintained_status": "Met",
   "maintained_justification": "Dependabot maintains both security updates, and version bumps (with a 5-day cooldown).",
   "contribution_requirements_status": "Met",
-  "contribution_requirements_justification": "CONTRIBUTING.md requires focused tests, signed commits, clear pull-request summaries with testing evidence, reviewable changes, and required checks and approval before merge. https://github.com/Scetrov/FrontierSharp/blob/main/CONTRIBUTING.md"
+  "contribution_requirements_justification": "CONTRIBUTING.md requires focused tests, signed commits, clear pull-request summaries with testing evidence, reviewable changes, and required checks and approval before merge. https://github.com/Scetrov/FrontierSharp/blob/main/CONTRIBUTING.md",
+  "release_notes_vulns_status": "Met",
+  "release_notes_vulns_justification": "No published GitHub Security Advisories currently exist for FrontierSharp. Stable release notes are copied into CHANGELOG.md, and any future vulnerability fix will be identified there. https://github.com/Scetrov/FrontierSharp/security/advisories"
 }
