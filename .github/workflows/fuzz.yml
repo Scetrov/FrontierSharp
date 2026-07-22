@@ -1,9 +1,17 @@
-name: Parser corpus replay
+name: Parser fuzzing
 
 on:
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '17 3 * * 0'
   workflow_dispatch:
+    inputs:
+      run_fuzzing:
+        description: Run the bounded AFL++ campaigns after corpus replay
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -27,9 +35,16 @@ jobs:
         working-directory: src
 
   fuzz:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'schedule' || inputs.run_fuzzing
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    concurrency:
+      group: parser-fuzz-${{ matrix.target }}
+      cancel-in-progress: false
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [sui, resindex, pickle, world]
     permissions:
       contents: read
     steps:
@@ -40,11 +55,57 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y afl++
       - run: dotnet restore --locked-mode
         working-directory: src
-      - run: dotnet publish FrontierSharp.Fuzz/FrontierSharp.Fuzz.csproj -c Debug -r linux-x64 --self-contained false
+      - run: dotnet publish FrontierSharp.Fuzz/FrontierSharp.Fuzz.csproj --no-restore -c Debug --self-contained false
         working-directory: src
-      - run: |
+      - name: Instrument parser dependencies
+        run: |
+          dotnet tool install --tool-path /tmp/sharpfuzz SharpFuzz.CommandLine --version 2.3.0
+          publish_directory=src/FrontierSharp.Fuzz/bin/Debug/net10.0/publish
+          for assembly in "$publish_directory"/*.dll; do
+            case "$(basename "$assembly")" in
+              FrontierSharp.Fuzz.dll|SharpFuzz.dll|SharpFuzz.Common.dll|System.*.dll) continue ;;
+            esac
+            /tmp/sharpfuzz/sharpfuzz "$assembly"
+          done
+      - name: Run bounded AFL++ campaign
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          set +e
           export DOTNET_ReadyToRun=0
           export DOTNET_TieredCompilation=0
-          for target in sui resindex pickle world; do
-            timeout 1800 afl-fuzz -V 1800 -i src/FrontierSharp.Fuzz/corpus/"$target" -o /tmp/out/"$target" -- dotnet src/FrontierSharp.Fuzz/bin/Debug/net10.0/linux-x64/FrontierSharp.Fuzz.dll fuzz "$target"
+          export DOTNET_ROLL_FORWARD=Major
+          export AFL_SKIP_BIN_CHECK=1
+          export AFL_SKIP_CPUFREQ=1
+          export AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1
+          mkdir -p /tmp/afl-out
+          timeout --preserve-status 1800 afl-fuzz -V 1800 -m none \
+            -i "src/FrontierSharp.Fuzz/corpus/$TARGET" \
+            -o "/tmp/afl-out/$TARGET" -- \
+            dotnet "src/FrontierSharp.Fuzz/bin/Debug/net10.0/publish/FrontierSharp.Fuzz.dll" fuzz "$TARGET"
+          status=$?
+
+          mkdir -p "fuzz-artifacts/$TARGET"
+          printf 'dotnet FrontierSharp.Fuzz.dll replay %s <artifact-directory>\n' "$TARGET" > "fuzz-artifacts/$TARGET/REPLAY.txt"
+          for kind in crashes hangs; do
+            source="/tmp/afl-out/$TARGET/default/$kind"
+            destination="fuzz-artifacts/$TARGET/$kind"
+            if [ -d "$source" ]; then
+              mkdir -p "$destination"
+              find "$source" -maxdepth 1 -type f ! -name README.txt -exec cp {} "$destination" \;
+            fi
           done
+
+          # AFL++ may return 124 when the outer bound expires; that is an expected,
+          # explicit campaign termination. Preserve other failures for investigation.
+          if [ "$status" -ne 0 ] && [ "$status" -ne 124 ]; then
+            exit "$status"
+          fi
+      - name: Upload sanitized AFL++ findings
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: afl-${{ matrix.target }}-findings
+          path: fuzz-artifacts/${{ matrix.target }}
+          if-no-files-found: ignore
+          retention-days: 14
