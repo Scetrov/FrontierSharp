@@ -26,7 +26,7 @@
 
 ## 5. Verify External Signals
 
-- [ ] 5.1 Trigger a fresh Scorecard analysis and record the version, date, run URL, finding, and any continuing SharpFuzz/AFL++ detection limitation
-- [ ] 5.2 Submit or trigger the documented maintainer-reviewed bestpractices.dev automation flow and confirm the badge continues to show the service-awarded status
+- [x] 5.1 Trigger a fresh Scorecard analysis and record the version, date, run URL, finding, and any continuing SharpFuzz/AFL++ detection limitation
+- [x] 5.2 Submit or trigger the documented maintainer-reviewed bestpractices.dev automation flow and confirm the badge continues to show the service-awarded status
 - [x] 5.3 Record asynchronous or residual findings with an owner and exit criterion instead of fabricating successful external results
 - [x] 5.4 Run focused project validation and `openspec validate --change improve-project-scorecard`, then update the evidence record with final outcomes
