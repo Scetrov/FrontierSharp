@@ -135,12 +135,12 @@ public async Task<ActionResult<Tribe>> GetTribes() {
 
 ## Contributing
 
-Contributions are welcome! For bug reports, feature requests, or questions, please open an issue. For code
-contributions, please create a pull request.
+Contributions are welcome. For bug reports, feature requests, or questions, please open an issue. For code contributions, read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request; it documents required signed commits, tests, coverage, and review standards.
+
+Stable releases are documented in both [GitHub Releases](https://github.com/Scetrov/FrontierSharp/releases) and [CHANGELOG.md](CHANGELOG.md). Pull requests from repository branches receive an explicitly labelled GitHub pre-release for evaluation.
 
 > [!IMPORTANT]
-> If you find a security issue with the solution, I would appreciate it if you followed a responsible disclosure process
-> and contacted me directly or via the GitHub Security Reporting programme.
+> If you find a security issue with the solution, please follow the responsible disclosure process in [SECURITY.md](SECURITY.md).
 
 ## License
 

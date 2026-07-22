@@ -91,8 +91,8 @@
       "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
       "badge_level": "in_progress",
-      "justification": "All development occurs in the main branch via pull requests. Each merge creates an interim version reviewable in the commit history between tagged releases.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/commits/main"
+      "justification": "Every same-repository pull request produces an explicitly marked GitHub pre-release containing evaluation packages for its current commit. The pre-release is replaced on each update and removed when the pull request closes.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/prerelease.yml"
     },
     "repo_distributed": {
       "status": "Met",
@@ -124,8 +124,8 @@
       "status": "Met",
       "project_url": "https://www.bestpractices.dev/projects/13670",
       "badge_level": "in_progress",
-      "justification": "Human-readable release notes maintained in CHANGELOG.md covering all tagged releases.",
-      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/CHANGELOG.md"
+      "justification": "Stable GitHub Releases use generated release notes, and automation copies each published release's notes into CHANGELOG.md.",
+      "evidence_url": "https://github.com/Scetrov/FrontierSharp/blob/main/.github/workflows/sync-release-notes.yml"
     },
     "report_tracker": {
       "status": "Met",

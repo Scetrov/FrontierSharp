@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Contributor guide defining signed-commit, pull-request, unit-test, and coverage expectations.
+- Pull-request GitHub pre-releases with evaluation packages and an explicit `pre-release` label.
+- Automated synchronization of published GitHub Release notes into this changelog.
+- CI coverage collection and report artifacts.
+
 ### Changed
 
 - Improved OpenSSF Scorecard assurance signals: proven SharpFuzz/AFL++ fuzzing workflow, `.bestpractices.json` evidence, and fixed Best Practices badge.
