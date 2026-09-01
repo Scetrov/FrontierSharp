@@ -240,9 +240,9 @@
       },
       "ZiggyCreatures.FusionCache": {
         "type": "Direct",
-        "requested": "[2.6.0, )",
-        "resolved": "2.6.0",
-        "contentHash": "BCe+/SkwQZfaMpq2ZGDZB2pyx6BdGnP+zxqjMM/5K+4PBuH6hljZeIqH4KVzQ26khSbPsQ7IiYZl0Fve4OZOog==",
+        "requested": "[2.7.2, )",
+        "resolved": "2.7.2",
+        "contentHash": "WXloGTKSkyOQLocl5Seqn3P6HnwoaWV6lJeNAUtK0dMP8QL5SxvSg3h0jO5Itw/yL1/7urwCahiQps9/gWeMaQ==",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "10.0.1"
         }

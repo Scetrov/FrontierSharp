@@ -4,9 +4,9 @@
     "net10.0": {
       "AwesomeAssertions": {
         "type": "Direct",
-        "requested": "[9.5.0, )",
-        "resolved": "9.5.0",
-        "contentHash": "F92MsjoF8B7IdcWETru4QGZx6VAl38qQPKNGS3kwPwlLB5lb0O4bhFqG8a8sz2estQJWkKmZkVy1r19HTaFcpg=="
+        "requested": "[9.6.0, )",
+        "resolved": "9.6.0",
+        "contentHash": "8kdtgI+tZIgP46ncnk650/dU4JSrn+n2Dkic8FvjIFn72P6Nv1Afyr5F8F3PsokHg1GBSBVo1/Z+eZOrU5esSA=="
       },
       "AwesomeAssertions.Analyzers": {
         "type": "Direct",
@@ -1083,8 +1083,8 @@
       },
       "ZiggyCreatures.FusionCache": {
         "type": "Transitive",
-        "resolved": "2.6.0",
-        "contentHash": "BCe+/SkwQZfaMpq2ZGDZB2pyx6BdGnP+zxqjMM/5K+4PBuH6hljZeIqH4KVzQ26khSbPsQ7IiYZl0Fve4OZOog==",
+        "resolved": "2.7.2",
+        "contentHash": "WXloGTKSkyOQLocl5Seqn3P6HnwoaWV6lJeNAUtK0dMP8QL5SxvSg3h0jO5Itw/yL1/7urwCahiQps9/gWeMaQ==",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "10.0.1"
         }
@@ -1113,7 +1113,7 @@
           "Spectre.Console.Cli": "[0.55.0, )",
           "System.IO.Abstractions": "[22.2.0, )",
           "YamlDotNet": "[18.1.0, )",
-          "ZiggyCreatures.FusionCache": "[2.6.0, )"
+          "ZiggyCreatures.FusionCache": "[2.7.2, )"
         }
       },
       "frontiersharp.common": {
