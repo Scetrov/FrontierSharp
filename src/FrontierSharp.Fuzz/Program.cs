@@ -87,18 +87,26 @@ internal static class FuzzTargets {
     }
 
     public static void ResIndex(Stream input) {
+        using var memory = new MemoryStream();
+        input.CopyTo(memory);
+        var contents = Encoding.UTF8.GetString(memory.ToArray());
+
         var root = Path.Combine(Path.GetTempPath(), "frontiersharp-fuzz", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
         try {
             var path = Path.Combine(root, "index.csv");
-            File.WriteAllText(path, new StreamReader(input, Encoding.UTF8, true, 1_048_576, leaveOpen: true).ReadToEnd());
+            File.WriteAllText(path, contents);
             _ = new ResIndex(path, new FileSystem()).Files.ToArray();
         } finally { Directory.Delete(root, recursive: true); }
     }
 
     public static void Pickle(Stream input) {
+        using var memory = new MemoryStream();
+        input.CopyTo(memory);
+        memory.Position = 0;
+
         using var unpickler = new Unpickler();
-        _ = unpickler.load(input);
+        _ = unpickler.load(memory);
     }
 
     public static void World(Stream input) {
