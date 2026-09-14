@@ -30,7 +30,17 @@ if (args.Length < 2 || !targets.TryGetValue(args[1], out var target)) {
 }
 
 if (string.Equals(args[0], "fuzz", StringComparison.OrdinalIgnoreCase)) {
-    Fuzzer.Run(stream => FuzzTargets.Run(target, stream));
+    Action<Stream> fuzzTarget = stream => FuzzTargets.Run(target, stream);
+
+    // Isolate targets that can terminate the managed worker on mutated input,
+    // allowing SharpFuzz to restart the worker without losing AFL's fork server.
+    if (args[1].Equals("resindex", StringComparison.OrdinalIgnoreCase) ||
+        args[1].Equals("pickle", StringComparison.OrdinalIgnoreCase)) {
+        Fuzzer.OutOfProcess.Run(fuzzTarget);
+    } else {
+        Fuzzer.Run(fuzzTarget);
+    }
+
     return 0;
 }
 
@@ -87,18 +97,26 @@ internal static class FuzzTargets {
     }
 
     public static void ResIndex(Stream input) {
+        using var memory = new MemoryStream();
+        input.CopyTo(memory);
+        var contents = Encoding.UTF8.GetString(memory.ToArray());
+
         var root = Path.Combine(Path.GetTempPath(), "frontiersharp-fuzz", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
         try {
             var path = Path.Combine(root, "index.csv");
-            File.WriteAllText(path, new StreamReader(input, Encoding.UTF8, true, 1_048_576, leaveOpen: true).ReadToEnd());
+            File.WriteAllText(path, contents);
             _ = new ResIndex(path, new FileSystem()).Files.ToArray();
         } finally { Directory.Delete(root, recursive: true); }
     }
 
     public static void Pickle(Stream input) {
+        using var memory = new MemoryStream();
+        input.CopyTo(memory);
+        memory.Position = 0;
+
         using var unpickler = new Unpickler();
-        _ = unpickler.load(input);
+        _ = unpickler.load(memory);
     }
 
     public static void World(Stream input) {

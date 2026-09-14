@@ -78,6 +78,9 @@ jobs:
           export AFL_SKIP_BIN_CHECK=1
           export AFL_SKIP_CPUFREQ=1
           export AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1
+          export AFL_NO_UI=1
+          export AFL_DEBUG_CHILD=1
+
           mkdir -p /tmp/afl-out
           timeout --preserve-status 1800 afl-fuzz -V 1800 -m none \
             -i "src/FrontierSharp.Fuzz/corpus/$TARGET" \
