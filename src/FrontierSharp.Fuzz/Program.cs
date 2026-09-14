@@ -30,7 +30,17 @@ if (args.Length < 2 || !targets.TryGetValue(args[1], out var target)) {
 }
 
 if (string.Equals(args[0], "fuzz", StringComparison.OrdinalIgnoreCase)) {
-    Fuzzer.Run(stream => FuzzTargets.Run(target, stream));
+    Action<Stream> fuzzTarget = stream => FuzzTargets.Run(target, stream);
+
+    // Isolate targets that can terminate the managed worker on mutated input,
+    // allowing SharpFuzz to restart the worker without losing AFL's fork server.
+    if (args[1].Equals("resindex", StringComparison.OrdinalIgnoreCase) ||
+        args[1].Equals("pickle", StringComparison.OrdinalIgnoreCase)) {
+        Fuzzer.OutOfProcess.Run(fuzzTarget);
+    } else {
+        Fuzzer.Run(fuzzTarget);
+    }
+
     return 0;
 }
 
